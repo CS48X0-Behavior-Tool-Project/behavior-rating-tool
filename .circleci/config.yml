@@ -19,7 +19,7 @@ jobs:
 
       - add_ssh_keys:
           fingerprints:
-            - ""
+            - "fa:48:32:52:60:b9:cb:1e:62:0e:b7:dd:c7:79:f0:de"
 
       - run: sudo apt update
       - run: sudo docker-php-ext-install zip pdo pdo_mysql bcmath

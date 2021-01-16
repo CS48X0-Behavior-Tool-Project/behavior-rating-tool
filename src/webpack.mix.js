@@ -1,5 +1,4 @@
-import { js } from 'laravel-mix';
-import tailwindcss from 'tailwindcss';
+const mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -12,7 +11,8 @@ import tailwindcss from 'tailwindcss';
  |
  */
 
-js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        require('tailwindcss'),
-    ]);
+mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'public/css', [
+    require('postcss-import'),
+    require('tailwindcss'),
+    require('autoprefixer'),
+]);

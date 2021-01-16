@@ -45,23 +45,8 @@ jobs:
 
       - run: ./vendor/bin/phpunit
 
-  deploy:
-    machine:
-      enabled: true
-    steps:
-      - run:
-          name: Deploy over SSH
-          command: |
-            ssh -o StrictHostKeyChecking=no docker@laraveldocker.com 'cd /home/docker/site && git fetch origin main && git reset --hard origin/main && git pull origin main && docker-compose -f docker-compose.prod.yml up -d --build nginx'
-
 workflows:
   version: 2
   build-and-deploy:
     jobs:
       - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: main

@@ -43,8 +43,8 @@ jobs:
       - run: touch storage/testing.sqlite
 
       - run:
-        name: Wait for database
-        command: dockerize -wait tcp://localhost:4306 -timeout 1m
+          name: Wait for database
+          command: dockerize -wait tcp://localhost:4306 -timeout 1m
 
       - run: php artisan migrate --env=testing --database=mysql --force
 

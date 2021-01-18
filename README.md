@@ -10,7 +10,6 @@
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [1.0 Installation](#10-installation)
   * [1.1 Installing Git](#11-installing-git)
   * [1.2 Cloning the repository](#12-cloning-the-repository)

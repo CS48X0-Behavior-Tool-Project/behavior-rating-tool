@@ -36,11 +36,7 @@
   * [4.4 Versioning](#44-versioning)
 - [X.0 Deploying](#x0-deploying)
 - [Authors](#authors)
-- [🤝 Contributing](#---contributing)
-- [📝 License](#---license)
-
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
+- [License](#---license)
 
 
 ## 1.0 Installation
@@ -271,12 +267,7 @@ TBD... Need More information and resources provided to us first.
 * Teng Liu
 * Zak McLure
 
-
-## 🤝 Contributing
-
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/CS48X0-Behavior-Tool-Project/behavior-rating-tool/issues). You can also take a look at the [contributing guide](https://github.com/CS48X0-Behavior-Tool-Project/behavior-rating-tool/issues).
-
-## 📝 License
+## License
 
 This project is [MIT](https://opensource.org/licenses/MIT) licensed.
 

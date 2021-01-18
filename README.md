@@ -8,6 +8,41 @@
 
 > The behavior rating tool is software pertinent to the Atlantic Canadian Veterinary College at UPEI. This software's aim is to improve students' knowledge on various animal behaviors.
 
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [1.0 Installation](#10-installation)
+  * [1.1 Installing Git](#11-installing-git)
+  * [1.2 Cloning the repository](#12-cloning-the-repository)
+  * [1.3 Install Docker](#13-install-docker)
+  * [1.4 Generating Environment Variables](#14-generating-environment-variables)
+  * [1.5 Pull Relevant Composer Packages](#15-pull-relevant-composer-packages)
+  * [1.6 Install relevant NPM packages](#16-install-relevant-npm-packages)
+  * [1.7 Build the Dockerfile](#17-build-the-dockerfile)
+  * [1.8 Migrate and Seed Database](#18-migrate-and-seed-database)
+  * [1.9 Test your installation](#19-test-your-installation)
+- [2.0 Development](#20-development)
+  * [2.1 Creating Models](#21-creating-models)
+  * [2.2 Writing Models](#22-writing-models)
+  * [2.3 Blade Templating](#23-blade-templating)
+- [3.0 Testing](#30-testing)
+  * [3.1 Creating Tests](#31-creating-tests)
+  * [3.2 Modifying Tests](#32-modifying-tests)
+  * [3.3 Running Tests](#33-running-tests)
+- [4.0 Naming Conventions](#40-naming-conventions)
+  * [4.1 Branches](#41-branches)
+  * [4.2 Classes](#42-classes)
+  * [4.3 Commits](#43-commits)
+  * [4.4 Versioning](#44-versioning)
+- [X.0 Deploying](#x0-deploying)
+- [Authors](#authors)
+- [🤝 Contributing](#---contributing)
+- [📝 License](#---license)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
+
 ## 1.0 Installation
 
 Follow the instructions below to install the software onto your system for development.
@@ -189,7 +224,40 @@ The PHPUnit command will give a very succinct output, simply displaying how many
 docker-compose run --rm artisan test
 ```
 
-## 4.0 Deploying
+## 4.0 Naming Conventions
+
+The following section will detail the naming convention schemes that will be implemented in the project, whether it be for classes, branches, issues, releases, or commits. It is important to note that most of the topics covered for naming conventions are also mentioned in the [North design and development handbook](https://github.com/north/north).
+
+### 4.1 Branches
+
+Naming branches isn't a horribly complex task. In fact, it will be describable in a few short sentences. The North design handbook above mentions "feature branches" which are a subset of what we will be using.
+
+In particular, when naming a branch, first prefix it with the task at hand. If you are implementing a whole feature, prefix it with feature. If you are fixing a small bug, then we would prefix it with fix. Finally, if you are updating documentation, prefix it with docs. After these prefixes, append a slash and then the name of the actual branch. This allows some programs like Fork or SourceTree to create tree like groupings out of the prefix names. It also keeps everything much more organized. Some examples below:
+
+ * feature/quiz-submission
+ * fix/erronius-migration
+ * docs/conventions
+
+### 4.2 Classes
+
+Thankfully, most of the class naming conventions are resolved already through Laravel. As stated in section 2.1, there is an option whilst creating a model that will automatically create our controllers, factories, etc. for us. So, when naming a model, just name it what it is, for instance, if were to create a user model:
+
+```sh
+docker-compose run --rm artisan make:model User -a
+```
+
+Automatically, a UserController, UserFactory, UserSeeder, and UserMigration classes/files are created. Hence, this is the naming conventions we will follow. For more information, please read the [Laravel best practices repo](https://github.com/alexeymezenin/laravel-best-practices).
+
+### 4.3 Commits
+
+The commit conventions that we'll be following for the project are detailed in the following [ConventionalCommits documentation](https://www.conventionalcommits.org/en/v1.0.0/).
+
+### 4.4 Versioning
+
+Similarly to commits, we'll be following the [SemVer versioning style](https://semver.org/).
+
+
+## X.0 Deploying
 
 TBD... Need More information and resources provided to us first.
 

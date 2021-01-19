@@ -101,9 +101,6 @@ docker-compose run --rm npm install && npm run dev
 
 ```sh
 Set-ExecutionPolicy RemoteSigned -scope CurrentUser
-```
-
-```sh
 iwr -useb get.scoop.sh | iex
 ```
 
@@ -111,9 +108,6 @@ Once installed, close your Powershell instance and open it again. Then simply ru
 
 ```sh
 scoop bucket add extras
-```
-
-```sh
 scoop install mkcert
 ```
 

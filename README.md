@@ -121,7 +121,7 @@ You should now have locally certified your domain which means https will be enab
 
 ### 1.8 Build the Dockerfile
 
-To build the Dockerfile we can run the following command:
+Ensure that you're back in the root directory, *behavior-rating-tool*. To build the Dockerfile we can run the following command:
 
 ```sh
 docker-compose up -d --build nginx

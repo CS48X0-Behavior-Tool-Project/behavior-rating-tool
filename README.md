@@ -92,7 +92,8 @@ This will pull all the required packages from Composer and they will be put into
 NPM is also required for the project. To install the required packages, please run:
 
 ```sh
-docker-compose run --rm npm install && npm run dev
+docker-compose run --rm npm install
+docker-compose run --rm npm run dev
 ```
 
 ### 1.7 Installing mkcert

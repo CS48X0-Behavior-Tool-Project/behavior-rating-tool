@@ -117,7 +117,7 @@ scoop bucket add extras
 scoop install mkcert
 ```
 
-Navigate to the project root, (not the src folder, the root of the project itself, so you're in the folder *behavior-rating-tool*) and run mkcert -install. Then run the following commands:
+Navigate to the project root, (not the src folder, the root of the project itself, so you're in the folder *behavior-rating-tool*) and run mkcert -install. Then run the following command:
 
 ```sh
 cd nginx; mkdir certs; cd certs; mkcert localhost;

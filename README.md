@@ -126,7 +126,11 @@ For Linux:
 cd nginx && mkdir certs && cd certs && mkcert localhost
 ```
 
-You should now have locally certified your domain which means https will be enabled when accessing localhost.
+You should now have locally certified your domain which means https will be enabled when accessing localhost. Be sure to set your directory back to the root directory, i.e.
+
+```sh
+cd ../..
+```
 
 ### 1.8 Generating an Encryption Key
 

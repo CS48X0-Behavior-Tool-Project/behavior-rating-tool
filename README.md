@@ -17,9 +17,11 @@
   * [1.4 Generating Environment Variables](#14-generating-environment-variables)
   * [1.5 Pull Relevant Composer Packages](#15-pull-relevant-composer-packages)
   * [1.6 Install relevant NPM packages](#16-install-relevant-npm-packages)
-  * [1.7 Build the Dockerfile](#17-build-the-dockerfile)
-  * [1.8 Migrate and Seed Database](#18-migrate-and-seed-database)
-  * [1.9 Test your installation](#19-test-your-installation)
+  * [1.7 Installing mkcert](#17-installing-mkcert)
+  * [1.8 Generating an Encryption Key](#18-generating-an-encryption-key)
+  * [1.9 Build the Dockerfile](#19-build-the-dockerfile)
+  * [1.10 Migrate and Seed Database](#110-migrate-and-seed-database)
+  * [1.11 Test your installation](#111-test-your-installation)
 - [2.0 Development](#20-development)
   * [2.1 Creating Models](#21-creating-models)
   * [2.2 Writing Models](#22-writing-models)
@@ -112,10 +114,16 @@ scoop bucket add extras
 scoop install mkcert
 ```
 
-Navigate to the project root, (not the src folder, the root of the project itself, so you're in the folder *behavior-rating-tool*) and run mkcert -install. Then run the following command:
+Navigate to the project root, (not the src folder, the root of the project itself, so you're in the folder *behavior-rating-tool*) and run mkcert -install. Then run the following command on Windows:
 
 ```sh
 cd nginx; mkdir certs; cd certs; mkcert localhost;
+```
+
+For Linux:
+
+```sh
+cd nginx && mkdir certs && cd certs && mkcert localhost
 ```
 
 You should now have locally certified your domain which means https will be enabled when accessing localhost.

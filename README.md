@@ -77,7 +77,7 @@ Docker utilizes environment files which can help keep private information from t
 cp ./src/.env.example ./src/.env
 ```
 
-Once the .env file is created, fill in the necessary environment variables in the file itself.
+Once the .env file is created, we need to replace an important line. This line is left as is in the .env.example file simply for CircleCI. However, on your system you will need to replace DB_HOST=127.0.0.1 with DB_HOST=mysql. Everything else should be left as is.
 
 ### 1.5 Pull Relevant Composer Packages
 

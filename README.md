@@ -301,7 +301,26 @@ Similarly to commits, we'll be following the [SemVer versioning style](https://s
 
 ## 5.0 Debugging
 
+If you come across problems while developing, come to this list of possible solutions
 
+### 5.1 Permissed Denied Error
+
+This can occur when pulling a new branch from the repository or if the Dockerfiles are modified. It's a very simple fix, simply run
+
+```sh
+docker-compose exec php /bin/sh
+chown -R www-data:www-data .
+```
+
+### 5.2 Missing Packages
+
+Similarly to 5.1, you may get this error when pulling down from the Github repository. Since vendor packages aren't uploaded to the repository, it is necessary to run this command any time new packages have been added. To fix this, we simply run the command:
+
+```sh
+docker-compose run --rm composer install
+```
+
+If we're missing any packages, this will make sure to install the ones listed in the composer.lock file.
 
 ## X.0 Deploying
 

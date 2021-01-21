@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
     {
         User::factory()
             ->times(5)
+            ->hasPosts(2)
             ->create();
     }
 }

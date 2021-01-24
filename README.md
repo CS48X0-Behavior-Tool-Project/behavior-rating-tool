@@ -100,7 +100,7 @@ docker-compose run --rm npm run dev
 
 ### 1.7 Installing mkcert
 
-[mkcert](https://drive.google.com/file/d/1nv06jjc-97PQnMpH2EzBzHlXRw_Q83B_/view?usp=sharing) is required if we want to enable https on our local machine, which improves the development experience. The mkcert Github (linked above) lists how to install mkcert in their documentation. However, windows is a bit different as it requires a package manager which you may not be familiar with, Scoop. Run the following commands below in Powershell as administrator:
+[mkcert](https://github.com/FiloSottile/mkcert) is required if we want to enable https on our local machine, which improves the development experience. The mkcert Github (linked above) lists how to install mkcert in their documentation. However, windows is a bit different as it requires a package manager which you may not be familiar with, Scoop. Run the following commands below in Powershell as administrator:
 
 ```sh
 Set-ExecutionPolicy RemoteSigned -scope CurrentUser

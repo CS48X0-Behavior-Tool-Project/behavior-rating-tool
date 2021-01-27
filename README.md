@@ -147,7 +147,7 @@ If at any point in time Laravel complains you're missing a key - run this comman
 Ensure that you're back in the root directory, *behavior-rating-tool*. To build the Dockerfile we can run the following command:
 
 ```sh
-docker-compose up -d --build nginx
+docker-compose up -d --build brt
 ```
 
 This command will run the Docker container discretely in the background of your terminal and build all the necessary components. If you have already built the images before, then you only have to run:

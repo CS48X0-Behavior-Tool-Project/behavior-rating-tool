@@ -308,7 +308,7 @@ If you come across problems while developing, come to this list of possible solu
 This can occur when pulling a new branch from the repository or if the Dockerfiles are modified. It's a very simple fix, simply run
 
 ```sh
-docker-compose exec php /bin/sh
+docker exec -it brt /bin/sh
 chown -R www-data:www-data .
 ```
 

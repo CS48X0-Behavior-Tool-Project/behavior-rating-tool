@@ -5,28 +5,16 @@ networks:
     name: laravel
 
 services:
-  nginx:
+  brt:
     build:
       context: .
-      dockerfile: nginx.dockerfile
-    container_name: nginx
-    depends_on: 
-      - php
+      dockerfile: brt.dockerfile
+    container_name: brt
+    depends_on:
       - mysql
       - redis
     ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./src:/var/www/html
-    networks:
-      - laravel
-
-  php:
-    build:
-      context: .
-      dockerfile: php.dockerfile
-    container_name: php
+      - 8080:80
     volumes:
       - ./src:/var/www/html
     networks:
@@ -56,18 +44,6 @@ services:
     networks:
       - laravel
 
-  artisan:
-    build:
-      context: .
-      dockerfile: php.dockerfile
-    container_name: artisan
-    volumes:
-      - ./src:/var/www/html
-    working_dir: /var/www/html
-    entrypoint: ["php", "artisan"]
-    networks:
-      - laravel
-
   npm:
     image: node:current-alpine
     container_name: npm
@@ -78,34 +54,10 @@ services:
     networks:
       - laravel
 
-  phpunit:
-    build:
-      context: .
-      dockerfile: php.dockerfile
-    container_name: phpunit
-    volumes:
-      - ./src:/var/www/html
-    working_dir: /var/www/html
-    entrypoint: ["/var/www/html/vendor/bin/phpunit"]
-    networks:
-      - laravel
-
   redis:
     image: redis:latest
     container_name: redis
     ports:
       - 6379:6379
-    networks:
-      - laravel
-
-  scheduler:
-    build:
-      context: .
-      dockerfile: php.dockerfile
-    container_name: scheduler
-    volumes:
-      - ./src:/var/www/html
-    working_dir: /var/www/html
-    entrypoint: ["php", "artisan", "schedule:work"]
     networks:
       - laravel

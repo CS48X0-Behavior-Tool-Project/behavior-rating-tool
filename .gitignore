@@ -9,7 +9,7 @@
 mysql
 
 # MkCert
-nginx/certs
+apache/certs
 
 # Git
 mysql/*

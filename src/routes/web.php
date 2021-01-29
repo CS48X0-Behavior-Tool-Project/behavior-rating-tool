@@ -10,11 +10,13 @@ use App\Http\Controllers\NewAccountController;
 Auth::routes();
 
 
+/*
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+*/
 
 
 
@@ -27,7 +29,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 /**
 * Login page is the landing page when we first visit the website
 */
-Route::get('/login', [PagesController::class, 'getLoginPage']);
+Route::get('/', [PagesController::class, 'getLoginPage']);
 
 /**
 * Account creation/confirmation page
@@ -47,7 +49,7 @@ Route::get('/account', [PagesController::class, 'getAccountManagement']);
 /**
 * Route for submitting a login request.  Will need to test when actual webpage is created.
 */
-Route::post('/login/submit', [LoginController::class, 'submit']);
+Route::post('/submit', [LoginController::class, 'submit']);
 
 /**
 * Route for creating a single new user.  Will need to test when actual webpage is created.

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('app.name', 'Behavioral Rating Tool'),
+    'name' => env('APP_NAME', 'Behavioral Rating Tool'),
 
     /*
     |--------------------------------------------------------------------------

@@ -322,6 +322,11 @@ docker-compose run --rm composer install
 
 If we're missing any packages, this will make sure to install the ones listed in the composer.lock file.
 
+### 5.3 VSCode Requesting Save Permissions
+
+If you are on a Linux based system you may encounter this error. Essentially, when you set the ownership in debugging 5.1 you exclude your current user from write permissions. To resolve this there are a multitude of steps to follow, given from [this Stackoverflow answer](https://stackoverflow.com/a/61939446/9861242).
+
+
 ## X.0 Deploying
 
 TBD... Need More information and resources provided to us first.

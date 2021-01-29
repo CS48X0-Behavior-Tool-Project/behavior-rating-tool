@@ -26,9 +26,15 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #fc8403">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name') }}
-                </a>
+                @guest
+                  <a class="navbar-brand" href="{{ route('login') }}">
+                      {{ config('app.name') }}
+                  </a>
+                @else
+                  <a class="navbar-brand" href="{{ url('/home') }}">
+                      {{ config('app.name') }}
+                  </a>
+                @endguest
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -64,12 +70,12 @@
                                 <!-- TODO -->
                                 <!-- navbar items once logged in - differentiate between student/admin -->
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                  <a class="dropdown-item" href="{{ route('#') }}"
+                                  <a class="dropdown-item" href="{{ route('logout') }}"
                                      onclick="event.preventDefault();
                                                    document.getElementById('logout-form').submit();">
                                       {{ __('Quizzes') }}
                                   </a>
-                                  <a class="dropdown-item" href="{{ route('#') }}"
+                                  <a class="dropdown-item" href="{{ route('logout') }}"
                                      onclick="event.preventDefault();
                                                    document.getElementById('logout-form').submit();">
                                       {{ __('Account') }}

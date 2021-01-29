@@ -2,6 +2,8 @@
 
 @section('content')
 <div class="container">
+
+  <link href="{{ asset($_SERVER['DOCUMENT_ROOT'].'\src\resources\css\styles.css') }}" rel="stylesheet">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

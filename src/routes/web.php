@@ -5,11 +5,13 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-/*Route::get('/', function () {
+/*
+Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');*/
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+*/
 
 
 /**
@@ -21,28 +23,24 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 /**
 * Login page is the landing page when we first visit the website
 */
-Route::get('/', function () {
-    return view('pages.login');
-});
-
+Route::get('/', 'App\Http\Controllers\PagesController@getLoginPage');
 
 /**
 * Account creation/confirmation page
 */
-Route::get('/confirmation', function () {
-    return view('pages.confirmation');
-});
+Route::get('/confirmation', 'App\Http\Controllers\PagesController@getConfirmationPage');
 
 /**
 * Add user page
 */
-Route::get('/adduser', function () {
-    return view('pages.adduser');
-});
+Route::get('/adduser', 'App\Http\Controllers\PagesController@getAddUser');
 
 /**
 * Account management page (first/last names, email, password changes)
 */
-Route::get('/account', function () {
-    return view('pages.account');
-});
+Route::get('/account', 'App\Http\Controllers\PagesController@getAccountManagement');
+
+/**
+* Route for submitting a login request.
+*/
+Route::post('/login', 'App\Http\Controllers\LoginController@submit');

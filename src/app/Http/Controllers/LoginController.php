@@ -10,6 +10,6 @@ class LoginController extends Controller
     * This function will eventually submit the login information to be checked in the database for authentication.
     */
     public function submit(Request $request) {
-      return 'test test test';
+      return 'login confirmed';
     }
 }

@@ -2,16 +2,18 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PagesController;
+use App\Http\Controllers\LoginController;
 
 Auth::routes();
 
-/*
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-*/
+
 
 
 /**
@@ -23,24 +25,34 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 /**
 * Login page is the landing page when we first visit the website
 */
-Route::get('/', 'App\Http\Controllers\PagesController@getLoginPage');
+Route::get('/login', [PagesController::class, 'getLoginPage']);
 
 /**
 * Account creation/confirmation page
 */
-Route::get('/confirmation', 'App\Http\Controllers\PagesController@getConfirmationPage');
+Route::get('/confirmation', [PagesController::class, 'getConfirmationPage']);
 
 /**
 * Add user page
 */
-Route::get('/adduser', 'App\Http\Controllers\PagesController@getAddUser');
+Route::get('/adduser', [PagesController::class, 'getAddUser']);
 
 /**
 * Account management page (first/last names, email, password changes)
 */
-Route::get('/account', 'App\Http\Controllers\PagesController@getAccountManagement');
+Route::get('/account', [PagesController::class, 'getAccountManagement']);
 
 /**
-* Route for submitting a login request.
+* Route for submitting a login request.  Will need to test when actual webpage is created.
 */
-Route::post('/login', 'App\Http\Controllers\LoginController@submit');
+Route::post('/login/submit', [LoginController::class, 'submit']);
+
+/**
+* Route for creating a single new user.  Will need to test when actual webpage is created.
+*/
+Route::post('/adduser/submit', [UserController::class, 'submit']);
+
+/**
+* Route for confirming a new account.  Will need to test when actual webpage is created.
+*/
+Route::post('/confirmation/submit', [NewAccountController::class, 'submit']);

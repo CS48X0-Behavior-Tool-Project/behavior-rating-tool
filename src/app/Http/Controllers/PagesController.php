@@ -11,7 +11,7 @@ class PagesController extends Controller
     */
 
     public function getLoginPage() {
-      return view('auth.passwords.login');
+      return view('auth.login');
     }
 
     public function getConfirmationPage() {

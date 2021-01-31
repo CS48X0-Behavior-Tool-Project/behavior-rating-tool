@@ -14,6 +14,10 @@ class PagesController extends Controller
       return view('auth.login');
     }
 
+    public function getHomePage() {
+      return view('home');
+    }
+
     public function getConfirmationPage() {
       return view('account_creation');
     }

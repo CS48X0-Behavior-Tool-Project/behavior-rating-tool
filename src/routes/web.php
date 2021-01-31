@@ -32,6 +32,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/', [PagesController::class, 'getLoginPage']);
 
 /**
+* Home page is the landing page when we first log in to the website
+*/
+Route::get('/home', [PagesController::class, 'getHomePage']);
+
+/**
 * Account creation/confirmation page
 */
 Route::get('/confirmation', [PagesController::class, 'getConfirmationPage']);

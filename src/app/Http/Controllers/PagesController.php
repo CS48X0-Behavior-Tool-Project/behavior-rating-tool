@@ -26,8 +26,12 @@ class PagesController extends Controller
       return view('quizzes');
     }
 
+    public function getCreateQuiz() {
+      return view('admin_create_quiz');
+    }
+
     public function getAddUser() {
-      return view('admin_add_users');
+      return view('admin_add_user');
     }
 
     public function getAccountManagement() {

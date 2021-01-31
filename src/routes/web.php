@@ -44,7 +44,12 @@ Route::get('/confirmation', [PagesController::class, 'getConfirmationPage']);
 /**
 * Add user page
 */
-Route::get('/adduser', [PagesController::class, 'getAddUser']);
+Route::get('/add_user', [PagesController::class, 'getAddUser']);
+
+/**
+* Create quiz page
+*/
+Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz']);
 
 /**
 * Account management page (first/last names, email, password changes)

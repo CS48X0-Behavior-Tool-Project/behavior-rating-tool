@@ -15,19 +15,34 @@ class UploadController extends Controller
     }
 
     /**
-    * Extract data from .csv file and store into array.
+    * Extract data from .csv file.
     */
     public function uploadFile() {
       if (request()->has('mycsv')) {
         $data = array_map('str_getcsv', file(request()->mycsv));
         $header = $data[0];
         unset($data[0]);
-        return $data;
+        foreach ($data as $value) {
+          $firstname = $value[0];
+          $surname = $value[1];
+          $email = $value[2];
+          $id = $value[3];
+
+          $this -> uploadUser($firstname,$surname,$email,$id);
+        }
       }
       else {
         return 'please upload a file';
       }
     }
 
-    // TODO: extract the data from the data array to upload to database
+    /**
+    * Upload an individual user to the database.  Currently only prints out the user info.
+    */
+    public function uploadUser($firstname, $surname, $email, $id) {
+      echo "Upload user ".$firstname." ".$surname."\temail: ".$email."\tid: ".$id."\n";
+    }
+
+    // TODO: database interaction with uploadUser method
+    // TODO: force incoming csv files to conform to specific format
 }

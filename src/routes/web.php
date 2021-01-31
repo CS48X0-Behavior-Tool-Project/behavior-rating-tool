@@ -52,6 +52,11 @@ Route::get('/adduser', [PagesController::class, 'getAddUser']);
 Route::get('/account', [PagesController::class, 'getAccountManagement']);
 
 /**
+* List of possible quizzes to attempt
+*/
+Route::get('/quizzes', [PagesController::class, 'getQuizList']);
+
+/**
 * Route for submitting a login request.  Will need to test when actual webpage is created.
 */
 Route::post('/submit', [LoginController::class, 'submit']);

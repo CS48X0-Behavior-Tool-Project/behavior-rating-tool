@@ -65,16 +65,12 @@
                                 <!-- TODO -->
                                 <!-- navbar items once logged in - differentiate between student/admin -->
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                  <a class="dropdown-item" href="{{ route('logout') }}"
-                                     onclick="event.preventDefault();
-                                                   document.getElementById('logout-form').submit();">
-                                      {{ __('Quizzes') }}
-                                  </a>
-                                  <a class="dropdown-item" href="{{ route('logout') }}"
-                                     onclick="event.preventDefault();
-                                                   document.getElementById('logout-form').submit();">
-                                      {{ __('Account') }}
-                                  </a>
+                                    <a class="dropdown-item" href="{{ url('quizzes') }}">
+                                        {{ __('Quizzes') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('account') }}">
+                                        {{ __('Account') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

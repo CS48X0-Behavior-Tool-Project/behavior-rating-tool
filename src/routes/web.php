@@ -9,23 +9,6 @@ use App\Http\Controllers\NewAccountController;
 
 Auth::routes();
 
-
-/*
-Route::get('/', function () {
-    return view('auth/login');
-});
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-*/
-
-
-
-/**
-* Currently operating under the assumption that front end people are making blade templates for
-* the approved designs, so I made these initial routes lead to simple HTML pages with still images
-* of our designs.  These can be replaced later with the actual templates/views.
-*/
-
 /**
 * Login page is the landing page when we first visit the website
 */
@@ -61,15 +44,20 @@ Route::get('/account', [PagesController::class, 'getAccountManagement']);
 */
 Route::get('/quizzes', [PagesController::class, 'getQuizList']);
 
+
+/**
+* Post routes will have to be tested later when we have database interaction.
+*/
+
 /**
 * Route for submitting a login request.  Will need to test when actual webpage is created.
 */
-Route::post('/submit', [LoginController::class, 'submit']);
+Route::post('/', [LoginController::class, 'submit']);
 
 /**
 * Route for creating a single new user.  Will need to test when actual webpage is created.
 */
-Route::post('/adduser/submit', [UserController::class, 'submit']);
+Route::post('/add_user/submit', [UserController::class, 'submit']);
 
 /**
 * Route for confirming a new account.  Will need to test when actual webpage is created.

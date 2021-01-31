@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('Welcome!') }}
+                    {{ __('Create quizzes if you are an admin!') }}
                 </div>
             </div>
         </div>

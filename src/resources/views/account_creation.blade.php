@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('Add users if you are an admin!') }}
+                    {{ __('Confirm a password for your account and answer your level of previous horse expereince!') }}
                 </div>
             </div>
         </div>

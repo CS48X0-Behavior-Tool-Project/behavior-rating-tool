@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('Welcome!') }}
+                    {{ __('View all possible quizzes and select the one you would like to attempt!') }}
                 </div>
             </div>
         </div>

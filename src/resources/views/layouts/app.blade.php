@@ -24,7 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #fc8403">
+        <nav class="navbar navbar-expand navbar-dark shadow-sm" style="background-color: #fc8403">
             <div class="container">
                 @guest
                   <a class="navbar-brand" href="{{ route('login') }}">
@@ -49,13 +49,14 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <!-- TODO -->
-                        <!-- Will remove these links once we have working login and registration within -->
+                        <!-- Remove ability to self-register once admin register is implemented -->
                         @guest
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
+                          <!-- Needs to be something here to only show admins option to create quizzes and users -->
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('Welcome!') }}
+                    {{ __('View your personal information and change it here!') }}
                 </div>
             </div>
         </div>

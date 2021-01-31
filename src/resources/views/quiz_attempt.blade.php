@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('Welcome!') }}
+                    {{ __('Attempt a quiz!') }}
                 </div>
             </div>
         </div>

@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    {{ __('Welcome!') }}
+                    {{ __('Review all your scores if you're a student!') }}
+                    {{ __('Review all your students scores if you're an admin!') }}
                 </div>
             </div>
         </div>

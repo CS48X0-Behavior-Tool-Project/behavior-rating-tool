@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Home') }}</div>
+                <div class="card-header">{{ __('Review All Quizzes') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    {{ __('Welcome!') }}
+                    {{ __('Review all your scores if you're a student!') }}
+                    {{ __('Review all your students scores if you're an admin!') }}
                 </div>
             </div>
         </div>

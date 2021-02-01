@@ -24,7 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #fc8403">
+        <nav class="navbar navbar-expand navbar-dark shadow-sm" style="background-color: #fc8403">
             <div class="container">
                 @guest
                   <a class="navbar-brand" href="{{ route('login') }}">
@@ -49,13 +49,14 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <!-- TODO -->
-                        <!-- Will remove these links once we have working login and registration within -->
+                        <!-- Remove ability to self-register once admin register is implemented -->
                         @guest
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
+                          <!-- Needs to be something here to only show admins option to create quizzes and users -->
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -64,25 +65,29 @@
                                 <!-- TODO -->
                                 <!-- navbar items once logged in - differentiate between student/admin -->
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                  <a class="dropdown-item" href="{{ route('logout') }}"
-                                     onclick="event.preventDefault();
-                                                   document.getElementById('logout-form').submit();">
+                                  <!-- admin only -->
+                                  <a class="dropdown-item" href="{{ url('add_user') }}">
+                                      {{ __('Add Users') }}
+                                  </a>
+                                  <a class="dropdown-item" href="{{ url('create_quiz') }}">
+                                      {{ __('Create New Quiz') }}
+                                  </a>
+                                  <!--  -->
+                                  <a class="dropdown-item" href="{{ url('quizzes') }}">
                                       {{ __('Quizzes') }}
                                   </a>
+                                  <a class="dropdown-item" href="{{ url('account') }}">
+                                      {{ __('Account') }}
+                                  </a>
                                   <a class="dropdown-item" href="{{ route('logout') }}"
                                      onclick="event.preventDefault();
                                                    document.getElementById('logout-form').submit();">
-                                      {{ __('Account') }}
+                                      {{ __('Logout') }}
                                   </a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                      @csrf
+                                  </form>
                                 </div>
                             </li>
                         @endguest

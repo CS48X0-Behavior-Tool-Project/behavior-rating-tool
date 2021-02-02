@@ -8,11 +8,11 @@
                 <div class="card-header">{{ __('Add Single User') }}</div>
                 <div class="card-body">
                   <!-- TODO add action route -->
-                  <form method="POST" action="">
+                  <form method="POST" action="{{ route('register') }}">
                       @csrf
                       <!-- Name -->
                       <div class="form-group row">
-                          <label for="fname" class="col-md-4 col-form-label text-md-right">{{ __('New User First Name') }}</label>
+                          <label for="fname" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
                           <div class="col-md-6">
                               <input id="fname" type="text" class="form-control @error('name') is-invalid @enderror" name="fname" placeholder="John" required autofocus>
                               @error('name')
@@ -24,7 +24,7 @@
                       </div>
 
                       <div class="form-group row">
-                          <label for="lname" class="col-md-4 col-form-label text-md-right">{{ __('New User Last Name') }}</label>
+                          <label for="lname" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
                           <div class="col-md-6">
                               <input id="lname" type="text" class="form-control @error('name') is-invalid @enderror" name="lname" placeholder="Smith" required autofocus>
                               @error('name')
@@ -34,9 +34,10 @@
                               @enderror
                           </div>
                       </div>
+
                       <!-- Email -->
                       <div class="form-group row">
-                          <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('New User Email') }}</label>
+                          <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
                           <div class="col-md-6">
                               <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="jsmith@upei.ca" required autofocus>
                               @error('email')
@@ -75,21 +76,27 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">{{ __('Add Multiple Users') }}</div>
-                <div class="card-body">
+                <div class="card-body" align="center">
                     <div align="center">
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('From Form') }}
-                        </button>
-
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('From File') }}
-                        </button>
+                        <form method="get" action="template_files/add_user_template.csv">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Download Template File') }}
+                            </button>
+                        </form>
                     </div>
-
                     <br>
-                    <img src="images/user_example.png" alt="example csv" max_width="col-md-6">
+                    <div align="center">
+                        <label for="">Add Multiple Users from a File</label> <br>
+                        <formaction="/add_users" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input type="file" id="users_upload"/>
+                            <input type="submit" class="btn btn-secondary" value="Upload">
+                        </form>
+                    </div>
                     <br>
-                    {{__('Option to download template file')}}
+                    <div align="center">
+                        <img src="images/user_example2.png" alt="example csv" max_width="col-md-6">
+                    </div>
                 </div>
             </div>
         </div>

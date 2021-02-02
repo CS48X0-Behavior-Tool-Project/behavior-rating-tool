@@ -65,12 +65,3 @@ Route::post('/add_user', [UploadController::class, 'uploadFile']);
 * Route for confirming a new account.  Will need to test when actual webpage is created.
 */
 Route::post('/confirmation/submit', [NewAccountController::class, 'submit']);
-
-
-
-/**
-* Routes for uploading a csv file to the web page.
-*/
-Route::get('/upload', [UploadController::class, 'getUploadPage']);
-
-Route::post('/upload', [UploadController::class, 'uploadFile']);

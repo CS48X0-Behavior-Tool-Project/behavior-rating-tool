@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UploadController extends Controller
 {
@@ -30,6 +31,7 @@ class UploadController extends Controller
 
           $this -> uploadUser($firstname,$surname,$email,$id);
         }
+        echo "Upload from .csv successful!";  //output for testing purposes
       }
       else {
         return 'please upload a file';
@@ -37,12 +39,13 @@ class UploadController extends Controller
     }
 
     /**
-    * Upload an individual user to the database.  Currently only prints out the user info.
+    * Upload an individual user to the database.
     */
     public function uploadUser($firstname, $surname, $email, $id) {
-      echo "Upload user ".$firstname." ".$surname."\temail: ".$email."\tid: ".$id."\n";
+      DB::insert('insert into user (id, username, role_id, first_name, last_name, email) values (?, ?, ?, ?, ?, ?)',
+      [NULL, strtolower(substr($firstname,0,1).$surname), 2, $firstname, $surname, $email]);
+      echo "Uploaded new user!\n";  //output for testing purposes
     }
 
-    // TODO: database interaction with uploadUser method
     // TODO: force incoming csv files to conform to specific format
 }

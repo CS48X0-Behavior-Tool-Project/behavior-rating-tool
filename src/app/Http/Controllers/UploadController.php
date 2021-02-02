@@ -32,9 +32,7 @@ class UploadController extends Controller
           DB::insert('insert into user (id, username, password, role_id, first_name, last_name, email)
           values (?, ?, ?, ?, ?, ?, ?)',
           [NULL, strtolower(substr($firstname,0,1).$surname), 'password', 2, $firstname, $surname, $email]);
-          echo "Uploaded new user!\n";  //output for testing purposes
         }
-        echo "Upload from .csv successful!";  //output for testing purposes
       }
       else {
         return 'please upload a file';

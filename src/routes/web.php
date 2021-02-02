@@ -29,7 +29,7 @@ Route::get('/confirmation', [PagesController::class, 'getConfirmationPage']);
 /**
 * Add user page
 */
-Route::get('/add_user', [PagesController::class, 'getAddUser']);
+Route::get('/add_user', [PagesController::class, 'getAddUser'])->name('add_user_route');
 
 /**
 * Create quiz page
@@ -57,7 +57,7 @@ Route::get('/quizzes', [PagesController::class, 'getQuizList']);
 Route::post('/', [LoginController::class, 'submit']);
 
 /**
-* Route for creating a single new user.  Will need to test when actual webpage is created.
+* Route for creating a single new user.
 */
 Route::post('/add_user', [UploadController::class, 'uploadFile']);
 

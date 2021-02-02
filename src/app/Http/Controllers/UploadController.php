@@ -25,6 +25,9 @@ class UploadController extends Controller
           values (?, ?, ?, ?, ?, ?, ?)',
           [NULL, strtolower(substr($firstname,0,1).$surname), 'password', 2, $firstname, $surname, $email]);
         }
+
+        //returns to current page after Upload button is pressed
+        return redirect()->route('add_user_route', ['id' => 1]);
       }
       else {
         return 'please upload a file';

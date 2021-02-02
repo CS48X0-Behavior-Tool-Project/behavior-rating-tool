@@ -7,14 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class UploadController extends Controller
 {
-
-  /**
-  * Display the simple html page with the file upload.
-  */
-    public function getUploadPage() {
-      return view ('upload');
-    }
-
     /**
     * Extract data from .csv file.
     */

@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewAccountController;
+use App\Http\Controllers\UploadController;
 
 Auth::routes();
 
@@ -63,3 +65,14 @@ Route::post('/add_user/submit', [UserController::class, 'submit']);
 * Route for confirming a new account.  Will need to test when actual webpage is created.
 */
 Route::post('/confirmation/submit', [NewAccountController::class, 'submit']);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+/**
+* Routes for uploading a csv file to the web page.
+*/
+Route::get('/upload', [UploadController::class, 'getUploadPage']);
+
+Route::post('/upload', [UploadController::class, 'uploadFile']);

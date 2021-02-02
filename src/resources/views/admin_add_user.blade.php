@@ -75,7 +75,7 @@
                     </div>
 
                     <br>
-                    <img src="images/user_example.png" alt="example csv">
+                    <img src="images/user_example.png" alt="example csv" max_width="col-md-6">
                     <br>
                     {{__('Option to download template file')}}
                 </div>

@@ -93,7 +93,6 @@
                             <input type="file" name = "mycsv" id="users_upload"/>
                             <input type="submit" class="btn btn-secondary" value="Upload">
                         </form>
-                        <!-- TODO pressing upload with no file takes you to a blank page that says "please upload a file" which needs to be fixed -->
                     </div>
                     <br>
                     <div align="center">

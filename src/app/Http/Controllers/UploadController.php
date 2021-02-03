@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class UploadController extends Controller
 {
+
+
     /**
     * Extract data from .csv file.
     */
@@ -25,14 +27,12 @@ class UploadController extends Controller
           values (?, ?, ?, ?, ?, ?, ?)',
           [NULL, strtolower(substr($firstname,0,1).$surname), 'password', 2, $firstname, $surname, $email]);
         }
+      }
 
-        //returns to current page after Upload button is pressed
-        return redirect()->route('add_user_route');
-      }
-      else {
-        return 'please upload a file';
-      }
+      //returns to current page after Upload button is pressed
+      return redirect()->route('add_user_route');
     }
 
     // TODO: force incoming csv files to conform to specific format
+    // TODO: allow different file types
 }

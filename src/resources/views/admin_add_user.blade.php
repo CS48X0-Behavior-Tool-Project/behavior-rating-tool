@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Add Single User') }}</div>
                 <div class="card-body">
                   <!-- TODO add action route -->
-                  <form method="POST" action="{{ route('register') }}">
+                  <form method="POST" action="/add_user">
                       @csrf
                       <!-- Name -->
                       <div class="form-group row">
@@ -62,7 +62,7 @@
 
                       <div class="form-group row mb-0">
                           <div class="col-md-6 offset-md-4">
-                              <button type="submit" class="btn btn-primary">
+                              <button type="submit" name="add_single_user" class="btn btn-primary">
                                   {{ __('Add User') }}
                               </button>
                           </div>
@@ -88,7 +88,7 @@
                     <div align="center">
                         <label for="">Add Multiple Users from a File</label> <br>
                         <!-- TODO this action should be renamed similar to {{ route('register') }} so page routing isn't affected -->
-                        <form action="{{ route('add_many_users_route') }}" method="post" enctype="multipart/form-data">
+                        <form action="/add_user" method="post" enctype="multipart/form-data">
                             @csrf
                             <input type="file" name = "mycsv" id="users_upload"/>
                             <input type="submit" class="btn btn-secondary" value="Upload">

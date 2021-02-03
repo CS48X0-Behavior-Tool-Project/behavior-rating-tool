@@ -57,9 +57,9 @@ Route::get('/quizzes', [PagesController::class, 'getQuizList']);
 Route::post('/', [LoginController::class, 'submit']);
 
 /**
-* Route for creating a single new user.
+* Route for creating new users from a file.
 */
-Route::post('/add_user', [UploadController::class, 'uploadFile']);
+Route::post('/add_user', [UploadController::class, 'uploadFile'])->name('add_many_users_route');
 
 /**
 * Route for confirming a new account.  Will need to test when actual webpage is created.

@@ -88,7 +88,7 @@
                     <div align="center">
                         <label for="">Add Multiple Users from a File</label> <br>
                         <!-- TODO this action should be renamed similar to {{ route('register') }} so page routing isn't affected -->
-                        <form action="/add_user" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('add_many_users_route') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <input type="file" name = "mycsv" id="users_upload"/>
                             <input type="submit" class="btn btn-secondary" value="Upload">

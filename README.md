@@ -170,7 +170,7 @@ docker-compose exec brt php artisan db:seed
 To access and view the database for development purposes, the following commands should be followed:
 
 ```sh
-docker-compose exec brt mysql /bin/sh
+docker-compose exec mysql /bin/sh
 mysql -u laravel -p laraveldb
 ```
 The password is "secret".

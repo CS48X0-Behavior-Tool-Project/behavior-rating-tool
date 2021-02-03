@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 class UploadController extends Controller
 {
 
+    /**
+    * Called when /add_user gets a post request from the forms.
+    */
     public function upload() {
       if (request()->has('mycsv')) {
         $this->uploadFile();
@@ -35,6 +38,9 @@ class UploadController extends Controller
         }
     }
 
+    /**
+    * Upload a single user from the form.
+    */
     public function uploadUser() {
 
       $firstname = request()->input('fname');
@@ -62,6 +68,9 @@ class UploadController extends Controller
       $this->dbInsert($firstname,$surname,$email,$role_id);
     }
 
+    /**
+    * Insert new user data into the database.
+    */
     public function dbInsert($firstname, $surname, $email, $role_id) {
       DB::insert('insert into user (id, username, password, role_id, first_name, last_name, email)
       values (?, ?, ?, ?, ?, ?, ?)',

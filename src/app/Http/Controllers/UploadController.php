@@ -27,7 +27,7 @@ class UploadController extends Controller
         }
 
         //returns to current page after Upload button is pressed
-        return redirect()->route('add_user_route', ['id' => 1]);
+        return redirect()->route('add_user_route');
       }
       else {
         return 'please upload a file';

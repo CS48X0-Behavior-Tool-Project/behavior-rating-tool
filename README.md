@@ -175,7 +175,7 @@ mysql -u laravel -p laraveldb
 ```
 The password is "secret".
 
-Then to populate the database with our tables and some test data, type:
+Then to populate the database with our tables and some test data, or if you want to revert all changes you made to the initial database, type:
 
 ```sh
 docker-compose exec brt php artisan db:seed --class=SqlFileSeeder

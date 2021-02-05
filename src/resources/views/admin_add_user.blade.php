@@ -7,7 +7,6 @@
             <div class="card">
                 <div class="card-header">{{ __('Add Single User') }}</div>
                 <div class="card-body">
-                  <!-- TODO add action route -->
                   <form method="POST" action="/add_user">
                       @csrf
                       <!-- Name -->
@@ -87,7 +86,6 @@
                     <br>
                     <div align="center">
                         <label for="">Add Multiple Users from a File</label> <br>
-                        <!-- TODO this action should be renamed similar to {{ route('register') }} so page routing isn't affected -->
                         <form action="/add_user" method="post" enctype="multipart/form-data">
                             @csrf
                             <input type="file" name = "mycsv" id="users_upload"/>

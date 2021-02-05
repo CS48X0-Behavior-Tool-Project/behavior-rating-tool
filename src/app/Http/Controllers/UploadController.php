@@ -29,13 +29,22 @@ class UploadController extends Controller
         $data = array_map('str_getcsv', file(request()->mycsv));
         $header = $data[0];
         unset($data[0]);
+
+        $new_user_count = 0;
+
         foreach ($data as $value) {
           $firstname = $value[0];
           $surname = $value[1];
           $email = $value[2];
 
           $this->dbInsert($firstname,$surname,$email,2);
+
+          $new_user_count++;
         }
+
+        $count_message = $new_user_count.' new users added!';
+        
+        return redirect()->route('add_user_route')->with('user_count_message', $count_message);
     }
 
     /**

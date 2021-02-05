@@ -91,6 +91,14 @@
                             <input type="file" name = "mycsv" id="users_upload"/>
                             <input type="submit" class="btn btn-secondary" value="Upload">
                         </form>
+
+                        <!-- TODO formatting sucks lol -->
+                        @if ($message = Session::get('user_count_message'))
+                         <div class="alert alert-success">
+                           <strong>{{ $message }}</strong>
+                         </div>
+                        @endif
+
                     </div>
                     <br>
                     <div align="center">

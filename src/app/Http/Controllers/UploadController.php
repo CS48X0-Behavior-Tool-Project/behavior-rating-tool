@@ -5,27 +5,37 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+$count_message;
+
 class UploadController extends Controller
 {
-
     /**
     * Called when /add_user gets a post request from the forms.
     */
     public function upload() {
+
+      global $count_message;
+
       if (request()->has('mycsv')) {
         $this->uploadFile();
+        return redirect()->route('add_user_route')->with('user_count_message', $count_message);
       }
       else if (request()->has('add_single_user')) {
         $this->uploadUser();
+        return redirect()->route('add_user_route')->with('add_message', 'New user added!');
       }
-
-      return redirect()->route('add_user_route');
+      else {
+        return redirect()->route('add_user_route');
+      }
     }
 
     /**
     * Extract data from .csv file.
     */
     public function uploadFile() {
+
+        global $count_message;
+
         $data = array_map('str_getcsv', file(request()->mycsv));
         $header = $data[0];
         unset($data[0]);
@@ -43,8 +53,6 @@ class UploadController extends Controller
         }
 
         $count_message = $new_user_count.' new users added!';
-        
-        return redirect()->route('add_user_route')->with('user_count_message', $count_message);
     }
 
     /**
@@ -88,4 +96,5 @@ class UploadController extends Controller
 
     // TODO: force incoming csv files to conform to specific format
     // TODO: allow different file types
+    // TODO: hash the password for newly created users
 }

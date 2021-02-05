@@ -66,6 +66,14 @@
                               </button>
                           </div>
                       </div>
+
+                      <!-- TODO formatting sucks lol -->
+                      @if ($message = Session::get('add_message'))
+                       <div class="alert alert-success">
+                         <strong>{{ $message }}</strong>
+                       </div>
+                      @endif
+
                   </form>
                 </div>
             </div>

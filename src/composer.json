@@ -15,7 +15,8 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "silber/bouncer": "v1.0.0-rc.10"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

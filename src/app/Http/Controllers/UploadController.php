@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 $count_message;
 
@@ -86,15 +88,32 @@ class UploadController extends Controller
     }
 
     /**
-    * Insert new user data into the database.
+    * Insert new user data into the database.   CURRENTLY DOESN"T SUPPORT ROLE ID.
     */
-    public function dbInsert($firstname, $surname, $email, $role_id) {
-      DB::insert('insert into user (id, username, password, role_id, first_name, last_name, email)
+
+    //OLD FUNCTION
+    /*public function dbInsert($firstname, $surname, $email, $role_id) {
+      DB::insert('insert into user (id, name, password, role_id, first_name, last_name, email)
       values (?, ?, ?, ?, ?, ?, ?)',
       [NULL, strtolower(substr($firstname,0,1).$surname), 'password', $role_id, $firstname, $surname, $email]);
+    }*/
+
+    //NEW FUNCTION auto registers new users allowing us to log in to them
+    public function dbInsert($firstname, $surname, $email, $role_id) {
+      $username = strtolower(substr($firstname,0,1).$surname);
+
+      $user = new User();
+      $user->password = Hash::make('password');
+      $user->email = $email;
+      $user->name = $username;
+      $user->save();
+
+      //update the first_name and last_name columns of the newly added user
+      DB::table('users')
+                ->where('name', $username)
+                ->update(['first_name' => $firstname, 'last_name' => $surname]);
     }
 
     // TODO: force incoming csv files to conform to specific format
     // TODO: allow different file types
-    // TODO: hash the password for newly created users
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewAccountController;
+use App\Http\Controllers\PermissionController;
 
 Auth::routes();
 
@@ -63,3 +64,17 @@ Route::post('/add_user/submit', [UserController::class, 'submit']);
 * Route for confirming a new account.  Will need to test when actual webpage is created.
 */
 Route::post('/confirmation/submit', [NewAccountController::class, 'submit']);
+
+// Tami for test Feb.7.2021
+// Route::get('/roles', 'PermissionController@Permission');
+Route::get('/roles', [PermissionController::class, 'Permission']);  // insert dummy data
+
+Route::group(['middleware' => 'role:developer'], function() {
+
+    Route::get('/admin', function() {
+ 
+       return 'Welcome Admin';
+       
+    });
+ 
+ });

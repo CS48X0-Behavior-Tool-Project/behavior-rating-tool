@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewAccountController;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\PermissionController;
 
 Auth::routes();
 

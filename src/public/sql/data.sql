@@ -1,6 +1,6 @@
 
-INSERT IGNORE INTO users (id, name, firstName, lastName, email, password)
- VALUES 
+INSERT IGNORE INTO users (id, name, first_name, last_name, email, password)
+ VALUES
  (1, 'admin', 'admin-firstname', 'admin-lastname', 'admin@upei.ca', '1234qwer'),
  (2, 'st1', 'st1-firstname', 'st1-lastname', 'st1@upei.ca', '1234qwer'),
  (3, 'st2', 'st2-firstname', 'st2-lastname', 'st2@upei.ca', '1234qwer'),

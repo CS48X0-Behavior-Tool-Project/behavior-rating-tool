@@ -181,6 +181,12 @@ Then to populate the database with our tables and some test data, or if you want
 docker-compose exec brt php artisan db:seed --class=SqlFileSeeder
 ```
 
+You may need to use a migration to format the Users table properly:
+
+```sh
+docker-compose exec brt php artisan migrate:refresh
+```
+
 ### 1.11 Test your installation
 
 To check if the installation went successfully, go to http://localhost:8080 in your browser. If successful, you should see a landing page. Make sure it is http, and not https. Locally certified SSL with Apache is much more difficult to setup and is not worth the hassle. Most modern web browsers will attempt to take you to https:// unless you specify http://. So if you ever attempt to load the website and it doesn't appear, first double check that you typed:

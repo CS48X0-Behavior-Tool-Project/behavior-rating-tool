@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
-$email_message;
+$name_msg;
+$email_msg;
+$email_err_msg;
+$password_msg;
+$password_err_msg;
 
 class AccountController extends Controller
 {
@@ -16,7 +21,11 @@ class AccountController extends Controller
   */
   public function update() {
 
-    global $email_message;
+    global $name_msg;
+    global $email_msg;
+    global $email_err_msg;
+    global $password_msg;
+    global $password_err_msg;
 
     //need to also check that the field isn't empty otherwise everything is updated to NULL
     if (request()->has('fname') && request()->input('fname') !== NULL) {
@@ -29,29 +38,38 @@ class AccountController extends Controller
 
     if (request()->has('old-email') && request()->input('old-email') !== NULL) {
       $this->changeEmail();
-      return redirect()->route('account_route')->with('email_error_message', $email_message);
     }
 
-    if (request()->has('change_password') && request()->input('old-password') !== NULL) {
+    if (request()->has('old-password') && request()->input('old-password') !== NULL) {
       $this->changePassword();
     }
 
-    return redirect()->route('account_route');
+    return redirect()->route('account_route')
+      ->with('name_message', $name_msg)
+      ->with('email_message', $email_msg)
+      ->with('email_error', $email_err_msg)
+      ->with('password_message', $password_msg)
+      ->with('password_error', $password_err_msg);
   }
 
   /**
   * Change the first name of the currently logged in user.
   */
   public function changeFirstName() {
+
+    global $name_msg;
+
     $firstname = request()->input('fname');
 
     $user = auth()->user();
     $oldfirstname = $user->first_name;
 
     if ($firstname !== $oldfirstname) {
-      DB::table('users')
-                ->where('first_name', $oldfirstname)
-                ->update(['first_name' => $firstname]);
+
+      $user->first_name = $firstname;
+      $user->save();
+
+      $name_msg = "Name changed successfully!";
     }
   }
 
@@ -59,15 +77,20 @@ class AccountController extends Controller
   * Change the last name of the currently logged in user.
   */
   public function changeLastName() {
+
+    global $name_msg;
+
     $lastname = request()->input('lname');
 
     $user = auth()->user();
     $oldlastname = $user->last_name;
 
     if ($lastname !== $oldlastname) {
-      DB::table('users')
-                ->where('last_name', $oldlastname)
-                ->update(['last_name' => $lastname]);
+
+      $user->last_name = $lastname;
+      $user->save();
+
+      $name_msg = "Name changed successfully!";
     }
   }
 
@@ -76,7 +99,8 @@ class AccountController extends Controller
   */
   public function changeEmail() {
 
-    global $email_message;
+    global $email_msg;
+    global $email_err_msg;
 
     $oldemail = request()->input('old-email');
     $newemail = request()->input('email');
@@ -86,7 +110,7 @@ class AccountController extends Controller
 
     //make sure the old email they put in matches with what is in the database
     if ($currentemail !== $oldemail) {
-      $email_message = "Old Email does not match current email.";
+      $email_err_msg = "Old Email does not match current email.";
       return;
     }
 
@@ -94,13 +118,15 @@ class AccountController extends Controller
     if ($currentemail !== $newemail) {
 
       if ($this->checkDuplicate($newemail)) {
-        $email_message = "That email is already in use.";
+        $email_err_msg = "That email is already in use.";
         return;
       }
 
       DB::table('users')
                 ->where('email', $currentemail)
                 ->update(['email' => $newemail]);
+
+      $email_msg = "Email changed successfully!";
     }
   }
 
@@ -115,16 +141,25 @@ class AccountController extends Controller
   * Change the password of the currently logged in user.
   */
   public function changePassword() {
+
+    global $password_msg;
+    global $password_err_msg;
+
     $oldpassword = request()->input('old-password');
     $newpassword = request()->input('password');
-    $confirmpassword = request()->input('password_confirmation');
 
-    if (strcmp($newpassword, $confirmpassword) !== 0) {
-      // TODO: notify the user that the passwords and the same
-      return redirect()->back()->with('mismatched_passwords','The new passwords do not match.');
+    $user = auth()->user();
+
+    // check if the old password matches what is in the database for this user, then update to new
+    if (Hash::check($oldpassword, $user->password)) {
+      $user->fill([
+              'password' => Hash::make($newpassword)
+          ])->save();
+
+      $password_msg = "Password changed successfully!";
     }
-
-    // TODO: check if the old password matches what is in the database for this user
-    // TODO: update password of currently logged in user in the database to the new password
+    else {
+      $password_err_msg = "Incorrect Password.";
+    }
   }
 }

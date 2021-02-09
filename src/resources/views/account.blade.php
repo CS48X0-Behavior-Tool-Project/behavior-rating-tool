@@ -117,6 +117,11 @@
                                 @enderror
                             </div>
                         </div>
+                        @if ($message = Session::get('name_message'))
+                         <div class="alert alert-success">
+                           <strong>{{ $message }}</strong>
+                         </div>
+                        @endif
                   </div>
               </div>
               <br>
@@ -160,8 +165,14 @@
                         </div>
                     </div>
                     <!-- TODO formatting sucks lol -->
-                    @if ($message = Session::get('email_error_message'))
+                    @if ($message = Session::get('email_error'))
                      <div class="alert alert-danger">
+                       <strong>{{ $message }}</strong>
+                     </div>
+                    @endif
+
+                    @if ($message = Session::get('email_message'))
+                     <div class="alert alert-success">
                        <strong>{{ $message }}</strong>
                      </div>
                     @endif
@@ -208,6 +219,18 @@
                             <input id="password-confirm" type="password" class="form-control" name="password-confirm" placeholder="Confirm New Password">
                         </div>
                     </div>
+                    <!-- TODO formatting sucks lol -->
+                    @if ($message = Session::get('password_error'))
+                     <div class="alert alert-danger">
+                       <strong>{{ $message }}</strong>
+                     </div>
+                    @endif
+
+                    @if ($message = Session::get('password_message'))
+                     <div class="alert alert-success">
+                       <strong>{{ $message }}</strong>
+                     </div>
+                    @endif
                   </div>
               </div>
               <br>

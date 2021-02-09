@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 $count_message;
+$add_user_message;
 
 class UploadController extends Controller
 {
@@ -17,6 +18,7 @@ class UploadController extends Controller
     public function upload() {
 
       global $count_message;
+      global $add_user_message;
 
       if (request()->has('mycsv')) {
         $this->uploadFile();
@@ -24,7 +26,7 @@ class UploadController extends Controller
       }
       else if (request()->has('add_single_user')) {
         $this->uploadUser();
-        return redirect()->route('add_user_route')->with('add_message', 'New user added!');
+        return redirect()->route('add_user_route')->with('add_message', $add_user_message);
       }
       else {
         return redirect()->route('add_user_route');
@@ -43,11 +45,17 @@ class UploadController extends Controller
         unset($data[0]);
 
         $new_user_count = 0;
+        $duplicate_count = 0;
 
         foreach ($data as $value) {
           $firstname = $value[0];
           $surname = $value[1];
           $email = $value[2];
+
+          if ($this->checkDuplicate($email)) {
+            $duplicate_count++;
+            continue;
+          }
 
           $this->dbInsert($firstname,$surname,$email,2);
 
@@ -55,6 +63,10 @@ class UploadController extends Controller
         }
 
         $count_message = $new_user_count.' new users added!';
+
+        if ($duplicate_count > 0) {
+          $count_message .= ' '.$duplicate_count.' emails already exist.';
+        }
     }
 
     /**
@@ -62,10 +74,19 @@ class UploadController extends Controller
     */
     public function uploadUser() {
 
+      global $add_user_message;
+
       $firstname = request()->input('fname');
       $surname = request()->input('lname');
       $email = request()->input('email');
       $role = request()->input('role');
+
+      if ($this->checkDuplicate($email)) {
+        $add_user_message = "This email already exists.";
+        return;
+      }
+
+      $add_user_message = "New user added!";
 
       $role_id = 0;
 
@@ -85,6 +106,13 @@ class UploadController extends Controller
       }
 
       $this->dbInsert($firstname,$surname,$email,$role_id);
+    }
+
+    /**
+    * Checks whether an email already exists in our records.
+    */
+    public function checkDuplicate ($email) {
+      return User::where('email', '=', $email)->exists();
     }
 
     /**

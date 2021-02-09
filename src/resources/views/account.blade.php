@@ -159,6 +159,12 @@
                             <input id="email-confirm" type="email" class="form-control" name="email-confirm" placeholder="Confirm New Email">
                         </div>
                     </div>
+                    <!-- TODO formatting sucks lol -->
+                    @if ($message = Session::get('email_error_message'))
+                     <div class="alert alert-danger">
+                       <strong>{{ $message }}</strong>
+                     </div>
+                    @endif
                   </div>
               </div>
               <br>

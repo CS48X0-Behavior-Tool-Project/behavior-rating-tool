@@ -8,7 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewAccountController;
 use App\Http\Controllers\UploadController;
-use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\AccountController;
 
 Auth::routes();
 
@@ -40,7 +40,7 @@ Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz']);
 /**
 * Account management page (first/last names, email, password changes)
 */
-Route::get('/account', [PagesController::class, 'getAccountManagement']);
+Route::get('/account', [PagesController::class, 'getAccountManagement'])->name('account_route');
 
 /**
 * List of possible quizzes to attempt
@@ -61,6 +61,11 @@ Route::post('/', [LoginController::class, 'submit']);
 * Route for creating new users.
 */
 Route::post('/add_user', [UploadController::class, 'upload']);
+
+/**
+* Route for account management page.
+*/
+Route::post('/account', [AccountController::class, 'update']);
 
 /**
 * Route for confirming a new account.  Will need to test when actual webpage is created.

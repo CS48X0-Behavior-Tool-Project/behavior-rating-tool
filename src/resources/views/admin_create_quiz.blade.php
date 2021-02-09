@@ -111,7 +111,7 @@
 
                     <div class="row justify-content-center">
                         <button type="submit" class="btn btn-primary">
-                            Create Video
+                            Create Quiz
                         </button>
                     </div>
 

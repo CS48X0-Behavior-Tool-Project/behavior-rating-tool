@@ -17,18 +17,19 @@
                         <div class="col">
                             <iframe src="https://www.youtube.com/embed/ofGy1zuj2rM" width="col-md-4" height="200"></iframe>
                             <br>
-                            <br>
-                            <div class="form-group row">
-                                <label for="video-id" class="col-md-4 col-form-label text-md-right">ID</label>
-                                <div class="col-md-8">
-                                    <input id="video-id" type="text" class="form-control" name="video-id" placeholder="ID ..." required>
-                                </div>
-                            </div>
+                            <p style="text-align:center;">Video information</p>
 
                             <div class="form-group row">
                                 <label for="video-link" class="col-md-4 col-form-label text-md-right">Link</label>
                                 <div class="col-md-8">
                                     <input id="video-link" type="text" class="form-control" name="video-link" placeholder="YouTube Link ..." required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="video-id" class="col-md-4 col-form-label text-md-right">ID</label>
+                                <div class="col-md-8">
+                                    <input id="video-id" type="text" class="form-control" name="video-id" placeholder="ID ..." required>
                                 </div>
                             </div>
 
@@ -42,24 +43,24 @@
                         </div>
 
                         <div class="col">
-                            that
+                            <p style="text-align:center;">Behaviours</p>
+                            <p style="text-align:center;">Enter all that you wish to have included in the quiz</p>
+                            <p style="text-align:center;">Select the correct answers</p>
+
+                            
                         </div>
                         <div class="col">
                             this
                         </div>
                     </div>
+
                     <form class="" action="index.html" method="post">
                         <div class="form-group row">
 
                         </div>
                     </form>
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
 
-                    {{ __('Create quizzes if you are an admin!') }}
+
                 </div>
             </div>
         </div>

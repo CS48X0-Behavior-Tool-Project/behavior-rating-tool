@@ -110,7 +110,7 @@
                             <label class="col-md-4 col-form-label text-md-right" for="lname">Last Name</label>
                             <div class="col-md-6">
                               <!-- TODO make placeholder first name -->
-                                <input id="lname" type="text" class="form-control @error('name') is-invalid @enderror" name="lname" placeholder="Last">
+                                <input id="lname" type="text" class="form-control @error('name') is-invalid @enderror" name="lname" placeholder="{{auth()->user()->last_name}}">
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">

@@ -95,9 +95,7 @@
                       <div class="form-group row">
                           <label class="col-md-4 col-form-label text-md-right" for="fname">First Name</label>
                           <div class="col-md-6">
-                            <!-- TODO make placeholder first name -->
                               <input id="fname" type="text" class="form-control @error('name') is-invalid @enderror" name="fname" placeholder="{{auth()->user()->first_name}}">
-
                               @error('name')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>

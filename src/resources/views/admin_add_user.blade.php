@@ -66,8 +66,8 @@
                               </button>
                           </div>
                       </div>
+                      <br>
 
-                      <!-- TODO formatting sucks lol -->
                       @if ($message = Session::get('add_message'))
                        <div class="alert alert-success">
                          <strong>{{ $message }}</strong>
@@ -99,16 +99,14 @@
                             <input type="file" name = "mycsv" id="users_upload"/>
                             <input type="submit" class="btn btn-secondary" value="Upload">
                         </form>
-
-                        <!-- TODO formatting sucks lol -->
-                        @if ($message = Session::get('user_count_message'))
-                         <div class="alert alert-success">
-                           <strong>{{ $message }}</strong>
-                         </div>
-                        @endif
-
                     </div>
                     <br>
+
+                    @if ($message = Session::get('user_count_message'))
+                     <div class="alert alert-success">
+                       <strong>{{ $message }}</strong>
+                     </div>
+                    @endif
                     <div align="center">
                         <img src="images/user_example2.png" alt="example csv" max_width="col-md-6">
                     </div>

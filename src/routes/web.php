@@ -50,16 +50,6 @@ Route::get('/quizzes', [PagesController::class, 'getQuizList']);
 */
 
 /**
-* Route for submitting a login request.  Will need to test when actual webpage is created.
-*/
-Route::post('/', [LoginController::class, 'submit']);
-
-/**
-* Route for creating a single new user.  Will need to test when actual webpage is created.
-*/
-Route::post('/add_user/submit', [UserController::class, 'submit']);
-
-/**
 * Route for confirming a new account.  Will need to test when actual webpage is created.
 */
-Route::post('/confirmation/submit', [NewAccountController::class, 'submit']);
+Route::post('/confirmation', [NewAccountController::class, 'createAccount']);

@@ -164,7 +164,7 @@
                             <input id="email-confirm" type="email" class="form-control" name="email-confirm" placeholder="Confirm New Email">
                         </div>
                     </div>
-                    <!-- TODO formatting sucks lol -->
+
                     @if ($message = Session::get('email_error'))
                      <div class="alert alert-danger">
                        <strong>{{ $message }}</strong>
@@ -219,7 +219,7 @@
                             <input id="password-confirm" type="password" class="form-control" name="password-confirm" placeholder="Confirm New Password">
                         </div>
                     </div>
-                    <!-- TODO formatting sucks lol -->
+                    
                     @if ($message = Session::get('password_error'))
                      <div class="alert alert-danger">
                        <strong>{{ $message }}</strong>

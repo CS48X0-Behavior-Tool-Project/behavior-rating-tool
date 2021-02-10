@@ -69,6 +69,8 @@ class AccountController extends Controller
       $user->first_name = $firstname;
       $user->save();
 
+      // TODO add an unsuccesful save message
+
       $name_msg = "Name changed successfully!";
     }
   }

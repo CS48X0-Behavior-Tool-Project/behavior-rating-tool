@@ -57,7 +57,7 @@ class UploadController extends Controller
             continue;
           }
 
-          $this->dbInsert($firstname,$surname,$email,2);
+          $this->dbInsert($firstname,$surname,$email,'student',2);
 
           $new_user_count++;
         }
@@ -65,7 +65,7 @@ class UploadController extends Controller
         $count_message = $new_user_count.' new users added!';
 
         if ($duplicate_count > 0) {
-          $count_message .= ' '.$duplicate_count.' emails already exist.';
+          $count_message .= ' '.$duplicate_count.' email(s) already exist.';
         }
     }
 
@@ -105,7 +105,7 @@ class UploadController extends Controller
           break;
       }
 
-      $this->dbInsert($firstname,$surname,$email,$role_id);
+      $this->dbInsert($firstname,$surname,$email,$role,$role_id);
     }
 
     /**
@@ -116,30 +116,29 @@ class UploadController extends Controller
     }
 
     /**
-    * Insert new user data into the database.   CURRENTLY DOESN"T SUPPORT ROLE ID.
+    * Insert new user data into the database.
     */
-
-    //OLD FUNCTION
-    /*public function dbInsert($firstname, $surname, $email, $role_id) {
-      DB::insert('insert into user (id, name, password, role_id, first_name, last_name, email)
-      values (?, ?, ?, ?, ?, ?, ?)',
-      [NULL, strtolower(substr($firstname,0,1).$surname), 'password', $role_id, $firstname, $surname, $email]);
-    }*/
-
-    //NEW FUNCTION auto registers new users allowing us to log in to them
-    public function dbInsert($firstname, $surname, $email, $role_id) {
-      $username = strtolower(substr($firstname,0,1).$surname);
+    public function dbInsert($firstname, $surname, $email, $role, $role_id) {
+      $username = strtolower(substr($firstname,0,1).$surname);    //needed for now, until we get rid of registration tab
 
       $user = new User();
+      // TODO: after account creation page, change the default password to something more secure
       $user->password = Hash::make('password');
       $user->email = $email;
-      $user->name = $username;
+      $user->name = $username;     //needed for now, until we get rid of registration tab
+      $user->first_name = $firstname;
+      $user->last_name = $surname;
       $user->save();
 
-      //update the first_name and last_name columns of the newly added user
-      DB::table('users')
-                ->where('name', $username)
-                ->update(['first_name' => $firstname, 'last_name' => $surname]);
+      //create role in roles table if it doesn't already exist
+      DB::insert('insert ignore into roles (id, name)
+      values (?,?)',
+      [$role_id,$role]);
+
+      //link the new user to their role
+      DB::insert('insert into users_roles (user_id, role_id)
+      values (?,?)',
+      [$user->id, $role_id]);
     }
 
     // TODO: force incoming csv files to conform to specific format

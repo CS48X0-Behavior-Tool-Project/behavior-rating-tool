@@ -23,21 +23,21 @@
                             <div class="form-group row">
                                 <label for="video-link" class="col-md-4 col-form-label text-md-right">Link</label>
                                 <div class="col-md-8">
-                                    <input id="video-link" type="text" class="form-control" name="video-link" placeholder="YouTube Link ..." required>
+                                    <input id="video-link" type="text" class="form-control" name="video-link" placeholder="YouTube Link ...">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="video-id" class="col-md-4 col-form-label text-md-right">ID</label>
                                 <div class="col-md-8">
-                                    <input id="video-id" type="text" class="form-control" name="video-id" placeholder="ID ..." required>
+                                    <input id="video-id" type="text" class="form-control" name="video-id" placeholder="Autogenerate ID">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="video-name" class="col-md-4 col-form-label text-md-right">Name</label>
                                 <div class="col-md-8">
-                                    <input id="video-name" type="text" class="form-control" name="video-name" placeholder="If different from ID ..." required>
+                                    <input id="video-name" type="text" class="form-control" name="video-name" placeholder="If different from ID ...">
                                 </div>
                             </div>
 

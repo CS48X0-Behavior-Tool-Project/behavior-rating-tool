@@ -93,7 +93,7 @@
                     </div>
                     <br>
                     <div align="center">
-                        <label for="">Add Multiple Users from a File</label> <br>
+                        <p style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">Add Multiple Users from a File</p>
                         <form action="/add_user" method="post" enctype="multipart/form-data">
                             @csrf
                             <input type="file" name = "mycsv" id="users_upload"/>

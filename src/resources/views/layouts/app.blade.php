@@ -56,7 +56,7 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
-                          <!-- Needs to be something here to only show admins option to create quizzes and users -->
+                        <!-- Needs to be something here to only show admins option to create quizzes and users -->
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

@@ -6,6 +6,29 @@
     </div>
 @endif
 
+<style>
+    .inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
+    .inputfile + label {
+        display: inline-block;
+    }
+</style>
+
+<script type="text/javascript">
+    $('#video_upload').change(function() {
+        var i = $(this).prev('label').clone();
+        var file = $('#file-upload')[0].files[0].name;
+        $(this).prev('label').text(file);
+    });
+</script>
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -22,8 +45,9 @@
 
                             <form action="/add_user" method="post" enctype="multipart/form-data">
                                 @csrf
-                                <input type="file" name="video_upload" id="video_upload"/>
+                                <input class="inputfile" type="file" name="video_upload" id="video_upload"/>
                                 <!-- <input type="submit" class="btn btn-secondary" value="Upload"> -->
+                                <label for="video_upload" class="btn btn-secondary">Import from Computer</label>
                             </form>
                             <br>
                             <br>

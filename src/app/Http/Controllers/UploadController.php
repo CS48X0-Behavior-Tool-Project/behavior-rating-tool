@@ -128,7 +128,7 @@ class UploadController extends Controller
       $user->name = $username;     //needed for now, until we get rid of registration tab
       $user->first_name = $firstname;
       $user->last_name = $surname;
-      $user->options = json_encode(json_decode ("{}"));
+      $user->options = json_encode((object)[]);
       $user->save();
 
       //create role in roles table if it doesn't already exist

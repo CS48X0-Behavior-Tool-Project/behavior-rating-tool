@@ -59,6 +59,7 @@
         if (email == emailconf) {
             mismatch_email = false;
         }
+
         // Password validation
         var pass = $("#password").val();
         var passconf = $("#password-confirm").val();
@@ -134,7 +135,7 @@
                         <label for="old-email" class="col-md-4 col-form-label text-md-right">Old Email</label>
 
                         <div class="col-md-6">
-                            <input id="old-email" type="email" class="form-control @error('email') is-invalid @enderror" name="old-email" placeholder="{{auth()->user()->email}}">
+                            <input id="old-email" type="email" class="form-control @error('email') is-invalid @enderror" name="old-email" placeholder="{{auth()->user()->email}}" pattern="{{auth()->user()->email}}" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'The email you have entered does not match the email used for your account' : '');">
 
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -219,7 +220,7 @@
                             <input id="password-confirm" type="password" class="form-control" name="password-confirm" placeholder="Confirm New Password">
                         </div>
                     </div>
-                    
+
                     @if ($message = Session::get('password_error'))
                      <div class="alert alert-danger">
                        <strong>{{ $message }}</strong>

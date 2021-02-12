@@ -6,32 +6,6 @@
     </div>
 @endif
 
-<style>
-    .inputfile {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1;
-    }
-
-    .inputfile + label {
-        display: inline-block;
-    }
-
-
-</style>
-
-<script type="text/javascript">
-    const upload_btn = document.getElementById('video_upload');
-    const label = document.getegetElementById('chosen_video');
-
-    upload_btn.addEventListener('change', function(){
-        document.getegetElementById('video_upload').textContent = this.files[0].name
-    })
-</script>
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

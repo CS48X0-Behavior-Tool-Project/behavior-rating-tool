@@ -33,7 +33,13 @@ class PagesController extends Controller
     public function attemptQuiz($id)
     {
         // TODO: Fetch quiz using passed quiz id
-        return view('quiz_attempt', ['id' => $id]);
+        // Using the ID, we should fetch the quiz
+        // which should contain path directory OR URL
+        if (!file_exists(public_path('/assets/videos/' . $id . '.mp4'))) {
+            abort(403, 'Provided video does not exist.');
+        } else {
+            return view('quiz_attempt', ['id' => $id]);
+        }
     }
 
     public function getCreateQuiz()

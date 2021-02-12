@@ -19,14 +19,17 @@
     .inputfile + label {
         display: inline-block;
     }
+
+
 </style>
 
 <script type="text/javascript">
-    $('#video_upload').change(function() {
-        var i = $(this).prev('label').clone();
-        var file = $('#file-upload')[0].files[0].name;
-        $(this).prev('label').text(file);
-    });
+    const upload_btn = document.getElementById('video_upload');
+    const label = document.getegetElementById('chosen_video');
+
+    upload_btn.addEventListener('change', function(){
+        document.getegetElementById('video_upload').textContent = this.files[0].name
+    })
 </script>
 
 @section('content')
@@ -41,15 +44,12 @@
                         <div class="col">
                             <iframe src="https://www.youtube.com/embed/ofGy1zuj2rM" width="col-md-4" height="200"></iframe>
                             <br>
-                            <p style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">Import Video</p>
-
-                            <form action="/add_user" method="post" enctype="multipart/form-data">
-                                @csrf
-                                <input class="inputfile" type="file" name="video_upload" id="video_upload"/>
-                                <!-- <input type="submit" class="btn btn-secondary" value="Upload"> -->
-                                <label for="video_upload" class="btn btn-secondary">Import from Computer</label>
-                            </form>
                             <br>
+                            <p style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">Import Video</p>
+                            <div class="row justify-content-center">
+                                <input type="file" id="video_upload" accept="video/*"> <!-- accept="video/*" -->
+                            </div>
+                            <!-- <input type="submit" class="btn btn-secondary" value="Upload"> -->
                             <br>
                             <div class="form-group row">
                                 <label for="video-link" class="col-md-4 col-form-label text-md-right">Link</label>

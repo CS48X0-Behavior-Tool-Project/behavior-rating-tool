@@ -59,11 +59,17 @@ class UploadController extends Controller
 
         $new_user_count = 0;
         $duplicate_count = 0;
+        $failed_entry_count = 0;
 
         foreach ($data as $value) {
           $firstname = $value[0];
           $surname = $value[1];
           $email = $value[2];
+
+          if (!($this->validateEmail($email))) {
+            $failed_entry_count++;
+            continue;
+          }
 
           if ($this->checkDuplicate($email)) {
             $duplicate_count++;
@@ -86,6 +92,17 @@ class UploadController extends Controller
           $count_msg_with_duplicates = $count_message;
           $count_message = NULL;
         }
+
+        if ($failed_entry_count > 0) {
+          $count_msg_with_duplicates .= ' '.$failed_entry_count.' entries were invalid.';
+        }
+    }
+
+    /**
+    * Ensure that the email field is a valid email format.
+    */
+    public function validateEmail($email) {
+      return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
     /**

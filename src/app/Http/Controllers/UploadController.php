@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Hash;
 
 $count_message;
 $add_user_message;
+$count_msg_with_duplicates;
+$count_msg_no_new;
+$add_user_err_message;
 
 class UploadController extends Controller
 {
@@ -19,14 +22,22 @@ class UploadController extends Controller
 
       global $count_message;
       global $add_user_message;
+      global $count_msg_with_duplicates;
+      global $count_msg_no_new;
+      global $add_user_err_message;
 
       if (request()->has('mycsv')) {
         $this->uploadFile();
-        return redirect()->route('add_user_route')->with('user_count_message', $count_message);
+        return redirect()->route('add_user_route')
+          ->with('user_count_message', $count_message)
+          ->with('count_message_duplicates', $count_msg_with_duplicates)
+          ->with('count_message_no_new', $count_msg_no_new);
       }
       else if (request()->has('add_single_user')) {
         $this->uploadUser();
-        return redirect()->route('add_user_route')->with('add_message', $add_user_message);
+        return redirect()->route('add_user_route')
+        ->with('add_message', $add_user_message)
+        ->with('add_message_error', $add_user_err_message);
       }
       else {
         return redirect()->route('add_user_route');
@@ -39,6 +50,8 @@ class UploadController extends Controller
     public function uploadFile() {
 
         global $count_message;
+        global $count_msg_with_duplicates;
+        global $count_msg_no_new;
 
         $data = array_map('str_getcsv', file(request()->mycsv));
         $header = $data[0];
@@ -46,11 +59,17 @@ class UploadController extends Controller
 
         $new_user_count = 0;
         $duplicate_count = 0;
+        $failed_entry_count = 0;
 
         foreach ($data as $value) {
           $firstname = $value[0];
           $surname = $value[1];
           $email = $value[2];
+
+          if (!($this->validateEmail($email))) {
+            $failed_entry_count++;
+            continue;
+          }
 
           if ($this->checkDuplicate($email)) {
             $duplicate_count++;
@@ -64,9 +83,26 @@ class UploadController extends Controller
 
         $count_message = $new_user_count.' new users added!';
 
-        if ($duplicate_count > 0) {
-          $count_message .= ' '.$duplicate_count.' email(s) already exist.';
+        if ($new_user_count === 0) {
+          $count_msg_no_new = $count_message.' All the emails are already in the system.';
+          $count_message = NULL;
         }
+        else if ($duplicate_count > 0) {
+          $count_message .= ' '.$duplicate_count.' email(s) already exist.';
+          $count_msg_with_duplicates = $count_message;
+          $count_message = NULL;
+        }
+
+        if ($failed_entry_count > 0) {
+          $count_msg_with_duplicates .= ' '.$failed_entry_count.' entries were invalid.';
+        }
+    }
+
+    /**
+    * Ensure that the email field is a valid email format.
+    */
+    public function validateEmail($email) {
+      return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
     /**
@@ -75,6 +111,7 @@ class UploadController extends Controller
     public function uploadUser() {
 
       global $add_user_message;
+      global $add_user_err_message;
 
       $firstname = request()->input('fname');
       $surname = request()->input('lname');
@@ -82,7 +119,7 @@ class UploadController extends Controller
       $role = request()->input('role');
 
       if ($this->checkDuplicate($email)) {
-        $add_user_message = "This email already exists.";
+        $add_user_err_message = "This email already exists.";
         return;
       }
 

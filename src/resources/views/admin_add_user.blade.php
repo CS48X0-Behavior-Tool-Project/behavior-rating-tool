@@ -74,6 +74,12 @@
                        </div>
                       @endif
 
+                      @if ($message = Session::get('add_message_error'))
+                       <div class="alert alert-danger">
+                         <strong>{{ $message }}</strong>
+                       </div>
+                      @endif
+
                   </form>
                 </div>
             </div>
@@ -104,6 +110,18 @@
 
                     @if ($message = Session::get('user_count_message'))
                      <div class="alert alert-success">
+                       <strong>{{ $message }}</strong>
+                     </div>
+                    @endif
+
+                    @if ($message = Session::get('count_message_duplicates'))
+                     <div class="alert alert-warning">
+                       <strong>{{ $message }}</strong>
+                     </div>
+                    @endif
+
+                    @if ($message = Session::get('count_message_no_new'))
+                     <div class="alert alert-danger">
                        <strong>{{ $message }}</strong>
                      </div>
                     @endif

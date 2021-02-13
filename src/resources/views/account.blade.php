@@ -27,6 +27,7 @@
     });
 
     // Passwords
+
     // If the new password field is changed, the confirm field gets a red border
     $(document).ready(function(){
         $("#password").on("input", function(){
@@ -135,7 +136,7 @@
                         <label for="old-email" class="col-md-4 col-form-label text-md-right">Old Email</label>
 
                         <div class="col-md-6">
-                            <input id="old-email" type="email" class="form-control @error('email') is-invalid @enderror" name="old-email" placeholder="{{auth()->user()->email}}" pattern="{{auth()->user()->email}}" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'The email you have entered does not match the email used for your account' : '');">
+                            <input id="old-email" type="email" class="form-control @error('email') is-invalid @enderror" name="old-email" placeholder="{{auth()->user()->email}}" pattern="{{auth()->user()->email}}" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'The email you have entered does not match the email used for this account' : '');">
 
                             @error('email')
                                 <span class="invalid-feedback" role="alert">

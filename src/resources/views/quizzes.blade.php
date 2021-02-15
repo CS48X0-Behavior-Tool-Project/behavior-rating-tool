@@ -71,7 +71,15 @@
         <div class="card col-8">
             <div class="card-header">Selection</div>
             <div class="card-body">
-
+                <!-- @foreach ($users as $user)
+                  <tr>
+                  <td>{{ $user->id }}</td>
+                  <td>{{ $user->first_name }}</td>
+                  <td>{{ $user->last_name }}</td>
+                  <td>{{ $user->city_name }}</td>
+                  <td>{{ $user->email }}</td>
+                  </tr>
+                @endforeach -->
             </div>
         </div>
     </div>

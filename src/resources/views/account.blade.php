@@ -97,7 +97,7 @@
                       <div class="form-group row">
                           <label class="col-md-4 col-form-label text-md-right" for="fname">First Name</label>
                           <div class="col-md-6">
-                              <input id="fname" type="text" class="form-control @error('name') is-invalid @enderror" name="fname" placeholder="{{auth()->user()->first_name}}">
+                              <input id="fname" type="text" class="form-control @error('name') is-invalid @enderror" name="fname" placeholder="{{Auth::user()->first_name}}">
                               @error('name')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
@@ -110,7 +110,7 @@
                             <label class="col-md-4 col-form-label text-md-right" for="lname">Last Name</label>
                             <div class="col-md-6">
                               <!-- TODO make placeholder first name -->
-                                <input id="lname" type="text" class="form-control @error('name') is-invalid @enderror" name="lname" placeholder="{{auth()->user()->last_name}}">
+                                <input id="lname" type="text" class="form-control @error('name') is-invalid @enderror" name="lname" placeholder="{{Auth::user()->last_name}}">
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -136,7 +136,7 @@
                         <label for="old-email" class="col-md-4 col-form-label text-md-right">Old Email</label>
 
                         <div class="col-md-6">
-                            <input id="old-email" type="email" class="form-control @error('email') is-invalid @enderror" name="old-email" placeholder="{{auth()->user()->email}}" pattern="{{auth()->user()->email}}" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'The email you have entered does not match the email used for this account' : '');">
+                            <input id="old-email" type="email" class="form-control @error('email') is-invalid @enderror" name="old-email" placeholder="{{Auth::user()->email}}" pattern="{{Auth::user()->email}}" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'The email you have entered does not match the email used for this account' : '');">
 
                             @error('email')
                                 <span class="invalid-feedback" role="alert">

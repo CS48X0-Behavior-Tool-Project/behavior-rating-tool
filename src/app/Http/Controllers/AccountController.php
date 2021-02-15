@@ -61,7 +61,7 @@ class AccountController extends Controller
 
     $firstname = request()->input('fname');
 
-    $user = auth()->user();
+    $user = Auth::user();
     $oldfirstname = $user->first_name;
 
     if ($firstname !== $oldfirstname) {
@@ -84,7 +84,7 @@ class AccountController extends Controller
 
     $lastname = request()->input('lname');
 
-    $user = auth()->user();
+    $user = Auth::user();
     $oldlastname = $user->last_name;
 
     if ($lastname !== $oldlastname) {
@@ -107,7 +107,7 @@ class AccountController extends Controller
     $oldemail = request()->input('old-email');
     $newemail = request()->input('email');
 
-    $user = auth()->user();
+    $user = Auth::user();
     $currentemail = $user->email;
 
     //make sure the old email they put in matches with what is in the database
@@ -150,7 +150,7 @@ class AccountController extends Controller
     $oldpassword = request()->input('old-password');
     $newpassword = request()->input('password');
 
-    $user = auth()->user();
+    $user = Auth::user();
 
     // check if the old password matches what is in the database for this user, then update to new
     if (Hash::check($oldpassword, $user->password)) {

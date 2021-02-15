@@ -60,7 +60,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->first_name }} {{ Auth::user()->last_name }} ({{ Auth::user()->roles[0]->name }})
+                                    {{ Auth::user()->first_name }} {{ Auth::user()->last_name }} 
                                 </a>
                                 <!-- TODO -->
                                 <!-- navbar items once logged in - differentiate between student/admin -->

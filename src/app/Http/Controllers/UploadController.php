@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 $count_message;
 $add_user_message;
@@ -43,6 +47,8 @@ class UploadController extends Controller
         return redirect()->route('add_user_route');
       }
     }
+
+    // TODO: allow different file types
 
     /**
     * Extract data from .csv file.
@@ -177,8 +183,15 @@ class UploadController extends Controller
       DB::insert('insert into users_roles (user_id, role_id)
       values (?,?)',
       [$user->id, $role_id]);
+
+      //send an email to the new user
+      $this->emailNewUser($firstname,$surname,$email);
     }
 
-    // TODO: force incoming csv files to conform to specific format
-    // TODO: allow different file types
+    /**
+    * Send an email to the new user upon account creation, directing them to the website.
+    */
+    public function emailNewUser($firstname, $surname, $email) {
+      Mail::to($email)->send(new WelcomeMail());
+    }
 }

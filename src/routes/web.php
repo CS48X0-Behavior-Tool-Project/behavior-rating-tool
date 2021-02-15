@@ -49,13 +49,17 @@ Route::get('/quizzes', [PagesController::class, 'getQuizList']);
 
 
 /**
-* Post routes will have to be tested later when we have database interaction.
+* Email testing stuff.
 */
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
-/**
-* Route for submitting a login request.  Will need to test when actual webpage is created.
-*/
-Route::post('/', [LoginController::class, 'submit']);
+Route::get('/email', function() {
+
+  Mail::to('email@email.com')->send(new WelcomeMail());
+  return new WelcomeMail();
+});
+
 
 /**
 * Route for creating new users.
@@ -66,8 +70,3 @@ Route::post('/add_user', [UploadController::class, 'upload']);
 * Route for account management page.
 */
 Route::post('/account', [AccountController::class, 'update']);
-
-/**
-* Route for confirming a new account.  Will need to test when actual webpage is created.
-*/
-Route::post('/confirmation/submit', [NewAccountController::class, 'submit']);

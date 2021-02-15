@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewAccountController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\PermissionController;
 
 Auth::routes();
 
@@ -46,6 +47,11 @@ Route::get('/account', [PagesController::class, 'getAccountManagement'])->name('
 * List of possible quizzes to attempt
 */
 Route::get('/quizzes', [PagesController::class, 'getQuizList']);
+
+/**
+* List of possible quizzes to attempt
+*/
+Route::get('/add_data', [PermissionController::class, 'Permission']);
 
 
 /**

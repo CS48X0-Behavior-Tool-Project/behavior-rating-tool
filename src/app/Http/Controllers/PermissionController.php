@@ -9,62 +9,65 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {   
-
+	// create system level data for:  Role, User, Permissions 
     public function Permission()
     {   
-    	$dev_permission = Permission::where('slug','create-tasks')->first();
-		$manager_permission = Permission::where('slug', 'edit-users')->first();
+    	$admin_permission = Permission::where('slug','create-account')->first();
+		$expert_permission = Permission::where('slug', 'create-quiz')->first();
 
 		//RoleTableSeeder.php
-		$dev_role = new Role();
-		$dev_role->slug = 'developer';
-		$dev_role->name = 'Front-end Developer';
-		$dev_role->save();
-		$dev_role->permissions()->attach($dev_permission);
+		$admin_role = new Role();
+		$admin_role->slug = 'admin';
+		$admin_role->name = 'Administrator';
+		$admin_role->save();
+		$admin_role->permissions()->attach($admin_permission);
 
-		$manager_role = new Role();
-		$manager_role->slug = 'manager';
-		$manager_role->name = 'Assistant Manager';
-		$manager_role->save();
-		$manager_role->permissions()->attach($manager_permission);
+		$expert_role = new Role();
+		$expert_role->slug = 'expert';
+		$expert_role->name = 'Expert';
+		$expert_role->save();
+		$expert_role->permissions()->attach($expert_permission);
 
-		$dev_role = Role::where('slug','developer')->first();
-		$manager_role = Role::where('slug', 'manager')->first();
+		$admin_role = Role::where('slug','admin')->first();
+		$expert_role = Role::where('slug', 'expert')->first();
 
-		$createTasks = new Permission();
-		$createTasks->slug = 'create-tasks';
-		$createTasks->name = 'Create Tasks';
-		$createTasks->save();
-		$createTasks->roles()->attach($dev_role);
+		$createAccount = new Permission();
+		$createAccount->slug = 'create-account';
+		$createAccount->name = 'Create Accounts';
+		$createAccount->save();
+		$createAccount->roles()->attach($admin_role);
 
-		$editUsers = new Permission();
-		$editUsers->slug = 'edit-users';
-		$editUsers->name = 'Edit Users';
-		$editUsers->save();
-		$editUsers->roles()->attach($manager_role);
+		$createQuiz = new Permission();
+		$createQuiz->slug = 'create-quiz';
+		$createQuiz->name = 'Create Quizzes';
+		$createQuiz->save();
+		$createQuiz->roles()->attach($expert_role);
 
-		$dev_role = Role::where('slug','developer')->first();
-		$manager_role = Role::where('slug', 'manager')->first();
-		$dev_perm = Permission::where('slug','create-tasks')->first();
-		$manager_perm = Permission::where('slug','edit-users')->first();
+		$admin_role = Role::where('slug','admin')->first();
+		$expert_role = Role::where('slug', 'expert')->first();
+		$admin_perm = Permission::where('slug','create-account')->first();
+		$expert_perm = Permission::where('slug','create-quiz')->first();
 
-		$developer = new User();
-		$developer->name = 'Mahedi Hasan';
-		$developer->email = 'mahedi@gmail.com';
-		$developer->password = bcrypt('secrettt');
-		$developer->save();
-		$developer->roles()->attach($dev_role);
-		$developer->permissions()->attach($dev_perm);
+		$admin = new User();
+		$admin->name = 'Admin';
+		$admin->first_name = 'AdminFirstName';
+		$admin->last_name = 'AdminLastName';
+		$admin->email = 'admin@gmail.com';
+		$admin->password = bcrypt('password');
+		$admin->save();
+		$admin->roles()->attach($admin_role);
+		$admin->permissions()->attach($admin_perm);
 
-		$manager = new User();
-		$manager->name = 'Hafizul Islam';
-		$manager->email = 'hafiz@gmail.com';
-		$manager->password = bcrypt('secrettt');
-		$manager->save();
-		$manager->roles()->attach($manager_role);
-		$manager->permissions()->attach($manager_perm);
+		$expert = new User();
+		$expert->name = 'expert1001';
+		$expert->first_name = 'Meexpert';
+		$expert->last_name = 'MeLN';
+		$expert->email = 'expert1001@gmail.com';
+		$expert->password = bcrypt('password');
+		$expert->save();
+		$expert->roles()->attach($expert_role);
+		$expert->permissions()->attach($expert_perm);
 
-		
 		return redirect()->back();
     }
 }

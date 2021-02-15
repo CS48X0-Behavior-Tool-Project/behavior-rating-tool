@@ -21,10 +21,3 @@
     </div>
 </div>
 @endsection
-
-
-@role('developer')
-
- Hello developer
-
-@endrole

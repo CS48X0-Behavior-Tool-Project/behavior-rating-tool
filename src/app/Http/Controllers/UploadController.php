@@ -192,6 +192,11 @@ class UploadController extends Controller
     * Send an email to the new user upon account creation, directing them to the website.
     */
     public function emailNewUser($firstname, $surname, $email) {
-      Mail::to($email)->send(new WelcomeMail());
+
+      $emailData = [
+        'name' => $firstname.' '.$surname
+      ];
+
+      Mail::to($email)->send(new WelcomeMail($emailData));
     }
 }

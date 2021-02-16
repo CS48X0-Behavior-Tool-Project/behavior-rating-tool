@@ -1,7 +1,10 @@
 @component('mail::message')
 # Introduction
 
-The body of your message.
+Hello, {{$mail_data['name']}}!
+
+Welcome to the Behavioural Rating Tool!
+Please follow the link to complete your registration:
 
 @component('mail::button', ['url' => ''])
 Button Text

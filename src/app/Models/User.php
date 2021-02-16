@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Auth\Traits\EmailAuthenticatable;
+
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasPermissionsTrait;
+    use HasFactory, Notifiable, HasPermissionsTrait, EmailAuthenticatable;
 
     /**
      * The attributes that are mass assignable.

@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Hash;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
 
+use App\Auth\EmailAuthentication;
+use App\Models\UserLoginToken;
+use Auth;
+
 $count_message;
 $add_user_message;
 $count_msg_with_duplicates;
@@ -185,18 +189,30 @@ class UploadController extends Controller
       [$user->id, $role_id]);
 
       //send an email to the new user
-      $this->emailNewUser($firstname,$surname,$email);
+      $this->emailNewUser($user->email);
     }
 
     /**
     * Send an email to the new user upon account creation, directing them to the website.
     */
-    public function emailNewUser($firstname, $surname, $email) {
+    public function emailNewUser($email) {
 
-      $emailData = [
-        'name' => $firstname.' '.$surname
-      ];
+      $auth = new EmailAuthentication($email);
+      $auth->requestLink();
+    }
 
-      Mail::to($email)->send(new WelcomeMail($emailData));
+    /**
+    * Validate the token sent in the email link.
+    */
+    public function validateToken(Request $request, UserLoginToken $token) {
+      $token->delete();
+
+      if ($token->isExpired()) {
+        return;
+      }
+
+      //login the user and redirect them to the account confirmation page where they set their password and take the survey
+      Auth::login($token->user);
+      return redirect()->route('confirmation_route');
     }
 }

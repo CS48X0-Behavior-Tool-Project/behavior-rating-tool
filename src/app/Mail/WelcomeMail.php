@@ -7,6 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
+use App\Models\User;
+
 class WelcomeMail extends Mailable
 {
     use Queueable, SerializesModels;
@@ -16,9 +18,10 @@ class WelcomeMail extends Mailable
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct(User $user, $options)
     {
-        $this->welcome_mail_data = $data;
+        $this->user = $user;
+        $this->welcome_mail_data = $options;
     }
 
     /**
@@ -28,6 +31,14 @@ class WelcomeMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Welcome to BRT!')->markdown('emails.welcome', ['mail_data' => $this->welcome_mail_data]);
+        return $this->subject('Welcome to BRT!')->markdown('emails.welcome', ['mail_data' => $this->welcome_mail_data])
+          ->with(['link' => $this->buildLink()]);
+    }
+
+    /**
+    * Create the link holding the user's login token.
+    */
+    protected function buildLink() {
+      return url('/confirmation/'. $this->user->token->token . '?' . http_build_query($this->welcome_mail_data));
     }
 }

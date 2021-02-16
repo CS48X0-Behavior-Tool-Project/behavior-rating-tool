@@ -25,7 +25,7 @@ Route::get('/home', [PagesController::class, 'getHomePage']);
 /**
 * Account creation/confirmation page
 */
-Route::get('/confirmation', [PagesController::class, 'getConfirmationPage']);
+Route::get('/confirmation', [PagesController::class, 'getConfirmationPage'])->name('confirmation_route');
 
 /**
 * Add user page
@@ -49,16 +49,9 @@ Route::get('/quizzes', [PagesController::class, 'getQuizList']);
 
 
 /**
-* Email testing stuff.
+* Called when the email link to a new user is clicked
 */
-use App\Mail\WelcomeMail;
-use Illuminate\Support\Facades\Mail;
-
-Route::get('/email', function() {
-
-  Mail::to('email@email.com')->send(new WelcomeMail());
-  return new WelcomeMail();
-});
+Route::get('/confirmation/{token}', [UploadController::class, 'validateToken']);
 
 
 /**

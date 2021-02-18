@@ -2,12 +2,17 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewAccountController;
+use App\Http\Controllers\UploadController;
+use App\Http\Controllers\AccountController;
 
 Auth::routes();
+
+Route::resource('users', UserController::class);
 
 /**
  * Login page is the landing page when we first visit the website

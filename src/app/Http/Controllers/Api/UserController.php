@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use Bouncer;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -24,15 +27,21 @@ class UserController extends Controller
 
     public function createUser(Request $request)
     {
-        // Implement logic to create user
     }
 
     public function updateUser(Request $request, $id)
     {
-        // Implement logic to update user
+        $user = $request->user();
+        if (Bouncer::is($user)->an('admin')) {
+            $toDelete = User::find($id);
+            $toDelete->delete();
+            return redirect('/')->with('message', 'Delete succeeded!');
+        } else {
+            return redirect('/')->with('message', 'Delete failed!');
+        }
     }
 
-    public function deleteUser($id)
+    public function deleteUser(Request $request, $id)
     {
         // Implement logic to delete user
     }

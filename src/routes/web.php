@@ -12,6 +12,8 @@ use App\Http\Controllers\AccountController;
 
 Auth::routes();
 
+Route::resource('users', UserController::class);
+
 /**
 * Login page is the landing page when we first visit the website
 */

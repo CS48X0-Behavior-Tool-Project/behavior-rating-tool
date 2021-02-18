@@ -16,15 +16,20 @@
 
                     {{ __('Welcome!') }}
                 </div>
+
+                <form action="{{route('users.destroy', ['user' => Auth::user()->id])}}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">delete</button>
+                </form>
+
+                @if($message = Session::get('success'))
+                    <div class="alert alert-success">
+                       <strong>{{ $message }}</strong>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
 </div>
 @endsection
-
-
-@role('developer')
-
- Hello developer
-
-@endrole

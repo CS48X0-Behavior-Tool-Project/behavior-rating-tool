@@ -101,43 +101,43 @@
                             <div class="form-group row justify-content-center">
                                 <div>
                                     <span>
-                                        <input type="checkbox" id="b-one">
+                                        <input type="checkbox" id="b-one" name="behaviour-checks">
                                         <label id="b-one" contentEditable="true" class="formLabel" onchange="check(this)">Edit me...</label><br>
                                     </span>
                                     <span>
-                                        <input type="checkbox" id="b-two">
+                                        <input type="checkbox" id="b-two" name="behaviour-checks">
                                         <label id="b-two" contentEditable="true" class="formLabel">Edit me...</label><br>
                                     </span>
                                     <span>
-                                        <input type="checkbox" id="b-three">
+                                        <input type="checkbox" id="b-three" name="behaviour-checks">
                                         <label id="b-three" contentEditable="true" class="formLabel">Edit me...</label><br>
                                     </span>
                                     <span>
-                                        <input type="checkbox" id="b-four">
+                                        <input type="checkbox" id="b-four" name="behaviour-checks">
                                         <label id="b-four" contentEditable="true" class="formLabel">Edit me...</label><br>
                                     </span>
                                     <span>
-                                        <input type="checkbox" id="b-five">
+                                        <input type="checkbox" id="b-five" name="behaviour-checks">
                                         <label id="b-five" contentEditable="true" class="formLabel">Edit me...</label><br>
                                     </span>
                                     <span>
-                                        <input type="checkbox" id="b-six">
+                                        <input type="checkbox" id="b-six" name="behaviour-checks">
                                         <label id="b-six" contentEditable="true" class="formLabel">Edit me...</label><br>
                                     </span>
                                     <span>
-                                        <input type="checkbox" id="b-seven">
+                                        <input type="checkbox" id="b-seven" name="behaviour-checks">
                                         <label id="b-seven" contentEditable="true" class="formLabel">Edit me...</label><br>
                                     </span>
                                     <span>
-                                        <input type="checkbox" id="b-eight">
+                                        <input type="checkbox" id="b-eight" name="behaviour-checks">
                                         <label id="b-eight" contentEditable="true" class="formLabel">Edit me...</label><br>
                                     </span>
                                     <span>
-                                        <input type="checkbox" id="b-nine">
+                                        <input type="checkbox" id="b-nine" name="behaviour-checks">
                                         <label id="b-nine" contentEditable="true" class="formLabel">Edit me...</label><br>
                                     </span>
                                     <span>
-                                        <input type="checkbox" id="b-ten">
+                                        <input type="checkbox" id="b-ten" name="behaviour-checks">
                                         <label id="b-ten" contentEditable="true" class="formLabel">Edit me...</label><br>
                                     </span>
                                 </div>
@@ -148,29 +148,25 @@
                             <p style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">Interpretation</p>
                             <h6 style="text-align:center;">Enter all the interpretations to included in the quiz</h6>
                             <p style="text-align:center;">Fields left "Edit me..." or blank will not be included in the quiz</p>
-                            <h6 style="text-align:center;">Check the correct answers</h6>
+                            <h6 style="text-align:center;">Select the correct answers</h6>
                             <div class="form-group row justify-content-center">
                                 <div>
-                                  <span>
-                                      <input type="checkbox" id="i-one">
+
+                                      <input type="radio" id="i-one" name="interpretation-radio">
                                       <label id="i-one" contentEditable="true" class="formLabel" onchange="check(this)">Edit me...</label><br>
-                                  </span>
-                                  <span>
-                                      <input type="checkbox" id="i-two">
+
+                                      <input type="radio" id="i-two" name="interpretation-radio">
                                       <label id="i-two" contentEditable="true" class="formLabel">Edit me...</label><br>
-                                  </span>
-                                  <span>
-                                      <input type="checkbox" id="i-three">
+
+                                      <input type="radio" id="i-three" name="interpretation-radio">
                                       <label id="i-three" contentEditable="true" class="formLabel">Edit me...</label><br>
-                                  </span>
-                                  <span>
-                                      <input type="checkbox" id="i-four">
+
+                                      <input type="radio" id="i-four" name="interpretation-radio">
                                       <label id="i-four" contentEditable="true" class="formLabel">Edit me...</label><br>
-                                  </span>
-                                  <span>
-                                      <input type="checkbox" id="i-five">
+
+                                      <input type="radio" id="i-five" name="interpretation-radio">
                                       <label id="i-five" contentEditable="true" class="formLabel">Edit me...</label><br>
-                                  </span>
+
                                 </div>
                             </div>
                         </div>

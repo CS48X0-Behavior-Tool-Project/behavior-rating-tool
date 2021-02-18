@@ -30,6 +30,7 @@
             $("#thumbnail").attr("src","videos/"+link);
         })
     });
+    // TODO need something that clears the choose file field if they prefer youtube over their local selection
 
     // Updates video thumbnail when a youtube link is entered
     $(document).ready(function(){

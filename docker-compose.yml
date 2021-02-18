@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 networks:
   laravel:
@@ -12,7 +12,6 @@ services:
     container_name: brt
     depends_on:
       - mysql
-      - redis
     ports:
       - 8080:80
     volumes:
@@ -51,13 +50,5 @@ services:
       - ./src:/var/www/html
     working_dir: /var/www/html
     entrypoint: ["npm"]
-    networks:
-      - laravel
-
-  redis:
-    image: redis:latest
-    container_name: redis
-    ports:
-      - 6379:6379
     networks:
       - laravel

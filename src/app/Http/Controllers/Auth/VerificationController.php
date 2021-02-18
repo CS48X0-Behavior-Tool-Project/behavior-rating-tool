@@ -39,4 +39,25 @@ class VerificationController extends Controller
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
+
+    // Tami added for test
+    public function store(Request $request)
+    {   
+        // createQuizs
+        if ($request->user()->can('createQuizs')) {
+
+            //Code goes here
+        }
+    }
+    
+    public function destroy(Request $request, $id)
+    {   
+        if ($request->user()->can('delete-tasks')) {
+          //Code goes here
+          
+        }
+    
+    }
+
+
 }

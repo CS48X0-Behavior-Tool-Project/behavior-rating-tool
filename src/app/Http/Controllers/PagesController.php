@@ -36,7 +36,7 @@ class PagesController extends Controller
         // Using the ID, we should fetch the quiz
         // which should contain path directory OR URL
         if (!file_exists(public_path('/assets/videos/' . $id . '.mp4'))) {
-            abort(403, 'Provided video does not exist.');
+            abort(404);
         } else {
             return view('quiz_attempt', ['id' => $id]);
         }

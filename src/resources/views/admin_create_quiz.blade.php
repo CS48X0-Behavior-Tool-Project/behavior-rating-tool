@@ -6,6 +6,49 @@
     </div>
 @endif
 
+<style>
+    .formLabel {
+        text-align:center;
+        color: black;
+        border-radius: 5px;
+        border: 1px solid #dfdfdf;
+        min-width: 75px;
+        min-height: 30px;
+        max-width: 200px;
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript">
+    // Updates video thumbnail when a file is selected
+    $(document).ready(function(){
+        $("#video-upload").on("input", function(){
+            var link = $("#video-upload").val().split("\\")[2];
+            console.log(link);
+            // TODO both of these just downloads the video, not actually updating the iframe src
+            // document.getElementById('thumbnail').src = "videos/" + link;
+            $("#thumbnail").attr("src","videos/"+link);
+        })
+    });
+
+    // Updates video thumbnail when a youtube link is entered
+    $(document).ready(function(){
+        // https://www.youtube.com/watch?v=K2972jP4ntY&ab_channel=JennaMarbles
+        // watch?v= ... &
+        // hxZss9dLpgI
+        $("#video-link").on("input", function(){
+            if($('#video-link').val().length > 11){
+                var link = $('#video-link').val().substring(32,43);
+                console.log(link);
+                $("#thumbnail").attr("src","https://www.youtube.com/embed/"+link+"?rel=0&amp;showinfo=0");
+
+            } else {
+                $("#thumbnail").attr("src","https://www.youtube.com/embed/"+$('#video-link').val()+"?rel=0&amp;showinfo=0");
+            }
+        })
+    });
+</script>
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -16,17 +59,17 @@
                     <form>
                     <div class="row">
                         <div class="col">
-                            <iframe src="https://www.youtube.com/embed/ofGy1zuj2rM" width="col-md-4" height="200"></iframe>
+                            <iframe id="thumbnail" src="" width="col-md-4" height="200"></iframe>
                             <br>
                             <br>
                             <p style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">Import Video</p>
                             <div class="row justify-content-center">
-                                <input type="file" id="video_upload" accept="video/*"> <!-- accept="video/*" -->
+                                <input type="file" id="video-upload" accept="video/*">
                             </div>
                             <!-- <input type="submit" class="btn btn-secondary" value="Upload"> -->
                             <br>
                             <div class="form-group row">
-                                <label for="video-link" class="col-md-4 col-form-label text-md-right">Link</label>
+                                <label for="video-link" class="col-md-4 col-form-label text-md-right">Youtube Link</label>
                                 <div class="col-md-8">
                                     <input id="video-link" type="text" class="form-control" name="video-link" placeholder="YouTube Link ...">
                                 </div>
@@ -51,31 +94,50 @@
                         <div class="col">
                             <p style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">Behaviours</p>
 
-                            <h6 style="text-align:center;">Enter all that you wish to have included in the quiz</h6>
-                            <input id="behaviours" type="text" class="form-control" name="behaviours" placeholder="Behaviours ..." required>
-                            <br>
-                            <h6 style="text-align:center;">Select the correct answers</h6>
+                            <h6 style="text-align:center;">Enter all the behaviours to included in the quiz</h6>
+                            <p style="text-align:center;">Fields left "Edit me..." or blank will not be included in the quiz</p>
+                            <h6 style="text-align:center;">Check the correct answers</h6>
                             <div class="form-group row justify-content-center">
                                 <div>
                                     <span>
-                                        <input type="checkbox" id="one" name="one" value="one">
-                                        <label for="one"> These should</label><br>
+                                        <input type="checkbox" id="b-one">
+                                        <label id="b-one" contentEditable="true" class="formLabel" onchange="check(this)">Edit me...</label><br>
                                     </span>
                                     <span>
-                                        <input type="checkbox" id="two" name="two" value="two">
-                                        <label for="two"> Autopopulate</label><br>
+                                        <input type="checkbox" id="b-two">
+                                        <label id="b-two" contentEditable="true" class="formLabel">Edit me...</label><br>
                                     </span>
                                     <span>
-                                        <input type="checkbox" id="three" name="three" value="three">
-                                        <label for="three"> Based on what</label><br>
+                                        <input type="checkbox" id="b-three">
+                                        <label id="b-three" contentEditable="true" class="formLabel">Edit me...</label><br>
                                     </span>
                                     <span>
-                                        <input type="checkbox" id="four" name="four" value="four">
-                                        <label for="four"> Is entered</label><br>
+                                        <input type="checkbox" id="b-four">
+                                        <label id="b-four" contentEditable="true" class="formLabel">Edit me...</label><br>
                                     </span>
                                     <span>
-                                        <input type="checkbox" id="five_plus" name="five_plus" value="five_plus">
-                                        <label for="five_plus"> Above</label><br>
+                                        <input type="checkbox" id="b-five">
+                                        <label id="b-five" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                    </span>
+                                    <span>
+                                        <input type="checkbox" id="b-six">
+                                        <label id="b-six" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                    </span>
+                                    <span>
+                                        <input type="checkbox" id="b-seven">
+                                        <label id="b-seven" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                    </span>
+                                    <span>
+                                        <input type="checkbox" id="b-eight">
+                                        <label id="b-eight" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                    </span>
+                                    <span>
+                                        <input type="checkbox" id="b-nine">
+                                        <label id="b-nine" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                    </span>
+                                    <span>
+                                        <input type="checkbox" id="b-ten">
+                                        <label id="b-ten" contentEditable="true" class="formLabel">Edit me...</label><br>
                                     </span>
                                 </div>
                             </div>
@@ -83,32 +145,31 @@
                         </div>
                         <div class="col">
                             <p style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">Interpretation</p>
-                            <h6 style="text-align:center;">Enter all that you wish to have included in the quiz</h6>
-                            <input id="interpretation" type="text" class="form-control" name="interpretation" placeholder="Interpretation ..." required>
-                            <br>
-                            <h6 style="text-align:center;">Select the correct answers</h6>
+                            <h6 style="text-align:center;">Enter all the interpretations to included in the quiz</h6>
+                            <p style="text-align:center;">Fields left "Edit me..." or blank will not be included in the quiz</p>
+                            <h6 style="text-align:center;">Check the correct answers</h6>
                             <div class="form-group row justify-content-center">
                                 <div>
-                                    <span>
-                                        <input type="checkbox" id="one" name="one" value="one">
-                                        <label for="one"> These should</label><br>
-                                    </span>
-                                    <span>
-                                        <input type="checkbox" id="two" name="two" value="two">
-                                        <label for="two"> Autopopulate</label><br>
-                                    </span>
-                                    <span>
-                                        <input type="checkbox" id="three" name="three" value="three">
-                                        <label for="three"> Based on what</label><br>
-                                    </span>
-                                    <span>
-                                        <input type="checkbox" id="four" name="four" value="four">
-                                        <label for="four"> Is entered</label><br>
-                                    </span>
-                                    <span>
-                                        <input type="checkbox" id="five_plus" name="five_plus" value="five_plus">
-                                        <label for="five_plus"> Above</label><br>
-                                    </span>
+                                  <span>
+                                      <input type="checkbox" id="i-one">
+                                      <label id="i-one" contentEditable="true" class="formLabel" onchange="check(this)">Edit me...</label><br>
+                                  </span>
+                                  <span>
+                                      <input type="checkbox" id="i-two">
+                                      <label id="i-two" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                  </span>
+                                  <span>
+                                      <input type="checkbox" id="i-three">
+                                      <label id="i-three" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                  </span>
+                                  <span>
+                                      <input type="checkbox" id="i-four">
+                                      <label id="i-four" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                  </span>
+                                  <span>
+                                      <input type="checkbox" id="i-five">
+                                      <label id="i-five" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                  </span>
                                 </div>
                             </div>
                         </div>

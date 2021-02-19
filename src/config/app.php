@@ -174,7 +174,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\PermissionsServiceProvider::class,
         Silber\Bouncer\BouncerServiceProvider::class
     ],
 

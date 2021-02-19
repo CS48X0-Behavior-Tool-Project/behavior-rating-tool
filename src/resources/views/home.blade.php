@@ -15,7 +15,7 @@
 
                 <div class="card-body">
                     Hi {{ Auth::user()->first_name }} {{ Auth::user()->last_name }},
-                    <br>You are currently logged in as a {{ Auth::user()->roles[0]->name }}
+                    <br>You are currently logged in as a {{ Auth::user()->roles->pluck('name')}}
                 </div>
 
                 @if($message = Session::get('success'))

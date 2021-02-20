@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewAccountController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\CreateQuizController;
 
 Auth::routes();
 
@@ -70,6 +71,6 @@ Route::post('/add_user', [UploadController::class, 'upload']);
 Route::post('/account', [AccountController::class, 'update']);
 
 /**
-* Route for confirming a new account.  Will need to test when actual webpage is created.
+* Route for creating a new quiz.
 */
-Route::post('/confirmation/submit', [NewAccountController::class, 'submit']);
+Route::post('/create_quiz', [CreateQuizController::class, 'createQuiz']);

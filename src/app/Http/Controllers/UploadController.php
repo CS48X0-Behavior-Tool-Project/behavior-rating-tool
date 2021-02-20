@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Bouncer;
 
 $count_message;
 $add_user_message;
@@ -168,15 +169,7 @@ class UploadController extends Controller
       $user->options = json_encode((object)[]);
       $user->save();
 
-      //create role in roles table if it doesn't already exist
-      DB::insert('insert ignore into roles (id, name)
-      values (?,?)',
-      [$role_id,$role]);
-
-      //link the new user to their role
-      DB::insert('insert into users_roles (user_id, role_id)
-      values (?,?)',
-      [$user->id, $role_id]);
+      Bouncer::assign($role)->to($user);
     }
 
     // TODO: force incoming csv files to conform to specific format

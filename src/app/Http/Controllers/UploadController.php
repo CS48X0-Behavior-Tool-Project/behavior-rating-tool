@@ -86,7 +86,7 @@ class UploadController extends Controller
             continue;
           }
 
-          $this->dbInsert($firstname,$surname,$email,'student',2);
+          $this->dbInsert($firstname,$surname,$email,'student');
 
           $new_user_count++;
         }
@@ -135,24 +135,7 @@ class UploadController extends Controller
 
       $add_user_message = "New user added!";
 
-      $role_id = 0;
-
-      switch ($role) {
-        case "admin":
-          $role_id = 1;
-          break;
-        case "student":
-          $role_id = 2;
-          break;
-        case "expert":
-          $role_id = 3;
-          break;
-        case "ta":
-          $role_id = 4;
-          break;
-      }
-
-      $this->dbInsert($firstname,$surname,$email,$role,$role_id);
+      $this->dbInsert($firstname,$surname,$email,$role);
     }
 
     /**
@@ -165,7 +148,7 @@ class UploadController extends Controller
     /**
     * Insert new user data into the database.
     */
-    public function dbInsert($firstname, $surname, $email, $role, $role_id) {
+    public function dbInsert($firstname, $surname, $email, $role) {
       $username = strtolower(substr($firstname,0,1).$surname);    //needed for now, until we get rid of registration tab
 
       $user = new User();
@@ -178,15 +161,6 @@ class UploadController extends Controller
       $user->options = json_encode((object)[]);
       $user->save();
 
-      //create role in roles table if it doesn't already exist
-      DB::insert('insert ignore into roles (id, name)
-      values (?,?)',
-      [$role_id,$role]);
-
-      //link the new user to their role
-      DB::insert('insert into users_roles (user_id, role_id)
-      values (?,?)',
-      [$user->id, $role_id]);
 
       //send an email to the new user
       $this->emailNewUser($user->email);

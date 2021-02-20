@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Quiz;
 
 class QuizController extends Controller
@@ -11,14 +12,18 @@ class QuizController extends Controller
     public function getAllQuizzes()
     {
         // Implement logic to fetch all quizzes
-        $quizzes = Quiz::all();    // TODO: need to add the quiz answer option list
+        $quizzes = Quiz::all(); 
         return $quizzes;
     }
 
     public function getQuiz($id)
     {
         // Implement logic to fetch quiz
-        return Quiz::find($id);
+
+        $quizOps = DB::select('select * from quiz_question_options where quiz_question_id = ?', [$id]);
+        $quizInfor = Quiz::find($id);
+        $quizInfor->quiz_question_options = $quizOps;
+        return $quizInfor;
     }
 
     public function getQuizAttempts($id)

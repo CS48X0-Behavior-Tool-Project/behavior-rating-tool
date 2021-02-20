@@ -12,7 +12,7 @@ use App\Auth\Traits\EmailAuthenticatable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasPermissionsTrait, EmailAuthenticatable;
+    use HasFactory, Notifiable, EmailAuthenticatable;
 
     /**
      * The attributes that are mass assignable.

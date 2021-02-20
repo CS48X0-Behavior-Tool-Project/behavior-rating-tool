@@ -14,8 +14,8 @@
                 @endif
 
                 <div class="card-body">
-                    Hi {{ Auth::user()->first_name ?? 'John'}} {{ Auth::user()->last_name ?? 'Smith'}},
-                    <br>You are currently logged in as a {{ Auth::user()->roles[0]->name ?? 'Student'}}
+                    Hi {{ Auth::user()->first_name }} {{ Auth::user()->last_name }},
+                    <br>You are currently logged in as a {{ Auth::user()->roles[0]->name }}
                 </div>
 
                 @if($message = Session::get('success'))

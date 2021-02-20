@@ -57,7 +57,7 @@ Route::get('/quizzes', [PagesController::class, 'getQuizList']);
 /**
 * Route for confirming a new account.
 */
-<<<<<<< HEAD
+
 Route::post('/', [LoginController::class, 'submit']);
 
 /**
@@ -71,9 +71,6 @@ Route::post('/add_user', [UploadController::class, 'upload']);
 Route::post('/account', [AccountController::class, 'update']);
 
 /**
-* Route for confirming a new account.  Will need to test when actual webpage is created.
+* Route for confirming a new account.
 */
-Route::post('/confirmation/submit', [NewAccountController::class, 'submit']);
-=======
 Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
->>>>>>> 42dcee5755af290a41334c563d870cc67495fb6a

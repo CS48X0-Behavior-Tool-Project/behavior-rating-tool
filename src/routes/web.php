@@ -22,7 +22,7 @@ Route::get('/', [PagesController::class, 'getLoginPage']);
 /**
 * Home page is the landing page when we first log in to the website
 */
-Route::get('/home', [PagesController::class, 'getHomePage']);
+Route::get('/home', [PagesController::class, 'getHomePage'])->name('home_route');
 
 /**
 * Account creation/confirmation page
@@ -55,8 +55,9 @@ Route::get('/quizzes', [PagesController::class, 'getQuizList']);
 */
 
 /**
-* Route for submitting a login request.  Will need to test when actual webpage is created.
+* Route for confirming a new account.
 */
+<<<<<<< HEAD
 Route::post('/', [LoginController::class, 'submit']);
 
 /**
@@ -73,3 +74,6 @@ Route::post('/account', [AccountController::class, 'update']);
 * Route for confirming a new account.  Will need to test when actual webpage is created.
 */
 Route::post('/confirmation/submit', [NewAccountController::class, 'submit']);
+=======
+Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
+>>>>>>> 42dcee5755af290a41334c563d870cc67495fb6a

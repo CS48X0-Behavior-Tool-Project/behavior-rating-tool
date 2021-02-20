@@ -20,17 +20,11 @@ class NewAccountController extends Controller
               'password' => Hash::make(request()->input('password'))
           ])->save();
 
-
-    //store survey response as json object in users db table
     $surveyResponse = request()->input('experience');
 
-    $user = auth()->user();
-    $jsonobj = json_decode($user->options, true);
-    $jsonobj['experience'] = $surveyResponse;
-    $user->options = json_encode($jsonobj);
-    $user->save();
 
     // TODO: make sure we are currently logged in to the proper user (done via email link?)
+    // TODO: store survey choice in json object in users tables
     // TODO: find a way to block future access to this page, they only need to do the survey once, and
     //changing password needs to be done on account management page
 

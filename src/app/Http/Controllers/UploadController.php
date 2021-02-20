@@ -4,8 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+
+use App\Auth\EmailAuthentication;
+use App\Models\UserLoginToken;
+use Auth;
 
 $count_message;
 $add_user_message;
@@ -43,6 +51,8 @@ class UploadController extends Controller
         return redirect()->route('add_user_route');
       }
     }
+
+    // TODO: allow different file types
 
     /**
     * Extract data from .csv file.
@@ -177,8 +187,32 @@ class UploadController extends Controller
       DB::insert('insert into users_roles (user_id, role_id)
       values (?,?)',
       [$user->id, $role_id]);
+
+      //send an email to the new user
+      $this->emailNewUser($user->email);
     }
 
-    // TODO: force incoming csv files to conform to specific format
-    // TODO: allow different file types
+    /**
+    * Send an email to the new user upon account creation, directing them to the website.
+    */
+    public function emailNewUser($email) {
+
+      $auth = new EmailAuthentication($email);
+      $auth->requestLink();
+    }
+
+    /**
+    * Validate the token sent in the email link.
+    */
+    public function validateToken(Request $request, UserLoginToken $token) {
+      $token->delete();
+
+      if ($token->isExpired()) {
+        return;
+      }
+
+      //login the user and redirect them to the account confirmation page where they set their password and take the survey
+      Auth::login($token->user);
+      return redirect()->route('confirmation_route');
+    }
 }

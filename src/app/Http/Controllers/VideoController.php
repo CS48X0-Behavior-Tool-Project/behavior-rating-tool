@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Video;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class VideoController extends Controller
 {
@@ -15,21 +15,25 @@ class VideoController extends Controller
 
         if ($request->has('video')) {
             try {
-                // Generate UUID for video
-                $uuid = Str::uuid()->toString();
-
                 $uploadedVideo = $request->file('video');
+                $clientfilename = basename($uploadedVideo->getClientOriginalName(), '.' . $uploadedVideo->getClientOriginalExtension());
+
+                // Create database entry for the video
+                $dbVideo = Video::create([
+                    'name' => $clientfilename,
+                    'created_at' => now(),
+                ]);
 
                 // Save video to storage/videos
                 $uploadedVideo->storeAs(
                     'videos',
-                    $uuid . '.' . $uploadedVideo->getClientOriginalExtension()
+                    $dbVideo->id . '.' . $uploadedVideo->getClientOriginalExtension()
                 );
 
                 return response()->json([
                     'msg' => 'Video uploaded successfully',
-                    'uuid' => $uuid,
-                    'name' => basename($uploadedVideo->getClientOriginalName(), '.' . $uploadedVideo->getClientOriginalExtension()),
+                    'uuid' => $dbVideo->id,
+                    'name' => $clientfilename,
                 ]);
             } catch (Exception $exception) {
                 return response()->json([], 404);

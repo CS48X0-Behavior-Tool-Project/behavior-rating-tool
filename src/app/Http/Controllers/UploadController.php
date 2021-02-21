@@ -4,8 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Bouncer;
+
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+
+use App\Auth\EmailAuthentication;
+use App\Models\UserLoginToken;
+use Auth;
 
 $count_message;
 $add_user_message;
@@ -43,6 +52,8 @@ class UploadController extends Controller
         }
     }
 
+    // TODO: allow different file types
+
     /**
      * Extract data from .csv file.
      */
@@ -76,7 +87,7 @@ class UploadController extends Controller
                 continue;
             }
 
-            $this->dbInsert($firstname, $surname, $email, 'student', 2);
+          $this->dbInsert($firstname,$surname,$email,'student');
 
             $new_user_count++;
         }
@@ -106,44 +117,26 @@ class UploadController extends Controller
     }
 
     /**
-     * Upload a single user from the form.
-     */
-    public function uploadUser()
-    {
+    * Upload a single user from the form.
+    */
+    public function uploadUser() {
 
-        global $add_user_message;
-        global $add_user_err_message;
+      global $add_user_message;
+      global $add_user_err_message;
 
-        $firstname = request()->input('fname');
-        $surname = request()->input('lname');
-        $email = request()->input('email');
-        $role = request()->input('role');
+      $firstname = request()->input('fname');
+      $surname = request()->input('lname');
+      $email = request()->input('email');
+      $role = request()->input('role');
 
-        if ($this->checkDuplicate($email)) {
-            $add_user_err_message = "This email already exists.";
-            return;
-        }
+      if ($this->checkDuplicate($email)) {
+        $add_user_err_message = "This email already exists.";
+        return;
+      }
 
-        $add_user_message = "New user added!";
+      $add_user_message = "New user added!";
 
-        $role_id = 0;
-
-        switch ($role) {
-            case "admin":
-                $role_id = 1;
-                break;
-            case "student":
-                $role_id = 2;
-                break;
-            case "expert":
-                $role_id = 3;
-                break;
-            case "ta":
-                $role_id = 4;
-                break;
-        }
-
-        $this->dbInsert($firstname, $surname, $email, $role, $role_id);
+      $this->dbInsert($firstname,$surname,$email,$role);
     }
 
     /**
@@ -155,37 +148,48 @@ class UploadController extends Controller
     }
 
     /**
-     * Insert new user data into the database.
-     */
-    public function dbInsert($firstname, $surname, $email, $role, $role_id)
-    {
-        $username = strtolower(substr($firstname, 0, 1) . $surname);    //needed for now, until we get rid of registration tab
+    * Insert new user data into the database.
+    */
+    public function dbInsert($firstname, $surname, $email, $role) {
+      $username = strtolower(substr($firstname,0,1).$surname);    //needed for now, until we get rid of registration tab
 
-        $user = new User();
-        // TODO: after account creation page, change the default password to something more secure
-        $user->password = Hash::make('password');
-        $user->email = $email;
-        $user->name = $username;     //needed for now, until we get rid of registration tab
-        $user->first_name = $firstname;
-        $user->last_name = $surname;
-        $user->options = json_encode((object)[]);
-        $user->save();
+      $user = new User();
+      // TODO: after account creation page, change the default password to something more secure
+      $user->password = Hash::make('password');
+      $user->email = $email;
+      $user->name = $username;     //needed for now, until we get rid of registration tab
+      $user->first_name = $firstname;
+      $user->last_name = $surname;
+      $user->options = json_encode((object)[]);
+      $user->save();
 
-        //create role in roles table if it doesn't already exist
-        DB::insert(
-            'insert ignore into roles (id, name)
-      values (?,?)',
-            [$role_id, $role]
-        );
+      Bouncer::assign($role)->to($user);
 
-        //link the new user to their role
-        DB::insert(
-            'insert into users_roles (user_id, role_id)
-      values (?,?)',
-            [$user->id, $role_id]
-        );
+      //send an email to the new user
+      $this->emailNewUser($user->email);
     }
 
-    // TODO: force incoming csv files to conform to specific format
-    // TODO: allow different file types
+    /**
+    * Send an email to the new user upon account creation, directing them to the website.
+    */
+    public function emailNewUser($email) {
+
+      $auth = new EmailAuthentication($email);
+      $auth->requestLink();
+    }
+
+    /**
+    * Validate the token sent in the email link.
+    */
+    public function validateToken(Request $request, UserLoginToken $token) {
+      $token->delete();
+
+      if ($token->isExpired()) {
+        return;
+      }
+
+      //login the user and redirect them to the account confirmation page where they set their password and take the survey
+      Auth::login($token->user);
+      return redirect()->route('confirmation_route');
+    }
 }

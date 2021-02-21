@@ -8,9 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
 
+use App\Auth\Traits\EmailAuthenticatable;
+
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRolesAndAbilities;
+    use HasFactory, Notifiable, EmailAuthenticatable;
 
     /**
      * The attributes that are mass assignable.

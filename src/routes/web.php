@@ -41,7 +41,7 @@ Route::get('/add_user', [PagesController::class, 'getAddUser'])->name('add_user_
 /**
  * Create quiz page
  */
-Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz']);
+Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz'])->name('create_quiz_route');
 
 /**
  * Account management page (first/last names, email, password changes)

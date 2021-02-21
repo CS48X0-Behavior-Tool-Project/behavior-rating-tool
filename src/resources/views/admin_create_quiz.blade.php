@@ -72,7 +72,7 @@
                                 <div class="form-group row">
                                     <label for="name-id" class="col-md-3 col-form-label text-md-right">Name</label>
                                     <div class="col-md-9">
-                                        <input id="video-name" type="text" class="form-control" name="name-id"
+                                        <input id="video-name" type="text" class="form-control" name="video-name"
                                             placeholder="Video Name">
                                     </div>
                                 </div>

@@ -10,13 +10,30 @@ class CreateQuizController extends Controller
       $this->readVideo();
       $this->readBehaviours();
       $this->readInterpretations();
+
+      return redirect()->route('create_quiz_route');
     }
 
     /**
     * Read video information from form.
     */
     public function readVideo() {
-      //echo 'reading video information <br>';
+      echo 'reading video information <br>';
+
+      $videoID = request()->input('video-id');
+      $videoName = request()->input('video-name');
+
+      print("Video id: " . $videoID);
+      echo '<br>';
+      print("Video name: " . $videoName);
+      echo '<br><br>';
+
+      // NOTE: videos are stored in storage\app\videos
+
+      //reject form upload if there is no video uploaded
+      if ($videoID === NULL) {
+        return redirect()->route('create_quiz_route');
+      }
     }
 
     /**
@@ -54,6 +71,8 @@ class CreateQuizController extends Controller
 
       print_r($behaviours);
       print_r($checkboxes);
+
+      // TODO: upload quiz information to database
     }
 
     /**
@@ -79,5 +98,6 @@ class CreateQuizController extends Controller
       print_r($interpretations);
       print_r($radioValue);
 
+      // TODO: upload quiz information to database
     }
 }

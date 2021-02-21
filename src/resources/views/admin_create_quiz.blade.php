@@ -57,7 +57,8 @@
                                 <div style="display:none" id="upload-alert" role="alert">
                                 </div>
                                 <br>
-
+                                <form action="/create_quiz" method="post">
+                                @csrf
                                 <p
                                     style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">
                                     Video information</p>
@@ -227,7 +228,7 @@
                             </button>
                         </div>
 
-                        </form>
+                      </form>
 
 
                     </div>

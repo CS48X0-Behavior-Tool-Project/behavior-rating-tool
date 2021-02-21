@@ -34,7 +34,7 @@
                                     style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">
                                     Import Video</p>
                                 <div class="row justify-content-center">
-                                    <form action="/upload_video" id="upload-form" method="post"
+                                    <form action="{{ route('videos.store') }}" id="upload-form" method="post"
                                         enctype="multipart/form-data"> @csrf
                                         <div class="row justify-content-center">
                                             <div class="input-group mb-3 col-md-11">
@@ -89,9 +89,9 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         <!--<span>
-                                                                                                                                    <input type="checkbox" id="b-one" name="behaviour-checks">
-                                                                                                                                    <label id="b-one" contentEditable="true" class="formLabel" onchange="check(this)">Edit me...</label><br>
-                                                                                                                                </span>-->
+                                                                                                                                                <input type="checkbox" id="b-one" name="behaviour-checks">
+                                                                                                                                                <label id="b-one" contentEditable="true" class="formLabel" onchange="check(this)">Edit me...</label><br>
+                                                                                                                                            </span>-->
                                         <span>
                                             <input type="checkbox" id="b-one" name="b-one">
                                             <!--<label id="b-two" contentEditable="true" class="formLabel">Edit me...</label><br>-->
@@ -154,37 +154,37 @@
                                         </span>
 
                                         <!--<span>
-                                                                                                                                    <input type="checkbox" id="b-three" name="behaviour-checks">
-                                                                                                                                    <label id="b-three" contentEditable="true" class="formLabel">Edit me...</label><br>
-                                                                                                                                </span>
-                                                                                                                                <span>
-                                                                                                                                    <input type="checkbox" id="b-four" name="behaviour-checks">
-                                                                                                                                    <label id="b-four" contentEditable="true" class="formLabel">Edit me...</label><br>
-                                                                                                                                </span>
-                                                                                                                                <span>
-                                                                                                                                    <input type="checkbox" id="b-five" name="behaviour-checks">
-                                                                                                                                    <label id="b-five" contentEditable="true" class="formLabel">Edit me...</label><br>
-                                                                                                                                </span>
-                                                                                                                                <span>
-                                                                                                                                    <input type="checkbox" id="b-six" name="behaviour-checks">
-                                                                                                                                    <label id="b-six" contentEditable="true" class="formLabel">Edit me...</label><br>
-                                                                                                                                </span>
-                                                                                                                                <span>
-                                                                                                                                    <input type="checkbox" id="b-seven" name="behaviour-checks">
-                                                                                                                                    <label id="b-seven" contentEditable="true" class="formLabel">Edit me...</label><br>
-                                                                                                                                </span>
-                                                                                                                                <span>
-                                                                                                                                    <input type="checkbox" id="b-eight" name="behaviour-checks">
-                                                                                                                                    <label id="b-eight" contentEditable="true" class="formLabel">Edit me...</label><br>
-                                                                                                                                </span>
-                                                                                                                                <span>
-                                                                                                                                    <input type="checkbox" id="b-nine" name="behaviour-checks">
-                                                                                                                                    <label id="b-nine" contentEditable="true" class="formLabel">Edit me...</label><br>
-                                                                                                                                </span>
-                                                                                                                                <span>
-                                                                                                                                    <input type="checkbox" id="b-ten" name="behaviour-checks">
-                                                                                                                                    <label id="b-ten" contentEditable="true" class="formLabel">Edit me...</label><br>
-                                                                                                                                </span>-->
+                                                                                                                                                <input type="checkbox" id="b-three" name="behaviour-checks">
+                                                                                                                                                <label id="b-three" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                                                                                                                            </span>
+                                                                                                                                            <span>
+                                                                                                                                                <input type="checkbox" id="b-four" name="behaviour-checks">
+                                                                                                                                                <label id="b-four" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                                                                                                                            </span>
+                                                                                                                                            <span>
+                                                                                                                                                <input type="checkbox" id="b-five" name="behaviour-checks">
+                                                                                                                                                <label id="b-five" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                                                                                                                            </span>
+                                                                                                                                            <span>
+                                                                                                                                                <input type="checkbox" id="b-six" name="behaviour-checks">
+                                                                                                                                                <label id="b-six" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                                                                                                                            </span>
+                                                                                                                                            <span>
+                                                                                                                                                <input type="checkbox" id="b-seven" name="behaviour-checks">
+                                                                                                                                                <label id="b-seven" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                                                                                                                            </span>
+                                                                                                                                            <span>
+                                                                                                                                                <input type="checkbox" id="b-eight" name="behaviour-checks">
+                                                                                                                                                <label id="b-eight" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                                                                                                                            </span>
+                                                                                                                                            <span>
+                                                                                                                                                <input type="checkbox" id="b-nine" name="behaviour-checks">
+                                                                                                                                                <label id="b-nine" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                                                                                                                            </span>
+                                                                                                                                            <span>
+                                                                                                                                                <input type="checkbox" id="b-ten" name="behaviour-checks">
+                                                                                                                                                <label id="b-ten" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                                                                                                                            </span>-->
                                     </div>
                                 </div>
                             </div>

@@ -1,4 +1,4 @@
-$(document).ready(function() {
+jQuery(function() {
     // Set CSRF token in header
     $.ajaxSetup({
         headers: {
@@ -12,7 +12,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/upload_video',
+            url: '/videos',
             cache: false,
             data: formData,
             success: (data) => updateUI(data, true),

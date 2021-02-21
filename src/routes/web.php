@@ -11,9 +11,12 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CreateQuizController;
 
+use App\Http\Controllers\Resources\VideoController;
+
 Auth::routes();
 
 Route::resource('users', UserController::class);
+Route::resource('videos', VideoController::class);
 
 /**
  * Login page is the landing page when we first visit the website
@@ -64,11 +67,6 @@ Route::post('/', [LoginController::class, 'submit']);
  * Route for creating new users.
  */
 Route::post('/add_user', [UploadController::class, 'upload']);
-
-/**
- * Route for uploading videos
- */
-Route::post('/upload_video', [VideoController::class, 'upload']);
 
 /**
  * Route for account management page.

@@ -29,7 +29,7 @@ class UserCreationTest extends TestCase
     //         ->assertUnauthorized();
     // }
 
-    public function test_submitting_single_valid_user()
+    public function testSubmissionOfSingleValidUser()
     {
         $response = $this->post('/add_user', [
             'fname' => 'Test',
@@ -41,4 +41,56 @@ class UserCreationTest extends TestCase
         $this->assertCount(1, User::all());
         $response->assertRedirect('/add_user');
     }
+
+    // public function testSubmissionOfSingleNullFnameUser()
+    // {
+    //     $response = $this->post('/add_user', [
+    //         'fname' => null,
+    //         'lname' => 'User',
+    //         'email' => 'test@example.com',
+    //         'role' => 'student',
+    //         'add_single_user' => null
+    //     ]);
+    //     $this->assertCount(0, User::all());
+    //     $response->assertRedirect('/add_user');
+    // }
+
+    // public function testSubmissionOfSingleNullLnameUser()
+    // {
+    //     $response = $this->post('/add_user', [
+    //         'fname' => 'Test',
+    //         'lname' => null,
+    //         'email' => 'test@example.com',
+    //         'role' => 'student',
+    //         'add_single_user' => null
+    //     ]);
+    //     $this->assertCount(0, User::all());
+    //     $response->assertRedirect('/add_user');
+    // }
+
+    // public function testSubmissionOfSingleNullEmailUser()
+    // {
+    //     $response = $this->post('/add_user', [
+    //         'fname' => 'Test',
+    //         'lname' => 'User',
+    //         'email' => null,
+    //         'role' => 'student',
+    //         'add_single_user' => null
+    //     ]);
+    //     $this->assertCount(0, User::all());
+    //     $response->assertRedirect('/add_user'); // response status 500, should redirect the user back to the page with an error
+    // }
+
+    // public function testSubmissionOfSingleNullRoleUser()
+    // {
+    //     $response = $this->post('/add_user', [
+    //         'fname' => 'Test',
+    //         'lname' => 'User',
+    //         'email' => 'test@example.com',
+    //         'role' => null,
+    //         'add_single_user' => null
+    //     ]);
+    //     $this->assertCount(0, User::all());
+    //     $response->assertRedirect('/add_user');
+    // }
 }

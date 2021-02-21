@@ -172,7 +172,7 @@ class UploadController extends Controller
         $user->options = json_encode((object)[]);
         $user->save();
         //create role in roles table if it doesn't already exist
-        $user->assign('student');
+        $user->assign($role);
     }
     // TODO: force incoming csv files to conform to specific format
     // TODO: allow different file types

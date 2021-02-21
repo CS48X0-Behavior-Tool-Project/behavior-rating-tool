@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Bouncer;
 
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
@@ -164,7 +163,7 @@ class UploadController extends Controller
       $user->options = json_encode((object)[]);
       $user->save();
 
-      Bouncer::assign($role)->to($user);
+      $user->assign($role)
 
       //send an email to the new user
       $this->emailNewUser($user->email);

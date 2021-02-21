@@ -49,6 +49,11 @@
                                                         file</label>
                                                 </div>
                                             </div>
+                                            @if (session('video-status'))
+                                                <div class="alert alert-danger">
+                                                    <strong>{{ session('video-status') }}</strong>
+                                                </div>
+                                            @endif
                                         </div>
                                     </form>
                                 </div>
@@ -141,6 +146,11 @@
                                         </span>
                                     </div>
                                 </div>
+                                @if (session('behaviour-status'))
+                                    <div class="alert alert-danger">
+                                        <strong>{{ session('behaviour-status') }}</strong>
+                                    </div>
+                                @endif
                             </div>
 
                         </div>
@@ -169,6 +179,11 @@
 
                                 </div>
                             </div>
+                            @if (session('int-status'))
+                                <div class="alert alert-danger">
+                                    <strong>{{ session('int-status') }}</strong>
+                                </div>
+                            @endif
                         </div>
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-primary">

@@ -18,21 +18,18 @@ class CreateQuizController extends Controller
     * Read video information from form.
     */
     public function readVideo() {
-      echo 'reading video information <br>';
-
       $videoID = request()->input('video-id');
       $videoName = request()->input('video-name');
 
-      print("Video id: " . $videoID);
-      echo '<br>';
-      print("Video name: " . $videoName);
-      echo '<br><br>';
+      //print("Video id: " . $videoID);
+      //print("Video name: " . $videoName);
 
-      // NOTE: videos are stored in storage\app\videos
+      // NOTE: videos are stored in storage\app\videos and automatically stored in the database
+      //should be able to store just the video id with the quiz information and use that to find the video later
 
       //reject form upload if there is no video uploaded
       if ($videoID === NULL) {
-        return redirect()->route('create_quiz_route');
+        return redirect()->route('create_quiz_route')->with('video-status', 'No Video Uploaded');
       }
     }
 
@@ -40,8 +37,6 @@ class CreateQuizController extends Controller
     * Read behaviours information from form.
     */
     public function readBehaviours() {
-      echo 'reading behaviour options <br>';
-
       //form responses and checkbox status stored in arrays, null otherwise
       $behaviours = array(
         request()->input('box-one'),
@@ -69,19 +64,29 @@ class CreateQuizController extends Controller
         request()->input('b-ten'),
       );
 
-      print_r($behaviours);
-      print_r($checkboxes);
+      //print_r($behaviours);
+      //print_r($checkboxes);
+
+      if ($this->containsOnlyNull($behaviours) || $this->containsOnlyNull($checkboxes)) {
+        return redirect()->route('create_quiz_route')->with('behaviour-status', 'Behaviours Incomplete');
+      }
+
 
       // TODO: upload quiz information to database
+    }
+
+    /**
+    * Checks whether every element is null, ensuring the user filled out the form.
+    */
+    function containsOnlyNull($input)
+    {
+      return empty(array_filter($input, function ($a) { return $a !== null;}));
     }
 
     /**
     * Read interpretations information from form.
     */
     public function readInterpretations() {
-      echo '<br><br>';
-      echo 'reading possible interpretations <br>';
-
       //form responses stored in array, null otherwise
       $interpretations = array(
         request()->input('inter-one'),
@@ -94,9 +99,12 @@ class CreateQuizController extends Controller
       //whichever radio button (1-5) was selected
       $radioValue = request()->input('interpretation-radio');
 
+      if ($this->containsOnlyNull($interpretations) || $radioValue === NULL) {
+        return redirect()->route('create_quiz_route')->with('int-status', 'Interpretations Incomplete');
+      }
 
-      print_r($interpretations);
-      print_r($radioValue);
+      //print_r($interpretations);
+      //print_r($radioValue);
 
       // TODO: upload quiz information to database
     }

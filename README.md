@@ -175,17 +175,19 @@ mysql -u laravel -p laraveldb
 ```
 The password is "secret".
 
-Then to populate the database with our tables and some test data, or if you want to revert all changes you made to the initial database, type:
-
-```sh
-docker-compose exec brt php artisan db:seed --class=SqlFileSeeder
-```
-
-You may need to use a migration to format the Users table properly:
+You will want to run the migrations to ensure all the tables are set up properly:
 
 ```sh
 docker-compose exec brt php artisan migrate:refresh
 ```
+
+Then you should populate the database using the Bouncer seeder so that an admin account can be created and logged in to:
+
+```sh
+docker-compose exec brt php artisan db:seed --class=BouncerSeeder
+```
+
+
 
 ### 1.11 Test your installation
 

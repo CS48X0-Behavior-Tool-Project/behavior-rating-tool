@@ -16,6 +16,7 @@ class BouncerSeeder extends Seeder
     public function run()
     {
         Bouncer::allow('admin')->to('delete-users');
+        Bouncer::allow('admin')->to('upload-videos');
         $adminUser = $this->createAdminAccount();
 
         $adminUser->assign('admin');

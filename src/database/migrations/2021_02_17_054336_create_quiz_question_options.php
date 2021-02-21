@@ -25,7 +25,7 @@ class CreateQuizQuestionOptions extends Migration
             $table->unsignedBigInteger('quiz_question_id');
             $table->string('type');
             $table->string('title');
-            $table->string('marking_scheme')->nullable();
+            $table->integer('marking_scheme')->nullable();
             $table->boolean('is_solution')->default(0);
             $table->timestamps();
             $table->jsonb('options')->nullable();

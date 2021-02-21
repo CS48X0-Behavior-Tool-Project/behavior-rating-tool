@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UserCreationTest extends TestCase
@@ -29,7 +31,7 @@ class UserCreationTest extends TestCase
     //         ->assertUnauthorized();
     // }
 
-    public function testSubmissionOfSingleValidUser()
+    public function test_submission_of_single_valid_user()
     {
         $response = $this->post('/add_user', [
             'fname' => 'Test',
@@ -42,7 +44,7 @@ class UserCreationTest extends TestCase
         $response->assertRedirect('/add_user');
     }
 
-    // public function testSubmissionOfSingleNullFnameUser()
+    // public function test_submission_of_single_null_fname_user()
     // {
     //     $response = $this->post('/add_user', [
     //         'fname' => null,
@@ -55,7 +57,7 @@ class UserCreationTest extends TestCase
     //     $response->assertRedirect('/add_user');
     // }
 
-    // public function testSubmissionOfSingleNullLnameUser()
+    // public function test_submission_of_single_null_lname_user()
     // {
     //     $response = $this->post('/add_user', [
     //         'fname' => 'Test',
@@ -68,7 +70,7 @@ class UserCreationTest extends TestCase
     //     $response->assertRedirect('/add_user');
     // }
 
-    // public function testSubmissionOfSingleNullEmailUser()
+    // public function test_submission_of_single_null_email_user()
     // {
     //     $response = $this->post('/add_user', [
     //         'fname' => 'Test',
@@ -81,7 +83,7 @@ class UserCreationTest extends TestCase
     //     $response->assertRedirect('/add_user'); // response status 500, should redirect the user back to the page with an error
     // }
 
-    // public function testSubmissionOfSingleNullRoleUser()
+    // public function test_submission_of_single_null_role_user()
     // {
     //     $response = $this->post('/add_user', [
     //         'fname' => 'Test',
@@ -93,4 +95,33 @@ class UserCreationTest extends TestCase
     //     $this->assertCount(0, User::all());
     //     $response->assertRedirect('/add_user');
     // }
+
+    public function test_user_through_csv()
+    {
+        $header = 'First Name,Last Name,Email';
+        $row1 = 'Test,User,test@example.com';
+        $row2 = ',User,test2@example.com';
+        $row3 = 'Test,,test3@example.com';
+        $row4 = 'John,Doe,,';
+        $row5 = ',,,';
+        $row6 = 'John,Doe,.test-@example.';
+
+        $content = implode("\n", [$header, $row1, $row2, $row3, $row4, $row5, $row6]);
+
+        $inputs = [
+            'mycsv' =>
+            UploadedFile::fake()->createWithContent(
+                'test.csv',
+                $content
+            )
+        ];
+
+        $response = $this->postJson(
+            '/add_user',
+            $inputs
+        );
+
+        $this->assertCount(3, User::all());
+        $response->assertRedirect('/add_user');
+    }
 }

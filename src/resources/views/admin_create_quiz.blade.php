@@ -200,20 +200,25 @@
                             <div class="form-group row justify-content-center">
                                 <div>
 
-                                      <input type="radio" id="i-one" name="interpretation-radio">
-                                      <label id="i-one" contentEditable="true" class="formLabel" onchange="check(this)">Edit me...</label><br>
+                                      <input type="radio" id="i-one" name="interpretation-radio" value="1">
+                                      <!--<label id="i-one" contentEditable="true" class="formLabel" onchange="check(this)">Edit me...</label><br>-->
+                                      <input id="inter-one" type="text" class="formLabel" name="inter-one" placeholder="Edit me ..."><br>
 
-                                      <input type="radio" id="i-two" name="interpretation-radio">
-                                      <label id="i-two" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                      <input type="radio" id="i-two" name="interpretation-radio" value="2">
+                                      <!--<label id="i-two" contentEditable="true" class="formLabel">Edit me...</label><br>-->
+                                      <input id="inter-two" type="text" class="formLabel" name="inter-two" placeholder="Edit me ..."><br>
 
-                                      <input type="radio" id="i-three" name="interpretation-radio">
-                                      <label id="i-three" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                      <input type="radio" id="i-three" name="interpretation-radio" value="3">
+                                      <!--<label id="i-three" contentEditable="true" class="formLabel">Edit me...</label><br>-->
+                                      <input id="inter-three" type="text" class="formLabel" name="inter-three" placeholder="Edit me ..."><br>
 
-                                      <input type="radio" id="i-four" name="interpretation-radio">
-                                      <label id="i-four" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                      <input type="radio" id="i-four" name="interpretation-radio" value="4">
+                                      <!--<label id="i-four" contentEditable="true" class="formLabel">Edit me...</label><br>-->
+                                      <input id="inter-four" type="text" class="formLabel" name="inter-four" placeholder="Edit me ..."><br>
 
-                                      <input type="radio" id="i-five" name="interpretation-radio">
-                                      <label id="i-five" contentEditable="true" class="formLabel">Edit me...</label><br>
+                                      <input type="radio" id="i-five" name="interpretation-radio" value="5">
+                                      <!--<label id="i-five" contentEditable="true" class="formLabel">Edit me...</label><br>-->
+                                      <input id="inter-five" type="text" class="formLabel" name="inter-five" placeholder="Edit me ..."><br>
 
                                 </div>
                             </div>

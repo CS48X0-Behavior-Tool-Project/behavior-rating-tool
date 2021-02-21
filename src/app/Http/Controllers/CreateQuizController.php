@@ -12,13 +12,20 @@ class CreateQuizController extends Controller
       $this->readInterpretations();
     }
 
+    /**
+    * Read video information from form.
+    */
     public function readVideo() {
       //echo 'reading video information <br>';
     }
 
+    /**
+    * Read behaviours information from form.
+    */
     public function readBehaviours() {
       echo 'reading behaviour options <br>';
 
+      //form responses and checkbox status stored in arrays, null otherwise
       $behaviours = array(
         request()->input('box-one'),
         request()->input('box-two'),
@@ -49,7 +56,28 @@ class CreateQuizController extends Controller
       print_r($checkboxes);
     }
 
+    /**
+    * Read interpretations information from form.
+    */
     public function readInterpretations() {
-      //echo 'reading possible interpretations <br>';
+      echo '<br><br>';
+      echo 'reading possible interpretations <br>';
+
+      //form responses stored in array, null otherwise
+      $interpretations = array(
+        request()->input('inter-one'),
+        request()->input('inter-two'),
+        request()->input('inter-three'),
+        request()->input('inter-four'),
+        request()->input('inter-five'),
+      );
+
+      //whichever radio button (1-5) was selected
+      $radioValue = request()->input('interpretation-radio');
+
+
+      print_r($interpretations);
+      print_r($radioValue);
+
     }
 }

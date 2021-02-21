@@ -71,7 +71,7 @@ class CreateQuizController extends Controller
         return redirect()->route('create_quiz_route')->with('behaviour-status', 'Behaviours Incomplete');
       }
 
-
+      // TODO: make sure all the checkboxes are associated with a non null input field
       // TODO: upload quiz information to database
     }
 
@@ -106,6 +106,7 @@ class CreateQuizController extends Controller
       //print_r($interpretations);
       //print_r($radioValue);
 
+      // TODO: make sure the radio value matches with a non null input field
       // TODO: upload quiz information to database
     }
 }

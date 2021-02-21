@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Bouncer;
+
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+
+use App\Auth\EmailAuthentication;
+use App\Models\UserLoginToken;
+use Auth;
 
 $count_message;
 $add_user_message;
@@ -45,6 +53,8 @@ class UploadController extends Controller
       }
     }
 
+    // TODO: allow different file types
+
     /**
     * Extract data from .csv file.
     */
@@ -77,7 +87,7 @@ class UploadController extends Controller
             continue;
           }
 
-          $this->dbInsert($firstname,$surname,$email,'student',2);
+          $this->dbInsert($firstname,$surname,$email,'student');
 
           $new_user_count++;
         }
@@ -126,24 +136,7 @@ class UploadController extends Controller
 
       $add_user_message = "New user added!";
 
-      $role_id = 0;
-
-      switch ($role) {
-        case "admin":
-          $role_id = 1;
-          break;
-        case "student":
-          $role_id = 2;
-          break;
-        case "expert":
-          $role_id = 3;
-          break;
-        case "ta":
-          $role_id = 4;
-          break;
-      }
-
-      $this->dbInsert($firstname,$surname,$email,$role,$role_id);
+      $this->dbInsert($firstname,$surname,$email,$role);
     }
 
     /**
@@ -156,7 +149,7 @@ class UploadController extends Controller
     /**
     * Insert new user data into the database.
     */
-    public function dbInsert($firstname, $surname, $email, $role, $role_id) {
+    public function dbInsert($firstname, $surname, $email, $role) {
       $username = strtolower(substr($firstname,0,1).$surname);    //needed for now, until we get rid of registration tab
 
       $user = new User();
@@ -170,8 +163,32 @@ class UploadController extends Controller
       $user->save();
 
       Bouncer::assign($role)->to($user);
+
+      //send an email to the new user
+      $this->emailNewUser($user->email);
     }
 
-    // TODO: force incoming csv files to conform to specific format
-    // TODO: allow different file types
+    /**
+    * Send an email to the new user upon account creation, directing them to the website.
+    */
+    public function emailNewUser($email) {
+
+      $auth = new EmailAuthentication($email);
+      $auth->requestLink();
+    }
+
+    /**
+    * Validate the token sent in the email link.
+    */
+    public function validateToken(Request $request, UserLoginToken $token) {
+      $token->delete();
+
+      if ($token->isExpired()) {
+        return;
+      }
+
+      //login the user and redirect them to the account confirmation page where they set their password and take the survey
+      Auth::login($token->user);
+      return redirect()->route('confirmation_route');
+    }
 }

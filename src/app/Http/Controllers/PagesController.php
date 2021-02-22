@@ -56,4 +56,9 @@ class PagesController extends Controller
     {
         return view('account');
     }
+
+    public function exportData()
+    {
+        return view('export');
+    }
 }

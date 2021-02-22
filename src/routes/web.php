@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewAccountController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ExportController;
 
 Auth::routes();
 
@@ -82,3 +83,8 @@ Route::post('/account', [AccountController::class, 'update']);
 */
 Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
 
+/**
+ * Route for exporting data
+ */
+Route::get('/export', [PagesController::class, 'exportData']);
+Route::get('/export/users', [ExportController::class, 'exportUsers'])->name('export_users_route');

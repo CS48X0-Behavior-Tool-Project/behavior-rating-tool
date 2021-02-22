@@ -162,7 +162,6 @@ class AccountController extends Controller
             $user->fill([
                 'password' => Hash::make($newpassword)
             ])->save();
-
             $password_msg = "Password changed successfully!";
         } else {
             $password_err_msg = "Incorrect Password.";

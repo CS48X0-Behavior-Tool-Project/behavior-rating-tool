@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Illuminate\Testing\TestResponse;
 use Illuminate\Support\Facades\Hash;
 
 class AccountControllerTest extends TestCase
@@ -82,5 +81,51 @@ class AccountControllerTest extends TestCase
             ]);
         $this->assertEquals('Password changed successfully!', session('password_message'));
         $this->assertEquals(true, Hash::check('this_is_a_new_password', $user->password));
+    }
+
+    public function test_user_update_with_invalid_email_account()
+    {
+        $user = User::factory()->create();
+        $user_oldemail = $user->email;
+        $response = $this->actingAs($user)
+            ->post('/account', [
+                'old-email' => 'asdf',
+                'email' => 'asdf',
+            ]);
+        $this->assertEquals('Old Email does not match current email.', session('email_error'));
+        $this->assertEquals($user_oldemail, $user->email);
+    }
+
+    public function test_user_update_with_duplicate_email_account()
+    {
+        // Generate two users
+        $userOne = User::factory()->create();
+        $userTwo = User::factory()->create();
+
+        $userOneOldEmail = $userOne->email;
+        $userTwoEmail = $userTwo->email;
+
+        // POST with userOne requesting access to userTwo's email
+        $this->actingAs($userOne)
+            ->post('/account', [
+                'old-email' => $userOneOldEmail,
+                'email' => $userTwoEmail,
+            ]);
+
+        $this->assertEquals('That email is already in use.', session('email_error'));
+        $this->assertEquals($userOneOldEmail, $userOne->email);
+    }
+
+    public function test_user_incorrect_password_of_account()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)
+            ->post('/account', [
+                'old-password' => 'incorrect_password',
+                'password' => 'this_is_a_new_password',
+            ]);
+        $this->assertEquals('Incorrect Password.', session('password_error'));
+        $this->assertEquals(true, Hash::check('password', $user->password));
     }
 }

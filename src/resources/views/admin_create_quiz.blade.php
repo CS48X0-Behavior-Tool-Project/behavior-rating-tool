@@ -26,6 +26,11 @@
             border: 1px solid #dfdfdf;
         }
 
+        #spacing {
+            margin-bottom: 10px;
+            display: block;
+        }
+
     </style>
 
     <div class="container">
@@ -34,62 +39,69 @@
                 <div class="card">
                     <div class="card-header">{{ __('Create A New Quiz') }}</div>
                     <div class="card-body">
-                        <div class="row">
-                            The animal being displayed in this video is:
-                        </div>
-                        <br>
-                        <div class="row">
+                        <div class="row justify-content-center">
                             <div class="col">
                                 <iframe id="thumbnail" src="" width="col-md-4" height="200"></iframe>
                                 <br>
                                 <br>
                                 <p class="title">Import Video</p>
-                                <div class="row justify-content-center">
-                                    <form action="{{ route('videos.store') }}" id="upload-form" method="post"
-                                        enctype="multipart/form-data"> @csrf
-                                        <div class="row justify-content-center">
-                                            <div class="input-group mb-3 col-md-11">
-                                                <div class="input-group-prepend">
-                                                    <button class="input-group-text" id="upload-button">Upload</button>
-                                                </div>
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="video"
-                                                        id="video-upload" accept="video/*" onchange="updateVideoLabel();">
-                                                    <label class="custom-file-label" for="video" id="file-label"
-                                                        style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Choose
-                                                        file</label>
-                                                </div>
+                                <div>
+                                    <form action="{{ route('videos.store') }}" id="upload-form" method="post" enctype="multipart/form-data"> @csrf
+                                        <div class="custom-file" >
+                                            <div class=" row justify-content-center">
+                                                <input type="file" class="custom-file-input" name="video" id="video-upload" accept="video/*" onchange="updateVideoLabel();">
+                                                <label class="custom-file-label" for="video" id="file-label" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Choose file</label>
                                             </div>
-                                            @if (session('video-status'))
-                                                <div class="alert alert-danger">
-                                                    <strong>{{ session('video-status') }}</strong>
-                                                </div>
-                                            @endif
                                         </div>
+                                        <br>
+                                        <br>
+                                        <div class="row justify-content-center">
+                                            <button class="btn btn-secondary" id="upload-button">Upload</button>
+                                        </div>
+
+                                        @if (session('video-status'))
+                                            <div class="alert alert-danger">
+                                                <strong>{{ session('video-status') }}</strong>
+                                            </div>
+                                        @endif
                                     </form>
                                 </div>
-                                <!-- <input type="submit" class="btn btn-secondary" value="Upload"> -->
-                                <br>
                                 <div style="display:none" id="upload-alert" role="alert">
                                 </div>
                                 <br>
+
                                 <form action="/create_quiz" method="post">
                                 @csrf
                                 <p class="title">Video information</p>
                                 <div class="form-group row">
                                     <label for="video-id" class="col-md-3 col-form-label text-md-right">ID</label>
                                     <div class="col-md-9">
-                                        <input id="video-id" type="text" class="form-control" name="video-id"
-                                            placeholder="Autogenerated ID">
+                                        <input id="video-id" type="text" class="form-control" name="video-id" placeholder="Autogenerated ID">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="name-id" class="col-md-3 col-form-label text-md-right">Name</label>
                                     <div class="col-md-9">
-                                        <input id="video-name" type="text" class="form-control" name="video-name"
-                                            placeholder="Video Name">
+                                        <input id="video-name" type="text" class="form-control" name="video-name" placeholder="Video Name">
                                     </div>
                                 </div>
+
+                                <p class="title">Animal information</p>
+                                <p style="text-align:center;"> This will be autogenerated to show all possible animals to choose from </p>
+                                <p style="text-align:center;"> Or allow to enter a new animal if it isn't an option </p>
+                                <div class="form-group row justify-content-center">
+                                    <div>
+                                        <span id="spacing">
+                                            <input type="checkbox" id="a-one" name="a-one">
+                                            <label id="a-one" type="text" name="a-one"> Horse </label>
+                                        </span>
+                                        <span id="spacing">
+                                            <input type="checkbox" id="a-two" name="a-two">
+                                            <input id="a-two" type="text" class="formLabel" name="a-two" placeholder="Edit me ...">
+                                        </span>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="col">
                                 <p class="title">Behaviours</p>
@@ -98,55 +110,45 @@
                                 <h6 style="text-align:center;">Check the correct answers</h6>
                                 <div class="form-group row justify-content-center">
                                     <div>
-                                        <span>
+                                        <span id="spacing">
                                             <input type="checkbox" id="b-one" name="b-one">
-                                            <input id="box-one" type="text" class="formLabel" name="box-one"
-                                                placeholder="Edit me ..."><br>
+                                            <input id="box-one" type="text" class="formLabel" name="box-one" placeholder="Edit me ...">
                                         </span>
-                                        <span>
+                                        <span id="spacing">
                                             <input type="checkbox" id="b-two" name="b-two">
-                                            <input id="box-two" type="text" class="formLabel" name="box-two"
-                                                placeholder="Edit me ..."><br>
+                                            <input id="box-two" type="text" class="formLabel" name="box-two" placeholder="Edit me ...">
                                         </span>
-                                        <span>
+                                        <span id="spacing">
                                             <input type="checkbox" id="b-three" name="b-three">
-                                            <input id="box-three" type="text" class="formLabel" name="box-three"
-                                                placeholder="Edit me ..."><br>
+                                            <input id="box-three" type="text" class="formLabel" name="box-three" placeholder="Edit me ...">
                                         </span>
-                                        <span>
+                                        <span id="spacing">
                                             <input type="checkbox" id="b-four" name="b-four">
-                                            <input id="box-four" type="text" class="formLabel" name="box-four"
-                                                placeholder="Edit me ..."><br>
+                                            <input id="box-four" type="text" class="formLabel" name="box-four" placeholder="Edit me ...">
                                         </span>
-                                        <span>
+                                        <span id="spacing">
                                             <input type="checkbox" id="b-five" name="b-five">
-                                            <input id="box-five" type="text" class="formLabel" name="box-five"
-                                                placeholder="Edit me ..."><br>
+                                            <input id="box-five" type="text" class="formLabel" name="box-five" placeholder="Edit me ...">
                                         </span>
-                                        <span>
+                                        <span id="spacing">
                                             <input type="checkbox" id="b-six" name="b-six">
-                                            <input id="box-six" type="text" class="formLabel" name="box-six"
-                                                placeholder="Edit me ..."><br>
+                                            <input id="box-six" type="text" class="formLabel" name="box-six" placeholder="Edit me ...">
                                         </span>
-                                        <span>
+                                        <span id="spacing">
                                             <input type="checkbox" id="b-seven" name="b-seven">
-                                            <input id="box-seven" type="text" class="formLabel" name="box-seven"
-                                                placeholder="Edit me ..."><br>
+                                            <input id="box-seven" type="text" class="formLabel" name="box-seven" placeholder="Edit me ...">
                                         </span>
-                                        <span>
+                                        <span id="spacing">
                                             <input type="checkbox" id="b-eight" name="b-eight">
-                                            <input id="box-eight" type="text" class="formLabel" name="box-eight"
-                                                placeholder="Edit me ..."><br>
+                                            <input id="box-eight" type="text" class="formLabel" name="box-eight" placeholder="Edit me ...">
                                         </span>
-                                        <span>
+                                        <span id="spacing">
                                             <input type="checkbox" id="b-nine" name="b-nine">
-                                            <input id="box-nine" type="text" class="formLabel" name="box-nine"
-                                                placeholder="Edit me ..."><br>
+                                            <input id="box-nine" type="text" class="formLabel" name="box-nine" placeholder="Edit me ...">
                                         </span>
-                                        <span>
+                                        <span id="spacing">
                                             <input type="checkbox" id="b-ten" name="b-ten">
-                                            <input id="box-ten" type="text" class="formLabel" name="box-ten"
-                                                placeholder="Edit me ..."><br>
+                                            <input id="box-ten" type="text" class="formLabel" name="box-ten" placeholder="Edit me ...">
                                         </span>
                                     </div>
                                 </div>
@@ -163,22 +165,26 @@
                                 <h6 style="text-align:center;">Select the correct answers</h6>
                                 <div class="form-group row justify-content-center">
                                     <div>
-
-                                          <input type="radio" id="i-one" name="interpretation-radio" value="1">
-                                          <input id="inter-one" type="text" class="formLabel" name="inter-one" placeholder="Edit me ..."><br>
-
-                                          <input type="radio" id="i-two" name="interpretation-radio" value="2">
-                                          <input id="inter-two" type="text" class="formLabel" name="inter-two" placeholder="Edit me ..."><br>
-
-                                          <input type="radio" id="i-three" name="interpretation-radio" value="3">
-                                          <input id="inter-three" type="text" class="formLabel" name="inter-three" placeholder="Edit me ..."><br>
-
-                                          <input type="radio" id="i-four" name="interpretation-radio" value="4">
-                                          <input id="inter-four" type="text" class="formLabel" name="inter-four" placeholder="Edit me ..."><br>
-
-                                          <input type="radio" id="i-five" name="interpretation-radio" value="5">
-                                          <input id="inter-five" type="text" class="formLabel" name="inter-five" placeholder="Edit me ..."><br>
-
+                                        <span id="spacing">
+                                            <input type="radio" id="i-one" name="interpretation-radio" value="1">
+                                            <input id="inter-one" type="text" class="formLabel" name="inter-one" placeholder="Edit me ...">
+                                        </span>
+                                        <span id="spacing">
+                                            <input type="radio" id="i-two" name="interpretation-radio" value="2">
+                                            <input id="inter-two" type="text" class="formLabel" name="inter-two" placeholder="Edit me ...">
+                                        </span>
+                                        <span id="spacing">
+                                            <input type="radio" id="i-three" name="interpretation-radio" value="3">
+                                            <input id="inter-three" type="text" class="formLabel" name="inter-three" placeholder="Edit me ...">
+                                        </span>
+                                        <span id="spacing">
+                                            <input type="radio" id="i-four" name="interpretation-radio" value="4">
+                                            <input id="inter-four" type="text" class="formLabel" name="inter-four" placeholder="Edit me ...">
+                                        </span>
+                                        <span id="spacing">
+                                            <input type="radio" id="i-five" name="interpretation-radio" value="5">
+                                            <input id="inter-five" type="text" class="formLabel" name="inter-five" placeholder="Edit me ...">
+                                        </span>
                                     </div>
                                 </div>
                                 @if (session('int-status'))

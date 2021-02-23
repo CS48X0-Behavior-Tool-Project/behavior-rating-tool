@@ -152,39 +152,39 @@
                                     </div>
                                 @endif
                             </div>
+                            <div class="col">
+                                <p style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">Interpretation</p>
+                                <h6 style="text-align:center;">Enter all the interpretations to included in the quiz</h6>
+                                <p style="text-align:center;">Fields left "Edit me..." or blank will not be included in the quiz</p>
+                                <h6 style="text-align:center;">Select the correct answers</h6>
+                                <div class="form-group row justify-content-center">
+                                    <div>
 
-                        </div>
-                        <div class="col">
-                            <p style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">Interpretation</p>
-                            <h6 style="text-align:center;">Enter all the interpretations to included in the quiz</h6>
-                            <p style="text-align:center;">Fields left "Edit me..." or blank will not be included in the quiz</p>
-                            <h6 style="text-align:center;">Select the correct answers</h6>
-                            <div class="form-group row justify-content-center">
-                                <div>
+                                          <input type="radio" id="i-one" name="interpretation-radio" value="1">
+                                          <input id="inter-one" type="text" class="formLabel" name="inter-one" placeholder="Edit me ..."><br>
 
-                                      <input type="radio" id="i-one" name="interpretation-radio" value="1">
-                                      <input id="inter-one" type="text" class="formLabel" name="inter-one" placeholder="Edit me ..."><br>
+                                          <input type="radio" id="i-two" name="interpretation-radio" value="2">
+                                          <input id="inter-two" type="text" class="formLabel" name="inter-two" placeholder="Edit me ..."><br>
 
-                                      <input type="radio" id="i-two" name="interpretation-radio" value="2">
-                                      <input id="inter-two" type="text" class="formLabel" name="inter-two" placeholder="Edit me ..."><br>
+                                          <input type="radio" id="i-three" name="interpretation-radio" value="3">
+                                          <input id="inter-three" type="text" class="formLabel" name="inter-three" placeholder="Edit me ..."><br>
 
-                                      <input type="radio" id="i-three" name="interpretation-radio" value="3">
-                                      <input id="inter-three" type="text" class="formLabel" name="inter-three" placeholder="Edit me ..."><br>
+                                          <input type="radio" id="i-four" name="interpretation-radio" value="4">
+                                          <input id="inter-four" type="text" class="formLabel" name="inter-four" placeholder="Edit me ..."><br>
 
-                                      <input type="radio" id="i-four" name="interpretation-radio" value="4">
-                                      <input id="inter-four" type="text" class="formLabel" name="inter-four" placeholder="Edit me ..."><br>
+                                          <input type="radio" id="i-five" name="interpretation-radio" value="5">
+                                          <input id="inter-five" type="text" class="formLabel" name="inter-five" placeholder="Edit me ..."><br>
 
-                                      <input type="radio" id="i-five" name="interpretation-radio" value="5">
-                                      <input id="inter-five" type="text" class="formLabel" name="inter-five" placeholder="Edit me ..."><br>
-
+                                    </div>
                                 </div>
+                                @if (session('int-status'))
+                                    <div class="alert alert-danger">
+                                        <strong>{{ session('int-status') }}</strong>
+                                    </div>
+                                @endif
                             </div>
-                            @if (session('int-status'))
-                                <div class="alert alert-danger">
-                                    <strong>{{ session('int-status') }}</strong>
-                                </div>
-                            @endif
                         </div>
+                        
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-primary">
                                 Create Quiz

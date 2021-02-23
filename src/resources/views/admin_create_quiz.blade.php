@@ -18,7 +18,16 @@
             max-width: 200px;
         }
 
+        .title {
+            text-align: center;
+            color: black;
+            background-color: #f7f7f7;
+            border-radius: 5px;
+            border: 1px solid #dfdfdf;
+        }
+
     </style>
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -26,13 +35,15 @@
                     <div class="card-header">{{ __('Create A New Quiz') }}</div>
                     <div class="card-body">
                         <div class="row">
+                            The animal being displayed in this video is:
+                        </div>
+                        <br>
+                        <div class="row">
                             <div class="col">
                                 <iframe id="thumbnail" src="" width="col-md-4" height="200"></iframe>
                                 <br>
                                 <br>
-                                <p
-                                    style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">
-                                    Import Video</p>
+                                <p class="title">Import Video</p>
                                 <div class="row justify-content-center">
                                     <form action="{{ route('videos.store') }}" id="upload-form" method="post"
                                         enctype="multipart/form-data"> @csrf
@@ -64,9 +75,7 @@
                                 <br>
                                 <form action="/create_quiz" method="post">
                                 @csrf
-                                <p
-                                    style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">
-                                    Video information</p>
+                                <p class="title">Video information</p>
                                 <div class="form-group row">
                                     <label for="video-id" class="col-md-3 col-form-label text-md-right">ID</label>
                                     <div class="col-md-9">
@@ -83,14 +92,9 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <p
-                                    style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">
-                                    Behaviours</p>
-
+                                <p class="title">Behaviours</p>
                                 <h6 style="text-align:center;">Enter all the behaviours to included in the quiz</h6>
-                                <p style="text-align:center;">Fields left "Edit me..." or blank will not be included in the
-                                    quiz
-                                </p>
+                                <p style="text-align:center;">Fields left "Edit me..." or blank will not be included in the quiz</p>
                                 <h6 style="text-align:center;">Check the correct answers</h6>
                                 <div class="form-group row justify-content-center">
                                     <div>
@@ -153,7 +157,7 @@
                                 @endif
                             </div>
                             <div class="col">
-                                <p style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">Interpretation</p>
+                                <p class="title">Interpretation</p>
                                 <h6 style="text-align:center;">Enter all the interpretations to included in the quiz</h6>
                                 <p style="text-align:center;">Fields left "Edit me..." or blank will not be included in the quiz</p>
                                 <h6 style="text-align:center;">Select the correct answers</h6>
@@ -184,7 +188,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-primary">
                                 Create Quiz

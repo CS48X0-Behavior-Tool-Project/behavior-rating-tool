@@ -114,7 +114,11 @@ class CreateQuizController extends Controller
       //print_r($interpretations);
       //print_r($radioValue);
 
-      // TODO: make sure the radio value matches with a non null input field
+      //make sure the radio button corresponds to a non null input field
+      if ($interpretations[$radioValue-1] === NULL) {
+        return redirect()->route('create_quiz_route')->with('int-status', 'Selected Field Must Be Filled In');
+      }
+
       // TODO: upload quiz information to database
     }
 }

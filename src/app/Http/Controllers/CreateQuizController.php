@@ -67,11 +67,19 @@ class CreateQuizController extends Controller
       //print_r($behaviours);
       //print_r($checkboxes);
 
+      //make sure at least one checkbox and field are filled in
       if ($this->containsOnlyNull($behaviours) || $this->containsOnlyNull($checkboxes)) {
         return redirect()->route('create_quiz_route')->with('behaviour-status', 'Behaviours Incomplete');
       }
 
-      // TODO: make sure all the checkboxes are associated with a non null input field
+
+      //make sure all the checkboxes are associated with a non null input field
+      foreach ($checkboxes as $key => $value) {
+        if ($value === 'on' && $behaviours[$key] === NULL) {
+          return redirect()->route('create_quiz_route')->with('behaviour-status', 'Checked Fields Must Be Filled In');
+        }
+      }
+
       // TODO: upload quiz information to database
     }
 

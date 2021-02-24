@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CreateQuizController extends Controller
 {
@@ -28,8 +29,9 @@ class CreateQuizController extends Controller
       //should be able to store just the video id with the quiz information and use that to find the video later
 
       //reject form upload if there is no video uploaded
-      if ($videoID === NULL) {
-        return redirect()->route('create_quiz_route')->with('video-status', 'No Video Uploaded');
+      //make sure the ID field is not empty, and that the ID corresponds to a video that has been uploaded (record stored in db)
+      if ($videoID === NULL || !DB::table('videos')->where('id',$videoID)->first()) {
+        return redirect()->route('create_quiz_route')->with('video-status', 'Video With That ID Does Not Exist');
       }
     }
 

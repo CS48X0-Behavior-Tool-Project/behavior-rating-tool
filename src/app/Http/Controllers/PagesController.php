@@ -31,14 +31,26 @@ class PagesController extends Controller
         return view('quizzes');
     }
 
+    public function attemptQuiz($id)
+    {
+        // TODO: Fetch quiz using passed quiz id
+        // Using the ID, we should fetch the quiz
+        // which should contain path directory OR URL
+        if (!file_exists(public_path('/assets/videos/' . $id . '.mp4'))) {
+            abort(404);
+        } else {
+            return view('quiz_attempt', ['id' => $id]);
+        }
+    }
+
     public function getCreateQuiz()
     {
-        return $this->adminView(request(), 'admin_create_quiz');
+        return view('admin_create_quiz');
     }
 
     public function getAddUser()
     {
-        return $this->adminView(request(), 'admin_add_user');
+        return view('admin_add_user');
     }
 
     public function getAccountManagement()

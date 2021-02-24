@@ -12,7 +12,7 @@ use App\Auth\Traits\EmailAuthenticatable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, EmailAuthenticatable, HasRolesAndAbilities;
+    use HasFactory, Notifiable, HasRolesAndAbilities, EmailAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -43,4 +43,5 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
 }

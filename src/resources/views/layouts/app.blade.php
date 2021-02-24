@@ -27,6 +27,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- <link href="{{ asset('/css/styles.css') }}" rel="stylesheet"> -->
+
+    <!-- Page Specific Scripts -->
+    @yield('view_specific_scripts')
+
+    <!-- Page Specific Styles -->
+    @yield('view_specific_styles')
 </head>
 
 <body>
@@ -109,7 +115,7 @@
             @yield('content')
         </main>
     </div>
-    @yield('end-body-scripts')
+    @yield('body_end_scripts')
 </body>
 
 </html>

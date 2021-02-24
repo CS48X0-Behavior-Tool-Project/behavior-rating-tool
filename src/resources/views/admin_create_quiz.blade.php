@@ -92,14 +92,28 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         <span id="spacing">
-                                            <input type="checkbox" id="a-one" name="a-one">
-                                            <label id="a-one" type="text" name="a-one"> Horse </label>
+                                            <input type="radio" id="a-horse" name="animal-radio[]" value = "Horse">
+                                            <label id="a-horse" type="text" name="a-horse"> Horse </label>
                                         </span>
+
+                                        <!-- Populate dynamic radio button list for each animal species in database -->
+                                        @foreach($animals as $data)
                                         <span id="spacing">
-                                            <input type="checkbox" id="a-two" name="a-two">
-                                            <input id="a-two" type="text" class="formLabel" name="a-two" placeholder="Edit me ...">
+                                            <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
+                                            <label id="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
+                                        </span>
+                                        @endforeach
+
+                                        <span id="spacing">
+                                            <input type="radio" id="a-new" name="animal-radio[]" value = "New">
+                                            <input id="a-new" type="text" class="formLabel" name="a-new" placeholder="Edit me ...">
                                         </span>
                                     </div>
+                                    @if (session('animal-status'))
+                                        <div class="alert alert-danger">
+                                            <strong>{{ session('animal-status') }}</strong>
+                                        </div>
+                                    @endif
                                 </div>
 
                             </div>

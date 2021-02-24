@@ -33,7 +33,18 @@ class PagesController extends Controller
 
     public function getCreateQuiz()
     {
-        return $this->adminView(request(), 'admin_create_quiz');
+        /*$animals = array(
+          'Cow',                //non-horse animals will be added to this array
+          'Chicken',            //these are just tests for now
+          'Dog',
+          'Kitty Cat',
+        );  */
+
+        $animals = array();
+
+        // TODO: search the database for different animal species to populate a radio button list
+
+        return $this->adminView(request(), 'admin_create_quiz')->with('animals', $animals);
     }
 
     public function getAddUser()

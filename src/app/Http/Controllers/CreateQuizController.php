@@ -9,6 +9,7 @@ class CreateQuizController extends Controller
 {
     public function createQuiz() {
       $this->readVideo();
+      $this->readAnimal();
       $this->readBehaviours();
       $this->readInterpretations();
 
@@ -31,8 +32,42 @@ class CreateQuizController extends Controller
       //reject form upload if there is no video uploaded
       //make sure the ID field is not empty, and that the ID corresponds to a video that has been uploaded (record stored in db)
       if ($videoID === NULL || !DB::table('videos')->where('id',$videoID)->first()) {
-        return redirect()->route('create_quiz_route')->with('video-status', 'Video With That ID Does Not Exist');
+        return redirect()->route('create_quiz_route')->with('video-status', 'Video ID Mismatch');
       }
+    }
+
+    /**
+    * Read the animal species from the list.
+    */
+    public function readAnimal() {
+
+      $species;
+
+      if (isset($_POST['animal-radio'])) {
+
+        $animal = $_POST['animal-radio'][0];
+
+        if ($animal === "New") {
+          $newanimal = request()->input('a-new');
+
+          if ($newanimal !== NULL) {
+            $species = $newanimal;
+          }
+          else {
+            return redirect()->route('create_quiz_route')->with('animal-status','Animal Field Empty');
+          }
+        }
+        else {
+          $species = $animal;
+        }
+      }
+      else {
+        return redirect()->route('create_quiz_route')->with('animal-status','No Animal Selected');
+      }
+
+      // TODO: add the species to the quiz database
+
+      //echo $species;
     }
 
     /**

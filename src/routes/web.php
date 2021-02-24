@@ -53,22 +53,10 @@ Route::get('/account', [PagesController::class, 'getAccountManagement'])->name('
  */
 Route::get('/quizzes', [PagesController::class, 'getQuizList']);
 
-/**
- * Quiz attempt page
- *
- * TODO: The URL should be appended with /{id} once a proper ID implementation
- * has been made in the attemptQuiz function.
- */
-Route::get('/quiz/attempt/{id}', [PagesController::class, 'attemptQuiz']);
 
 /**
- * Route for submitting a login request.  Will need to test when actual webpage is created.
- */
-Route::post('/', [LoginController::class, 'submit']);
-
-/**
- * Called when the email link to a new user is clicked
- */
+* Called when the email link to a new user is clicked
+*/
 Route::get('/confirmation/{token}', [UploadController::class, 'validateToken']);
 
 /**

@@ -39,6 +39,7 @@ class QuizController extends Controller
         // \Log::info($request);
         $quiz = new Quiz;
         $quiz->code = $request->code;
+        $quiz->animal = $request->animal;
         $quiz->video = $request->video;
         $quiz->question = $request->question;
         $quiz->save();
@@ -73,10 +74,11 @@ class QuizController extends Controller
             }
             else {
                 $code = is_null($request->code) ? $quiz->code : $request->code;
+                $animal = is_null($request->animal) ? $quiz->animal : $request->animal;
                 $video = is_null($request->video) ? $quiz->video : $request->video;
                 $question = is_null($request->question) ? $quiz->question : $request->question;
                 $options = is_null($request->options) ? $quiz->options : $request->options;
-                $quiz->update(['code' => $code, 'video' => $video, 'question'=>  $question, 'options'=>$options]);
+                $quiz->update(['code' => $code, 'animal' => $animal, 'video' => $video, 'question'=>  $question, 'options'=>$options]);
 
                 $ops = $request['quiz_question_options'];
                 foreach ($ops as $option) {

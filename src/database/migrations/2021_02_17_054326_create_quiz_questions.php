@@ -14,9 +14,9 @@ class CreateQuizQuestions extends Migration
     public function up()
     {
         // quiz_question
-        // id | code | video | question | options
-        // 1  | house-01 | http://google.. | choose behavior and its corresponding interpretations | 
-        // 2  | cat-01 | http://google.. | choose behavior and its corresponding interpretations | 
+        // id | code | animal | video | question | options
+        // 1  | house-01 | horse | http://google.. | choose behavior and its corresponding interpretations | 
+        // 2  | cat-01 | cat | http://google.. | choose behavior and its corresponding interpretations | 
        
         // INSERT INTO quiz_questions(code, video, question)
         // VALUES ('horse001', 'https://www.youtube.com/watch?v=8bgnG4Ni9Jo', 'Please indicate behaviors and interpretations')
@@ -24,6 +24,7 @@ class CreateQuizQuestions extends Migration
         Schema::create('quiz_questions', function (Blueprint $table) {
             $table->id();
             $table->string('code');
+            $table->string('animal');
             $table->string('video')->nullable();
             $table->string('question')->nullable();
             $table->timestamps();

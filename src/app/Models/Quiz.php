@@ -11,6 +11,6 @@ class Quiz extends Model
 
     protected $table = 'quiz_questions';
     protected $fillable = [
-        'code', 'video', 'question', 'quiz_question_options', 'options'
+        'code', 'animal', 'video', 'question', 'quiz_question_options', 'options'
     ];
 }

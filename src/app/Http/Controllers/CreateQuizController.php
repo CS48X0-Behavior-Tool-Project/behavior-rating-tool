@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\DB;
 class CreateQuizController extends Controller
 {
     public function createQuiz() {
-      $this->readVideo();
-      $this->readAnimal();
-      $this->readBehaviours();
-      $this->readInterpretations();
+      $videoID = $this->readVideo();
+      $animal = $this->readAnimal();
+      $behaviours = $this->readBehaviours();
+      $interpretations = $this->readInterpretations();
+
+      $this->uploadQuiz($videoID, $animal, $behaviours, $interpretations);
 
       return redirect()->route('create_quiz_route');
     }
@@ -23,9 +25,6 @@ class CreateQuizController extends Controller
       $videoID = request()->input('video-id');
       $videoName = request()->input('video-name');
 
-      //print("Video id: " . $videoID);
-      //print("Video name: " . $videoName);
-
       // NOTE: videos are stored in storage\app\videos and automatically stored in the database
       //should be able to store just the video id with the quiz information and use that to find the video later
 
@@ -34,6 +33,8 @@ class CreateQuizController extends Controller
       if ($videoID === NULL || !DB::table('videos')->where('id',$videoID)->first()) {
         return redirect()->route('create_quiz_route')->with('video-status', 'Video ID Mismatch');
       }
+
+      return $videoID;
     }
 
     /**
@@ -65,9 +66,7 @@ class CreateQuizController extends Controller
         return redirect()->route('create_quiz_route')->with('animal-status','No Animal Selected');
       }
 
-      // TODO: add the species to the quiz database
-
-      //echo $species;
+      return $species;
     }
 
     /**
@@ -101,9 +100,6 @@ class CreateQuizController extends Controller
         request()->input('b-ten'),
       );
 
-      //print_r($behaviours);
-      //print_r($checkboxes);
-
       //make sure at least one checkbox and field are filled in
       if ($this->containsOnlyNull($behaviours) || $this->containsOnlyNull($checkboxes)) {
         return redirect()->route('create_quiz_route')->with('behaviour-status', 'Behaviours Incomplete');
@@ -117,7 +113,17 @@ class CreateQuizController extends Controller
         }
       }
 
-      // TODO: upload quiz information to database
+      // build array having options as the keys, and the checkbutton status as value (on or NULL)
+      $behavioursArray = array();
+
+      foreach ($behaviours as $key => $value) {
+        if ($value !== NULL) {
+          $behavioursArray[$value] = $checkboxes[$key];
+        }
+      }
+
+      return $behavioursArray;
+
     }
 
     /**
@@ -148,14 +154,33 @@ class CreateQuizController extends Controller
         return redirect()->route('create_quiz_route')->with('int-status', 'Interpretations Incomplete');
       }
 
-      //print_r($interpretations);
-      //print_r($radioValue);
-
       //make sure the radio button corresponds to a non null input field
       if ($interpretations[$radioValue-1] === NULL) {
         return redirect()->route('create_quiz_route')->with('int-status', 'Selected Field Must Be Filled In');
       }
 
-      // TODO: upload quiz information to database
+      // build array having options as the keys, and the radio button status as value (on or NULL)
+
+      $interpretationsArray = array();
+
+      foreach ($interpretations as $key => $value) {
+        if ($value !== NULL) {
+          if ($key == $radioValue-1) {
+            $interpretationsArray[$value] = $radioValue-1;
+          }
+          else {
+            $interpretationsArray[$value] = NULL;
+          }
+        }
+      }
+
+      return $interpretationsArray;
+    }
+
+    /**
+    * Upload the information for the new quiz into the database.
+    */
+    public function uploadQuiz($videoID, $animal, $behaviours, $interpretations) {
+
     }
 }

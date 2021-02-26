@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Quiz;
+use App\Models\QuizOption;
+
 class CreateQuizController extends Controller
 {
     public function createQuiz() {
@@ -184,10 +187,12 @@ class CreateQuizController extends Controller
 
       $quizCode = ucfirst($animal) . $videoID;
 
-      $quizID = DB::table('quiz_questions')->insertGetId(
-        ['code' => $quizCode, 'animal' => $animal, 'video' => $videoID,
-        'question' => "Please indicate behaviors and interpretations", 'created_at' => now()]
-      );
+      $quiz = new Quiz();
+      $quiz->code = $quizCode;
+      $quiz->animal = $animal;
+      $quiz->video = $videoID;
+      $quiz->question = 'Please indicate behaviors and interpretations';
+      $quiz->save();
 
       foreach ($behaviours as $key => $value) {
 
@@ -197,10 +202,13 @@ class CreateQuizController extends Controller
           $isSolution = true;
         }
 
-        DB::table('quiz_question_options')->insert(
-          ['quiz_question_id' => $quizID, 'type' => 'behaviour', 'title' => $key, 'marking_scheme' => 1,
-          'is_solution' => $isSolution, 'created_at' => now()]
-        );
+        $opt = new QuizOption;
+        $opt->quiz_question_id = $quiz->id;
+        $opt->type = 'behaviour';
+        $opt->title = $key;
+        $opt->marking_scheme = 1;
+        $opt->is_solution = $isSolution;
+        $opt->save();
       }
 
       foreach ($interpretations as $key => $value) {
@@ -211,10 +219,13 @@ class CreateQuizController extends Controller
           $isSolution = true;
         }
 
-        DB::table('quiz_question_options')->insert(
-          ['quiz_question_id' => $quizID, 'type' => 'interpretation', 'title' => $key, 'marking_scheme' => 1,
-          'is_solution' => $isSolution, 'created_at' => now()]
-        );
+        $opt = new QuizOption;
+        $opt->quiz_question_id = $quiz->id;
+        $opt->type = 'interpretation';
+        $opt->title = $key;
+        $opt->marking_scheme = 1;
+        $opt->is_solution = $isSolution;
+        $opt->save();
       }
     }
 }

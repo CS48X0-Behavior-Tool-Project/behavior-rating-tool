@@ -15,7 +15,7 @@ class CreateQuizController extends Controller
 
       $this->uploadQuiz($videoID, $animal, $behaviours, $interpretations);
 
-      return redirect()->route('create_quiz_route');
+      return redirect()->route('create_quiz_route')->with('quiz-status', 'Quiz Created Successfully');
     }
 
     /**
@@ -166,7 +166,7 @@ class CreateQuizController extends Controller
       foreach ($interpretations as $key => $value) {
         if ($value !== NULL) {
           if ($key == $radioValue-1) {
-            $interpretationsArray[$value] = $radioValue-1;
+            $interpretationsArray[$value] = 'on';
           }
           else {
             $interpretationsArray[$value] = NULL;
@@ -182,5 +182,39 @@ class CreateQuizController extends Controller
     */
     public function uploadQuiz($videoID, $animal, $behaviours, $interpretations) {
 
+      $quizCode = ucfirst($animal) . $videoID;
+
+      $quizID = DB::table('quiz_questions')->insertGetId(
+        ['code' => $quizCode, 'animal' => $animal, 'video' => $videoID,
+        'question' => "Please indicate behaviors and interpretations", 'created_at' => now()]
+      );
+
+      foreach ($behaviours as $key => $value) {
+
+        $isSolution = false;
+
+        if ($value === 'on') {
+          $isSolution = true;
+        }
+
+        DB::table('quiz_question_options')->insert(
+          ['quiz_question_id' => $quizID, 'type' => 'behaviour', 'title' => $key, 'marking_scheme' => 1,
+          'is_solution' => $isSolution, 'created_at' => now()]
+        );
+      }
+
+      foreach ($interpretations as $key => $value) {
+
+        $isSolution = false;
+
+        if ($value === 'on') {
+          $isSolution = true;
+        }
+
+        DB::table('quiz_question_options')->insert(
+          ['quiz_question_id' => $quizID, 'type' => 'interpretation', 'title' => $key, 'marking_scheme' => 1,
+          'is_solution' => $isSolution, 'created_at' => now()]
+        );
+      }
     }
 }

@@ -38,6 +38,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">{{ __('Create A New Quiz') }}</div>
+                    @if (session('quiz-status'))
+                        <div class="alert alert-success">
+                            <strong>{{ session('quiz-status') }}</strong>
+                        </div>
+                    @endif
                     <div class="card-body">
                         <div class="row justify-content-center">
                             <div class="col">

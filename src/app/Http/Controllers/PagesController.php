@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Bouncer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
 {
@@ -33,16 +34,10 @@ class PagesController extends Controller
 
     public function getCreateQuiz()
     {
-        /*$animals = array(
-          'Cow',                //non-horse animals will be added to this array
-          'Chicken',            //these are just tests for now
-          'Dog',
-          'Kitty Cat',
-        );  */
-
-        $animals = array();
-
-        // TODO: search the database for different animal species to populate a radio button list
+        // search the database for different animal species to populate a radio button list
+        $animals = DB::table('quiz_questions')
+                ->where('animal', '<>', 'Horse')
+                ->pluck('animal');
 
         return $this->adminView(request(), 'admin_create_quiz')->with('animals', $animals);
     }

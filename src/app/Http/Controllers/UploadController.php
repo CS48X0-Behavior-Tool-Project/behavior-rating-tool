@@ -130,7 +130,7 @@ class UploadController extends Controller
         request()->validate([
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
-            'email' => 'required|unique:users|email:rfc,dns',
+            'email' => 'required|unique:users|email:rfc',
             'role' => 'required'
         ]);
 

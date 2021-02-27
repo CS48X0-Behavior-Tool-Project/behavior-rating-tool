@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 
 use App\Auth\EmailAuthentication;
 use App\Models\UserLoginToken;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 $count_message;
 $add_user_message;
@@ -72,8 +72,8 @@ class UploadController extends Controller
         $failed_entry_count = 0;
 
         foreach ($data as $value) {
-            $firstname = $value[0];
-            $surname = $value[1];
+            $firstName = $value[0];
+            $lastName = $value[1];
             $email = $value[2];
 
             if (!($this->validateEmail($email))) {
@@ -86,7 +86,7 @@ class UploadController extends Controller
                 continue;
             }
 
-            $this->dbInsert($firstname, $surname, $email, 'student');
+            $this->dbInsert($firstName, $lastName, $email, 'student');
 
             $new_user_count++;
         }
@@ -121,21 +121,22 @@ class UploadController extends Controller
     public function uploadUser()
     {
         global $add_user_message;
-        global $add_user_err_message;
 
-        $firstname = request()->input('fname');
-        $surname = request()->input('lname');
+        $firstName = request()->input('first_name');
+        $lastName = request()->input('last_name');
         $email = request()->input('email');
         $role = request()->input('role');
 
-        if ($this->checkDuplicate($email)) {
-            $add_user_err_message = "This email already exists.";
-            return;
-        }
+        request()->validate([
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'email' => 'required|unique:users|email:rfc,dns',
+            'role' => 'required'
+        ]);
 
         $add_user_message = "New user added!";
 
-        $this->dbInsert($firstname, $surname, $email, $role);
+        $this->dbInsert($firstName, $lastName, $email, $role);
     }
 
     /**
@@ -149,24 +150,23 @@ class UploadController extends Controller
     /**
      * Insert new user data into the database.
      */
-    public function dbInsert($firstname, $surname, $email, $role)
+    public function dbInsert($firstName, $lastName, $email, $role)
     {
-        $username = strtolower(substr($firstname, 0, 1) . $surname);    //needed for now, until we get rid of registration tab
+        $username = strtolower(substr($firstName, 0, 1) . $lastName);    //needed for now, until we get rid of registration tab
 
-        $user = new User();
-        // TODO: after account creation page, change the default password to something more secure
-        $user->password = Hash::make('password');
-        $user->email = $email;
-        $user->name = $username;     //needed for now, until we get rid of registration tab
-        $user->first_name = $firstname;
-        $user->last_name = $surname;
-        $user->options = json_encode((object)[]);
-        $user->save();
+        $user = User::create([
+            'password' => Hash::make('password'),
+            'email' => $email,
+            'name' => $username,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'options' => json_encode((object)[]),
+        ]);
 
         $user->assign($role);
 
         // send an email to the new user
-        $this->emailNewUser($user->email);
+        $this->emailNewUser($email);
     }
 
     /**

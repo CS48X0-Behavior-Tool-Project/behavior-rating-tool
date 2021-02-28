@@ -32,7 +32,9 @@ class PagesController extends Controller
         $animals = DB::table('quiz_questions')
                 ->pluck('animal')->unique();
 
-        return view('quizzes')->with('animals', $animals);
+        $quizzes = DB::select('select * from quiz_questions');
+
+        return view('quizzes')->with(['animals'=>$animals, 'quizzes'=>$quizzes]);
     }
 
     public function getCreateQuiz()
@@ -42,7 +44,7 @@ class PagesController extends Controller
                 ->where('animal', '<>', 'Horse')
                 ->pluck('animal')->unique();
 
-        return $this->adminView(request(), 'admin_create_quiz')->with('animals', $animals);
+        return $this->adminView(request(), 'admin_create_quiz')->with('animals',$animals);
     }
 
     public function getAddUser()

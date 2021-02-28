@@ -14,7 +14,7 @@ class QuizController extends Controller
     public function getAllQuizzes()
     {
         // Implement logic to fetch all quizzes
-        $quizzes = Quiz::all(); 
+        $quizzes = Quiz::all();
         return $quizzes;
     }
 
@@ -47,7 +47,7 @@ class QuizController extends Controller
         // iterate each question_options, create quiz_question_option
         $options = $request->quiz_question_options;
         // \Log::info($options);
-        
+
         foreach ($options as $option) {
             $opt = new QuizOption;
             $opt->quiz_question_id = $quiz->id;
@@ -101,7 +101,7 @@ class QuizController extends Controller
 
                     $opt->save();
                 }
-                
+
             }
             return response()->json(['success' => true, 'message' => 'updated successfully'], 200);
         }

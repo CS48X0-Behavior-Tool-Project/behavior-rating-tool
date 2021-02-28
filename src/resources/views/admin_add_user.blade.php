@@ -80,13 +80,6 @@
                                     <strong>{{ $message }}</strong>
                                 </div>
                             @endif
-
-                            @if ($message = Session::get('add_message_error'))
-                                <div class="alert alert-danger">
-                                    <strong>{{ $message }}</strong>
-                                </div>
-                            @endif
-
                         </form>
                     </div>
                 </div>
@@ -116,42 +109,28 @@
                             </form>
                         </div>
                         <br>
-
                         @if ($message = Session::get('user_count_message'))
-                            <div class="alert alert-success">
+                            <div class="alert alert-info">
                                 <strong>{{ $message }}</strong>
                             </div>
-                        @endif
 
-                        @if ($message = Session::get('count_message_duplicates'))
-                            <div class="alert alert-warning">
-                                <strong>{{ $message }}</strong>
-                            </div>
                         @endif
-
-                        @if ($message = Session::get('count_message_no_new'))
-                            <div class="alert alert-danger">
-                                <strong>{{ $message }}</strong>
-                            </div>
+                        @if ($message = Session::get('duplicate_email_error'))
+                                <ul class="list-group">
+                                    <li class="list-group-item invalid-feedback">Duplicate Emails Found</li>
+                                    @foreach ($message as $email)
+                                        <li class="list-group-item list-group-item-danger text-left"> {{ $email }}
+                                        </li>
+                                    @endforeach
+                                </ul>
                         @endif
+                        <br>
                         <div align="center">
                             <img src="images/user_example2.png" alt="example csv" max_width="col-md-6">
                         </div>
                     </div>
                 </div>
             </div>
-            @if ($message = Session::get('duplicate_email_error'))
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">{{ __('Unsuccessful User Import') }}</div>
-                        <ul class="list-group">
-                            @foreach ($message as $email)
-                                <li class="list-group-item list-group-item-danger"> {{ $email }} </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            @endif
         </div>
     </div>
 @endsection

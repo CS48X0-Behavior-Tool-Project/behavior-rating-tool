@@ -40,11 +40,9 @@ class UploadController extends Controller
     {
 
         if (request()->has('mycsv')) {
-            $this->uploadFile();
-            return redirect()->back();
+            return $this->uploadFile();
         } else if (request()->has('add_single_user')) {
-            $this->uploadUser();
-            return redirect()->back();
+            return $this->uploadUser();
         } else {
             return redirect()->route('add_user_route');
         }
@@ -98,11 +96,9 @@ class UploadController extends Controller
 
         $user_count_message = $new_user_count . '/' . count($data) . " users added.";
 
-        // return redirect()->back()
-        //     ->with('user_count_message', $user_count_message)
-        //     ->with(array(
-        //         "duplicate_email_error" => $duplicateEmailsArray
-        //     ));
+        return redirect()->back()
+            ->with('user_count_message', $user_count_message)
+            ->with('duplicate_email_error', $duplicateEmailsArray);
     }
 
     /**
@@ -125,9 +121,9 @@ class UploadController extends Controller
                 'role' => 'required'
             ]);
 
-        $add_user_message = "New user added!";
-
         $this->dbInsert($firstName, $lastName, $email, $role);
+
+        return redirect()->back()->with('add_message', 'New user added!');
     }
 
     /**

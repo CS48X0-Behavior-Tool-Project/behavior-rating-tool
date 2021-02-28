@@ -10,6 +10,7 @@ use App\Http\Controllers\NewAccountController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CreateQuizController;
+use App\Http\Controllers\Api\QuizController;
 
 use App\Http\Controllers\Resources\VideoController;
 
@@ -51,7 +52,12 @@ Route::get('/account', [PagesController::class, 'getAccountManagement'])->name('
 /**
  * List of possible quizzes to attempt
  */
-Route::get('/quizzes', [PagesController::class, 'getQuizList']);
+Route::get('/quizzes', [PagesController::class, 'getQuizList'])->name('quizzes_route');
+
+/**
+ * Display the quiz we are attempting
+ */
+Route::get('/quizzes/{id}', [PagesController::class, 'getQuizById']);
 
 
 /**
@@ -79,3 +85,8 @@ Route::post('/create_quiz', [CreateQuizController::class, 'createQuiz']);
 * Route for confirming a new account.
 */
 Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
+
+/*
+* Route for filtering quiz list.
+*/
+Route::post('/quizzes', [QuizController::class, 'filter']);

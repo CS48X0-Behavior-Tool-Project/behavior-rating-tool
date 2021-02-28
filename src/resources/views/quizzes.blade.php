@@ -11,6 +11,8 @@
     <div class="row col-12">
         <div class="card col-4">
             <div class="card-header">Filter</div>
+            <form action="/quizzes" method="post">
+              @csrf
             <div class="card-body">
                 <input id="search" class="form-control" type="text" name="search" placeholder="Search Quizzes..." onkeyup"">
 
@@ -47,6 +49,11 @@
 
                         <!-- Populate dynamic radio button list for each animal species in database -->
                         <br>
+                        <span>
+                            <input type="radio" id="a-all" name="animal-radio[]" value = "all" checked = "checked">
+                            <label id="a-all" type="text" name="a-all"> All </label>
+                            <br>
+                        </span>
                         @foreach($animals as $data)
                         <span>
                             <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
@@ -57,6 +64,7 @@
 
                     </div>
                 </div>
+                </form>
             </div>
         </div>
         <div class="card col-8">
@@ -77,6 +85,7 @@
               <td>{{ $quiz->animal }}</td>
               <td>{{ $quiz->video }}</td>
               <td>{{ $quiz->question }}</td>
+              <td><a href="{{ url('/quizzes/' . $quiz->id) }}" class="btn btn-xs btn-info pull-right">Select</a><td>
               </tr>
               @endforeach
               </table>

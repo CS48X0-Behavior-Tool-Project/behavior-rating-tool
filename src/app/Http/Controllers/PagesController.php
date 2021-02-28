@@ -33,8 +33,15 @@ class PagesController extends Controller
                 ->pluck('animal')->unique();
 
         $quizzes = DB::select('select * from quiz_questions');
+        $options = DB::select('select * from quiz_question_options');
 
         return view('quizzes')->with(['animals'=>$animals, 'quizzes'=>$quizzes]);
+    }
+
+    public function getQuizById($id) {
+      $options = $options = DB::select('select * from quiz_question_options where quiz_question_id = ?', [$id]);
+
+      return view('single_quiz')->with('options', $options);
     }
 
     public function getCreateQuiz()

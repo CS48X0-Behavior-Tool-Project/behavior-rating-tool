@@ -21,6 +21,12 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- <link href="{{ asset('/css/styles.css') }}" rel="stylesheet"> -->
+
+    <!-- Page Specific Scripts -->
+    @yield('view_specific_scripts')
+
+    <!-- Page Specific Styles -->
+    @yield('view_specific_styles')
 </head>
 <body>
     <div id="app">
@@ -60,7 +66,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
                                 </a>
                                 <!-- TODO -->
                                 <!-- navbar items once logged in - differentiate between student/admin -->
@@ -100,5 +106,6 @@
             @yield('content')
         </main>
     </div>
+    @yield('body_end_scripts')
 </body>
 </html>

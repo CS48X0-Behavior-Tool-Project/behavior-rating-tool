@@ -44,26 +44,17 @@
                 <div class="form-group row justify-content-center">
                     <br><p style="text-align:center;">Filter quizzes by animal</p>
                     <div>
+
+                        <!-- Populate dynamic radio button list for each animal species in database -->
+                        <br>
+                        @foreach($animals as $data)
                         <span>
-                            <input type="checkbox" id="1" name="1" value="1">
-                            <label for="1"> This will need</label><br>
+                            <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
+                            <label id="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
+                            <br>
                         </span>
-                        <span>
-                            <input type="checkbox" id="2" name="2" value="2">
-                            <label for="2"> to be auto-populated</label><br>
-                        </span>
-                        <span>
-                            <input type="checkbox" id="3" name="3" value="3">
-                            <label for="3"> from the database</label><br>
-                        </span>
-                        <span>
-                            <input type="checkbox" id="4" name="4" value="4">
-                            <label for="4"> based on what animals</label><br>
-                        </span>
-                        <span>
-                            <input type="checkbox" id="5" name="5" value="5">
-                            <label for="5"> are available</label><br>
-                        </span>
+                        @endforeach
+                        
                     </div>
                 </div>
             </div>

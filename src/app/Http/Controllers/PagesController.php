@@ -29,7 +29,10 @@ class PagesController extends Controller
 
     public function getQuizList()
     {
-        return view('quizzes');
+        $animals = DB::table('quiz_questions')
+                ->pluck('animal')->unique();
+
+        return view('quizzes')->with('animals', $animals);
     }
 
     public function getCreateQuiz()
@@ -37,7 +40,7 @@ class PagesController extends Controller
         // search the database for different animal species to populate a radio button list
         $animals = DB::table('quiz_questions')
                 ->where('animal', '<>', 'Horse')
-                ->pluck('animal');
+                ->pluck('animal')->unique();
 
         return $this->adminView(request(), 'admin_create_quiz')->with('animals', $animals);
     }

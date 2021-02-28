@@ -117,12 +117,12 @@ class UserCreationTest extends TestCase
             )
         ];
 
-        $response = $this->postJson(
+        $response = $this->from('/add_user')->postJson(
             '/add_user',
             $inputs
         );
 
-        $this->assertCount(3, User::all());
+        $this->assertCount(1, User::all());
         $response->assertRedirect('/add_user');
     }
 }

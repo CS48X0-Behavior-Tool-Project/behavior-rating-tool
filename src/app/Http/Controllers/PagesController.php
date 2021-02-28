@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Bouncer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
 {
@@ -30,30 +32,32 @@ class PagesController extends Controller
         return view('quizzes');
     }
 
-    public function attemptQuiz($id)
-    {
-        // TODO: Fetch quiz using passed quiz id
-        // Using the ID, we should fetch the quiz
-        // which should contain path directory OR URL
-        if (!file_exists(public_path('/assets/videos/' . $id . '.mp4'))) {
-            abort(404);
-        } else {
-            return view('quiz_attempt', ['id' => $id]);
-        }
-    }
-
     public function getCreateQuiz()
     {
-        return view('admin_create_quiz');
+        // search the database for different animal species to populate a radio button list
+        $animals = DB::table('quiz_questions')
+                ->where('animal', '<>', 'Horse')
+                ->pluck('animal');
+
+        return $this->adminView(request(), 'admin_create_quiz')->with('animals', $animals);
     }
 
     public function getAddUser()
     {
-        return view('admin_add_user');
+        return $this->adminView(request(), 'admin_add_user');
     }
 
     public function getAccountManagement()
     {
         return view('account');
+    }
+
+    private function adminView(Request $request, $path)
+    {
+        if ($request->user()->isAn('admin')) {
+            return view($path);
+        } else {
+            return abort(404);
+        }
     }
 }

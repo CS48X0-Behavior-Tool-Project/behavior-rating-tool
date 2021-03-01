@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\QuizController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VideoController;
 use App\Models\User;
+use App\Models\Quiz;
 
 /*
 |--------------------------------------------------------------------------

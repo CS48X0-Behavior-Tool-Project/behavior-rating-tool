@@ -16,6 +16,7 @@ services:
       - 8080:80
     volumes:
       - ./src:/var/www/html
+      - ./apache/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - laravel
 

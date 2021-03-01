@@ -11,6 +11,8 @@
     <div class="row col-12">
         <div class="card col-4">
             <div class="card-header">Filter</div>
+            <form action="/quizzes" method="post">
+              @csrf
             <div class="card-body">
                 <input id="search" class="form-control" type="text" name="search" placeholder="Search Quizzes..." onkeyup"">
 
@@ -19,23 +21,23 @@
                     <br><p style="text-align:center;">Filter quizzes by your number of attempts</p>
                     <div>
                         <span>
-                            <input type="checkbox" id="one" name="one" value="one">
+                            <input type="radio" id="one" name="attempts-radio[]" value="one">
                             <label for="one"> One</label><br>
                         </span>
                         <span>
-                            <input type="checkbox" id="two" name="two" value="two">
+                            <input type="radio" id="two" name="attempts-radio[]" value="two">
                             <label for="two"> Two</label><br>
                         </span>
                         <span>
-                            <input type="checkbox" id="three" name="three" value="three">
+                            <input type="radio" id="three" name="attempts-radio[]" value="three">
                             <label for="three"> Three</label><br>
                         </span>
                         <span>
-                            <input type="checkbox" id="four" name="four" value="four">
+                            <input type="radio" id="four" name="attempts-radio[]" value="four">
                             <label for="four"> Four</label><br>
                         </span>
                         <span>
-                            <input type="checkbox" id="five_plus" name="five_plus" value="five_plus">
+                            <input type="radio" id="five_plus" name="attempts-radio[]" value="five_plus">
                             <label for="five_plus"> Five +</label><br>
                         </span>
                     </div>
@@ -44,42 +46,49 @@
                 <div class="form-group row justify-content-center">
                     <br><p style="text-align:center;">Filter quizzes by animal</p>
                     <div>
+
+                        <!-- Populate dynamic radio button list for each animal species in database -->
+                        <br>
                         <span>
-                            <input type="checkbox" id="1" name="1" value="1">
-                            <label for="1"> This will need</label><br>
+                            <input type="radio" id="a-all" name="animal-radio[]" value = "all" checked = "checked">
+                            <label id="a-all" type="text" name="a-all"> All </label>
+                            <br>
                         </span>
+                        @foreach($animals as $data)
                         <span>
-                            <input type="checkbox" id="2" name="2" value="2">
-                            <label for="2"> to be auto-populated</label><br>
+                            <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
+                            <label id="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
+                            <br>
                         </span>
-                        <span>
-                            <input type="checkbox" id="3" name="3" value="3">
-                            <label for="3"> from the database</label><br>
-                        </span>
-                        <span>
-                            <input type="checkbox" id="4" name="4" value="4">
-                            <label for="4"> based on what animals</label><br>
-                        </span>
-                        <span>
-                            <input type="checkbox" id="5" name="5" value="5">
-                            <label for="5"> are available</label><br>
-                        </span>
+                        @endforeach
+
                     </div>
                 </div>
+                </form>
             </div>
         </div>
         <div class="card col-8">
             <div class="card-header">Selection</div>
             <div class="card-body">
-                <!-- @foreach ($users as $user)
-                  <tr>
-                  <td>{{ $user->id }}</td>
-                  <td>{{ $user->first_name }}</td>
-                  <td>{{ $user->last_name }}</td>
-                  <td>{{ $user->city_name }}</td>
-                  <td>{{ $user->email }}</td>
-                  </tr>
-                @endforeach -->
+              <table border = "1">
+              <tr>
+              <td>Id</td>
+              <td>Code</td>
+              <td>Animal</td>
+              <td>Video</td>
+              <td>Question</td>
+              </tr>
+              @foreach ($quizzes as $quiz)
+              <tr>
+              <td>{{ $quiz->id }}</td>
+              <td>{{ $quiz->code }}</td>
+              <td>{{ $quiz->animal }}</td>
+              <td>{{ $quiz->video }}</td>
+              <td>{{ $quiz->question }}</td>
+              <td><a href="{{ url('/quizzes/' . $quiz->id) }}" class="btn btn-xs btn-info pull-right">Select</a><td>
+              </tr>
+              @endforeach
+              </table>
             </div>
         </div>
     </div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use App\Models\User;
 use Auth;
+use Bouncer;
 
 class ExportController extends Controller
 {
@@ -13,24 +14,21 @@ class ExportController extends Controller
     
     public function exportUsers() {
         
-        if (Auth::user()){
+        // Only Admins should be allowed to access this resource
+        if (Bouncer::is(request()->user())->an('admin')){
             $table = User::all();
-            $filename = "users.csv";
-            $handle = fopen($filename, 'w+');
-
-            fputcsv($handle, array('username', 'First Name', 'Last Name', 'E-mail'));
+            $csvFile = "username,\"First Name\",\"Last Name\",Email\n";
 
             foreach($table as $row) {
-                fputcsv($handle, array($row['name'], $row['first_name'], $row['last_name'], $row['email']));
+                $csvFile .= "{$row['name']},{$row['first_name']},{$row['last_name']},{$row['email']}\n";
             }
-        
-            fclose($handle);
-        
-            $headers = array(
-                'Content-Type' => 'text/csv',
-            );
-        
-            return Response::download($filename, 'users.csv', $headers);
+
+            return response($csvFile)
+                ->withHeaders([
+                    'Content-Type' => 'text/csv',
+                    'Cache-Control' => 'no-store, no-cache',
+                    'Content-Disposition' => 'attachment; filename=users.csv',
+                ]);
         }
         else
         {

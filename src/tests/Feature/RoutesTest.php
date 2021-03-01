@@ -76,9 +76,9 @@ class RoutesTest extends TestCase
         $response->assertStatus(200);
     }
 
-    // public function test_guest_can_view_confirmation_page()
-    // {
-    //     $response = $this->get('/confirmation');
-    //     $response->assertOk();
-    // }
+    public function test_guest_can_view_confirmation_page()
+    {
+        $response = $this->get('/confirmation');
+        $response->assertOk();
+    }
 }

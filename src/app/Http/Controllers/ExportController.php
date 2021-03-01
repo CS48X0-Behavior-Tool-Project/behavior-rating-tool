@@ -17,7 +17,7 @@ class ExportController extends Controller
         // Only Admins should be allowed to access this resource
         if (Bouncer::is(request()->user())->an('admin')){
             $table = User::all();
-            $csvFile = "username,\"First Name\",\"Last Name\",Email\n";
+            $csvFile = "username,First Name,Last Name,Email\n";
 
             foreach($table as $row) {
                 $csvFile .= "{$row['name']},{$row['first_name']},{$row['last_name']},{$row['email']}\n";

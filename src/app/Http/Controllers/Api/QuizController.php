@@ -22,7 +22,7 @@ class QuizController extends Controller
     {
         // Implement logic to fetch quiz
 
-        $quizOps = DB::select('select * from quiz_question_options where quiz_question_id = ?', [$id]);
+        $quizOps = DB::select('select * from quiz_options where quiz_id = ?', [$id]);
         $quizInfor = Quiz::find($id);
         $quizInfor->quiz_question_options = $quizOps;
         return $quizInfor;
@@ -50,7 +50,7 @@ class QuizController extends Controller
         
         foreach ($options as $option) {
             $opt = new QuizOption;
-            $opt->quiz_question_id = $quiz->id;
+            $opt->quiz_id = $quiz->id;
             $opt->type = $option['type'];
             $opt->title = $option['title'];
             $opt->marking_scheme = $option['marking_scheme'];

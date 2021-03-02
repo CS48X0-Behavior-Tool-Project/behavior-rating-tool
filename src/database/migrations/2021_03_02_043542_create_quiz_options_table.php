@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuizQuestionOptions extends Migration
+class CreateQuizOptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,9 @@ class CreateQuizQuestionOptions extends Migration
      */
     public function up()
     {
-        // quiz_question_option
-        // id | quiz_question_id | type | title | marking_scheme | is_solution | options
-        // 1 | 1 | behavior | kicking | 1 | t |
-        // 2 | 1 | behavior | smiling | 1 | f | 
-        // 3 | 1 | interpretation | angry | 1 | t | 
-        // 4 | 1 | interpretation | happy | 1 | f | 
-
-        Schema::create('quiz_question_options', function (Blueprint $table) {
+        Schema::create('quiz_options', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('quiz_question_id');
+            $table->unsignedBigInteger('quiz_id');
             $table->string('type');
             $table->string('title');
             $table->integer('marking_scheme')->nullable();
@@ -31,7 +24,7 @@ class CreateQuizQuestionOptions extends Migration
             $table->jsonb('options')->nullable();
 
             //FOREIGN KEY CONSTRAINTS
-            $table->foreign('quiz_question_id')->references('id')->on('quiz_questions')->onDelete('cascade');
+            $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');
         });
     }
 
@@ -43,7 +36,7 @@ class CreateQuizQuestionOptions extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('quiz_question_options');
+        Schema::dropIfExists('quiz_options');
         Schema::enableForeignKeyConstraints();
     }
 }

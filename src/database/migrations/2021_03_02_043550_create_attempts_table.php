@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAttempts extends Migration
+class CreateAttemptsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateAttempts extends Migration
      */
     public function up()
     {
-        // attempt
-        // id | student_id | datetime | options
         Schema::create('attempts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('student_id');   // users -> id
+            $table->unsignedBigInteger('user_id');   // users -> id
             $table->timestamps();
             $table->jsonb('options')->nullable();
 
             //FOREIGN KEY CONSTRAINTS
-            $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

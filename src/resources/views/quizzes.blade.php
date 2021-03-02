@@ -6,6 +6,16 @@
     </div>
 @endif
 
+<style media="screen">
+    .title {
+        text-align: center;
+        color: black;
+        background-color: #f7f7f7;
+        border-radius: 5px;
+        border: 1px solid #dfdfdf;
+    }
+</style>
+
 @section('content')
 <div class="container">
     <div class="row col-12">
@@ -17,78 +27,59 @@
                 <input id="search" class="form-control" type="text" name="search" placeholder="Search Quizzes..." onkeyup"">
 
                 <!-- Number of attempts filter -->
+                <p class="title" style="margin-top: 15px;">Filter quizzes by your number of attempts</p>
                 <div class="form-group row justify-content-center">
-                    <br><p style="text-align:center;">Filter quizzes by your number of attempts</p>
                     <div>
                         <span>
-                            <input type="radio" id="one" name="attempts-radio[]" value="one">
+                            <input type="radio" id="one" name="attempts-radio" value="one">
                             <label for="one"> One</label><br>
                         </span>
                         <span>
-                            <input type="radio" id="two" name="attempts-radio[]" value="two">
+                            <input type="radio" id="two" name="attempts-radio" value="two">
                             <label for="two"> Two</label><br>
                         </span>
                         <span>
-                            <input type="radio" id="three" name="attempts-radio[]" value="three">
+                            <input type="radio" id="three" name="attempts-radio" value="three">
                             <label for="three"> Three</label><br>
                         </span>
                         <span>
-                            <input type="radio" id="four" name="attempts-radio[]" value="four">
+                            <input type="radio" id="four" name="attempts-radio" value="four">
                             <label for="four"> Four</label><br>
                         </span>
                         <span>
-                            <input type="radio" id="five_plus" name="attempts-radio[]" value="five_plus">
+                            <input type="radio" id="five_plus" name="attempts-radio" value="five_plus">
                             <label for="five_plus"> Five +</label><br>
                         </span>
                     </div>
                 </div>
                 <!-- Animal filter -->
-                <div class="form-group row justify-content-center">
-                    <br><p style="text-align:center;">Filter quizzes by animal</p>
-                    <div>
-
-                        <!-- Populate dynamic radio button list for each animal species in database -->
-                        <br>
-                        <span>
-                            <input type="radio" id="a-all" name="animal-radio[]" value = "all" checked = "checked">
-                            <label id="a-all" type="text" name="a-all"> All </label>
-                            <br>
-                        </span>
-                        @foreach($animals as $data)
-                        <span>
-                            <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
-                            <label id="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
-                            <br>
-                        </span>
-                        @endforeach
-
-                    </div>
+                <p class="title">Filter quizzes by animal</p>
+                <div class="row justify-content-center">
+                  <span>
+                      <input type="radio" id="animal-all" name="animal-radio" value="all" checked="checked">
+                      <label for="animal-all" type="text"> All </label>
+                  </span>
                 </div>
+                @foreach($animals as $data)
+                <div class="row justify-content-center">
+                    <span>
+                        <input type="radio" id="animal-{{$data}}" name="animal-radio" value = "{{$data}}">
+                        <label for="animal-{{$data}}" type="text"> {{$data}} </label>
+                    </span>
+                </div>
+                @endforeach
+
                 </form>
             </div>
         </div>
         <div class="card col-8">
             <div class="card-header">Selection</div>
+            Insert selected filter criteria here
+            <!-- Insert selected filter criteria here TODO -->
             <div class="card-body">
-              <table border = "1">
-              <tr>
-              <td>Id</td>
-              <td>Code</td>
-              <td>Animal</td>
-              <td>Video</td>
-              <td>Question</td>
-              </tr>
-              @foreach ($quizzes as $quiz)
-              <tr>
-              <td>{{ $quiz->id }}</td>
-              <td>{{ $quiz->code }}</td>
-              <td>{{ $quiz->animal }}</td>
-              <td>{{ $quiz->video }}</td>
-              <td>{{ $quiz->question }}</td>
-              <td><a href="{{ url('/quizzes/' . $quiz->id) }}" class="btn btn-xs btn-info pull-right">Select</a><td>
-              </tr>
-              @endforeach
-              </table>
+                @foreach ($quizzes as $quiz)
+                    <button class="btn btn-secondary" style="padding: 10px; margin: 10px;" onclick="{{ url('/quizzes/' . $quiz->id) }}">{{ $quiz->code }}</button>
+                @endforeach
             </div>
         </div>
     </div>

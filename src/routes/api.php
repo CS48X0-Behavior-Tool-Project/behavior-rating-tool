@@ -55,6 +55,7 @@ Route::delete('quizzes/{id}', [QuizController::class, 'deleteQuiz']);
 Route::get('users', [UserController::class, 'getAllUsers']);
 Route::get('users/{id}', [UserController::class, 'getUser']);
 Route::get('users/{id}/attempts', [UserController::class, 'getUserAttempts']);
+Route::post('users/{id}/attempts', [UserController::class, 'createUserAttempts']);
 Route::post('users/create', [UserController::class, 'createUser']);
 Route::put('users/{id}', [UserController::class, 'updateUser']);
 Route::delete('users/{id}', [UserController::class, 'deleteUser']);

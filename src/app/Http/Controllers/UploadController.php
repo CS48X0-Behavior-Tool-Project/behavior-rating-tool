@@ -61,121 +61,59 @@ class UploadController extends Controller
 
         switch ($extension) {
           case 'csv':
-            return $this->uploadCsv();
-          case 'xlsx':
-            return $this->uploadXlsx();
-          case 'ods':
-            return $this->uploadOds();
-          default:
-            echo 'go here if invalid file type';
+            $data = array_map('str_getcsv', file(request()->mycsv));
             break;
+          case 'xlsx':
+            $data = SimpleXLSX::parse(request()->mycsv)->rows();
+            break;
+          default:
+            return redirect()->back()
+                ->with('file_error_message', 'Invalid File Type (must be .csv or .xlsx)');
         }
-    }
 
-    /**
-    * Upload a .csv file.
-    */
-    public function uploadCsv()
-    {
-      $data = array_map('str_getcsv', file(request()->mycsv));
+        unset($data[0]);
 
-      unset($data[0]);
+        $new_user_count = 0;
+        $failed_entry_count = 0;
+        $duplicateEmailsArray = [];
 
-      $new_user_count = 0;
-      $failed_entry_count = 0;
-      $duplicateEmailsArray = [];
+        foreach ($data as $value) {
+            $firstName = $value[0];
+            $lastName = $value[1];
+            $email = $value[2];
 
-      foreach ($data as $value) {
-          $firstName = $value[0];
-          $lastName = $value[1];
-          $email = $value[2];
+            $entry = [
+                "first_name" => $firstName,
+                "last_name" => $lastName,
+                "email" => $email
+            ];
 
-          $entry = [
-              "first_name" => $firstName,
-              "last_name" => $lastName,
-              "email" => $email
-          ];
+            $validator = Validator::make(
+                $entry,
+                [
+                    'first_name' => 'required|max:255',
+                    'last_name' => 'required|max:255',
+                    'email' => 'required|unique:users|email:rfc'
+                ]
+            );
 
-          $validator = Validator::make(
-              $entry,
-              [
-                  'first_name' => 'required|max:255',
-                  'last_name' => 'required|max:255',
-                  'email' => 'required|unique:users|email:rfc'
-              ]
-          );
+            if ($validator->fails()) {
+                $failedRules = $validator->failed();
+                if (isset($failedRules['email']['Unique'])) {
+                    array_push($duplicateEmailsArray, $email);
+                }
+                $failed_entry_count++;
+            } else {
+                $this->dbInsert($firstName, $lastName, $email, 'student');
+                $new_user_count++;
+            }
+        }
 
-          if ($validator->fails()) {
-              $failedRules = $validator->failed();
-              if (isset($failedRules['email']['Unique'])) {
-                  array_push($duplicateEmailsArray, $email);
-              }
-              $failed_entry_count++;
-          } else {
-              $this->dbInsert($firstName, $lastName, $email, 'student');
-              $new_user_count++;
-          }
-      }
+        $user_count_message = $new_user_count . '/' . count($data) . " users added.";
 
-      $user_count_message = $new_user_count . '/' . count($data) . " users added.";
-
-      return redirect()->back()
-          ->with('user_count_message', $user_count_message)
-          ->with('duplicate_email_error', $duplicateEmailsArray);
-    }
-
-    public function uploadXlsx() {
-
-      $data = SimpleXLSX::parse(request()->mycsv)->rows();
-
-      // NOTE: copied from uploadCsv function, make the code simpler later
-      unset($data[0]);
-
-      $new_user_count = 0;
-      $failed_entry_count = 0;
-      $duplicateEmailsArray = [];
-
-      foreach ($data as $value) {
-          $firstName = $value[0];
-          $lastName = $value[1];
-          $email = $value[2];
-
-          $entry = [
-              "first_name" => $firstName,
-              "last_name" => $lastName,
-              "email" => $email
-          ];
-
-          $validator = Validator::make(
-              $entry,
-              [
-                  'first_name' => 'required|max:255',
-                  'last_name' => 'required|max:255',
-                  'email' => 'required|unique:users|email:rfc'
-              ]
-          );
-
-          if ($validator->fails()) {
-              $failedRules = $validator->failed();
-              if (isset($failedRules['email']['Unique'])) {
-                  array_push($duplicateEmailsArray, $email);
-              }
-              $failed_entry_count++;
-          } else {
-              $this->dbInsert($firstName, $lastName, $email, 'student');
-              $new_user_count++;
-          }
-      }
-
-      $user_count_message = $new_user_count . '/' . count($data) . " users added.";
-
-      return redirect()->back()
-          ->with('user_count_message', $user_count_message)
-          ->with('duplicate_email_error', $duplicateEmailsArray);
-    }
-
-    public function uploadOds() {
-
+        return redirect()->back()
+            ->with('user_count_message', $user_count_message)
+            ->with('duplicate_email_error', $duplicateEmailsArray);
     }
 
     /**
@@ -221,7 +159,7 @@ class UploadController extends Controller
         $user->assign($role);
 
         // send an email to the new user
-        // $this->emailNewUser($email);
+        $this->emailNewUser($email);
     }
 
     /**

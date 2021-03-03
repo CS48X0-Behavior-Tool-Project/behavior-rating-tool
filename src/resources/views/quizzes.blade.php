@@ -78,7 +78,7 @@
             <!-- Insert selected filter criteria here TODO -->
             <div class="card-body">
                 @foreach ($quizzes as $quiz)
-                    <button class="btn btn-secondary" style="padding: 10px; margin: 10px;" onclick="{{ url('/quizzes/' . $quiz->id) }}">{{ $quiz->code }}</button>
+                    <button class="btn btn-secondary" style="padding: 10px; margin: 10px;" onclick="window.location.href='/quizzes/{{$quiz->id}}'">{{ $quiz->code }}</button>
                 @endforeach
             </div>
         </div>

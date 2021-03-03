@@ -6,11 +6,19 @@ use Bouncer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Http\Controllers\Api\QuizController;
+
 class PagesController extends Controller
 {
+
+    private $qc;
     /**
      * These controller methods simply load up the appropriate views from the pages folder.
      */
+
+   public function __construct() {
+     $this->qc = new QuizController();
+   }
 
     public function getLoginPage()
     {
@@ -32,14 +40,13 @@ class PagesController extends Controller
         $animals = DB::table('quiz_questions')
                 ->pluck('animal')->unique();
 
-        $quizzes = DB::select('select * from quiz_questions');
-        $options = DB::select('select * from quiz_question_options');
+        $quizzes = $this->qc->getAllQuizzes();
 
         return view('quizzes')->with(['animals'=>$animals, 'quizzes'=>$quizzes]);
     }
 
     public function getQuizById($id) {
-      $options = $options = DB::select('select * from quiz_question_options where quiz_question_id = ?', [$id]);
+      $options = DB::select('select * from quiz_question_options where quiz_question_id = ?', [$id]);
 
       return view('single_quiz')->with('options', $options);
     }

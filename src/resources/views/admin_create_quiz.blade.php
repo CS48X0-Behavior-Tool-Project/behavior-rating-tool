@@ -96,16 +96,11 @@
                                 <p style="text-align:center;"> Or allow to enter a new animal if it isn't an option </p>
                                 <div class="form-group row justify-content-center">
                                     <div>
-                                        <span id="spacing">
-                                            <input type="radio" id="a-horse" name="animal-radio[]" value = "Horse">
-                                            <label id="a-horse" type="text" name="a-horse"> Horse </label>
-                                        </span>
-
                                         <!-- Populate dynamic radio button list for each animal species in database -->
                                         @foreach($animals as $data)
                                         <span id="spacing">
                                             <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
-                                            <label id="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
+                                            <label for="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
                                         </span>
                                         @endforeach
 

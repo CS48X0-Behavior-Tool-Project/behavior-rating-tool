@@ -21,4 +21,6 @@
 @endforeach
 </table>
 
+<?php echo 'video ID: ' . $video; ?>
+
 @endsection

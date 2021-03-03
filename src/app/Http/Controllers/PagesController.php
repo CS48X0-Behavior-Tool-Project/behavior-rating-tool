@@ -46,9 +46,10 @@ class PagesController extends Controller
     }
 
     public function getQuizById($id) {
-      $options = DB::select('select * from quiz_question_options where quiz_question_id = ?', [$id]);
 
-      return view('single_quiz')->with('options', $options);
+      $quiz = $this->qc->getQuiz($id);
+
+      return view('single_quiz')->with(['options' => $quiz->quiz_question_options, 'video' => $quiz->video]);
     }
 
     public function getCreateQuiz()

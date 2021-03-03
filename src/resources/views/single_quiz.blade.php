@@ -54,7 +54,6 @@
                             TIMER
                             <p id="demo"></p>
                         </div>
-                        <br>
 
                         <!-- Video -->
                         <div class="row justify-content-center">

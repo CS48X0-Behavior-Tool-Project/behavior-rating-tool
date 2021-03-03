@@ -14,6 +14,17 @@
         border-radius: 5px;
         border: 1px solid #dfdfdf;
     }
+
+    .timer {
+        text-align: right;
+    }
+    p span {
+        color: black;
+        background-color: #f7f7f7;
+        border-radius: 5px;
+        padding: 10px;
+        border: 1px solid #dfdfdf;
+    }
 </style>
 <!-- Timer -->
 <script>
@@ -50,9 +61,8 @@
 
                     <form>
                         <!-- Stopwatch -->
-                        <div class="col-md-4">
-                            TIMER
-                            <p id="demo"></p>
+                        <div class="col-xs-2">
+                            <p class="timer"> <span id="demo">00:00:00</span>  </p>
                         </div>
 
                         <!-- Video -->

@@ -31,9 +31,9 @@ class UserCreationTest extends TestCase
 
     public function test_submission_of_single_valid_user()
     {
-        $response = $this->post('/add_user', [
-            'fname' => 'Test',
-            'lname' => 'User',
+        $response = $this->from('/add_user')->post('/add_user', [
+            'first_name' => 'Test',
+            'last_name' => 'User',
             'email' => 'test@example.com',
             'role' => 'student',
             'add_single_user' => null
@@ -42,57 +42,60 @@ class UserCreationTest extends TestCase
         $response->assertRedirect('/add_user');
     }
 
-    // public function test_submission_of_single_null_fname_user()
-    // {
-    //     $response = $this->post('/add_user', [
-    //         'fname' => null,
-    //         'lname' => 'User',
-    //         'email' => 'test@example.com',
-    //         'role' => 'student',
-    //         'add_single_user' => null
-    //     ]);
-    //     $this->assertCount(0, User::all());
-    //     $response->assertRedirect('/add_user');
-    // }
+    public function test_submission_of_single_null_first_name_user()
+    {
+        $response = $this->from('/add_user')->post('/add_user', [
+            'first_name' => null,
+            'last_name' => 'User',
+            'email' => 'test@example.com',
+            'role' => 'student',
+            'add_single_user' => null
+        ]);
+        $this->assertCount(0, User::all());
+        $response->assertSessionHasErrors([
+            'first_name'
+        ]);
+        $response->assertRedirect('/add_user');
+    }
 
-    // public function test_submission_of_single_null_lname_user()
-    // {
-    //     $response = $this->post('/add_user', [
-    //         'fname' => 'Test',
-    //         'lname' => null,
-    //         'email' => 'test@example.com',
-    //         'role' => 'student',
-    //         'add_single_user' => null
-    //     ]);
-    //     $this->assertCount(0, User::all());
-    //     $response->assertRedirect('/add_user');
-    // }
+    public function test_submission_of_single_null_last_name_user()
+    {
+        $response = $this->from('/add_user')->post('/add_user', [
+            'first_name' => 'Test',
+            'last_name' => null,
+            'email' => 'test@example.com',
+            'role' => 'student',
+            'add_single_user' => null
+        ]);
+        $this->assertCount(0, User::all());
+        $response->assertRedirect('/add_user');
+    }
 
-    // public function test_submission_of_single_null_email_user()
-    // {
-    //     $response = $this->post('/add_user', [
-    //         'fname' => 'Test',
-    //         'lname' => 'User',
-    //         'email' => null,
-    //         'role' => 'student',
-    //         'add_single_user' => null
-    //     ]);
-    //     $this->assertCount(0, User::all());
-    //     $response->assertRedirect('/add_user'); // response status 500, should redirect the user back to the page with an error
-    // }
+    public function test_submission_of_single_null_email_user()
+    {
+        $response = $this->from('/add_user')->post('/add_user', [
+            'first_name' => 'Test',
+            'last_name' => 'User',
+            'email' => null,
+            'role' => 'student',
+            'add_single_user' => null
+        ]);
+        $this->assertCount(0, User::all());
+        $response->assertRedirect('/add_user'); // response status 500, should redirect the user back to the page with an error
+    }
 
-    // public function test_submission_of_single_null_role_user()
-    // {
-    //     $response = $this->post('/add_user', [
-    //         'fname' => 'Test',
-    //         'lname' => 'User',
-    //         'email' => 'test@example.com',
-    //         'role' => null,
-    //         'add_single_user' => null
-    //     ]);
-    //     $this->assertCount(0, User::all());
-    //     $response->assertRedirect('/add_user');
-    // }
+    public function test_submission_of_single_null_role_user()
+    {
+        $response = $this->from('/add_user')->post('/add_user', [
+            'first_name' => 'Test',
+            'last_name' => 'User',
+            'email' => 'test@example.com',
+            'role' => null,
+            'add_single_user' => null
+        ]);
+        $this->assertCount(0, User::all());
+        $response->assertRedirect('/add_user');
+    }
 
     public function test_user_through_csv()
     {
@@ -114,12 +117,12 @@ class UserCreationTest extends TestCase
             )
         ];
 
-        $response = $this->postJson(
+        $response = $this->from('/add_user')->postJson(
             '/add_user',
             $inputs
         );
 
-        $this->assertCount(3, User::all());
+        $this->assertCount(1, User::all());
         $response->assertRedirect('/add_user');
     }
 }

@@ -57,7 +57,6 @@ class PagesController extends Controller
     {
         // search the database for different animal species to populate a radio button list
         $animals = DB::table('quiz_questions')
-                ->where('animal', '<>', 'Horse')
                 ->pluck('animal')->unique();
 
         return $this->adminView(request(), 'admin_create_quiz')->with('animals',$animals);

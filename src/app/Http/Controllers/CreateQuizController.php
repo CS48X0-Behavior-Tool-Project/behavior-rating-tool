@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Exception;
 use App\Models\Quiz;
 use App\Models\QuizOption;
+use App\Models\Video;
 
 class CreateQuizController extends Controller
 {
@@ -48,7 +48,10 @@ class CreateQuizController extends Controller
 
       //reject form upload if there is no video uploaded
       //make sure the ID field is not empty, and that the ID corresponds to a video that has been uploaded (record stored in db)
-      if ($videoID === NULL || !DB::table('videos')->where('id', $videoID)->first()) {
+
+      $video = Video::where('id', $videoID);
+      
+      if ($videoID === NULL || !$video->exists()) {
         throw new Exception("video-status:"."Video ID Mismatch");
         return redirect()->route('create_quiz_route')->with('video-status', 'Video ID Mismatch');
       }

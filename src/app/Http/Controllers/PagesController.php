@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Bouncer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Api\QuizController;
+
+use App\Models\Quiz;
 
 class PagesController extends Controller
 {
@@ -37,8 +38,7 @@ class PagesController extends Controller
 
     public function getQuizList()
     {
-        $animals = DB::table('quiz_questions')
-                ->pluck('animal')->unique();
+        $animals = Quiz::all()->pluck('animal')->unique();
 
         $quizzes = $this->qc->getAllQuizzes();
 
@@ -56,8 +56,7 @@ class PagesController extends Controller
     public function getCreateQuiz()
     {
         // search the database for different animal species to populate a radio button list
-        $animals = DB::table('quiz_questions')
-                ->pluck('animal')->unique();
+        $animals = Quiz::all()->pluck('animal')->unique();
 
         return $this->adminView(request(), 'admin_create_quiz')->with('animals',$animals);
     }

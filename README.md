@@ -48,7 +48,7 @@ Follow the instructions below to install the software onto your system for devel
 
 Git can be downloaded and installed on any operating system from [their website](https://git-scm.com/). If you're interested in using a client then there are a couple of options:
 
-**Software** 
+**Software**
  * [Github Desktop](https://desktop.github.com/) [Mac, Windows]
  * [GitKraken](https://www.gitkraken.com/) [Linux, Mac, Windows]
  * [SourceTree](https://www.sourcetreeapp.com/) [Mac, Windows]
@@ -167,6 +167,28 @@ docker-compose exec brt php artisan migrate
 docker-compose exec brt php artisan db:seed
 ```
 
+To access and view the database for development purposes, the following commands should be followed:
+
+```sh
+docker-compose exec mysql /bin/sh
+mysql -u laravel -p laraveldb
+```
+The password is "secret".
+
+You will want to run the migrations to ensure all the tables are set up properly:
+
+```sh
+docker-compose exec brt php artisan migrate:refresh
+```
+
+Then you should populate the database using the Bouncer seeder so that an admin account can be created and logged in to:
+
+```sh
+docker-compose exec brt php artisan db:seed --class=BouncerSeeder
+```
+
+
+
 ### 1.11 Test your installation
 
 To check if the installation went successfully, go to http://localhost:8080 in your browser. If successful, you should see a landing page. Make sure it is http, and not https. Locally certified SSL with Apache is much more difficult to setup and is not worth the hassle. Most modern web browsers will attempt to take you to https:// unless you specify http://. So if you ever attempt to load the website and it doesn't appear, first double check that you typed:
@@ -181,7 +203,7 @@ The following category will explain the basics of development with Laravel. Lara
 
 ### 2.1 Creating Models
 
-Laravel includes a package called Eloquent, which is an ORM which has some of those "automagical" properties as discussed above. Models are an important part of development, they are what describe tables in PHP code. 
+Laravel includes a package called Eloquent, which is an ORM which has some of those "automagical" properties as discussed above. Models are an important part of development, they are what describe tables in PHP code.
 
 To create a model is simple:
 
@@ -189,7 +211,7 @@ To create a model is simple:
 docker-compose exec brt php artisan make:model ModelName -a
 ```
 
-Be sure to replace ModelName with the preferred name. 
+Be sure to replace ModelName with the preferred name.
 
 Thanks to an update in 2020, Laravel has included an option *-a* which eases the development process. The *-a* option will create a model, controller, seeder, migration, and factory for that class. However, if you wish to create these individually, that will be below:
 
@@ -349,4 +371,3 @@ TBD... Need More information and resources provided to us first.
 ## License
 
 This project is [MIT](https://opensource.org/licenses/MIT) licensed.
-

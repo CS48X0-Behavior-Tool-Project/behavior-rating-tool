@@ -72,6 +72,7 @@ class PagesController extends Controller
         return view('account');
     }
 
+
     private function adminView(Request $request, $path)
     {
         if ($request->user()->isAn('admin')) {
@@ -79,5 +80,9 @@ class PagesController extends Controller
         } else {
             return abort(404);
         }
+
+    public function exportData()
+    {
+        return view('export');
     }
 }

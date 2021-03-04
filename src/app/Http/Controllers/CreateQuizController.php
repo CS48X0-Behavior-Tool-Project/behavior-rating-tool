@@ -4,21 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Exception;
 use App\Models\Quiz;
 use App\Models\QuizOption;
 
 class CreateQuizController extends Controller
 {
     public function createQuiz() {
-      $videoID = $this->readVideo();
-      $animal = $this->readAnimal();
-      $behaviours = $this->readBehaviours();
-      $interpretations = $this->readInterpretations();
+      try {
+        $videoID = $this->readVideo();
+        $animal = $this->readAnimal();
+        $behaviours = $this->readBehaviours();
+        $interpretations = $this->readInterpretations();
 
-      $this->uploadQuiz($videoID, $animal, $behaviours, $interpretations);
 
-      return redirect()->route('create_quiz_route')->with('quiz-status', 'Quiz Created Successfully');
+        \Log::info('>>> videoID: '.$videoID);
+        \Log::info('>>> animal: '.$animal);
+
+        $this->uploadQuiz($videoID, $animal, $behaviours, $interpretations);
+
+        return redirect()->route('create_quiz_route')->with('quiz-status', 'Quiz Created Successfully');
+      }
+      catch (Exception $e) {
+
+        list($status, $message) = explode(':', $e->getMessage());
+        \Log::info('>>> error status: '.$status);
+        \Log::info('>>> error message: '.$message);
+        return redirect()->route('create_quiz_route')->with($status, $message);
+      }
     }
 
     /**
@@ -33,8 +46,9 @@ class CreateQuizController extends Controller
 
       //reject form upload if there is no video uploaded
       //make sure the ID field is not empty, and that the ID corresponds to a video that has been uploaded (record stored in db)
-      if ($videoID === NULL || !DB::table('videos')->where('id',$videoID)->first()) {
-        return redirect()->route('create_quiz_route')->with('video-status', 'Video ID Mismatch');
+      if ($videoID === NULL || !DB::table('videos')->where('id', $videoID)->first()) {
+        throw new Exception("video-status:"."Video ID Mismatch");
+        // return redirect()->route('create_quiz_route')->with('video-status', 'Video ID Mismatch');
       }
 
       return $videoID;
@@ -58,7 +72,8 @@ class CreateQuizController extends Controller
             $species = $newanimal;
           }
           else {
-            return redirect()->route('create_quiz_route')->with('animal-status','Animal Field Empty');
+            throw new Exception("animal-status:"."Animal Field Empty");
+            // return redirect()->route('create_quiz_route')->with('animal-status','Animal Field Empty');
           }
         }
         else {
@@ -66,7 +81,8 @@ class CreateQuizController extends Controller
         }
       }
       else {
-        return redirect()->route('create_quiz_route')->with('animal-status','No Animal Selected');
+        throw new Exception("animal-status:"."No Animal Selected");
+        // return redirect()->route('create_quiz_route')->with('animal-status','No Animal Selected');
       }
 
       return $species;
@@ -105,14 +121,14 @@ class CreateQuizController extends Controller
 
       //make sure at least one checkbox and field are filled in
       if ($this->containsOnlyNull($behaviours) || $this->containsOnlyNull($checkboxes)) {
-        return redirect()->route('create_quiz_route')->with('behaviour-status', 'Behaviours Incomplete');
+        // return redirect()->route('create_quiz_route')->with('behaviour-status', 'Behaviours Incomplete');
       }
 
 
       //make sure all the checkboxes are associated with a non null input field
       foreach ($checkboxes as $key => $value) {
         if ($value === 'on' && $behaviours[$key] === NULL) {
-          return redirect()->route('create_quiz_route')->with('behaviour-status', 'Checked Fields Must Be Filled In');
+          // return redirect()->route('create_quiz_route')->with('behaviour-status', 'Checked Fields Must Be Filled In');
         }
       }
 
@@ -186,6 +202,10 @@ class CreateQuizController extends Controller
     public function uploadQuiz($videoID, $animal, $behaviours, $interpretations) {
 
       $quizCode = ucfirst($animal) . $videoID;
+      \Log::info('>>> stop 1');
+      \Log::info('>>> videoID: '.$videoID);
+      \Log::info('>>> animal: '.$animal);
+      \Log::info('>>> quizCode: '.$quizCode);
 
       $quiz = new Quiz();
       $quiz->code = $quizCode;
@@ -208,6 +228,7 @@ class CreateQuizController extends Controller
         $opt->title = $key;
         $opt->marking_scheme = 1;
         $opt->is_solution = $isSolution;
+        \Log::info('>>> stop 2');
         $opt->save();
       }
 
@@ -225,6 +246,7 @@ class CreateQuizController extends Controller
         $opt->title = $key;
         $opt->marking_scheme = 1;
         $opt->is_solution = $isSolution;
+        \Log::info('>>> stop 3');
         $opt->save();
       }
     }

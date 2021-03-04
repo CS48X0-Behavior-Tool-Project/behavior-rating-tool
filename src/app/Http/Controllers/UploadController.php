@@ -144,7 +144,7 @@ class UploadController extends Controller
         $user->assign($role);
 
         // send an email to the new user
-        // $this->emailNewUser($email);
+        $this->emailNewUser($email);
     }
 
     /**

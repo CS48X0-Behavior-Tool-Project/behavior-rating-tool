@@ -25,6 +25,9 @@
             alert("You must select an animal");
             aniInfo.style.borderColor = "red";
         } else {
+            // Initially set to grey
+            document.getElementById('animal-new').style.borderColor = "#dfdfdf";
+
             var animalRadio = document.querySelectorAll("[name='animal-radio[]']:checked");
             var radio = animalRadio[0];
             var id = String(radio.id).replace('a', 'animal');
@@ -36,7 +39,7 @@
                 document.getElementById(id).style.borderColor = "red";
             } else {
                 aniInfo.style.borderColor = "#dfdfdf";
-                document.getElementById(id).style.borderColor = "#dfdfdf";
+                document.getElementById('animal-new').style.borderColor = "#dfdfdf";
             }
         }
 

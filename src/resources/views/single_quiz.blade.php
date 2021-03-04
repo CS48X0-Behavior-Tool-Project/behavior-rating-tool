@@ -56,7 +56,7 @@
         <div class="col-md-12">
             <div class="card">
                 <!-- TODO inserts -->
-                <div class="card-header">Attempting Quiz:  {{$quiz->id ?? 'QuizID'}}  {{$attempt ?? 'Attempt#'}}</div>
+                <div class="card-header">Attempting Quiz:  {{$code ?? 'QuizID'}}  {{$attempt ?? 'Attempt#'}}</div>
                 <div class="card-body">
 
                     <form>

@@ -47,6 +47,13 @@
             alert("You must select at least one correct behaviour");
             behInfo.style.borderColor = "red";
         } else {
+            // Color all borders grey first
+            var inputs = document.querySelectorAll("[name='behaviour-check[]']");
+            for (var i = 0; i < inputs.length; i++){
+                var current = inputs[i];
+                var id = String(current.id).replace('b', 'box');
+                document.getElementById(id).style.borderColor = "#dfdfdf";
+            }
             // Check that selected behaviours aren't blank fields
             var checked_boxes = document.querySelectorAll("[name='behaviour-check[]']:checked");
             for (var i = 0; i < checked_boxes.length; i++) {

@@ -134,43 +134,43 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-one" name="behaviour-check[]">
+                                            <input type="checkbox" id="b-one" name="behaviour-check[]" value="1">
                                             <input id="box-one" type="text" class="formLabel" name="box-one" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-two" name="behaviour-check[]">
+                                            <input type="checkbox" id="b-two" name="behaviour-check[]" value="2">
                                             <input id="box-two" type="text" class="formLabel" name="box-two" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-three" name="behaviour-check[]">
+                                            <input type="checkbox" id="b-three" name="behaviour-check[]" value="3">
                                             <input id="box-three" type="text" class="formLabel" name="box-three" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-four" name="behaviour-check[]">
+                                            <input type="checkbox" id="b-four" name="behaviour-check[]" value="4">
                                             <input id="box-four" type="text" class="formLabel" name="box-four" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-five" name="behaviour-check[]">
+                                            <input type="checkbox" id="b-five" name="behaviour-check[]" value="5">
                                             <input id="box-five" type="text" class="formLabel" name="box-five" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-six" name="behaviour-check[]">
+                                            <input type="checkbox" id="b-six" name="behaviour-check[]" value="6">
                                             <input id="box-six" type="text" class="formLabel" name="box-six" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-seven" name="behaviour-check[]">
+                                            <input type="checkbox" id="b-seven" name="behaviour-check[]" value="7">
                                             <input id="box-seven" type="text" class="formLabel" name="box-seven" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-eight" name="behaviour-check[]">
+                                            <input type="checkbox" id="b-eight" name="behaviour-check[]" value="8">
                                             <input id="box-eight" type="text" class="formLabel" name="box-eight" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-nine" name="behaviour-check[]">
+                                            <input type="checkbox" id="b-nine" name="behaviour-check[]" value="9">
                                             <input id="box-nine" type="text" class="formLabel" name="box-nine" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-ten" name="behaviour-check[]">
+                                            <input type="checkbox" id="b-ten" name="behaviour-check[]" value="10">
                                             <input id="box-ten" type="text" class="formLabel" name="box-ten" placeholder="Edit me ...">
                                         </span>
                                     </div>

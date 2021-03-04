@@ -48,7 +48,7 @@ class CreateQuizController extends Controller
       //make sure the ID field is not empty, and that the ID corresponds to a video that has been uploaded (record stored in db)
       if ($videoID === NULL || !DB::table('videos')->where('id', $videoID)->first()) {
         throw new Exception("video-status:"."Video ID Mismatch");
-        // return redirect()->route('create_quiz_route')->with('video-status', 'Video ID Mismatch');
+        return redirect()->route('create_quiz_route')->with('video-status', 'Video ID Mismatch');
       }
 
       return $videoID;
@@ -73,7 +73,7 @@ class CreateQuizController extends Controller
           }
           else {
             throw new Exception("animal-status:"."Animal Field Empty");
-            // return redirect()->route('create_quiz_route')->with('animal-status','Animal Field Empty');
+            return redirect()->route('create_quiz_route')->with('animal-status','Animal Field Empty');
           }
         }
         else {
@@ -82,7 +82,7 @@ class CreateQuizController extends Controller
       }
       else {
         throw new Exception("animal-status:"."No Animal Selected");
-        // return redirect()->route('create_quiz_route')->with('animal-status','No Animal Selected');
+        return redirect()->route('create_quiz_route')->with('animal-status','No Animal Selected');
       }
 
       return $species;
@@ -106,29 +106,29 @@ class CreateQuizController extends Controller
         request()->input('box-ten'),
       );
 
-      $checkboxes = array(
-        request()->input('b-one'),
-        request()->input('b-two'),
-        request()->input('b-three'),
-        request()->input('b-four'),
-        request()->input('b-five'),
-        request()->input('b-six'),
-        request()->input('b-seven'),
-        request()->input('b-eight'),
-        request()->input('b-nine'),
-        request()->input('b-ten'),
-      );
+      $checkboxes = array();
+      for ($i=0; $i < 10; $i++) {
+        $checkboxes[$i] = NULL;
+      }
+
+      if(isset($_POST['behaviour-check'])) {
+        if (is_array($_POST['behaviour-check'])) {
+             foreach($_POST['behaviour-check'] as $value){
+                $checkboxes[$value-1] = 'on';
+             }
+          }
+        }
 
       //make sure at least one checkbox and field are filled in
       if ($this->containsOnlyNull($behaviours) || $this->containsOnlyNull($checkboxes)) {
-        // return redirect()->route('create_quiz_route')->with('behaviour-status', 'Behaviours Incomplete');
+        return redirect()->route('create_quiz_route')->with('behaviour-status', 'Behaviours Incomplete');
       }
 
 
       //make sure all the checkboxes are associated with a non null input field
       foreach ($checkboxes as $key => $value) {
         if ($value === 'on' && $behaviours[$key] === NULL) {
-          // return redirect()->route('create_quiz_route')->with('behaviour-status', 'Checked Fields Must Be Filled In');
+          return redirect()->route('create_quiz_route')->with('behaviour-status', 'Checked Fields Must Be Filled In');
         }
       }
 

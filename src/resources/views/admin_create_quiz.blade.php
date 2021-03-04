@@ -77,7 +77,7 @@
             var intRadio = document.querySelectorAll("[name='interpretation-radio']:checked");
             var radio = intRadio[0];
             var id = String(radio.id).replace('i', 'inter');
-            // If the selected interpretation is not filled in 
+            // If the selected interpretation is not filled in
             if (document.getElementById(id).value == ""){
                 event.preventDefault();
                 alert("You have not filled in the correct interpretation");
@@ -182,18 +182,22 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         @foreach($animals as $data)
-                                        <span id="spacing">
-                                            <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
-                                            <label for="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
-                                        </span>
+                                        <!-- TODO this is only return COW when quizzes returns COW nad HORSE -->
+                                        <div class="row-justify-content-center">
+                                            <span id="spacing">
+                                                <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
+                                                <label for="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
+                                            </span>
+                                        </div>
                                         @endforeach
-
-                                        <span id="spacing">
-                                            <input type="radio" id="a-new" name="animal-radio[]" value = "New">
-                                            <!-- TODO IMPORTANT ZAK I changed this id to be animal-new instead of a-new so I can tell the difference between the
-                                                  radio button and the input field -->
-                                            <input id="animal-new" type="text" class="formLabel" name="a-new" placeholder="Edit me ...">
-                                        </span>
+                                        <div class="row-justify-content-center">
+                                            <span id="spacing">
+                                                <input type="radio" id="a-new" name="animal-radio[]" value = "New">
+                                                <!-- TODO IMPORTANT ZAK I changed this id to be animal-new instead of a-new so I can tell the difference between the
+                                                      radio button and the input field -->
+                                                <input id="animal-new" type="text" class="formLabel" name="a-new" placeholder="Edit me ...">
+                                            </span>
+                                        </div>
                                     </div>
                                     @if (session('animal-status'))
                                         <div class="alert alert-danger">

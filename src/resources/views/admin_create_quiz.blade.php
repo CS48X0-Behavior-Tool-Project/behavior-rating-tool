@@ -30,9 +30,9 @@
             var id = String(radio.id).replace('a', 'animal');
             // If they selected a new animal but didn't input the animal name
             if (id == "animal-new" && document.getElementById(id).value == ""){
-                var input = document.getElementById(id).value;
                 event.preventDefault();
                 alert("You have not filled in the animal information");
+                aniInfo.style.borderColor = "red";
                 document.getElementById(id).style.borderColor = "red";
             } else {
                 aniInfo.style.borderColor = "#dfdfdf";
@@ -74,7 +74,19 @@
             alert("You must select one correct interpretation");
             intInfo.style.borderColor = "red";
         } else {
-            intInfo.style.borderColor = "#dfdfdf";
+            var intRadio = document.querySelectorAll("[name='interpretation-radio']:checked");
+            var radio = intRadio[0];
+            var id = String(radio.id).replace('i', 'inter');
+            // If the selected interpretation is not filled in 
+            if (document.getElementById(id).value == ""){
+                event.preventDefault();
+                alert("You have not filled in the correct interpretation");
+                intInfo.style.borderColor = "red";
+                document.getElementById(id).style.borderColor = "red";
+            } else {
+                intInfo.style.borderColor = "#dfdfdf";
+                document.getElementById(id).style.borderColor = "#dfdfdf";
+            }
         }
     }
 </script>
@@ -270,8 +282,9 @@
                                             <input id="inter-four" type="text" class="formLabel" name="inter-four" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="radio" id="i-five" name="interpretation-radio" value="5">
-                                            <input id="inter-five" type="text" class="formLabel" name="inter-five" placeholder="Edit me ...">
+                                            <!-- TODO ZAK changed these ID -->
+                                            <input type="radio" id="i-fve" name="interpretation-radio" value="5">
+                                            <input id="inter-fve" type="text" class="formLabel" name="inter-five" placeholder="Edit me ...">
                                         </span>
                                     </div>
                                 </div>

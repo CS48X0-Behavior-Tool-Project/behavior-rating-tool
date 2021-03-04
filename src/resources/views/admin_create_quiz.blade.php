@@ -7,7 +7,9 @@
 @endif
 
 <script type="text/javascript" language="JavaScript">
-    function validate(event) {        
+
+
+    function validate(event) {
         // Video upload check
         if ($("#video-id").val() == "") {
             event.preventDefault();
@@ -32,7 +34,24 @@
             alert("You must select at least one correct behaviour");
             document.getElementById("behaviour-info").style.borderColor = "red";
         } else {
-            document.getElementById("behaviour-info").style.borderColor = "#dfdfdf";
+            // Check that selected behaviours aren't blank fields
+            var checked_boxes = document.querySelectorAll("[name='behaviour-check[]']:checked");
+            for (var i = 0; i < checked_boxes.length; i++) {
+                var currentCheckbox = checked_boxes[i];
+                var id = String(currentCheckbox.id).replace('b', 'box');
+                input = document.getElementById(id);
+                resp = input.value;
+                if (resp == ""){
+                    event.preventDefault();
+                    alert("The selected correct behaviour must have an answer associated with it");
+                    document.getElementById("behaviour-info").style.borderColor = "red";
+                    input.style.borderColor = "red";
+                    break;
+                } else {
+                    input.style.borderColor = "#dfdfdf";
+                    document.getElementById("behaviour-info").style.borderColor = "#dfdfdf";
+                }
+            }  
         }
 
         // Interpretation check
@@ -43,8 +62,6 @@
         } else {
             document.getElementById("interpretation-info").style.borderColor = "#dfdfdf";
         }
-
-        return true;
     }
 </script>
 

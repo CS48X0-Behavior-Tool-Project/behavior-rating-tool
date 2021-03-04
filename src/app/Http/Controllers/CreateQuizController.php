@@ -17,13 +17,15 @@ class CreateQuizController extends Controller
         $behaviours = $this->readBehaviours();
         $interpretations = $this->readInterpretations();
 
+        $quizCode = ucfirst($animal) . $videoID;
+
 
         \Log::info('>>> videoID: '.$videoID);
         \Log::info('>>> animal: '.$animal);
 
-        $this->uploadQuiz($videoID, $animal, $behaviours, $interpretations);
+        $this->uploadQuiz($videoID, $quizCode, $animal, $behaviours, $interpretations);
 
-        return redirect()->route('create_quiz_route')->with('quiz-status', 'Quiz Created Successfully');
+        return redirect()->route('create_quiz_route')->with('quiz-status', 'Quiz ' . $quizCode . ' Created Successfully');
       }
       catch (Exception $e) {
 
@@ -199,9 +201,8 @@ class CreateQuizController extends Controller
     /**
     * Upload the information for the new quiz into the database.
     */
-    public function uploadQuiz($videoID, $animal, $behaviours, $interpretations) {
+    public function uploadQuiz($videoID, $quizCode, $animal, $behaviours, $interpretations) {
 
-      $quizCode = ucfirst($animal) . $videoID;
       \Log::info('>>> stop 1');
       \Log::info('>>> videoID: '.$videoID);
       \Log::info('>>> animal: '.$animal);

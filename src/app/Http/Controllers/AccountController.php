@@ -124,9 +124,8 @@ class AccountController extends Controller
         return;
       }
 
-      DB::table('users')
-                ->where('email', $currentemail)
-                ->update(['email' => $newemail]);
+      $user->email = $newemail;
+      $user->save();
 
       $email_msg = "Email changed successfully!";
     }

@@ -7,32 +7,45 @@
 @endif
 
 <script type="text/javascript" language="JavaScript">
-
-
     function validate(event) {
         // Video upload check
+        impVideo = document.getElementById("import-video");
         if ($("#video-id").val() == "") {
             event.preventDefault();
             alert("You must upload a video for the quiz");
-            document.getElementById("import-video").style.borderColor = "red";
+            impVideo.style.borderColor = "red";
         } else {
-            document.getElementById("import-video").style.borderColor = "#dfdfdf";
+            impVideo.style.borderColor = "#dfdfdf";
         }
 
         // Animal selection check
+        aniInfo = document.getElementById("animal-info")
         if ($('input[name="animal-radio[]"]:checked').length == 0){
             event.preventDefault();
             alert("You must select an animal");
-            document.getElementById("animal-info").style.borderColor = "red";
+            aniInfo.style.borderColor = "red";
         } else {
-            document.getElementById("animal-info").style.borderColor = "#dfdfdf";
+            var animalRadio = document.querySelectorAll("[name='animal-radio[]']:checked");
+            var radio = animalRadio[0];
+            var id = String(radio.id).replace('a', 'animal');
+            // If they selected a new animal but didn't input the animal name
+            if (id == "animal-new" && document.getElementById(id).value == ""){
+                var input = document.getElementById(id).value;
+                event.preventDefault();
+                alert("You have not filled in the animal information");
+                document.getElementById(id).style.borderColor = "red";
+            } else {
+                aniInfo.style.borderColor = "#dfdfdf";
+                document.getElementById(id).style.borderColor = "#dfdfdf";
+            }
         }
 
         // Behaviour check
+        behInfo = document.getElementById("behaviour-info");
         if ($('input[name="behaviour-check[]"]:checked').length == 0){
             event.preventDefault();
             alert("You must select at least one correct behaviour");
-            document.getElementById("behaviour-info").style.borderColor = "red";
+            behInfo.style.borderColor = "red";
         } else {
             // Check that selected behaviours aren't blank fields
             var checked_boxes = document.querySelectorAll("[name='behaviour-check[]']:checked");
@@ -44,23 +57,24 @@
                 if (resp == ""){
                     event.preventDefault();
                     alert("The selected correct behaviour must have an answer associated with it");
-                    document.getElementById("behaviour-info").style.borderColor = "red";
+                    behInfo.style.borderColor = "red";
                     input.style.borderColor = "red";
                     break;
                 } else {
                     input.style.borderColor = "#dfdfdf";
-                    document.getElementById("behaviour-info").style.borderColor = "#dfdfdf";
+                    behInfo.style.borderColor = "#dfdfdf";
                 }
-            }  
+            }
         }
 
         // Interpretation check
+        intInfo = document.getElementById("interpretation-info")
         if ($('input[name=interpretation-radio]:checked').length == 0){
             event.preventDefault();
             alert("You must select one correct interpretation");
-            document.getElementById("interpretation-info").style.borderColor = "red";
+            intInfo.style.borderColor = "red";
         } else {
-            document.getElementById("interpretation-info").style.borderColor = "#dfdfdf";
+            intInfo.style.borderColor = "#dfdfdf";
         }
     }
 </script>
@@ -164,7 +178,9 @@
 
                                         <span id="spacing">
                                             <input type="radio" id="a-new" name="animal-radio[]" value = "New">
-                                            <input id="a-new" type="text" class="formLabel" name="a-new" placeholder="Edit me ...">
+                                            <!-- TODO IMPORTANT ZAK I changed this id to be animal-new instead of a-new so I can tell the difference between the
+                                                  radio button and the input field -->
+                                            <input id="animal-new" type="text" class="formLabel" name="a-new" placeholder="Edit me ...">
                                         </span>
                                     </div>
                                     @if (session('animal-status'))

@@ -81,6 +81,14 @@
             alert("You must select one correct interpretation");
             intInfo.style.borderColor = "red";
         } else {
+            // Color all borders grey first
+            var inputs = document.querySelectorAll("[name='interpretation-radio']");
+            for (var i = 0; i < inputs.length; i++){
+                var current = inputs[i];
+                var id = String(current.id).replace('i', 'inter');
+                document.getElementById(id).style.borderColor = "#dfdfdf";
+            }
+
             var intRadio = document.querySelectorAll("[name='interpretation-radio']:checked");
             var radio = intRadio[0];
             var id = String(radio.id).replace('i', 'inter');

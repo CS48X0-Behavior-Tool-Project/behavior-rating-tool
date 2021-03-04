@@ -80,6 +80,7 @@ class PagesController extends Controller
         } else {
             return abort(404);
         }
+    }
 
     public function exportData()
     {

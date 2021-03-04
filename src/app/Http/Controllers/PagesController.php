@@ -49,7 +49,8 @@ class PagesController extends Controller
 
       $quiz = $this->qc->getQuiz($id);
 
-      return view('single_quiz')->with(['options' => $quiz->quiz_question_options, 'video' => $quiz->video]);
+      return view('single_quiz')->with(['code' => $quiz->code, 'options' => $quiz->quiz_question_options,
+        'video' => $quiz->video]);
     }
 
     public function getCreateQuiz()

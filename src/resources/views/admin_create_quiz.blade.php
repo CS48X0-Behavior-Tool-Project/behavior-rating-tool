@@ -48,6 +48,7 @@
                     <div class="card-body">
                         <div class="row justify-content-center">
                             <div class="col">
+                                <!-- TODO video here -->
                                 <iframe id="thumbnail" src="" width="col-md-4" height="200"></iframe>
                                 <br>
                                 <br>

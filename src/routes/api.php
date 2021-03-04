@@ -44,6 +44,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('quizzes', [QuizController::class, 'getAllQuizzes']);
 Route::get('quizzes/{id}', [QuizController::class, 'getQuiz']);
 Route::get('quizzes/{id}/attempts', [QuizController::class, 'getQuizAttempts']);
+Route::put('quizzes/{id}/attempts', [QuizController::class, 'updateQuizAttempts']);
 Route::post('quizzes/create', [QuizController::class, 'createQuiz']);
 Route::put('quizzes/{id}', [QuizController::class, 'updateQuiz']);
 Route::delete('quizzes/{id}', [QuizController::class, 'deleteQuiz']);

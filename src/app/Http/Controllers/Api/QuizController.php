@@ -8,6 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Models\Quiz;
 use App\Models\QuizOption;
+use App\Models\AttemptQuiz;
+use App\Models\AttemptAnswerItem;
 
 class QuizController extends Controller
 {
@@ -31,7 +33,62 @@ class QuizController extends Controller
     public function getQuizAttempts($id)
     {
         // Implement logic to fetch quiz attempts
-        // TODO: attempts related to users, will be a new task in the sprint 4
+        $attempts = DB::select('select * from attempt_quizzes where quiz_id = ?', [$id]);
+        return $attempts;
+    }
+
+    public function updateQuizAttempts(Request $request, $id) {
+        // will perfrom insert if not exist, update if exist
+
+        \Log::info($request);
+        $attempt_id = $request->attempt_id;
+        $quiz_id = $id;
+
+        $attempt_quiz_id = -1;
+
+        // using 'attempt_id' and 'quiz_id' check if existing in attempt_quizzes
+        $attempt_quiz = DB::table('attempt_quizzes')
+        ->where('attempt_id', $attempt_id)
+        ->Where('quiz_id', $quiz_id)
+        ->get();
+        
+        \Log::info($attempt_quiz);
+
+        if(count($attempt_quiz) > 0) {
+            $attempt_quiz_id = $attempt_quiz[0]->id;
+        }
+        else { // insert into attempt_quizzes
+            $attempt_quiz = new AttemptQuiz;
+            $attempt_quiz->attempt_id = $attempt_id;
+            $attempt_quiz->quiz_id = $quiz_id;
+            $attempt_quiz->save();
+            $attempt_quiz_id = $attempt_quiz->id;
+        }
+
+
+        // using 'attempt_id' and 'quiz_id' check if existing in attempt_quizzes
+        $attempt_answer_item = DB::table('attempt_answer_items')
+        ->where('attempt_quiz_id', $attempt_quiz_id)
+        ->get();
+
+        if(count($attempt_answer_item) > 0) {
+            // TODO: if exist, find and update - Mar.4 Tami
+            // $attempt_quiz_id = $attempt_quiz[0]->id;
+            // $attempt_answer_item->behavior_answers = json_encode($request->behavior_answers);
+            // $attempt_answer_item->interpretation_answers = json_encode($request->interpretation_answers);
+            // $attempt_answer_item->save();
+        }
+        else{
+            // insert into attemp_answer_items
+            $attempt_answer_item = new AttemptAnswerItem;
+            $attempt_answer_item->attempt_quiz_id = $attempt_quiz_id;
+            $attempt_answer_item->behavior_answers = json_encode($request->behavior_answers);
+            $attempt_answer_item->interpretation_answers = json_encode($request->interpretation_answers);
+            $attempt_answer_item->save();
+        }
+
+
+        return response()->json(['success' => true], 200);
     }
 
     public function createQuiz(Request $request)

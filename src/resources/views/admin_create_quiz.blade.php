@@ -166,6 +166,7 @@
                                         <div class="row justify-content-center">
                                             <button class="btn btn-secondary" id="upload-button">Upload</button>
                                         </div>
+                                        <br>
 
                                         @if (session('video-status'))
                                             <div class="alert alert-danger">
@@ -217,6 +218,7 @@
                                             </span>
                                         </div>
                                     </div>
+                                    <br>
                                     @if (session('animal-status'))
                                         <div class="alert alert-danger">
                                             <strong>{{ session('animal-status') }}</strong>

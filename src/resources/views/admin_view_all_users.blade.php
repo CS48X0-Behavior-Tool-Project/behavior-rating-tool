@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Create Quiz') }}</div>
 
@@ -14,13 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('View all users if you are an admin!') }}
-
-                    <!-- Zak for testing purposes display your data here -->
-
-
-
-
+                    {{ __('Create quizzes if you are an admin!') }}
                 </div>
             </div>
         </div>

@@ -2,10 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Bouncer;
 use Illuminate\Http\Request;
+
+use App\Http\Controllers\Api\UserController;
 
 class PagesController extends Controller
 {
+
+    private $uc;
+
+    public function __construct()
+    {
+        $this->uc = new UserController();
+    }
+
     /**
      * These controller methods simply load up the appropriate views from the pages folder.
      */
@@ -28,6 +39,20 @@ class PagesController extends Controller
     public function getQuizList()
     {
         return view('quizzes');
+    }
+
+    public function getUsers()
+    {
+        $users = $this->uc->getAllUsers();
+
+        return $this->adminView(request(), 'admin_view_all_users')->with('users', $users);
+    }
+
+    public function getUserById($id)
+    {
+        $user = $this->uc->getUser($id);
+
+        return $this->adminView(request(), 'single_user')->with('user', $user);
     }
 
     public function attemptQuiz($id)
@@ -55,6 +80,15 @@ class PagesController extends Controller
     public function getAccountManagement()
     {
         return view('account');
+    }
+
+    private function adminView(Request $request, $path)
+    {
+        if ($request->user()->isAn('admin')) {
+            return view($path);
+        } else {
+            return abort(404);
+        }
     }
 
     public function exportData()

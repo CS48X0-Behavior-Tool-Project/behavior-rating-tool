@@ -13,13 +13,13 @@ class UserController extends Controller
     public function getAllUsers()
     {
         // Implement logic to fetch all users
-        $users = User::all(); 
+        $users = User::all();
         return $users;
     }
 
     public function getUser($id)
     {
-        // Implement logic to fetch user
+        return User::find($id);
     }
 
     public function getUserAttempts($id)

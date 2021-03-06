@@ -59,6 +59,16 @@ Route::get('/quizzes', [PagesController::class, 'getQuizList']);
 Route::get('/quiz/attempt/{id}', [PagesController::class, 'attemptQuiz']);
 
 /**
+ * Show all the users in the system
+ */
+Route::get('/users', [PagesController::class, 'getUsers']);
+
+/**
+ * Display the user
+ */
+Route::get('/user/{id}', [PagesController::class, 'getUserById']);
+
+/**
  * Route for submitting a login request.  Will need to test when actual webpage is created.
  */
 Route::post('/', [LoginController::class, 'submit']);

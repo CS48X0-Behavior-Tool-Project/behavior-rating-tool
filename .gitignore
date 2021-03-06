@@ -21,6 +21,7 @@ mysql/*
 /src/public/storage
 /src/storage/*.key
 /src/.env
+/src/.env.testing
 /src/.env.backup
 /src/.phpunit.result.cache
 /src/docker-compose.override.yml

@@ -7,6 +7,9 @@ use App\Models\Video;
 use Bouncer;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response as FacadeResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class VideoController extends Controller
 {
@@ -15,7 +18,7 @@ class VideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
         //
     }
@@ -62,13 +65,13 @@ class VideoController extends Controller
                         'name' => $clientfilename,
                     ]);
                 } catch (Exception $exception) {
-                    return response()->json([], 404);
+                    abort(404);
                 }
             } else {
-                return response()->json([], 404);
+                abort(404);
             }
         } else {
-            return response()->json([], 403);
+            abort(403);
         }
     }
 
@@ -80,7 +83,14 @@ class VideoController extends Controller
      */
     public function show($id)
     {
-        //
+        if (Auth::user()) {
+            $video = Storage::disk('local')->get('videos/'. $id . '.mp4');
+            $response = FacadeResponse::make($video, 200);
+            $response->header('Content-Type', 'video/mp4');
+            return $response;
+        } else {
+            abort(404);
+        }
     }
 
     /**

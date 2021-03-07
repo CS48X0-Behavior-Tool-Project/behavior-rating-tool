@@ -24,7 +24,10 @@ class QuizController extends Controller
     {
         // Implement logic to fetch quiz
 
-        $quizOps = DB::select('select * from quiz_options where quiz_id = ?', [$id]);
+        // $quizOps = DB::select('select * from quiz_options where quiz_id = ?', [$id]);
+        $quizOps = DB::table('quiz_options')
+            ->where('quiz_id', $id)
+            ->get();
         $quizInfor = Quiz::find($id);
         $quizInfor->quiz_question_options = $quizOps;
         return $quizInfor;
@@ -33,7 +36,10 @@ class QuizController extends Controller
     public function getQuizAttempts($id)
     {
         // Implement logic to fetch quiz attempts
-        $attempts = DB::select('select * from attempt_quizzes where quiz_id = ?', [$id]);
+        // $attempts = DB::select('select * from attempt_quizzes where quiz_id = ?', [$id]);
+        $attempts = DB::table('attempt_quizzes')
+            ->where('quiz_id', $id)
+            ->get();
         return $attempts;
     }
 

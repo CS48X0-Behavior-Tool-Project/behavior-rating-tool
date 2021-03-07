@@ -44,7 +44,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('quizzes', [QuizController::class, 'getAllQuizzes']);
 Route::get('quizzes/{id}', [QuizController::class, 'getQuiz']);
 Route::get('quizzes/{id}/attempts', [QuizController::class, 'getQuizAttempts']);
-Route::put('quizzes/{id}/attempts', [QuizController::class, 'updateQuizAttempts']);
 Route::post('quizzes/create', [QuizController::class, 'createQuiz']);
 Route::put('quizzes/{id}', [QuizController::class, 'updateQuiz']);
 Route::delete('quizzes/{id}', [QuizController::class, 'deleteQuiz']);
@@ -56,7 +55,8 @@ Route::delete('quizzes/{id}', [QuizController::class, 'deleteQuiz']);
 Route::get('users', [UserController::class, 'getAllUsers']);
 Route::get('users/{id}', [UserController::class, 'getUser']);
 Route::get('users/{id}/attempts', [UserController::class, 'getUserAttempts']);
-Route::post('users/{id}/attempts', [UserController::class, 'createUserAttempts']);
+Route::post('users/{id}/attempts', [UserController::class, 'upsertUserAttempts']);      // update and insert => upsert
+Route::delete('users/{id}/attempts', [UserController::class, 'deleteUserAllAttempts']);
 Route::post('users/create', [UserController::class, 'createUser']);
 Route::put('users/{id}', [UserController::class, 'updateUser']);
 Route::delete('users/{id}', [UserController::class, 'deleteUser']);

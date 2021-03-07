@@ -16,6 +16,7 @@ class QuizController extends Controller
     public function getAllQuizzes()
     {
         // Implement logic to fetch all quizzes
+        
         $quizzes = Quiz::all(); 
         return $quizzes;
     }
@@ -24,7 +25,6 @@ class QuizController extends Controller
     {
         // Implement logic to fetch quiz
 
-        // $quizOps = DB::select('select * from quiz_options where quiz_id = ?', [$id]);
         $quizOps = DB::table('quiz_options')
             ->where('quiz_id', $id)
             ->get();
@@ -36,70 +36,15 @@ class QuizController extends Controller
     public function getQuizAttempts($id)
     {
         // Implement logic to fetch quiz attempts
-        // $attempts = DB::select('select * from attempt_quizzes where quiz_id = ?', [$id]);
+
         $attempts = DB::table('attempt_quizzes')
             ->where('quiz_id', $id)
             ->get();
         return $attempts;
     }
 
-    public function updateQuizAttempts(Request $request, $id) {
-        // will perfrom insert if not exist, update if exist
-
-        \Log::info($request);
-        $attempt_id = $request->attempt_id;
-        $quiz_id = $id;
-
-        $attempt_quiz_id = -1;
-
-        // using 'attempt_id' and 'quiz_id' check if existing in attempt_quizzes
-        $attempt_quiz = DB::table('attempt_quizzes')
-        ->where('attempt_id', $attempt_id)
-        ->Where('quiz_id', $quiz_id)
-        ->get();
-        
-        \Log::info($attempt_quiz);
-
-        if(count($attempt_quiz) > 0) {
-            $attempt_quiz_id = $attempt_quiz[0]->id;
-        }
-        else { // insert into attempt_quizzes
-            $attempt_quiz = new AttemptQuiz;
-            $attempt_quiz->attempt_id = $attempt_id;
-            $attempt_quiz->quiz_id = $quiz_id;
-            $attempt_quiz->save();
-            $attempt_quiz_id = $attempt_quiz->id;
-        }
-
-
-        // using 'attempt_id' and 'quiz_id' check if existing in attempt_quizzes
-        $attempt_answer_item = DB::table('attempt_answer_items')
-        ->where('attempt_quiz_id', $attempt_quiz_id)
-        ->get();
-
-        if(count($attempt_answer_item) > 0) {
-            // TODO: if exist, find and update - Mar.4 Tami
-            // $attempt_quiz_id = $attempt_quiz[0]->id;
-            // $attempt_answer_item->behavior_answers = json_encode($request->behavior_answers);
-            // $attempt_answer_item->interpretation_answers = json_encode($request->interpretation_answers);
-            // $attempt_answer_item->save();
-        }
-        else{
-            // insert into attemp_answer_items
-            $attempt_answer_item = new AttemptAnswerItem;
-            $attempt_answer_item->attempt_quiz_id = $attempt_quiz_id;
-            $attempt_answer_item->behavior_answers = json_encode($request->behavior_answers);
-            $attempt_answer_item->interpretation_answers = json_encode($request->interpretation_answers);
-            $attempt_answer_item->save();
-        }
-
-
-        return response()->json(['success' => true], 200);
-    }
-
     public function createQuiz(Request $request)
     {
-        // \Log::info($request);
         $quiz = new Quiz;
         $quiz->code = $request->code;
         $quiz->animal = $request->animal;
@@ -109,7 +54,6 @@ class QuizController extends Controller
 
         // iterate each question_options, create quiz_question_option
         $options = $request->quiz_question_options;
-        // \Log::info($options);
         
         foreach ($options as $option) {
             $opt = new QuizOption;

@@ -122,6 +122,9 @@ class UserController extends Controller
             Log::info([">>> creating a new attempt_quiz (attempt_id, quiz_id): ", $attempt_id, $request->quiz_id]);
             $attemptQuiz = new AttemptQuiz;
             $attemptQuiz->attempt_id = $attempt_id;
+            if(!$request->has('quiz_id')) {
+                return response()->json(['failed' => 'no quiz_id specified'], 500);
+            }
             $attemptQuiz->quiz_id = $request->quiz_id;
             $attemptQuiz->save();
 

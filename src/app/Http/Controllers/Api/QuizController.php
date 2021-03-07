@@ -8,12 +8,15 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Models\Quiz;
 use App\Models\QuizOption;
+use App\Models\AttemptQuiz;
+use App\Models\AttemptAnswerItem;
 
 class QuizController extends Controller
 {
     public function getAllQuizzes()
     {
         // Implement logic to fetch all quizzes
+
         $quizzes = Quiz::all();
         return $quizzes;
     }
@@ -22,7 +25,9 @@ class QuizController extends Controller
     {
         // Implement logic to fetch quiz
 
-        $quizOps = DB::select('select * from quiz_question_options where quiz_question_id = ?', [$id]);
+        $quizOps = DB::table('quiz_options')
+            ->where('quiz_id', $id)
+            ->get();
         $quizInfor = Quiz::find($id);
         $quizInfor->quiz_question_options = $quizOps;
         return $quizInfor;
@@ -31,12 +36,15 @@ class QuizController extends Controller
     public function getQuizAttempts($id)
     {
         // Implement logic to fetch quiz attempts
-        // TODO: attempts related to users, will be a new task in the sprint 4
+
+        $attempts = DB::table('attempt_quizzes')
+            ->where('quiz_id', $id)
+            ->get();
+        return $attempts;
     }
 
     public function createQuiz(Request $request)
     {
-        // \Log::info($request);
         $quiz = new Quiz;
         $quiz->code = $request->code;
         $quiz->animal = $request->animal;
@@ -50,7 +58,7 @@ class QuizController extends Controller
 
         foreach ($options as $option) {
             $opt = new QuizOption;
-            $opt->quiz_question_id = $quiz->id;
+            $opt->quiz_id = $quiz->id;
             $opt->type = $option['type'];
             $opt->title = $option['title'];
             $opt->marking_scheme = $option['marking_scheme'];

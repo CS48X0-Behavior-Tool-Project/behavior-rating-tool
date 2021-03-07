@@ -4,16 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\AttemptAnswerItem;
 
-class Quiz extends Model
+class AttemptQuiz extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'code', 'animal', 'video', 'question', 'quiz_question_options', 'options'
+        'attempt_id', 'quiz_id'
     ];
 
-    public function quizOption()
+    public function attemptAnswerItem()
     {
-        return $this->hasMany(QuizOption::class);
+        return $this->hasOne(AttemptAnswerItem::class);
     }
 }

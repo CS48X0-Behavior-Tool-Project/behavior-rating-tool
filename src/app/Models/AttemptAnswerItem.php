@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class QuizOption extends Model
+class AttemptAnswerItem extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'quiz_question_id', 'type', 'title', 'marking_scheme', 'is_solution', 'options'
+        'attempt_quiz_id', 'behavior_answers', 'interpretation_answers', 'options'
     ];
 
 }

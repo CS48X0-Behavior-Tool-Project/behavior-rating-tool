@@ -17,7 +17,6 @@ class AccountControllerTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)
-            ->withSession(['banned' => false])
             ->get('/account');
 
         $response->assertStatus(200);
@@ -34,8 +33,7 @@ class AccountControllerTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
-            ->withSession(['banned' => false])
+        $this->actingAs($user)
             ->post('/account', [
                 'fname' => 'TEST',
             ]);
@@ -48,8 +46,7 @@ class AccountControllerTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
-            ->withSession(['banned' => false])
+        $this->actingAs($user)
             ->post('/account', [
                 'lname' => 'TEST',
             ]);
@@ -61,7 +58,7 @@ class AccountControllerTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->post('/account', [
                 'old-email' => $user->email,
                 'email' => 'test_email@example.com',
@@ -74,7 +71,7 @@ class AccountControllerTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->post('/account', [
                 'old-password' => 'password',
                 'password' => 'this_is_a_new_password',
@@ -87,7 +84,7 @@ class AccountControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $user_oldemail = $user->email;
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->post('/account', [
                 'old-email' => 'asdf',
                 'email' => 'asdf',
@@ -120,7 +117,7 @@ class AccountControllerTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->post('/account', [
                 'old-password' => 'incorrect_password',
                 'password' => 'this_is_a_new_password',

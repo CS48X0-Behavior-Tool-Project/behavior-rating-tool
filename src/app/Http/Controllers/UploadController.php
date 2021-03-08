@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Bouncer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Bouncer;
 
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
@@ -163,13 +162,12 @@ class UploadController extends Controller
     }
 
     /**
-     * Send an email to the new user upon account creation, directing them to the website.
-     */
-    public function emailNewUser($email)
-    {
+    * Send an email to the new user upon account creation, directing them to the website.
+    */
+    public function emailNewUser($email) {
 
-        $auth = new EmailAuthentication($email);
-        $auth->requestLink();
+      $auth = new EmailAuthentication($email);
+      $auth->requestLink();
     }
 
     /**

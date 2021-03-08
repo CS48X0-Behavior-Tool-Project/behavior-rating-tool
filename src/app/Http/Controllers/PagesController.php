@@ -84,7 +84,7 @@ class PagesController extends Controller
     public function getAddUser()
     {
         if (request()->user()->can('create', User::class)) {
-            return $this->adminView(request(), 'admin_add_user');
+            return view('admin_add_user');
         }
         return redirect()->back();
     }

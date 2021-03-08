@@ -29,3 +29,6 @@ mysql/*
 /src/Homestead.yaml
 /src/npm-debug.log
 /src/yarn-error.log
+
+# MP4 files, which are connected to the DB
+*.mp4

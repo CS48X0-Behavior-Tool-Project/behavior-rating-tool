@@ -1,15 +1,10 @@
 .video-wrapper {
-    text-align: center;
+    height: 500px;
     overflow: hidden;
     display: flex;
-    flex-direction: coulmn;
     align-items: center;
-    align-items: center;
-    position: relative !important;
-    width: 100% !important;
-    height: auto !important;
 }
 
 .video-wrapper > video {
-    width: 60%;
+    width: 100%;
 }

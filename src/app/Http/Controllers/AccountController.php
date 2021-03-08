@@ -16,10 +16,16 @@ $password_err_msg;
 
 class AccountController extends Controller
 {
+
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
   /**
-  * Called when /account gets a post request from the forms.
-  */
-  public function update() {
+   * Called when /account gets a post request from the forms.
+   */
+  public function update()
+  {
 
     global $name_msg;
     global $email_msg;
@@ -53,9 +59,10 @@ class AccountController extends Controller
   }
 
   /**
-  * Change the first name of the currently logged in user.
-  */
-  public function changeFirstName() {
+   * Change the first name of the currently logged in user.
+   */
+  public function changeFirstName()
+  {
 
     global $name_msg;
 
@@ -76,9 +83,10 @@ class AccountController extends Controller
   }
 
   /**
-  * Change the last name of the currently logged in user.
-  */
-  public function changeLastName() {
+   * Change the last name of the currently logged in user.
+   */
+  public function changeLastName()
+  {
 
     global $name_msg;
 
@@ -97,9 +105,10 @@ class AccountController extends Controller
   }
 
   /**
-  * Change the email of the currently logged in user.
-  */
-  public function changeEmail() {
+   * Change the email of the currently logged in user.
+   */
+  public function changeEmail()
+  {
 
     global $email_msg;
     global $email_err_msg;
@@ -132,16 +141,18 @@ class AccountController extends Controller
   }
 
   /**
-  * Checks whether an email already exists in our records.
-  */
-  public function checkDuplicate ($email) {
+   * Checks whether an email already exists in our records.
+   */
+  public function checkDuplicate($email)
+  {
     return User::where('email', '=', $email)->exists();
   }
 
   /**
-  * Change the password of the currently logged in user.
-  */
-  public function changePassword() {
+   * Change the password of the currently logged in user.
+   */
+  public function changePassword()
+  {
 
     global $password_msg;
     global $password_err_msg;
@@ -154,12 +165,11 @@ class AccountController extends Controller
     // check if the old password matches what is in the database for this user, then update to new
     if (Hash::check($oldpassword, $user->password)) {
       $user->fill([
-              'password' => Hash::make($newpassword)
-          ])->save();
+        'password' => Hash::make($newpassword)
+      ])->save();
 
       $password_msg = "Password changed successfully!";
-    }
-    else {
+    } else {
       $password_err_msg = "Incorrect Password.";
     }
   }

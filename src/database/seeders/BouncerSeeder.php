@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use Bouncer;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Video;
 
 class BouncerSeeder extends Seeder
 {
@@ -15,9 +16,10 @@ class BouncerSeeder extends Seeder
      */
     public function run()
     {
-        Bouncer::allow('admin')->to('delete-users');
-        Bouncer::allow('admin')->to('upload-videos');
+        Bouncer::allow('admin')->to(['delete', 'edit', 'create', 'view'], [User::class, Video::class, Quiz::class]);
+        Bouncer::allow('admin')->to('export-users');
         $adminUser = $this->createAdminAccount();
+
 
         $adminUser->assign('admin');
     }

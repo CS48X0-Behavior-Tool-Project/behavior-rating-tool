@@ -35,28 +35,56 @@ class QuizAttemptController extends Controller
       $userAttempt = new UserAttempt();
       $userAttempt->user_id = auth()->user()->id;
       $userAttempt->attempt_id = $attempt->id;
-      $userAttempt->score = $this->calcScore($id, $behaviourSelections);
+      $scores = $this->calcScore($id, $behaviourSelections);
+      $userAttempt->score = $scores[0];
       $userAttempt->interpretation_guess = $this->isCorrectInterpretation($id, $interpretationSelection);
       $userAttempt->save();
 
-      return redirect()->back();
+      // TODO: store time taken to submit answers
+      // TODO: make sure the user fills in the quiz correctly (no empty answers)
+
+      $scoreMessage = $scores[0] . '/' . $scores[1];
+
+      // TODO: display message showing the user's score after submitting quiz
+
+      //echo $scoreMessage;
+
+      return redirect()->back()->with('score_message', $scoreMessage);
     }
 
     /**
     *  Calculate the score the user gets based on the marking scheme of the behaviour options.
     */
     private function calcScore($quizId, $behaviourSelection) {
-      $correctBehaviours = QuizOption::where([['quiz_id','=',$quizId],['type','=','behaviour'],
-        ['is_solution', '=', true]])->pluck('title')->toArray();
+      //array of all possible behaviours
+      $behaviours = QuizOption::where([['quiz_id','=',$quizId],['type','=','behaviour']])
+        ->pluck('title')->toArray();
 
-      $behaviourValues = QuizOption::where([['quiz_id','=',$quizId],['type','=','behaviour'],
-        ['is_solution', '=', true]])->pluck('marking_scheme')->toArray();
+      //array showing whether each behaviour is true or false (1 or 0)
+      $behaviourSolutions = QuizOption::where([['quiz_id','=',$quizId],['type','=','behaviour']])
+        ->pluck('is_solution')->toArray();
+
+      //array holding marking scheme of each potential answer
+      $behaviourValues = QuizOption::where([['quiz_id','=',$quizId],['type','=','behaviour']])
+        ->pluck('marking_scheme')->toArray();
 
       $score = 0;
+      $maxScore = 0;
+
+      $answerKey = array();
+
+      //create the answer key, with behaviours as keys and truth/false as the values
+      foreach ($behaviours as $key => $value) {
+        $answerKey[$value] = $behaviourSolutions[$key];
+
+        if ($answerKey[$value] === 1) {
+          $maxScore += $behaviourValues[$key];
+        }
+      }
 
       foreach ($behaviourSelection as $key => $value) {
 
-        if (in_array($value, $correctBehaviours)) {
+        if($answerKey[$value] === 1) {
           $score += $behaviourValues[$key];
         }
         else {
@@ -69,7 +97,7 @@ class QuizAttemptController extends Controller
         $score = 0;
       }
 
-      return $score;
+      return [$score,$maxScore];
 
     }
 

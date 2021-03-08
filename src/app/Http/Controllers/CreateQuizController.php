@@ -50,7 +50,7 @@ class CreateQuizController extends Controller
       //make sure the ID field is not empty, and that the ID corresponds to a video that has been uploaded (record stored in db)
 
       $video = Video::where('id', $videoID);
-      
+
       if ($videoID === NULL || !$video->exists()) {
         throw new Exception("video-status:"."Video ID Mismatch");
         return redirect()->route('create_quiz_route')->with('video-status', 'Video ID Mismatch');
@@ -227,7 +227,7 @@ class CreateQuizController extends Controller
         }
 
         $opt = new QuizOption;
-        $opt->quiz_question_id = $quiz->id;
+        $opt->quiz_id = $quiz->id;
         $opt->type = 'behaviour';
         $opt->title = $key;
         $opt->marking_scheme = 1;
@@ -245,7 +245,7 @@ class CreateQuizController extends Controller
         }
 
         $opt = new QuizOption;
-        $opt->quiz_question_id = $quiz->id;
+        $opt->quiz_id = $quiz->id;
         $opt->type = 'interpretation';
         $opt->title = $key;
         $opt->marking_scheme = 1;

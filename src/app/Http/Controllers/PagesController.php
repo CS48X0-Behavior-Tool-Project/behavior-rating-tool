@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\QuizController;
 
 use App\Models\Quiz;
+use App\Models\Attempt;
+use App\Models\AttemptQuiz;
 
 class PagesController extends Controller
 {
@@ -49,8 +51,22 @@ class PagesController extends Controller
 
       $quiz = $this->qc->getQuiz($id);
 
+      //array holding every attempt id the current user has done
+      $userAttempts = Attempt::where('user_id','=',auth()->user()->id)->pluck('id')->toArray();
+
+      //count how many attempts the user has already taken on the quiz and send it to frontend
+      // TODO: there has to be a cleaner way to do this with Eloquent but can't find it right now
+      // NOTE: I think the best solution would be to combine the 'attempts' and 'attempt_quizzes' tables
+      $attemptNumber = 1;
+      foreach ($userAttempts as $key => $value) {
+        $quizId = AttemptQuiz::where('attempt_id','=',$value)->limit(1)->pluck('quiz_id')->toArray();
+        if (in_array($id, $quizId)) {
+          $attemptNumber++;
+        }
+      }
+
       return view('single_quiz')->with(['code' => $quiz->code, 'options' => $quiz->quiz_question_options,
-        'video' => $quiz->video]);
+        'video' => $quiz->video, 'attempt' => $attemptNumber]);
     }
 
     public function getCreateQuiz()

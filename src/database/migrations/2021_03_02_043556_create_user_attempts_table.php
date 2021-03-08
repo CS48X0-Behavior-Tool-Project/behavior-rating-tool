@@ -15,9 +15,10 @@ class CreateUserAttemptsTable extends Migration
     {
         Schema::create('user_attempts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');  
-            $table->unsignedBigInteger('attempt_id');   
-            $table->integer('scores')->nullable();   
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('attempt_id');
+            $table->integer('score')->nullable();
+            $table->boolean('interpretation_guess')->default(0);
             $table->timestamps();
             $table->jsonb('options')->nullable();
 
@@ -39,4 +40,3 @@ class CreateUserAttemptsTable extends Migration
         Schema::enableForeignKeyConstraints();
     }
 }
-

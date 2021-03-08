@@ -65,9 +65,13 @@ class UploadController extends Controller
           case 'xlsx':
             $data = SimpleXLSX::parse(request()->mycsv)->rows();
             break;
+          case 'json':
+            $data = json_decode(file_get_contents(request()->mycsv), true);
+            $data = $this->readJson($data);
+            break;
           default:
             return redirect()->back()
-                ->with('file_error_message', 'Invalid File Type (must be .csv or .xlsx)');
+                ->with('file_error_message', 'Invalid File Type (must be .csv, .xlsx, or .json)');
         }
 
         unset($data[0]);
@@ -113,6 +117,25 @@ class UploadController extends Controller
         return redirect()->back()
             ->with('user_count_message', $user_count_message)
             ->with('duplicate_email_error', $duplicateEmailsArray);
+    }
+
+    /**
+    *  Read the json file.
+    */
+    private function readJson($data)
+    {
+        $arr = array();
+        $arr[0] = array_keys($data[0]);
+
+        foreach ($data as $key => $value) {
+            $arr[$key+1] = array(
+                0 => $value[$arr[0][0]],
+                1 => $value[$arr[0][1]],
+                2 => $value[$arr[0][2]],
+            );
+        }
+
+        return $arr;
     }
 
     /**

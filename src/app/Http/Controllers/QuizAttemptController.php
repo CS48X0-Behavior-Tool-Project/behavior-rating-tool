@@ -4,41 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Attempt;
-use App\Models\AttemptQuiz;
-use App\Models\AttemptAnswerItem;
-use App\Models\UserAttempt;
-
 use App\Models\QuizOption;
+
+use App\Http\Controllers\Api\UserController;
 
 class QuizAttemptController extends Controller
 {
+    private $uc;
+
+    public function __construct() {
+        $this->uc = new UserController();
+    }
+
     public function submitQuizAttempt($id) {
 
-      $attempt = new Attempt();
-      $attempt->user_id = auth()->user()->id;
-      $attempt->save();
-
-      $quiz = new AttemptQuiz();
-      $quiz->attempt_id = $attempt->id;
-      $quiz->quiz_id = $id;
-      $quiz->save();
-
-      $answer = new AttemptAnswerItem();
-      $answer->attempt_quiz_id = $id;
       $behaviourSelections = request()->input('behaviour-check');
-      $answer->behavior_answers = json_encode($behaviourSelections);
       $interpretationSelection = request()->input('interpretation-check');
-      $answer->interpretation_answers = json_encode($interpretationSelection);
-      $answer->save();
 
-      $userAttempt = new UserAttempt();
-      $userAttempt->user_id = auth()->user()->id;
-      $userAttempt->attempt_id = $attempt->id;
       $scores = $this->calcScore($id, $behaviourSelections);
-      $userAttempt->score = $scores[0];
-      $userAttempt->interpretation_guess = $this->isCorrectInterpretation($id, $interpretationSelection);
-      $userAttempt->save();
+      $interpretationGuess = $this->isCorrectInterpretation($id, $interpretationSelection);
+
+      $request = new Request([
+        'user_id'   => auth()->user()->id,
+        'quiz_id' => $id,
+        'behavior_answers' => $behaviourSelections,
+        'interpretation_answers' => $interpretationSelection,
+        'score' => $scores[0],
+        'interpretation_guess' => $interpretationGuess,
+      ]);
+
+      $this->uc->upsertUserAttempts($request);
 
       // TODO: store time taken to submit answers
       // TODO: make sure the user fills in the quiz correctly (no empty answers)

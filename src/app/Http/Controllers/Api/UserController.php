@@ -21,13 +21,14 @@ class UserController extends Controller
     public function getAllUsers()
     {
         // Implement logic to fetch all users
-        $users = User::all(); 
+        $users = User::all();
         return $users;
     }
 
     public function getUser($id)
     {
         // Implement logic to fetch user
+        return User::find($id);
     }
 
     public function getUserAttempts($id)
@@ -56,15 +57,15 @@ class UserController extends Controller
             // create new attempt and corresponding user_attempt
             Log::info(">>> Creating a new attempt.");
             $attempt = new Attempt;
-            $attempt->user_id = $request->route('id');
+            $attempt->user_id = $request->user_id;
             $attempt->save();
             $attempt_id = $attempt->id;
-    
+
             Log::info([">>> Creating a new user_attempt, where attempt_id is: ", $attempt_id]);
             $userAttempt = new UserAttempt;
-            $userAttempt->user_id = $request->route('id');
+            $userAttempt->user_id = $request->user_id;
             $userAttempt->attempt_id = $attempt_id;
-            $userAttempt->scores = 0;
+            $userAttempt->score = 0;
             $userAttempt->save();
             Log::info(">>> DONE: user_attempt created !");
             return response()->json(['success' => true, 'attempt_id' => $attempt_id, 'user_attempt_id' => $userAttempt->id], 200);
@@ -81,8 +82,8 @@ class UserController extends Controller
             if($user_attempt != null) {
                 $attempt_id =  $user_attempt->attempt_id;
                 Log::info([">>> attempt_id is ", $attempt_id]);
-                if($request->has('scores')) {
-                    $user_attempt->scores = $request->scores;
+                if($request->has('score')) {
+                    $user_attempt->score = $request->score;
                     $user_attempt->save();
                 }
             }
@@ -94,18 +95,19 @@ class UserController extends Controller
             // create new attempt and corresponding user_attempt
             Log::info(">>> Creating a new attempt.");
             $attempt = new Attempt;
-            $attempt->user_id = $request->route('id');
+            $attempt->user_id = $request->user_id;
             $attempt->save();
             $attempt_id = $attempt->id;
-    
+
             Log::info([">>> Creating a new user_attempt, where attempt_id is: ", $attempt_id]);
             $userAttempt = new UserAttempt;
-            $userAttempt->user_id = $request->route('id');
+            $userAttempt->user_id = $request->user_id;
             $userAttempt->attempt_id = $attempt_id;
-            $userAttempt->scores = 0;
-            if($request->has('scores')) {
-                $userAttempt->scores = $request->scores;
+            $userAttempt->score = 0;
+            if($request->has('score')) {
+                $userAttempt->score = $request->score;
             }
+            $userAttempt->interpretation_guess = $request->interpretation_guess;
             $userAttempt->save();
             $user_attempt_id = $userAttempt->id;
             Log::info(">>> DONE: user_attempt created !");
@@ -141,7 +143,7 @@ class UserController extends Controller
             $attempt_answers->interpretation_answers = json_encode($request->interpretation_answers);
             $attempt_answers->save();
 
-        } 
+        }
         else {
             // insert attempt answers
             Log::info([">>> creating a new attempt_answer_items (attempt_quiz_id): ", $attempt_quiz_id]);

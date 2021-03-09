@@ -24,6 +24,10 @@ class QuizAttemptController extends Controller
       $behaviourSelections = request()->input('behaviour-check');
       $interpretationSelection = request()->input('interpretation-check');
 
+      if ($behaviourSelections === NULL || $interpretationSelection === NULL ) {
+        return redirect()->route('quizzes_route')->with('quiz-error-message', 'Please select at least one option in each section.');
+      }
+
       $scores = $this->calcScore($id, $behaviourSelections);
       $interpretationGuess = $this->isCorrectInterpretation($id, $interpretationSelection);
 
@@ -39,7 +43,6 @@ class QuizAttemptController extends Controller
       $this->uc->upsertUserAttempts($request);
 
       // TODO: store time taken to submit answers
-      // TODO: make sure the user fills in the quiz correctly (no empty answers)
 
       $quiz = $this->qc->getQuiz($id);
 
@@ -100,6 +103,7 @@ class QuizAttemptController extends Controller
 
       }
 
+      //don't let the score go below zero
       if ($score < 0) {
         $score = 0;
       }

@@ -79,6 +79,11 @@
                     <strong>{{ session('score-message') }}</strong>
                 </div>
             @endif
+            @if (session('quiz-error-message'))
+                <div class="alert alert-danger">
+                    <strong>{{ session('quiz-error-message') }}</strong>
+                </div>
+            @endif
             Insert selected filter criteria here
             <!-- Insert selected filter criteria here TODO -->
             <div class="card-body">

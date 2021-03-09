@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 use App\Models\QuizOption;
 
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\QuizController;
 
 class QuizAttemptController extends Controller
 {
     private $uc;
+    private $qc;
 
     public function __construct() {
         $this->uc = new UserController();
+        $this->qc = new QuizController();
     }
 
     public function submitQuizAttempt($id) {
@@ -38,13 +41,22 @@ class QuizAttemptController extends Controller
       // TODO: store time taken to submit answers
       // TODO: make sure the user fills in the quiz correctly (no empty answers)
 
-      $scoreMessage = $scores[0] . '/' . $scores[1];
+      $quiz = $this->qc->getQuiz($id);
 
-      // TODO: display message showing the user's score after submitting quiz
+      $scoreMessage = 'You got ' . $scores[0] . '/' . $scores[1] . ' on ' . $quiz->code . '.';
 
-      //echo $scoreMessage;
+      $interpretationMessage;
 
-      return redirect()->back()->with('score_message', $scoreMessage);
+      if ($interpretationGuess) {
+        $interpretationMessage = '  You have chosen the correct interpretation.';
+      }
+      else {
+        $interpretationMessage = '  You have chosen the incorrect interpretation.';
+      }
+
+      $scoreMessage .= $interpretationMessage;
+
+      return redirect()->route('quizzes_route')->with('score-message', $scoreMessage);
     }
 
     /**

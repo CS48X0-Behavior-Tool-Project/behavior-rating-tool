@@ -69,8 +69,10 @@
                 </div>
             @endif
             Insert selected filter criteria here
+
             <!-- Insert selected filter criteria here TODO -->
             <div class="card-body">
+                <!-- Add number of attempts and best score to the quizzes button TODO -->
                 @foreach ($quizzes as $quiz)
                     <button class="btn btn-secondary" style="padding: 10px; margin: 10px;" onclick="window.location.href='/quizzes/{{$quiz->id}}'">{{ $quiz->code }}</button>
                 @endforeach

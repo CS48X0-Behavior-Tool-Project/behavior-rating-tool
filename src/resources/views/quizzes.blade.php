@@ -28,30 +28,14 @@
 
                 <!-- Number of attempts filter -->
                 <p class="title" style="margin-top: 15px;">Filter quizzes by your number of attempts</p>
-                <div class="form-group row justify-content-center">
-                    <div>
-                        <span>
-                            <input type="radio" id="one" name="attempts-radio" value="one">
-                            <label for="one"> One</label><br>
-                        </span>
-                        <span>
-                            <input type="radio" id="two" name="attempts-radio" value="two">
-                            <label for="two"> Two</label><br>
-                        </span>
-                        <span>
-                            <input type="radio" id="three" name="attempts-radio" value="three">
-                            <label for="three"> Three</label><br>
-                        </span>
-                        <span>
-                            <input type="radio" id="four" name="attempts-radio" value="four">
-                            <label for="four"> Four</label><br>
-                        </span>
-                        <span>
-                            <input type="radio" id="five_plus" name="attempts-radio" value="five_plus">
-                            <label for="five_plus"> Five +</label><br>
-                        </span>
-                    </div>
+                <div class="row justify-content-center">
+                  <span>
+                      <input type="radio" id="attempt-all" name="attempt-radio" value="all" checked="checked">
+                      <label for="attempt-all" type="text"> All </label>
+                  </span>
                 </div>
+                <!-- foreach, same as animals here for attempts -->
+
                 <!-- Animal filter -->
                 <p class="title">Filter quizzes by animal</p>
                 <div class="row justify-content-center">

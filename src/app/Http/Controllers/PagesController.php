@@ -6,6 +6,7 @@ use Bouncer;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Api\QuizController;
+use App\Http\Controllers\Api\UserController;
 
 use App\Models\Quiz;
 

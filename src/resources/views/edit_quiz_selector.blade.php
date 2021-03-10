@@ -18,13 +18,20 @@
                         <select class="custom-select" id="inputGroupSelect02">
                             <option selected>Quizzes...</option>
                             <!-- for each quiz in the database make an option -->
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            @foreach($quizzes as $quiz)
+                            <option value="{{$quiz->id}}">{{$quiz->code}}</option>
+                            @endforeach
                         </select>
+
+                        <script>
+                            function selectQuiz() {
+                                var val = document.getElementById("inputGroupSelect02").value;
+                                window.location.href = `/edit_quiz/${val}`;
+                            }
+                        </script>
+
                         <div class="input-group-append">
-                            <!-- TODO href should take you to edit_quiz_by_id{selectedQuiz} -->
-                            <a class="input-group-text btn btn-primary" for="inputGroupSelect02" href="{{url('/edit_quiz')}}">Edit!</a>
+                            <a class="input-group-text btn btn-primary" for="inputGroupSelect02" href="javascript:selectQuiz()">Edit!</a>
                         </div>
                     </div>
                 </div>

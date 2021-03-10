@@ -64,15 +64,19 @@ class PagesController extends Controller
     // Selector page for
     public function getEditQuiz()
     {
-        return view('edit_quiz_selector');
+        $quizzes = Quiz::all();
+
+        return view('edit_quiz_selector')->with('quizzes',$quizzes);
     }
 
     // Edits a single quiz
-    public function getEditQuizByID()
+    public function getEditQuizByID($id)
     {
         $animals = Quiz::all()->pluck('animal')->unique();
+        $quiz = Quiz::find($id);
 
-        return $this->adminView(request(), 'admin_edit_quiz')->with('animals',$animals);
+        return $this->adminView(request(), 'admin_edit_quiz')->with(['animals' => $animals,
+            'quiz' => $quiz]);
     }
 
     public function getAddUser()

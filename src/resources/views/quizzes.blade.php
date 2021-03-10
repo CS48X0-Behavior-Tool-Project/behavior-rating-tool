@@ -21,9 +21,10 @@
     <div class="row col-12">
         <div class="card col-4">
             <div class="card-header">Filter</div>
-            <form action="/quizzes" method="post">
-              @csrf
+
             <div class="card-body">
+              <form action="/quizzes" method="post">
+                @csrf
                 <input id="search" class="form-control" type="text" name="search" placeholder="Search Quizzes..." onkeyup"">
 
                 <!-- Number of attempts filter -->

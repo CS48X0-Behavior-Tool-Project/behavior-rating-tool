@@ -1,49 +1,39 @@
 @extends('layouts.app')
 
+@if (session('status'))
+    <div class="alert alert-success" role="alert">
+        {{ session('status') }}
+    </div>
+@endif
+
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">{{ __('View All Users') }}</div>
+    <div class="row col-12">
+        <!-- Filter -->
+        <div class="card col-4">
+            <div class="card-header"> Filter Users </div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('View all users if you are an admin!') }}
-
-                    <!-- Zak for testing purposes display your data here -->
-
-                    <table border = "1">
-                    <tr>
-                    <td>Id</td>
-                    <td>Username (think we're getting rid of this eventually)</td>
-                    <td>First Name</td>
-                    <td>Last Name</td>
-                    <td>Email</td>
-                    <td>Options</td>
-                    </tr>
-                    @foreach ($users as $user)
-                    <tr>
-                    <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->first_name }}</td>
-                    <td>{{ $user->last_name }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->options }}</td>
-                    <td><a href="{{ url('/user/' . $user->id) }}" class="btn btn-xs btn-info pull-right">Select</a><td>
-                    </tr>
-                    @endforeach
-                    </table>
-
-
-                </div>
+            <div class="card-body">
+                <form class="" action="index.html" method="post">
+                    <input id="search" class="form-control" type="text" name="search" placeholder="Search Users..." onkeyup"">
+                </form>
             </div>
         </div>
+
+        <!-- Users -->
+        <div class="card col-8">
+            <div class="card-header"> Users </div>
+
+            <div class="card-body">
+              <!-- TODO add filter options here, search bar and letter to select first letter of first and last name -->
+                @foreach ($users as $user)
+                    <p style="padding:5px"> {{$user->first_name}} {{$user->last_name}}
+                    <a href="{{ url('/user/' . $user->id) }}" class="btn btn-secondary" style="margin-left: 10px">View User</a>
+                    </p>
+                @endforeach
+            </div>
+        </div>
+
     </div>
 </div>
 @endsection

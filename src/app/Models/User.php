@@ -12,7 +12,17 @@ use App\Auth\Traits\EmailAuthenticatable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRolesAndAbilities, EmailAuthenticatable;
+    use HasFactory, Notifiable, EmailAuthenticatable, HasRolesAndAbilities;
+
+    public function attempt()
+    {
+        return $this->hasMany(Attempt::class);
+    }
+
+    public function userAttempt()
+    {
+        return $this->hasMany(UserAttempt::class);
+    }
 
     /**
      * The attributes that are mass assignable.

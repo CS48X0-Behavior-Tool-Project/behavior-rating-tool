@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateQuizzesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('code');
+            $table->string('animal');
+            $table->string('video')->nullable();
+            $table->string('question')->nullable();
             $table->timestamps();
             $table->jsonb('options')->nullable();
         });
@@ -35,7 +32,8 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('quizzes');
         Schema::enableForeignKeyConstraints();
     }
 }
+

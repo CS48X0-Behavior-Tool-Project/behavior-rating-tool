@@ -9,11 +9,18 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewAccountController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\AccountController;
+
+use App\Http\Controllers\CreateQuizController;
+
+use App\Http\Controllers\Resources\VideoController;
+
 use App\Http\Controllers\ExportController;
+
 
 Auth::routes();
 
 Route::resource('users', UserController::class);
+Route::resource('videos', VideoController::class);
 
 /**
  * Login page is the landing page when we first visit the website
@@ -38,7 +45,7 @@ Route::get('/add_user', [PagesController::class, 'getAddUser'])->name('add_user_
 /**
  * Create quiz page
  */
-Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz']);
+Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz'])->name('create_quiz_route');
 
 /**
  * Account management page (first/last names, email, password changes)
@@ -48,15 +55,12 @@ Route::get('/account', [PagesController::class, 'getAccountManagement'])->name('
 /**
  * List of possible quizzes to attempt
  */
-Route::get('/quizzes', [PagesController::class, 'getQuizList']);
+Route::get('/quizzes', [PagesController::class, 'getQuizList'])->name('quizzes_route');
 
 /**
- * Quiz attempt page
- *
- * TODO: The URL should be appended with /{id} once a proper ID implementation
- * has been made in the attemptQuiz function.
+ * Display the quiz we are attempting
  */
-Route::get('/quiz/attempt/{id}', [PagesController::class, 'attemptQuiz']);
+Route::get('/quizzes/{id}', [PagesController::class, 'getQuizById']);
 
 /**
  * Show all the users in the system
@@ -74,8 +78,8 @@ Route::get('/user/{id}', [PagesController::class, 'getUserById']);
 Route::post('/', [LoginController::class, 'submit']);
 
 /**
- * Called when the email link to a new user is clicked
- */
+* Called when the email link to a new user is clicked
+*/
 Route::get('/confirmation/{token}', [UploadController::class, 'validateToken']);
 
 /**
@@ -89,6 +93,12 @@ Route::post('/add_user', [UploadController::class, 'upload']);
 Route::post('/account', [AccountController::class, 'update']);
 
 /**
+
+ * Route for creating a new quiz.
+ */
+Route::post('/create_quiz', [CreateQuizController::class, 'createQuiz']);
+
+/*
 * Route for confirming a new account.
 */
 Route::post('/confirmation', [NewAccountController::class, 'createAccount']);

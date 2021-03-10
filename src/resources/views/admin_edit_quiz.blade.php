@@ -6,7 +6,108 @@
     </div>
 @endif
 
-<script type="text/javascript" src="{{ URL::asset('javascript/admin_create_quiz.js') }}"></script>
+<script type="text/javascript" language="JavaScript">
+    function validate(event) {
+        // Video upload check
+        impVideo = document.getElementById("import-video");
+        if ($("#video-id").val() == "") {
+            event.preventDefault();
+            alert("You must upload a video for the quiz");
+            impVideo.style.borderColor = "red";
+        } else {
+            impVideo.style.borderColor = "#dfdfdf";
+        }
+
+        // Animal selection check
+        aniInfo = document.getElementById("animal-info")
+        if ($('input[name="animal-radio[]"]:checked').length == 0){
+            event.preventDefault();
+            alert("You must select an animal");
+            aniInfo.style.borderColor = "red";
+        } else {
+            // Initially set to grey
+            document.getElementById('animal-new').style.borderColor = "#dfdfdf";
+
+            var animalRadio = document.querySelectorAll("[name='animal-radio[]']:checked");
+            var radio = animalRadio[0];
+            var id = String(radio.id).replace('a', 'animal');
+            // If they selected a new animal but didn't input the animal name
+            if (id == "animal-new" && document.getElementById(id).value == ""){
+                event.preventDefault();
+                alert("You have not filled in the animal information");
+                aniInfo.style.borderColor = "red";
+                document.getElementById(id).style.borderColor = "red";
+            } else {
+                aniInfo.style.borderColor = "#dfdfdf";
+                document.getElementById('animal-new').style.borderColor = "#dfdfdf";
+            }
+        }
+
+        // Behaviour check
+        behInfo = document.getElementById("behaviour-info");
+        if ($('input[name="behaviour-check[]"]:checked').length == 0){
+            event.preventDefault();
+            alert("You must select at least one correct behaviour");
+            behInfo.style.borderColor = "red";
+        } else {
+            // Color all borders grey first
+            var inputs = document.querySelectorAll("[name='behaviour-check[]']");
+            for (var i = 0; i < inputs.length; i++){
+                var current = inputs[i];
+                var id = String(current.id).replace('b', 'box');
+                document.getElementById(id).style.borderColor = "#dfdfdf";
+            }
+            // Check that selected behaviours aren't blank fields
+            var checked_boxes = document.querySelectorAll("[name='behaviour-check[]']:checked");
+            for (var i = 0; i < checked_boxes.length; i++) {
+                var currentCheckbox = checked_boxes[i];
+                var id = String(currentCheckbox.id).replace('b', 'box');
+                input = document.getElementById(id);
+                resp = input.value;
+                if (resp == ""){
+                    event.preventDefault();
+                    alert("The selected correct behaviour must have an answer associated with it");
+                    behInfo.style.borderColor = "red";
+                    input.style.borderColor = "red";
+                    break;
+                } else {
+                    input.style.borderColor = "#dfdfdf";
+                    behInfo.style.borderColor = "#dfdfdf";
+                }
+            }
+        }
+
+        // Interpretation check
+        intInfo = document.getElementById("interpretation-info")
+        if ($('input[name=interpretation-radio]:checked').length == 0){
+            event.preventDefault();
+            alert("You must select one correct interpretation");
+            intInfo.style.borderColor = "red";
+        } else {
+            // Color all borders grey first
+            var inputs = document.querySelectorAll("[name='interpretation-radio']");
+            for (var i = 0; i < inputs.length; i++){
+                var current = inputs[i];
+                var id = String(current.id).replace('i', 'inter');
+                document.getElementById(id).style.borderColor = "#dfdfdf";
+            }
+
+            var intRadio = document.querySelectorAll("[name='interpretation-radio']:checked");
+            var radio = intRadio[0];
+            var id = String(radio.id).replace('i', 'inter');
+            // If the selected interpretation is not filled in
+            if (document.getElementById(id).value == ""){
+                event.preventDefault();
+                alert("You have not filled in the correct interpretation");
+                intInfo.style.borderColor = "red";
+                document.getElementById(id).style.borderColor = "red";
+            } else {
+                intInfo.style.borderColor = "#dfdfdf";
+                document.getElementById(id).style.borderColor = "#dfdfdf";
+            }
+        }
+    }
+</script>
 
 <style>
     .formLabel {
@@ -48,7 +149,6 @@
                     <div class="card-body">
                         <div class="row justify-content-center">
                             <div class="col">
-                                <!-- TODO video here -->
                                 <iframe id="thumbnail" src="" width="col-md-4" height="200"></iframe>
                                 <br>
                                 <br>
@@ -85,7 +185,7 @@
                                 <div class="form-group row">
                                     <label for="video-id" class="col-md-3 col-form-label text-md-right">ID</label>
                                     <div class="col-md-9">
-                                        <input id="video-id" type="text" class="form-control" name="video-id" placeholder="Autogenerated ID" readonly="readonly">
+                                        <input id="video-id" type="text" class="form-control" name="video-id" placeholder="Autogenerated ID" disabled="disabled">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -101,6 +201,7 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         @foreach($animals as $data)
+                                        <!-- TODO this is only return COW when quizzes returns COW nad HORSE -->
                                         <div class="row-justify-content-center">
                                             <span id="spacing">
                                                 <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
@@ -134,43 +235,43 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-one" name="behaviour-check[]" value="1">
+                                            <input type="checkbox" id="b-one" name="behaviour-check[]">
                                             <input id="box-one" type="text" class="formLabel" name="box-one" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-two" name="behaviour-check[]" value="2">
+                                            <input type="checkbox" id="b-two" name="behaviour-check[]">
                                             <input id="box-two" type="text" class="formLabel" name="box-two" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-three" name="behaviour-check[]" value="3">
+                                            <input type="checkbox" id="b-three" name="behaviour-check[]">
                                             <input id="box-three" type="text" class="formLabel" name="box-three" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-four" name="behaviour-check[]" value="4">
+                                            <input type="checkbox" id="b-four" name="behaviour-check[]">
                                             <input id="box-four" type="text" class="formLabel" name="box-four" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-five" name="behaviour-check[]" value="5">
+                                            <input type="checkbox" id="b-five" name="behaviour-check[]">
                                             <input id="box-five" type="text" class="formLabel" name="box-five" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-six" name="behaviour-check[]" value="6">
+                                            <input type="checkbox" id="b-six" name="behaviour-check[]">
                                             <input id="box-six" type="text" class="formLabel" name="box-six" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-seven" name="behaviour-check[]" value="7">
+                                            <input type="checkbox" id="b-seven" name="behaviour-check[]">
                                             <input id="box-seven" type="text" class="formLabel" name="box-seven" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-eight" name="behaviour-check[]" value="8">
+                                            <input type="checkbox" id="b-eight" name="behaviour-check[]">
                                             <input id="box-eight" type="text" class="formLabel" name="box-eight" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-nine" name="behaviour-check[]" value="9">
+                                            <input type="checkbox" id="b-nine" name="behaviour-check[]">
                                             <input id="box-nine" type="text" class="formLabel" name="box-nine" placeholder="Edit me ...">
                                         </span>
                                         <span id="spacing">
-                                            <input type="checkbox" id="b-ten" name="behaviour-check[]" value="10">
+                                            <input type="checkbox" id="b-ten" name="behaviour-check[]">
                                             <input id="box-ten" type="text" class="formLabel" name="box-ten" placeholder="Edit me ...">
                                         </span>
                                     </div>

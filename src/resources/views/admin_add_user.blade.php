@@ -109,6 +109,13 @@
                             </form>
                         </div>
                         <br>
+                        @if ($message = Session::get('file_error_message'))
+                            <div class="alert alert-danger">
+                                <strong>{{ $message }}</strong>
+                            </div>
+
+                        @endif
+
                         @if ($message = Session::get('user_count_message'))
                             <div class="alert alert-info">
                                 <strong>{{ $message }}</strong>

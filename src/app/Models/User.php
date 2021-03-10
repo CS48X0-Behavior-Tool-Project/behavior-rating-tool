@@ -12,7 +12,7 @@ use App\Auth\Traits\EmailAuthenticatable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRolesAndAbilities, EmailAuthenticatable;
+    use HasFactory, Notifiable, EmailAuthenticatable, HasRolesAndAbilities;
 
     public function attempt()
     {

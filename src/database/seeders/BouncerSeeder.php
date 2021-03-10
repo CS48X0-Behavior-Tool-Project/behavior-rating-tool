@@ -16,9 +16,12 @@ class BouncerSeeder extends Seeder
     public function run()
     {
         Bouncer::allow('admin')->to('delete-users');
+        Bouncer::allow('admin')->to('upload-videos');
         $adminUser = $this->createAdminAccount();
 
         $adminUser->assign('admin');
+
+        $this->createRolePermission();
     }
 
     /**
@@ -36,5 +39,51 @@ class BouncerSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => env('ADMIN_USER_PASSWORD')
         ]);
+    }
+
+    private function createRolePermission() {
+
+        Bouncer::allow('student')->to('view-profile');
+        Bouncer::allow('student')->to('edit-profile');
+        Bouncer::allow('student')->to('review-my-quizzes');  
+        Bouncer::allow('student')->to('conduct-quizzes');
+
+        Bouncer::allow('expert')->to('view-profile');
+        Bouncer::allow('expert')->to('edit-profile');
+        Bouncer::allow('expert')->to('create-quizzes');
+        Bouncer::allow('expert')->to('update-quizzes');
+        Bouncer::allow('expert')->to('review-my-quizzes');  
+        Bouncer::allow('expert')->to('conduct-quizzes');
+
+        Bouncer::allow('TA')->to('view-users-page');
+        Bouncer::allow('TA')->to('create-users');
+        Bouncer::allow('TA')->to('edit-users');
+        Bouncer::allow('TA')->to('import-users');
+        Bouncer::allow('TA')->to('export-users');
+        Bouncer::allow('TA')->to('view-profile');
+        Bouncer::allow('TA')->to('edit-profile');
+        Bouncer::allow('TA')->to('create-quizzes');
+        Bouncer::allow('TA')->to('update-quizzes');
+        Bouncer::allow('TA')->to('review-my-quizzes');      // review page by a student
+        Bouncer::allow('TA')->to('review-quizzes');         // review for all students
+        Bouncer::allow('TA')->to('export-student-quizzes');
+        Bouncer::allow('TA')->to('conduct-quizzes');
+
+        Bouncer::allow('admin')->to('view-users-page');
+        Bouncer::allow('admin')->to('create-users');
+        Bouncer::allow('admin')->to('edit-users');
+        Bouncer::allow('admin')->to('delete-users');
+        Bouncer::allow('admin')->to('import-users');
+        Bouncer::allow('admin')->to('export-users');
+        Bouncer::allow('admin')->to('view-profile');
+        Bouncer::allow('admin')->to('edit-profile');
+        Bouncer::allow('admin')->to('create-quizzes');
+        Bouncer::allow('admin')->to('update-quizzes');
+        Bouncer::allow('admin')->to('delete-quizzes');
+        Bouncer::allow('admin')->to('review-my-quizzes');
+        Bouncer::allow('admin')->to('review-quizzes');
+        Bouncer::allow('admin')->to('export-student-quizzes');
+        Bouncer::allow('admin')->to('conduct-quizzes');
+    
     }
 }

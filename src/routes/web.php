@@ -48,11 +48,7 @@ Route::get('/add_user', [PagesController::class, 'getAddUser'])->name('add_user_
 Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz'])->name('create_quiz_route');
 
 /**
-<<<<<<< HEAD
  * Edit quiz page
-=======
- * Create quiz page
->>>>>>> 996990876cb87a18fa4b45c00defccdb6d4887be
  */
 Route::get('/edit_quiz', [PagesController::class, 'getEditQuiz'])->name('edit_quiz_route');
 

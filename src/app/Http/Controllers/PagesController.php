@@ -61,6 +61,13 @@ class PagesController extends Controller
         return $this->adminView(request(), 'admin_create_quiz')->with('animals',$animals);
     }
 
+    public function getEditQuiz()
+    {
+        $animals = Quiz::all()->pluck('animal')->unique();
+
+        return $this->adminView(request(), 'admin_edit_quiz')->with('animals',$animals);
+    }
+
     public function getAddUser()
     {
         return $this->adminView(request(), 'admin_add_user');

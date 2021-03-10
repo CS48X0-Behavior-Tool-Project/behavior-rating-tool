@@ -39,7 +39,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Create A New Quiz') }}</div>
+                    <div class="card-header">{{ __('Edit Quiz (insert ID here)') }}</div>
                     @if (session('quiz-status'))
                         <div class="alert alert-success">
                             <strong>{{ session('quiz-status') }}</strong>

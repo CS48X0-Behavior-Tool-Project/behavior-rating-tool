@@ -24,16 +24,6 @@ class User extends Authenticatable
         return $this->hasMany(UserAttempt::class);
     }
 
-    public function attempt()
-    {
-        return $this->hasMany(Attempt::class);
-    }
-
-    public function userAttempt()
-    {
-        return $this->hasMany(UserAttempt::class);
-    }
-
     /**
      * The attributes that are mass assignable.
      *

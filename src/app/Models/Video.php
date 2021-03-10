@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAttempt extends Model
+class Video extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'user_id', 'attempt_id', 'scores', 'options'
+        'name',
     ];
-
-    public function attempt()
-    {
-        return $this->hasMany(Attempt::class);
-    }
 }

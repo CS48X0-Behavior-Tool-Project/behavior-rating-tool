@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Log;
 
 class CreateQuizController extends Controller
 {
-
 	public function __construct()
 	{
 		$this->middleware('auth');

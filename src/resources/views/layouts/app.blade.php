@@ -70,7 +70,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <!-- Admin and TA -->
-                                    @if (Bouncer::is(Auth::user())->an("admin") || Bouncer::is(Auth::user())->an("ta"))
+                                    @if (Bouncer::is(Auth::user())->an("admin") || Bouncer::is(Auth::user())->a("ta"))
                                         <a class="dropdown-item" href="{{ url('add_user') }}">
                                             {{ __('Add Users') }}
                                         </a>
@@ -79,7 +79,7 @@
                                         </a>
                                     @endif
                                     <!-- Admin, TA, and Experts -->
-                                    @if (Bouncer::is(Auth::user())->an("admin") || Bouncer::is(Auth::user())->an("ta") || Bouncer::is(Auth::user())->an("expert"))
+                                    @if (Bouncer::is(Auth::user())->an("admin") || Bouncer::is(Auth::user())->a("ta") || Bouncer::is(Auth::user())->an("expert"))
                                         <a class="dropdown-item" href="{{ url('edit_quiz') }}">
                                             {{ __('Edit Quiz') }}
                                         </a>

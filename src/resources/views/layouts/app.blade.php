@@ -62,33 +62,31 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        <!-- TODO -->
-                        <!-- Remove ability to self-register once admin register is implemented -->
                         @guest
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                            <!-- Needs to be something here to only show admins option to create quizzes and users -->
+                            <!-- Guests see nothing here -->
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
                                 </a>
-                                <!-- TODO -->
-                                <!-- navbar items once logged in - differentiate between student/admin -->
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <!-- admin only -->
-                                    <a class="dropdown-item" href="{{ url('add_user') }}">
-                                        {{ __('Add Users') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ url('create_quiz') }}">
-                                        {{ __('Create New Quiz') }}
-                                    </a>
-                                    <!--  -->
+                                    <!-- Admin and TA -->
+                                    @if (Auth::user()->roles[0]->name === "admin" || Auth::user()->roles[0]->name === "ta")
+                                        <a class="dropdown-item" href="{{ url('add_user') }}">
+                                            {{ __('Add Users') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ url('create_quiz') }}">
+                                            {{ __('Create New Quiz') }}
+                                        </a>
+                                    @endif
+                                    <!-- Admin, TA, and Experts -->
+                                    @if (Auth::user()->roles[0]->name === "admin" || Auth::user()->roles[0]->name === "ta" || Auth::user()->roles[0]->name === "expert")
+                                        <a class="dropdown-item" href="{{ url('edit_quiz') }}">
+                                            {{ __('Edit Quiz') }}
+                                        </a>
+                                    @endif
+                                    <!-- All users  -->
                                     <a class="dropdown-item" href="{{ url('quizzes') }}">
                                         {{ __('Quizzes') }}
                                     </a>

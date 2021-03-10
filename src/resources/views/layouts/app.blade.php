@@ -57,9 +57,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         @guest
@@ -72,7 +70,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <!-- Admin and TA -->
-                                    @if (Auth::user()->roles[0]->name === "admin" || Auth::user()->roles[0]->name === "ta")
+                                    @if (Bouncer::is(Auth::user())->an("admin") || Bouncer::is(Auth::user())->an("ta"))
                                         <a class="dropdown-item" href="{{ url('add_user') }}">
                                             {{ __('Add Users') }}
                                         </a>
@@ -81,7 +79,7 @@
                                         </a>
                                     @endif
                                     <!-- Admin, TA, and Experts -->
-                                    @if (Auth::user()->roles[0]->name === "admin" || Auth::user()->roles[0]->name === "ta" || Auth::user()->roles[0]->name === "expert")
+                                    @if (Bouncer::is(Auth::user())->an("admin") || Bouncer::is(Auth::user())->an("ta") || Bouncer::is(Auth::user())->an("expert"))
                                         <a class="dropdown-item" href="{{ url('edit_quiz') }}">
                                             {{ __('Edit Quiz') }}
                                         </a>

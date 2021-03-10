@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\QuizController;
 
 use App\Models\Quiz;
+use App\Models\QuizOption;
 
 class PagesController extends Controller
 {
@@ -74,9 +75,10 @@ class PagesController extends Controller
     {
         $animals = Quiz::all()->pluck('animal')->unique();
         $quiz = Quiz::find($id);
+        $options = QuizOption::where('quiz_id', '=', $quiz->id)->get();
 
         return $this->adminView(request(), 'admin_edit_quiz')->with(['animals' => $animals,
-            'quiz' => $quiz]);
+            'quiz' => $quiz, 'options' => $options]);
     }
 
     public function getAddUser()

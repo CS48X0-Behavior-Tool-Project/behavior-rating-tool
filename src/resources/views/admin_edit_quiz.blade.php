@@ -45,6 +45,44 @@
                             <strong>{{ session('quiz-status') }}</strong>
                         </div>
                     @endif
+
+                  <!-- display data for testing purposes-->
+                    <table border = "1">
+                    <tr>
+                    <td>Quiz Id</td>
+                    <td>Code</td>
+                    <td>Animal</td>
+                    <td>Video</td>
+                    </tr>
+                    <tr>
+                    <td>{{ $quiz->id }}</td>
+                    <td>{{ $quiz->code }}</td>
+                    <td>{{ $quiz->animal }}</td>
+                    <td>{{ $quiz->video }}</td>
+                    </tr>
+                    </table>
+
+                    <br><br>
+
+                    <table border = "1">
+                    <tr>
+                    <td>Quiz Id</td>
+                    <td>Type</td>
+                    <td>Title</td>
+                    <td>Marking Scheme</td>
+                    <td>Is Solution</td>
+                    </tr>
+                    @foreach ($options as $opt)
+                    <tr>
+                    <td>{{ $opt->quiz_id }}</td>
+                    <td>{{ $opt->type }}</td>
+                    <td>{{ $opt->title }}</td>
+                    <td>{{ $opt->marking_scheme }}</td>
+                    <td>{{ $opt->is_solution }}</td>
+                    </tr>
+                    @endforeach
+                    </table>
+
                     <div class="card-body">
                         <div class="row justify-content-center">
                             <div class="col">

@@ -13,19 +13,18 @@ class PagesController extends Controller
 {
 
     private $uc;
+    private $qc;
 
     public function __construct()
     {
         $this->uc = new UserController();
+        $this->qc = new QuizController();
     }
 
     /**
      * These controller methods simply load up the appropriate views from the pages folder.
      */
 
-   public function __construct() {
-     $this->qc = new QuizController();
-   }
 
     public function getLoginPage()
     {
@@ -67,14 +66,16 @@ class PagesController extends Controller
 
     public function attemptQuiz($id)
     {
-        // TODO: Fetch quiz using passed quiz id
-        // Using the ID, we should fetch the quiz
-        // which should contain path directory OR URL
-        if (!file_exists(public_path('/assets/videos/' . $id . '.mp4'))) {
-            abort(404);
-        } else {
-            return view('quiz_attempt', ['id' => $id]);
-        }
+          // TODO: Fetch quiz using passed quiz id
+          // Using the ID, we should fetch the quiz
+          // which should contain path directory OR URL
+          if (!file_exists(public_path('/assets/videos/' . $id . '.mp4'))) {
+              abort(404);
+          } else {
+              return view('quiz_attempt', ['id' => $id]);
+          }
+      }
+
     public function getQuizById($id) {
 
       $quiz = $this->qc->getQuiz($id);
@@ -83,6 +84,7 @@ class PagesController extends Controller
         'video' => $quiz->video]);
 
     }
+
 
     public function getCreateQuiz()
     {

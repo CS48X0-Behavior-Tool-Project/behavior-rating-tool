@@ -82,7 +82,7 @@
                                     @endif
                                     <!-- Admin, TA, and Experts -->
                                     @if (Auth::user()->roles[0]->name === "admin" || Auth::user()->roles[0]->name === "ta" || Auth::user()->roles[0]->name === "expert")
-                                        <a class="dropdown-item" href="{{ url('edit_quiz') }}">
+                                        <a class="dropdown-item" href="{{ url('create_quiz') }}">
                                             {{ __('Edit Quiz') }}
                                         </a>
                                     @endif

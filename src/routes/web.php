@@ -48,6 +48,11 @@ Route::get('/add_user', [PagesController::class, 'getAddUser'])->name('add_user_
 Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz'])->name('create_quiz_route');
 
 /**
+ * Create quiz page
+ */
+Route::get('/edit_quiz', [PagesController::class, 'getEditQuiz'])->name('edit_quiz_route');
+
+/**
  * Account management page (first/last names, email, password changes)
  */
 Route::get('/account', [PagesController::class, 'getAccountManagement'])->name('account_route');

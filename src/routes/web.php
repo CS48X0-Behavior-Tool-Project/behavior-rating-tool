@@ -51,6 +51,7 @@ Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz'])->name('cre
  * Edit quiz page
  */
 Route::get('/edit_quiz', [PagesController::class, 'getEditQuiz'])->name('edit_quiz_route');
+Route::get('/edit_quiz/{id}', [PagesController::class, 'getEditQuizByID']);
 
 /**
  * Account management page (first/last names, email, password changes)

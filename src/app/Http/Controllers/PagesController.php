@@ -75,10 +75,11 @@ class PagesController extends Controller
     {
         $animals = Quiz::all()->pluck('animal')->unique();
         $quiz = Quiz::find($id);
-        $options = QuizOption::where('quiz_id', '=', $quiz->id)->get();
+        $b_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'behaviour')->get();
+        $i_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'interpretation')->get();
 
         return $this->adminView(request(), 'admin_edit_quiz')->with(['animals' => $animals,
-            'quiz' => $quiz, 'options' => $options]);
+            'quiz' => $quiz, 'b_options' => $b_options, 'i_options' => $i_options]);
     }
 
     public function getAddUser()

@@ -17,9 +17,8 @@
                     <div class="input-group mb-3">
                         <select class="custom-select" id="inputGroupSelect02">
                             <option selected>Quizzes...</option>
-                            <!-- for each quiz in the database make an option -->
                             @foreach($quizzes as $quiz)
-                            <option value="{{$quiz->id}}">{{$quiz->code}}</option>
+                                <option value="{{$quiz->id}}">{{$quiz->code}}</option>
                             @endforeach
                         </select>
 

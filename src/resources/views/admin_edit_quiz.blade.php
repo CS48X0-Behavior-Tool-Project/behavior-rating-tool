@@ -182,7 +182,7 @@
                                                     <input id="inter-{{$x}}" type="text" class="formLabel" name="inter-{{$x}}" placeholder="Edit me ..."  value="{{$i_options[$x]->title}}">
                                                 </span>
                                             <!-- If it exists and is NOT correct -->
-                                            @elseif (@isset($b_options[$x]))
+                                            @elseif (@isset($i_options[$x]))
                                                 <span id="spacing">
                                                     <input type="radio" id="i-{{$x}}" name="interpretation-radio">
                                                     <input id="inter-{{$x}}" type="text" class="formLabel" name="inter-{{$x}}" placeholder="Edit me ..." value="{{$i_options[$x]->title}}">

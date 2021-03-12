@@ -16,6 +16,8 @@ use App\Http\Controllers\Resources\VideoController;
 
 use App\Http\Controllers\ExportController;
 
+use App\Http\Controllers\EditQuizController;
+
 
 Auth::routes();
 
@@ -52,6 +54,12 @@ Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz'])->name('cre
  */
 Route::get('/edit_quiz', [PagesController::class, 'getEditQuiz'])->name('edit_quiz_route');
 Route::get('/edit_quiz/{id}', [PagesController::class, 'getEditQuizByID']);
+
+
+/**
+*  Submit the updated quiz with new changes.
+*/
+Route::post('/edit_quiz/{id}', [EditQuizController::class, 'updateQuiz']);
 
 /**
  * Account management page (first/last names, email, password changes)

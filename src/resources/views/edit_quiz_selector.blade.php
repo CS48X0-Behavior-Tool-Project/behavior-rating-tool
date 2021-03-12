@@ -13,6 +13,12 @@
             <div class="card">
                 <div class="card-header">{{ __('Select a Quiz to Edit') }}</div>
 
+                @if (session('edit-status'))
+                    <div class="alert alert-success">
+                        <strong>{{ session('edit-status') }}</strong>
+                    </div>
+                @endif
+
                 <div class="card-body">
                     <div class="input-group mb-3">
                         <select class="custom-select" id="inputGroupSelect02">

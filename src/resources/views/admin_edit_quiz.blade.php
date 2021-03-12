@@ -79,13 +79,13 @@
                                 </div>
                                 <br>
 
-                                <form action="/create_quiz" method="post">
+                                <form action="/edit_quiz/{{$quiz->id}}" method="post">
                                 @csrf
                                 <p class="title">Video information</p>
                                 <div class="form-group row">
                                     <label for="video-id" class="col-md-3 col-form-label text-md-right">ID</label>
                                     <div class="col-md-9">
-                                        <input id="video-id" type="text" class="form-control" name="video-id" value="{{$quiz->video}}" disabled="disabled">
+                                        <input id="video-id" type="text" class="form-control" name="video-id" value="{{$quiz->video}}" readonly="readonly">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -141,19 +141,19 @@
                                             <!-- If it exists and is correct -->
                                             @if (@isset($b_options[$x]) and $b_options[$x]->is_solution)
                                                 <span id="spacing">
-                                                    <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" checked="true">
+                                                    <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" checked="true" value="{{$x}}">
                                                     <input id="box-{{$x}}" type="text" class="formLabel" name="box-{{$x}}" placeholder="Edit me ..." value="{{$b_options[$x]->title}}">
                                                 </span>
                                             <!-- If it exists and is NOT correct -->
                                             @elseif (@isset($b_options[$x]))
                                                 <span id="spacing">
-                                                    <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]">
+                                                    <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
                                                     <input id="box-{{$x}}" type="text" class="formLabel" name="box-{{$x}}" placeholder="Edit me ..." value="{{$b_options[$x]->title}}">
                                                 </span>
                                             <!-- Doesn't exist -->
                                             @else
                                                 <span id="spacing">
-                                                    <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]">
+                                                    <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
                                                     <input id="box-{{$x}}" type="text" class="formLabel" name="box-{{$x}}" placeholder="Edit me ...">
                                                 </span>
                                             @endif
@@ -178,19 +178,19 @@
                                             <!-- If it exists and is correct -->
                                             @if (@isset($i_options[$x]) and $i_options[$x]->is_solution)
                                                 <span id="spacing">
-                                                    <input type="radio" id="i-{{$x}}" name="interpretation-radio" checked="true">
+                                                    <input type="radio" id="i-{{$x}}" name="interpretation-radio" checked="true" value="{{$x}}">
                                                     <input id="inter-{{$x}}" type="text" class="formLabel" name="inter-{{$x}}" placeholder="Edit me ..."  value="{{$i_options[$x]->title}}">
                                                 </span>
                                             <!-- If it exists and is NOT correct -->
                                             @elseif (@isset($i_options[$x]))
                                                 <span id="spacing">
-                                                    <input type="radio" id="i-{{$x}}" name="interpretation-radio">
+                                                    <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
                                                     <input id="inter-{{$x}}" type="text" class="formLabel" name="inter-{{$x}}" placeholder="Edit me ..." value="{{$i_options[$x]->title}}">
                                                 </span>
                                             @else
                                             <!-- Doesn't exist -->
                                                 <span id="spacing">
-                                                    <input type="radio" id="i-{{$x}}" name="interpretation-radio">
+                                                    <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
                                                     <input id="inter-{{$x}}" type="text" class="formLabel" name="inter-{{$x}}" placeholder="Edit me ...">
                                                 </span>
                                             @endif
@@ -207,7 +207,7 @@
 
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-primary" onclick="validate(event)">
-                                Create Quiz
+                                Edit Quiz
                             </button>
                         </div>
 

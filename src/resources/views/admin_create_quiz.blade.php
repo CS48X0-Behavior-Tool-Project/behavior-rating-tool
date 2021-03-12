@@ -34,14 +34,6 @@
 
 </style>
 
-<script type="text/javascript">
-    function refresh() {
-      var t = document.getElementById("thumbnail");
-      var i = document.getElementById("video-id").value;
-      t.src = "{{route('videos.show', ['video' => 'abc'])}}".replace('abc',i);
-    }
-</script>
-
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -56,7 +48,6 @@
                     <div class="card-body">
                         <div class="row justify-content-center">
                             <div class="col">
-                                <!-- TODO make video change on upload -->
                                 <iframe id="thumbnail" src="" width="100%" height="210px" style="max-width: 100%"></iframe>
                                 <br>
                                 <br>
@@ -101,9 +92,6 @@
                                     <div class="col-md-9">
                                         <input id="video-name" type="text" class="form-control" name="video-name" placeholder="Quiz Name">
                                     </div>
-                                </div>
-                                <div class="form-group row justify-content-center">
-                                    <button type="button" name="button" class="btn btn-secondary" onclick="refresh()"> Refresh Video </button>
                                 </div>
 
                                 <p class="title" id="animal-info">Animal information</p>

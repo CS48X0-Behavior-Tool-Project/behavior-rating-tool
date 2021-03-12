@@ -44,11 +44,14 @@ class UserController extends Controller
     {
         // insert if new, update if exist (update behavior and interpretation given an user attempt)
 
-        $user_id = -1;
+        $user_id = $request->route('id') ?? -1;
         $attempt_id = -1;
-        $user_attempt_id = -1;
+        $user_attempt_id = $request->user_attempt_id ?? -1;
         $attempt_quiz_id = -1;
-        $quiz_id = -1;
+        $quiz_id = $request->quiz_id ?? -1;
+
+        Log::info($user_attempt_id);
+        Log::info($quiz_id);
 
         $bodyContent = $request->getContent();
         if($bodyContent == null) {
@@ -140,7 +143,7 @@ class UserController extends Controller
             $attempt_answers->behavior_answers = json_encode($request->behavior_answers);
             $attempt_answers->interpretation_answers = json_encode($request->interpretation_answers);
             $attempt_answers->save();
-
+            
         } 
         else {
             // insert attempt answers
@@ -152,7 +155,65 @@ class UserController extends Controller
             $attempt_answer_item->save();
         }
 
-        return response()->json(['success' => true], 200);
+        $scores = $this->getScores($quiz_id, $request->behavior_answers, $request->interpretation_answers);
+
+        // update user_attempts scores
+        DB::table('user_attempts')
+        ->where('id', $user_attempt_id)
+        ->update(['scores' => $scores["scores"], 'behavior_scores' => $scores["behavior_scores"], 'interpretation_guess' => $scores["interpretation_guess"]]);
+
+        Log::info(['>>>>> scores: ', $scores]);
+
+        return response()->json(['success' => true, 'scores' => $scores], 200);
+    }
+
+    private function getScores($quiz_id, $behavior_answers, $interpretation_answers) {
+        
+        $behavior_scores = 0;
+        $interpretation_guess = true;
+        $scores = 0;
+
+        $behaviours = DB::table('quiz_options')
+        ->where('quiz_id', $quiz_id)
+        ->where('type', 'behaviour')
+        ->get();
+
+        $interpretations = DB::table('quiz_options')
+        ->where('quiz_id', $quiz_id)
+        ->where('type', 'interpretation')
+        ->get();
+
+        foreach ($behavior_answers as $be_answered) {
+            foreach ($behaviours as $be_solution) {
+                if ($be_answered == $be_solution->title) {
+                    if ($be_solution->is_solution == true) {
+                        $scores += $be_solution->marking_scheme;
+                        $behavior_scores += $be_solution->marking_scheme;
+                    }
+                    else {
+                        $scores -= $be_solution->marking_scheme;
+                        $behavior_scores -= $be_solution->marking_scheme;
+                    }
+                }
+            }
+        }
+
+        foreach ($interpretation_answers as $in_answered) {
+            foreach ($interpretations as $in_solution) {
+                if ($in_answered == $in_solution->title) {
+                    if ($in_solution->is_solution == true) {
+                        $scores += $in_solution->marking_scheme;
+                        $interpretation_guess = $interpretation_guess and true;
+                    }
+                    else {
+                        $scores -= $in_solution->marking_scheme;
+                        $interpretation_guess = false;
+                    }
+                }
+            }
+        }
+            
+        return ['behavior_scores' => $behavior_scores, 'interpretation_guess' => $interpretation_guess, 'scores' => $scores] ;
     }
 
     public function deleteUserAllAttempts(Request $request, $id) {

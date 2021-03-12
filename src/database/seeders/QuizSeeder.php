@@ -56,7 +56,7 @@ class QuizSeeder extends Seeder
 
     private function createOption($id, $type, $title, $marking_scheme, $is_solution) {
       $opt = new QuizOption;
-      $opt->quiz_question_id = $id;
+      $opt->quiz_id = $id;
       $opt->type = $type;
       $opt->title = $title;
       $opt->marking_scheme = $marking_scheme;

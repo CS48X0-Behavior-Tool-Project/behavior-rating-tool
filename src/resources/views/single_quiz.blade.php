@@ -58,6 +58,9 @@
                             <p class="timer"> <span id="demo">00:00:00</span>  </p>
                         </div>
 
+                        <!-- store starting time -->
+                        <input type="hidden" id="startTime" name="startTime" value={{$time}}>
+
                         <!-- Video -->
                         {{-- Be sure to include the video-wrapper div, as it's CSS components
                         will ensure that the video.js player is contained within the parent div --}}

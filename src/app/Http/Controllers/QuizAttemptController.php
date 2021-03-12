@@ -21,6 +21,12 @@ class QuizAttemptController extends Controller
 
     public function submitQuizAttempt($id) {
 
+      $time_pre = request()->input('startTime');
+      $time_post = microtime(true);
+
+      // TODO: store time taken for this attempt
+      $exec_time = $time_post - $time_pre;
+
       $behaviourSelections = request()->input('behaviour-check');
       $interpretationSelection = request()->input('interpretation-check');
 
@@ -41,8 +47,6 @@ class QuizAttemptController extends Controller
       ]);
 
       $this->uc->upsertUserAttempts($request);
-
-      // TODO: store time taken to submit answers
 
       $quiz = $this->qc->getQuiz($id);
 

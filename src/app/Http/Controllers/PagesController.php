@@ -66,7 +66,7 @@ class PagesController extends Controller
       }
 
       return view('single_quiz')->with(['code' => $quiz->code, 'options' => $quiz->quiz_question_options,
-        'video' => $quiz->video, 'attempt' => $attemptNumber]);
+        'video' => $quiz->video, 'attempt' => $attemptNumber, 'time' => microtime(true)]);
     }
 
     public function getCreateQuiz()

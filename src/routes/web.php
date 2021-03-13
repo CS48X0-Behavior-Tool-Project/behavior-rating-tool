@@ -67,7 +67,7 @@ Route::get('/quizzes/{id}', [PagesController::class, 'getQuizById']);
 /**
  * Show all the users in the system
  */
-Route::get('/users', [PagesController::class, 'getUsers']);
+Route::get('/users', [PagesController::class, 'getUsers'])->name('users_route');;
 
 /**
  * Display the user

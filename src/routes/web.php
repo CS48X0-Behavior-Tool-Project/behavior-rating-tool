@@ -16,6 +16,8 @@ use App\Http\Controllers\Resources\VideoController;
 
 use App\Http\Controllers\ExportController;
 
+use App\Http\Controllers\SingleUserController;
+
 
 Auth::routes();
 
@@ -71,6 +73,11 @@ Route::get('/users', [PagesController::class, 'getUsers']);
  * Display the user
  */
 Route::get('/user/{id}', [PagesController::class, 'getUserById']);
+
+/**
+* Perform an action on the single user page
+*/
+Route::post('/user/{id}', [SingleUserController::class, 'action']);
 
 /**
  * Route for submitting a login request.  Will need to test when actual webpage is created.

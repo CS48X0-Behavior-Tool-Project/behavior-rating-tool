@@ -25,16 +25,16 @@ Route::resource('videos', VideoController::class);
 /**
  * Login page is the landing page when we first visit the website
  */
-Route::get('/', [PagesController::class, 'getLoginPage']);
+Route::get('/', [PagesController::class, 'getLoginPage'])->name('login_page');
 
 /**
-* Home page is the landing page when we first log in to the website
-*/
+ * Home page is the landing page when we first log in to the website
+ */
 Route::get('/home', [PagesController::class, 'getHomePage'])->name('home_route');
 
 /**
-* Account creation/confirmation page
-*/
+ * Account creation/confirmation page
+ */
 Route::get('/confirmation', [PagesController::class, 'getConfirmationPage'])->name('confirmation_route');
 
 /**
@@ -62,10 +62,9 @@ Route::get('/quizzes', [PagesController::class, 'getQuizList'])->name('quizzes_r
  */
 Route::get('/quizzes/{id}', [PagesController::class, 'getQuizById']);
 
-
 /**
-* Called when the email link to a new user is clicked
-*/
+ * Called when the email link to a new user is clicked
+ */
 Route::get('/confirmation/{token}', [UploadController::class, 'validateToken']);
 
 /**
@@ -79,14 +78,13 @@ Route::post('/add_user', [UploadController::class, 'upload']);
 Route::post('/account', [AccountController::class, 'update']);
 
 /**
-
  * Route for creating a new quiz.
  */
 Route::post('/create_quiz', [CreateQuizController::class, 'createQuiz']);
 
-/*
-* Route for confirming a new account.
-*/
+/**
+ * Route for confirming a new account.
+ */
 Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
 
 /**

@@ -30,6 +30,12 @@
                 </div>
             @endif
 
+            @if ($message = Session::get('reset-message'))
+                <div class="alert alert-success">
+                    <strong>{{ $message }}</strong>
+                </div>
+            @endif
+
             <div class="card-body">
               <!-- TODO add filter options here, search bar and letter to select first letter of first and last name -->
                 @foreach ($users as $user)

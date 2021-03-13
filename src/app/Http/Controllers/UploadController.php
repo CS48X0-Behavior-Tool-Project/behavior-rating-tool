@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Bouncer;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
@@ -15,6 +15,8 @@ use App\Auth\EmailAuthentication;
 use App\Models\UserLoginToken;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
+use SimpleXLSX;
 
 $count_message;
 $add_user_message;
@@ -37,24 +39,45 @@ class UploadController extends Controller
      */
     public function upload()
     {
-
-        if (request()->has('mycsv')) {
-            return $this->uploadFile();
-        } else if (request()->has('add_single_user')) {
-            return $this->uploadUser();
+        // Check administrator privileges
+        if (request()->user()->can('create', User::class)) {
+            if (request()->has('mycsv')) {
+                return $this->uploadFile();
+            } else if (request()->has('add_single_user')) {
+                return $this->uploadUser();
+            } else {
+                return redirect()->route('add_user_route');
+            }
         } else {
-            return redirect()->route('add_user_route');
+            abort(403);
         }
     }
 
     // TODO: allow different file types
 
     /**
-     * Extract data from .csv file.
+     * Extract data from file.
      */
     public function uploadFile()
     {
-        $data = array_map('str_getcsv', file(request()->mycsv));
+        $extension = request()->mycsv->getClientOriginalExtension();
+
+        switch ($extension) {
+          case 'csv':
+            $data = array_map('str_getcsv', file(request()->mycsv));
+            break;
+          case 'xlsx':
+            $data = SimpleXLSX::parse(request()->mycsv)->rows();
+            break;
+          case 'json':
+            $data = json_decode(file_get_contents(request()->mycsv), true);
+            $data = $this->readJson($data);
+            break;
+          default:
+            return redirect()->back()
+                ->with('file_error_message', 'Invalid File Type (must be .csv, .xlsx, or .json)');
+        }
+
         unset($data[0]);
 
         $new_user_count = 0;
@@ -101,6 +124,25 @@ class UploadController extends Controller
     }
 
     /**
+    *  Read the json file.
+    */
+    private function readJson($data)
+    {
+        $arr = array();
+        $arr[0] = array_keys($data[0]);
+
+        foreach ($data as $key => $value) {
+            $arr[$key+1] = array(
+                0 => $value[$arr[0][0]],
+                1 => $value[$arr[0][1]],
+                2 => $value[$arr[0][2]],
+            );
+        }
+
+        return $arr;
+    }
+
+    /**
      * Upload a single user from the form.
      */
     public function uploadUser()
@@ -143,16 +185,17 @@ class UploadController extends Controller
         $user->assign($role);
 
         // send an email to the new user
-        // $this->emailNewUser($email);
+        $this->emailNewUser($email);
     }
 
     /**
-    * Send an email to the new user upon account creation, directing them to the website.
-    */
-    public function emailNewUser($email) {
+     * Send an email to the new user upon account creation, directing them to the website.
+     */
+    public function emailNewUser($email)
+    {
 
-      $auth = new EmailAuthentication($email);
-      $auth->requestLink();
+        $auth = new EmailAuthentication($email);
+        $auth->requestLink();
     }
 
     /**

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\QuizController;
 
 use App\Models\User;
 use App\Models\Quiz;
+use App\Models\QuizOption;
 use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -79,6 +80,26 @@ class PagesController extends Controller
             return view('admin_create_quiz')->with('animals', $animals);
         }
         return redirect()->back();
+    }
+
+    // Selector page for
+    public function getEditQuiz()
+    {
+        $quizzes = Quiz::all();
+
+        return view('edit_quiz_selector')->with('quizzes',$quizzes);
+    }
+
+    // Edits a single quiz
+    public function getEditQuizByID($id)
+    {
+        $animals = Quiz::all()->pluck('animal')->unique();
+        $quiz = Quiz::find($id);
+        $b_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'behaviour')->get();
+        $i_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'interpretation')->get();
+
+        return $this->adminView(request(), 'admin_edit_quiz')->with(['animals' => $animals,
+            'quiz' => $quiz, 'b_options' => $b_options, 'i_options' => $i_options]);
     }
 
     public function getAddUser()

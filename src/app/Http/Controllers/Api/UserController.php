@@ -15,14 +15,21 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function getAllUsers()
     {
         // Implement logic to fetch all users
-        $users = User::all(); 
-        return $users;
+
+        if (Auth::user() and Bouncer::is(request()->user())->can('view-users-page')){
+            $users = User::all(); 
+            return $users;
+        }
+        else {
+            return redirect()->route('login')->with('validate', 'Please login first.');
+        }
     }
 
     public function getUser($id)

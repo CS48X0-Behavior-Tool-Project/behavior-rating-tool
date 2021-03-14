@@ -6,108 +6,7 @@
     </div>
 @endif
 
-<script type="text/javascript" language="JavaScript">
-    function validate(event) {
-        // Video upload check
-        impVideo = document.getElementById("import-video");
-        if ($("#video-id").val() == "") {
-            event.preventDefault();
-            alert("You must upload a video for the quiz");
-            impVideo.style.borderColor = "red";
-        } else {
-            impVideo.style.borderColor = "#dfdfdf";
-        }
-
-        // Animal selection check
-        aniInfo = document.getElementById("animal-info")
-        if ($('input[name="animal-radio[]"]:checked').length == 0){
-            event.preventDefault();
-            alert("You must select an animal");
-            aniInfo.style.borderColor = "red";
-        } else {
-            // Initially set to grey
-            document.getElementById('animal-new').style.borderColor = "#dfdfdf";
-
-            var animalRadio = document.querySelectorAll("[name='animal-radio[]']:checked");
-            var radio = animalRadio[0];
-            var id = String(radio.id).replace('a', 'animal');
-            // If they selected a new animal but didn't input the animal name
-            if (id == "animal-new" && document.getElementById(id).value == ""){
-                event.preventDefault();
-                alert("You have not filled in the animal information");
-                aniInfo.style.borderColor = "red";
-                document.getElementById(id).style.borderColor = "red";
-            } else {
-                aniInfo.style.borderColor = "#dfdfdf";
-                document.getElementById('animal-new').style.borderColor = "#dfdfdf";
-            }
-        }
-
-        // Behaviour check
-        behInfo = document.getElementById("behaviour-info");
-        if ($('input[name="behaviour-check[]"]:checked').length == 0){
-            event.preventDefault();
-            alert("You must select at least one correct behaviour");
-            behInfo.style.borderColor = "red";
-        } else {
-            // Color all borders grey first
-            var inputs = document.querySelectorAll("[name='behaviour-check[]']");
-            for (var i = 0; i < inputs.length; i++){
-                var current = inputs[i];
-                var id = String(current.id).replace('b', 'box');
-                document.getElementById(id).style.borderColor = "#dfdfdf";
-            }
-            // Check that selected behaviours aren't blank fields
-            var checked_boxes = document.querySelectorAll("[name='behaviour-check[]']:checked");
-            for (var i = 0; i < checked_boxes.length; i++) {
-                var currentCheckbox = checked_boxes[i];
-                var id = String(currentCheckbox.id).replace('b', 'box');
-                input = document.getElementById(id);
-                resp = input.value;
-                if (resp == ""){
-                    event.preventDefault();
-                    alert("The selected correct behaviour must have an answer associated with it");
-                    behInfo.style.borderColor = "red";
-                    input.style.borderColor = "red";
-                    break;
-                } else {
-                    input.style.borderColor = "#dfdfdf";
-                    behInfo.style.borderColor = "#dfdfdf";
-                }
-            }
-        }
-
-        // Interpretation check
-        intInfo = document.getElementById("interpretation-info")
-        if ($('input[name=interpretation-radio]:checked').length == 0){
-            event.preventDefault();
-            alert("You must select one correct interpretation");
-            intInfo.style.borderColor = "red";
-        } else {
-            // Color all borders grey first
-            var inputs = document.querySelectorAll("[name='interpretation-radio']");
-            for (var i = 0; i < inputs.length; i++){
-                var current = inputs[i];
-                var id = String(current.id).replace('i', 'inter');
-                document.getElementById(id).style.borderColor = "#dfdfdf";
-            }
-
-            var intRadio = document.querySelectorAll("[name='interpretation-radio']:checked");
-            var radio = intRadio[0];
-            var id = String(radio.id).replace('i', 'inter');
-            // If the selected interpretation is not filled in
-            if (document.getElementById(id).value == ""){
-                event.preventDefault();
-                alert("You have not filled in the correct interpretation");
-                intInfo.style.borderColor = "red";
-                document.getElementById(id).style.borderColor = "red";
-            } else {
-                intInfo.style.borderColor = "#dfdfdf";
-                document.getElementById(id).style.borderColor = "#dfdfdf";
-            }
-        }
-    }
-</script>
+<script type="text/javascript" src="{{ URL::asset('javascript/edit_quiz.js') }}"></script>
 
 <style>
     .formLabel {
@@ -140,7 +39,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Create A New Quiz') }}</div>
+                    <div class="card-header"> Edit Quiz {{$quiz->code}} </div>
                     @if (session('quiz-status'))
                         <div class="alert alert-success">
                             <strong>{{ session('quiz-status') }}</strong>
@@ -158,6 +57,7 @@
                                         <div class="custom-file" >
                                             <div class=" row justify-content-center">
                                                 <input type="file" class="custom-file-input" name="video" id="video-upload" accept="video/*" onchange="updateVideoLabel();">
+                                                <!-- TODO Display video $quiz->video here -->
                                                 <label class="custom-file-label" for="video" id="file-label" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Choose file</label>
                                             </div>
                                         </div>
@@ -179,19 +79,19 @@
                                 </div>
                                 <br>
 
-                                <form action="/create_quiz" method="post">
+                                <form action="/edit_quiz/{{$quiz->id}}" method="post">
                                 @csrf
                                 <p class="title">Video information</p>
                                 <div class="form-group row">
                                     <label for="video-id" class="col-md-3 col-form-label text-md-right">ID</label>
                                     <div class="col-md-9">
-                                        <input id="video-id" type="text" class="form-control" name="video-id" placeholder="Autogenerated ID" disabled="disabled">
+                                        <input id="video-id" type="text" class="form-control" name="video-id" value="{{$quiz->video}}" readonly="readonly">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="name-id" class="col-md-3 col-form-label text-md-right">Name</label>
                                     <div class="col-md-9">
-                                        <input id="video-name" type="text" class="form-control" name="video-name" placeholder="Quiz Name">
+                                        <input id="video-name" type="text" class="form-control" name="video-name" value="{{$quiz->code}}">
                                     </div>
                                 </div>
 
@@ -201,19 +101,21 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         @foreach($animals as $data)
-                                        <!-- TODO this is only return COW when quizzes returns COW nad HORSE -->
                                         <div class="row-justify-content-center">
                                             <span id="spacing">
-                                                <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
-                                                <label for="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
+                                                @if ($data == $quiz->animal)
+                                                    <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}" checked="true">
+                                                    <label for="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
+                                                @else
+                                                    <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
+                                                    <label for="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
+                                                @endif
                                             </span>
                                         </div>
                                         @endforeach
                                         <div class="row-justify-content-center">
                                             <span id="spacing">
                                                 <input type="radio" id="a-new" name="animal-radio[]" value = "New">
-                                                <!-- TODO IMPORTANT ZAK I changed this id to be animal-new instead of a-new so I can tell the difference between the
-                                                      radio button and the input field -->
                                                 <input id="animal-new" type="text" class="formLabel" name="a-new" placeholder="Edit me ...">
                                             </span>
                                         </div>
@@ -234,46 +136,28 @@
                                 <h6 style="text-align:center;">Check the correct answers</h6>
                                 <div class="form-group row justify-content-center">
                                     <div>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-one" name="behaviour-check[]">
-                                            <input id="box-one" type="text" class="formLabel" name="box-one" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-two" name="behaviour-check[]">
-                                            <input id="box-two" type="text" class="formLabel" name="box-two" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-three" name="behaviour-check[]">
-                                            <input id="box-three" type="text" class="formLabel" name="box-three" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-four" name="behaviour-check[]">
-                                            <input id="box-four" type="text" class="formLabel" name="box-four" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-five" name="behaviour-check[]">
-                                            <input id="box-five" type="text" class="formLabel" name="box-five" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-six" name="behaviour-check[]">
-                                            <input id="box-six" type="text" class="formLabel" name="box-six" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-seven" name="behaviour-check[]">
-                                            <input id="box-seven" type="text" class="formLabel" name="box-seven" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-eight" name="behaviour-check[]">
-                                            <input id="box-eight" type="text" class="formLabel" name="box-eight" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-nine" name="behaviour-check[]">
-                                            <input id="box-nine" type="text" class="formLabel" name="box-nine" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-ten" name="behaviour-check[]">
-                                            <input id="box-ten" type="text" class="formLabel" name="box-ten" placeholder="Edit me ...">
-                                        </span>
+                                        <!-- For each possible behaviour sent forward -->
+                                        @foreach (range(0,9) as $x)
+                                            <!-- If it exists and is correct -->
+                                            @if (@isset($b_options[$x]) and $b_options[$x]->is_solution)
+                                                <span id="spacing">
+                                                    <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" checked="true" value="{{$x}}">
+                                                    <input id="box-{{$x}}" type="text" class="formLabel" name="box-{{$x}}" placeholder="Edit me ..." value="{{$b_options[$x]->title}}">
+                                                </span>
+                                            <!-- If it exists and is NOT correct -->
+                                            @elseif (@isset($b_options[$x]))
+                                                <span id="spacing">
+                                                    <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
+                                                    <input id="box-{{$x}}" type="text" class="formLabel" name="box-{{$x}}" placeholder="Edit me ..." value="{{$b_options[$x]->title}}">
+                                                </span>
+                                            <!-- Doesn't exist -->
+                                            @else
+                                                <span id="spacing">
+                                                    <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
+                                                    <input id="box-{{$x}}" type="text" class="formLabel" name="box-{{$x}}" placeholder="Edit me ...">
+                                                </span>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
                                 @if (session('behaviour-status'))
@@ -289,27 +173,28 @@
                                 <h6 style="text-align:center;">Select the correct answers</h6>
                                 <div class="form-group row justify-content-center">
                                     <div>
-                                        <span id="spacing">
-                                            <input type="radio" id="i-one" name="interpretation-radio" value="1">
-                                            <input id="inter-one" type="text" class="formLabel" name="inter-one" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="radio" id="i-two" name="interpretation-radio" value="2">
-                                            <input id="inter-two" type="text" class="formLabel" name="inter-two" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="radio" id="i-three" name="interpretation-radio" value="3">
-                                            <input id="inter-three" type="text" class="formLabel" name="inter-three" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="radio" id="i-four" name="interpretation-radio" value="4">
-                                            <input id="inter-four" type="text" class="formLabel" name="inter-four" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <!-- TODO ZAK changed these ID -->
-                                            <input type="radio" id="i-fve" name="interpretation-radio" value="5">
-                                            <input id="inter-fve" type="text" class="formLabel" name="inter-five" placeholder="Edit me ...">
-                                        </span>
+                                        <!-- For each possible interpretation sent forward -->
+                                        @foreach (range(0,4) as $x)
+                                            <!-- If it exists and is correct -->
+                                            @if (@isset($i_options[$x]) and $i_options[$x]->is_solution)
+                                                <span id="spacing">
+                                                    <input type="radio" id="i-{{$x}}" name="interpretation-radio" checked="true" value="{{$x}}">
+                                                    <input id="inter-{{$x}}" type="text" class="formLabel" name="inter-{{$x}}" placeholder="Edit me ..."  value="{{$i_options[$x]->title}}">
+                                                </span>
+                                            <!-- If it exists and is NOT correct -->
+                                            @elseif (@isset($i_options[$x]))
+                                                <span id="spacing">
+                                                    <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
+                                                    <input id="inter-{{$x}}" type="text" class="formLabel" name="inter-{{$x}}" placeholder="Edit me ..." value="{{$i_options[$x]->title}}">
+                                                </span>
+                                            @else
+                                            <!-- Doesn't exist -->
+                                                <span id="spacing">
+                                                    <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
+                                                    <input id="inter-{{$x}}" type="text" class="formLabel" name="inter-{{$x}}" placeholder="Edit me ...">
+                                                </span>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
                                 @if (session('int-status'))
@@ -322,7 +207,7 @@
 
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-primary" onclick="validate(event)">
-                                Create Quiz
+                                Edit Quiz
                             </button>
                         </div>
 

@@ -107,6 +107,7 @@ class UserController extends Controller
             if($request->has('score')) {
                 $userAttempt->score = $request->score;
             }
+            $userAttempt->max_score = $request->max_score;
             $userAttempt->interpretation_guess = $request->interpretation_guess;
             $userAttempt->save();
             $user_attempt_id = $userAttempt->id;

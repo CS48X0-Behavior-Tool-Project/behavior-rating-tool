@@ -80,17 +80,32 @@ class PagesController extends Controller
               }
             }
 
+            //key for this array is the quiz id, value is the number of attempts the user has on that quiz
             $attemptsPerQuiz[$value] = $attemptNumber;
         }
-
 
         //generating list of unique attempt values for the filter
         $uniqueAttempts = array_unique($attemptsPerQuiz);
         sort($uniqueAttempts);
 
+        //key will be the quiz ID, values will be array of scores from each attempt
+        $quizScores = array();
+        foreach ($attemptsPerQuiz as $key => $value) {
 
-        return view('quizzes')->with(['animals' => $animals, 'quizzes' => $quizzes,
-          'attempts' => $attemptsPerQuiz, 'uniqueAttempts' => $uniqueAttempts]);
+          if ($value > 0) {
+            $scoreList = array();
+            foreach ($userAttempts as $key => $value) {
+              // code...
+            }
+
+          }
+
+
+        }
+
+        print_r($attemptsPerQuiz);
+        //return view('quizzes')->with(['animals' => $animals, 'quizzes' => $quizzes,
+          //'attempts' => $attemptsPerQuiz, 'uniqueAttempts' => $uniqueAttempts]);
     }
 
     public function getQuizById($id)

@@ -43,6 +43,7 @@ class QuizAttemptController extends Controller
         'behavior_answers' => $behaviourSelections,
         'interpretation_answers' => $interpretationSelection,
         'score' => $scores[0],
+        'max_score' => $scores[1],
         'interpretation_guess' => $interpretationGuess,
       ]);
 

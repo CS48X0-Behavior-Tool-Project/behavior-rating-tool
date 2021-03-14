@@ -6,6 +6,9 @@
 <div class="card-header">{{ __('Download Center') }}</div>
 <div class="card-body" >
     <a href="{{ route('export_users_route') }}">Export Users</a>
+</div>
+<div class="card-body" >
+<a href="{{ route('export_user_quizzes_route') }}">Export User Quizzes</a>
     </div>
 </div>
 </div>

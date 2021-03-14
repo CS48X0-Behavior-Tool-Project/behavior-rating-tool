@@ -16,6 +16,7 @@ use App\Http\Controllers\Resources\VideoController;
 
 use App\Http\Controllers\ExportController;
 
+use App\Http\Controllers\EditQuizController;
 use App\Http\Controllers\SingleUserController;
 
 
@@ -27,16 +28,16 @@ Route::resource('videos', VideoController::class);
 /**
  * Login page is the landing page when we first visit the website
  */
-Route::get('/', [PagesController::class, 'getLoginPage']);
+Route::get('/', [PagesController::class, 'getLoginPage'])->name('login_page');
 
 /**
-* Home page is the landing page when we first log in to the website
-*/
+ * Home page is the landing page when we first log in to the website
+ */
 Route::get('/home', [PagesController::class, 'getHomePage'])->name('home_route');
 
 /**
-* Account creation/confirmation page
-*/
+ * Account creation/confirmation page
+ */
 Route::get('/confirmation', [PagesController::class, 'getConfirmationPage'])->name('confirmation_route');
 
 /**
@@ -48,6 +49,18 @@ Route::get('/add_user', [PagesController::class, 'getAddUser'])->name('add_user_
  * Create quiz page
  */
 Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz'])->name('create_quiz_route');
+
+/**
+ * Edit quiz page
+ */
+Route::get('/edit_quiz', [PagesController::class, 'getEditQuiz'])->name('edit_quiz_route');
+Route::get('/edit_quiz/{id}', [PagesController::class, 'getEditQuizByID']);
+
+
+/**
+*  Submit the updated quiz with new changes.
+*/
+Route::post('/edit_quiz/{id}', [EditQuizController::class, 'updateQuiz']);
 
 /**
  * Account management page (first/last names, email, password changes)
@@ -85,8 +98,8 @@ Route::post('/user/{id}', [SingleUserController::class, 'action']);
 Route::post('/', [LoginController::class, 'submit']);
 
 /**
-* Called when the email link to a new user is clicked
-*/
+ * Called when the email link to a new user is clicked
+ */
 Route::get('/confirmation/{token}', [UploadController::class, 'validateToken']);
 
 /**
@@ -100,14 +113,13 @@ Route::post('/add_user', [UploadController::class, 'upload']);
 Route::post('/account', [AccountController::class, 'update']);
 
 /**
-
  * Route for creating a new quiz.
  */
 Route::post('/create_quiz', [CreateQuizController::class, 'createQuiz']);
 
-/*
-* Route for confirming a new account.
-*/
+/**
+ * Route for confirming a new account.
+ */
 Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
 
 /**
@@ -115,3 +127,4 @@ Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
  */
 Route::get('/export', [PagesController::class, 'exportData']);
 Route::get('/export/users', [ExportController::class, 'exportUsers'])->name('export_users_route');
+Route::get('/export/user_quizzes', [ExportController::class, 'exportUserAttempts'])->name('export_user_quizzes_route');

@@ -14,14 +14,3 @@ class Attempt extends Model
 
 }
 
-
-//     protected $fillable = [
-//         'user_id', 'options'
-//     ];
-
-//     public function attemptQuiz()
-//     {
-//         return $this->hasMany(AttemptQuiz::class);
-//     }
-}
-

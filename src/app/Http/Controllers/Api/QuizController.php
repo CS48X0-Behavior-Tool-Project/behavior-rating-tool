@@ -16,6 +16,7 @@ class QuizController extends Controller
     public function getAllQuizzes()
     {
         // Implement logic to fetch all quizzes
+
         $quizzes = Quiz::all(); 
 
         return $quizzes;

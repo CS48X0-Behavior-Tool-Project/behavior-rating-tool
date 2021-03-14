@@ -17,6 +17,7 @@ use App\Http\Controllers\Resources\VideoController;
 use App\Http\Controllers\ExportController;
 
 use App\Http\Controllers\EditQuizController;
+use App\Http\Controllers\SingleUserController;
 
 
 Auth::routes();
@@ -77,6 +78,26 @@ Route::get('/quizzes', [PagesController::class, 'getQuizList'])->name('quizzes_r
 Route::get('/quizzes/{id}', [PagesController::class, 'getQuizById']);
 
 /**
+ * Show all the users in the system
+ */
+Route::get('/users', [PagesController::class, 'getUsers'])->name('users_route');;
+
+/**
+ * Display the user
+ */
+Route::get('/user/{id}', [PagesController::class, 'getUserById']);
+
+/**
+* Perform an action on the single user page
+*/
+Route::post('/user/{id}', [SingleUserController::class, 'action']);
+
+/**
+ * Route for submitting a login request.  Will need to test when actual webpage is created.
+ */
+Route::post('/', [LoginController::class, 'submit']);
+
+/**
  * Called when the email link to a new user is clicked
  */
 Route::get('/confirmation/{token}', [UploadController::class, 'validateToken']);
@@ -107,4 +128,3 @@ Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
 Route::get('/export', [PagesController::class, 'exportData']);
 Route::get('/export/users', [ExportController::class, 'exportUsers'])->name('export_users_route');
 Route::get('/export/user_quizzes', [ExportController::class, 'exportUserAttempts'])->name('export_user_quizzes_route');
-

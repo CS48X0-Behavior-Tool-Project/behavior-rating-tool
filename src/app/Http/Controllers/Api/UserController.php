@@ -143,7 +143,6 @@ class UserController extends Controller
             $attempt_answers->behavior_answers = json_encode($request->behavior_answers);
             $attempt_answers->interpretation_answers = json_encode($request->interpretation_answers);
             $attempt_answers->save();
-            
         } 
         else {
             // insert attempt answers

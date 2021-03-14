@@ -48,9 +48,7 @@
                     <div class="card-body">
                         <div class="row justify-content-center">
                             <div class="col">
-                                <!-- TODO video here -->
-                                <iframe id="thumbnail" src="" width="col-md-4" height="200" src="1.wmv"></iframe>
-
+                                <iframe id="thumbnail" src="" width="100%" height="210px" style="max-width: 100%"></iframe>
                                 <br>
                                 <br>
                                 <p class="title" id="import-video">Import Video</p>

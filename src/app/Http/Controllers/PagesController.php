@@ -63,7 +63,28 @@ class PagesController extends Controller
 
         $quizzes = $this->qc->getAllQuizzes();
 
-        return view('quizzes')->with(['animals' => $animals, 'quizzes' => $quizzes]);
+        //array holding every attempt id the current user has done
+        $userAttempts = Attempt::where('user_id','=',auth()->user()->id)->pluck('id')->toArray();
+
+        $attemptsPerQuiz = array();
+        $quizIDs = Quiz::all()->pluck('id')->toArray();
+
+        foreach ($quizIDs as $key => $value) {
+
+            //count how many attempts the user made on each quiz
+            $attemptNumber = 0;
+            foreach ($userAttempts as $key2 => $value2) {
+              $quizId = AttemptQuiz::where('attempt_id','=',$value2)->limit(1)->pluck('quiz_id')->toArray();
+              if (in_array($value, $quizId)) {
+                $attemptNumber++;
+              }
+            }
+
+            $attemptsPerQuiz[$value] = $attemptNumber;
+        }
+
+        return view('quizzes')->with(['animals' => $animals, 'quizzes' => $quizzes,
+          'attempts' => $attemptsPerQuiz]);
     }
 
     public function getQuizById($id)

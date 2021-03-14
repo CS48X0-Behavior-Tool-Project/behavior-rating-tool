@@ -74,7 +74,7 @@
             <div class="card-body">
                 <!-- Add number of attempts and best score to the quizzes button TODO -->
                 @foreach ($quizzes as $quiz)
-                  <button class="btn btn-secondary" style="padding: 10px; margin: 10px;" onclick="window.location.href='/quizzes/{{$quiz->id}}'">{{ $quiz->code }} </br> Attempts: - </br> Best Score: -</button>
+                  <button class="btn btn-secondary" style="padding: 10px; margin: 10px;" onclick="window.location.href='/quizzes/{{$quiz->id}}'">{{ $quiz->code }} </br> Attempts: {{$attempts[$quiz->id]}} </br> Best Score: -</button>
                 @endforeach
             </div>
         </div>

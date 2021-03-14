@@ -23,12 +23,13 @@ class UserController extends Controller
     {
         // Implement logic to fetch all users
 
-        if (Auth::user() and Bouncer::is(request()->user())->can('view-users-page')){
+        // if (Auth::user() and Bouncer::is(request()->user())->can('view-users')){
+        if (Auth::user()){
             $users = User::all(); 
             return $users;
         }
         else {
-            return redirect()->route('login')->with('validate', 'Please login first.');
+            return "No permission";
         }
     }
 

@@ -16,7 +16,7 @@ class ExportController extends Controller
     public function exportUsers()
     {
         // Only Admins should be allowed to access this resource
-        if (Auth::user() and Bouncer::is(request()->user())->an('admin')) {
+        if (Auth::user() and request()->user()->can('export-users')) {
             $table = User::all();
             $csvFile = "username,First Name,Last Name,Email\n";
 
@@ -38,7 +38,7 @@ class ExportController extends Controller
     public function exportUserAttempts() { 
 
         // Only Admins should be allowed to access this resource
-        if (Auth::user() and Bouncer::is(request()->user())->an('admin')){
+        if (Auth::user() and request()->user()->can('export-student-quizzes')){
         
             $data = DB::select('select 
                             u.name, 

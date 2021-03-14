@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Bouncer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -10,15 +11,22 @@ use App\Models\Quiz;
 use App\Models\QuizOption;
 use App\Models\AttemptQuiz;
 use App\Models\AttemptAnswerItem;
+use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
-    public function getAllQuizzes()
+    public function getAllQuizzes(Request $request)
     {
         // Implement logic to fetch all quizzes
-        $quizzes = Quiz::all(); 
 
-        return $quizzes;
+        if (Bouncer::can('view-quiz')) {        // TODO: tami 2021.03.14
+            $quizzes = Quiz::all(); 
+            return $quizzes;
+        }
+        else {
+            return "No permission.";
+        }
+
     }
 
     public function getQuiz($id)

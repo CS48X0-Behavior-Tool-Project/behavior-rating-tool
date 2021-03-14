@@ -26,17 +26,13 @@ class PagesController extends Controller
     {
         $this->uc = new UserController();
         $this->qc = new QuizController();
+        $this->qc = new QuizController();
+        $this->middleware('auth')->except('getLoginPage');
     }
 
     /**
      * These controller methods simply load up the appropriate views from the pages folder.
      */
-
-    public function __construct()
-    {
-        $this->qc = new QuizController();
-        $this->middleware('auth')->except('getLoginPage');
-    }
 
     public function getLoginPage()
     {
@@ -79,7 +75,7 @@ class PagesController extends Controller
             'video' => $quiz->video
         ]);
     }
-    
+
     public function getUsers()
     {
         $users = $this->uc->getAllUsers();
@@ -104,17 +100,7 @@ class PagesController extends Controller
           } else {
               return view('quiz_attempt', ['id' => $id]);
           }
-      }
-
-    public function getQuizById($id) {
-
-      $quiz = $this->qc->getQuiz($id);
-
-      return view('single_quiz')->with(['code' => $quiz->code, 'options' => $quiz->quiz_question_options,
-        'video' => $quiz->video]);
-
     }
-
 
     public function getCreateQuiz()
     {

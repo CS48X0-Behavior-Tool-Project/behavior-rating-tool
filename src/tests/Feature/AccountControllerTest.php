@@ -25,8 +25,7 @@ class AccountControllerTest extends TestCase
     public function test_non_authenticated_can_not_view_account_route()
     {
         $response = $this->get('/account');
-        $response->assertStatus(500);   // will have to be updated to redirect once
-        // once check is implemented
+        $response->assertRedirect('/login');
     }
 
     public function test_user_update_first_name_of_account()

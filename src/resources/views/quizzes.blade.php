@@ -35,6 +35,15 @@
                   </span>
                 </div>
                 <!-- foreach, same as animals here for attempts -->
+                @foreach ($uniqueAttempts as $att)
+                <div class="row justify-content-center">
+                  <span>
+                      <input type="radio" id="attempt-{{$att}}" name="attempt-radio" value="{{$att}}"></button>
+                      <label for="attempt-{{$att}}">{{$att}}</label>
+                  </span>
+                </div>
+                @endforeach
+
 
                 <!-- Animal filter -->
                 <p class="title">Filter quizzes by animal</p>

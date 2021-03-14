@@ -83,8 +83,14 @@ class PagesController extends Controller
             $attemptsPerQuiz[$value] = $attemptNumber;
         }
 
+
+        //generating list of unique attempt values for the filter
+        $uniqueAttempts = array_unique($attemptsPerQuiz);
+        sort($uniqueAttempts);
+
+
         return view('quizzes')->with(['animals' => $animals, 'quizzes' => $quizzes,
-          'attempts' => $attemptsPerQuiz]);
+          'attempts' => $attemptsPerQuiz, 'uniqueAttempts' => $uniqueAttempts]);
     }
 
     public function getQuizById($id)

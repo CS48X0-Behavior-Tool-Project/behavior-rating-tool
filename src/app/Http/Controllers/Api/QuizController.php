@@ -18,7 +18,6 @@ class QuizController extends Controller
         // Implement logic to fetch all quizzes
 
         $quizzes = Quiz::all(); 
-
         return $quizzes;
     }
 

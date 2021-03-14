@@ -18,6 +18,8 @@ class CreateUserAttemptsTable extends Migration
             $table->unsignedBigInteger('user_id');  
             $table->unsignedBigInteger('attempt_id');   
             $table->integer('scores')->nullable();   
+            $table->integer('behavior_scores')->nullable();
+            $table->boolean('interpretation_guess')->default(0);
             $table->timestamps();
             $table->jsonb('options')->nullable();
 

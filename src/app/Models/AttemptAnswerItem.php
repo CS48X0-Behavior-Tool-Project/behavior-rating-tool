@@ -8,13 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Attempt extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'user_id', 'options'
+        'attempt_quiz_id', 'behavior_answers', 'interpretation_answers', 'options'
     ];
 
-    public function attemptQuiz()
-    {
-        return $this->hasMany(AttemptQuiz::class);
-    }
 }
+

@@ -9,16 +9,16 @@ use App\Http\Controllers\Api\QuizController;
 
 use App\Models\User;
 use App\Models\Quiz;
-<<<<<<< HEAD
+
 use App\Models\Attempt;
 use App\Models\AttemptQuiz;
-=======
+
 use App\Models\QuizOption;
 use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Auth;
->>>>>>> main
+
 
 class PagesController extends Controller
 {
@@ -49,8 +49,8 @@ class PagesController extends Controller
 
     /**
      * ! Token authorization is required
-     * @return View|Factory 
-     * @throws BindingResolutionException 
+     * @return View|Factory
+     * @throws BindingResolutionException
      */
     public function getConfirmationPage()
     {
@@ -70,7 +70,7 @@ class PagesController extends Controller
     {
         $quiz = $this->qc->getQuiz($id);
 
-<<<<<<< HEAD
+
       //array holding every attempt id the current user has done
       $userAttempts = Attempt::where('user_id','=',auth()->user()->id)->pluck('id')->toArray();
 
@@ -87,12 +87,6 @@ class PagesController extends Controller
 
       return view('single_quiz')->with(['code' => $quiz->code, 'options' => $quiz->quiz_question_options,
         'video' => $quiz->video, 'attempt' => $attemptNumber, 'time' => microtime(true)]);
-=======
-        return view('single_quiz')->with([
-            'code' => $quiz->code, 'options' => $quiz->quiz_question_options,
-            'video' => $quiz->video
-        ]);
->>>>>>> main
     }
 
     public function getCreateQuiz()

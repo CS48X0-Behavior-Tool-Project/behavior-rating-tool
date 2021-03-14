@@ -16,12 +16,8 @@ use App\Http\Controllers\Resources\VideoController;
 
 use App\Http\Controllers\ExportController;
 
-<<<<<<< HEAD
 use App\Http\Controllers\QuizAttemptController;
-=======
 use App\Http\Controllers\EditQuizController;
->>>>>>> main
-
 
 Auth::routes();
 
@@ -116,7 +112,3 @@ Route::post('/quizzes/{id}', [QuizAttemptController::class, 'submitQuizAttempt']
 Route::get('/export', [PagesController::class, 'exportData']);
 Route::get('/export/users', [ExportController::class, 'exportUsers'])->name('export_users_route');
 Route::get('/export/user_quizzes', [ExportController::class, 'exportUserAttempts'])->name('export_user_quizzes_route');
-<<<<<<< HEAD
-=======
-
->>>>>>> main

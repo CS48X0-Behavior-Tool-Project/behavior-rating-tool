@@ -41,7 +41,7 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->user()->can('create', Video::class)) {
+        if ($request->user()->can('upload-videos')) {
             if ($request->has('video')) {
                 try {
                     $uploadedVideo = $request->file('video');
@@ -84,7 +84,7 @@ class VideoController extends Controller
     public function show($id)
     {
         if (Auth::user()) {
-            $video = Storage::disk('local')->get('videos/' . $id . '.mp4');
+            $video = Storage::disk('local')->get('videos/'. $id . '.mp4');
             $response = FacadeResponse::make($video, 200);
             $response->header('Content-Type', 'video/mp4');
             return $response;

@@ -7,259 +7,251 @@ use Exception;
 use App\Models\Quiz;
 use App\Models\QuizOption;
 use App\Models\Video;
-use Illuminate\Support\Facades\Log;
 
 class CreateQuizController extends Controller
 {
-	public function __construct()
-	{
-		$this->middleware('auth');
-	}
+    public function createQuiz() {
+      try {
+        $videoID = $this->readVideo();
+        $animal = $this->readAnimal();
+        $behaviours = $this->readBehaviours();
+        $interpretations = $this->readInterpretations();
 
-	public function createQuiz()
-	{
-		if (request()->user()->can('edit', Quiz::class)) {
-			try {
-				$videoID = $this->readVideo();
-				$animal = $this->readAnimal();
-				$behaviours = $this->readBehaviours();
-				$interpretations = $this->readInterpretations();
-
-				$quizCode = ucfirst($animal) . $videoID;
+        $quizCode = ucfirst($animal) . $videoID;
 
 
-				Log::info('>>> videoID: ' . $videoID);
-				Log::info('>>> animal: ' . $animal);
+        \Log::info('>>> videoID: '.$videoID);
+        \Log::info('>>> animal: '.$animal);
 
-				$this->uploadQuiz($videoID, $quizCode, $animal, $behaviours, $interpretations);
+        $this->uploadQuiz($videoID, $quizCode, $animal, $behaviours, $interpretations);
 
-				return redirect()->route('create_quiz_route')->with('quiz-status', 'Quiz ' . $quizCode . ' Created Successfully');
-			} catch (Exception $e) {
+        return redirect()->route('create_quiz_route')->with('quiz-status', 'Quiz ' . $quizCode . ' Created Successfully');
+      }
+      catch (Exception $e) {
 
-				list($status, $message) = explode(':', $e->getMessage());
-				Log::info('>>> error status: ' . $status);
-				Log::info('>>> error message: ' . $message);
-				return redirect()->route('create_quiz_route')->with($status, $message);
-			}
-		}
-		return abort(403);
-	}
+        list($status, $message) = explode(':', $e->getMessage());
+        \Log::info('>>> error status: '.$status);
+        \Log::info('>>> error message: '.$message);
+        return redirect()->route('create_quiz_route')->with($status, $message);
+      }
+    }
 
-	/**
-	 * Read video information from form.
-	 */
-	public function readVideo()
-	{
-		$videoID = request()->input('video-id');
-		$videoName = request()->input('video-name');
+    /**
+    * Read video information from form.
+    */
+    public function readVideo() {
+      $videoID = request()->input('video-id');
+      $videoName = request()->input('video-name');
 
-		// NOTE: videos are stored in storage\app\videos and automatically stored in the database
-		//should be able to store just the video id with the quiz information and use that to find the video later
+      // NOTE: videos are stored in storage\app\videos and automatically stored in the database
+      //should be able to store just the video id with the quiz information and use that to find the video later
 
-		//reject form upload if there is no video uploaded
-		//make sure the ID field is not empty, and that the ID corresponds to a video that has been uploaded (record stored in db)
+      //reject form upload if there is no video uploaded
+      //make sure the ID field is not empty, and that the ID corresponds to a video that has been uploaded (record stored in db)
 
-		$video = Video::where('id', $videoID);
+      $video = Video::where('id', $videoID);
 
-		if ($videoID === NULL || !$video->exists()) {
-			throw new Exception("video-status:" . "Video ID Mismatch");
-			return redirect()->route('create_quiz_route')->with('video-status', 'Video ID Mismatch');
-		}
+      if ($videoID === NULL || !$video->exists()) {
+        throw new Exception("video-status:"."Video ID Mismatch");
+        return redirect()->route('create_quiz_route')->with('video-status', 'Video ID Mismatch');
+      }
 
-		return $videoID;
-	}
+      return $videoID;
+    }
 
-	/**
-	 * Read the animal species from the list.
-	 */
-	public function readAnimal()
-	{
-		if (isset($_POST['animal-radio'])) {
+    /**
+    * Read the animal species from the list.
+    */
+    public function readAnimal() {
 
-			$animal = $_POST['animal-radio'][0];
+      $species;
 
-			if ($animal === "New") {
-				$newanimal = request()->input('a-new');
+      if (isset($_POST['animal-radio'])) {
 
-				if ($newanimal !== NULL) {
-					$species = $newanimal;
-				} else {
-					throw new Exception("animal-status:" . "Animal Field Empty");
-					return redirect()->route('create_quiz_route')->with('animal-status', 'Animal Field Empty');
-				}
-			} else {
-				$species = $animal;
-			}
-		} else {
-			throw new Exception("animal-status:" . "No Animal Selected");
-			return redirect()->route('create_quiz_route')->with('animal-status', 'No Animal Selected');
-		}
+        $animal = $_POST['animal-radio'][0];
 
-		return $species;
-	}
+        if ($animal === "New") {
+          $newanimal = request()->input('a-new');
 
-	/**
-	 * Read behaviours information from form.
-	 */
-	public function readBehaviours()
-	{
-		//form responses and checkbox status stored in arrays, null otherwise
-		$behaviours = array(
-			request()->input('box-one'),
-			request()->input('box-two'),
-			request()->input('box-three'),
-			request()->input('box-four'),
-			request()->input('box-five'),
-			request()->input('box-six'),
-			request()->input('box-seven'),
-			request()->input('box-eight'),
-			request()->input('box-nine'),
-			request()->input('box-ten'),
-		);
+          if ($newanimal !== NULL) {
+            $species = $newanimal;
+          }
+          else {
+            throw new Exception("animal-status:"."Animal Field Empty");
+            return redirect()->route('create_quiz_route')->with('animal-status','Animal Field Empty');
+          }
+        }
+        else {
+          $species = $animal;
+        }
+      }
+      else {
+        throw new Exception("animal-status:"."No Animal Selected");
+        return redirect()->route('create_quiz_route')->with('animal-status','No Animal Selected');
+      }
 
-		$checkboxes = array();
-		for ($i = 0; $i < 10; $i++) {
-			$checkboxes[$i] = NULL;
-		}
+      return $species;
+    }
 
-		if (isset($_POST['behaviour-check'])) {
-			if (is_array($_POST['behaviour-check'])) {
-				foreach ($_POST['behaviour-check'] as $value) {
-					$checkboxes[$value - 1] = 'on';
-				}
-			}
-		}
+    /**
+    * Read behaviours information from form.
+    */
+    public function readBehaviours() {
+      //form responses and checkbox status stored in arrays, null otherwise
+      $behaviours = array(
+        request()->input('box-one'),
+        request()->input('box-two'),
+        request()->input('box-three'),
+        request()->input('box-four'),
+        request()->input('box-five'),
+        request()->input('box-six'),
+        request()->input('box-seven'),
+        request()->input('box-eight'),
+        request()->input('box-nine'),
+        request()->input('box-ten'),
+      );
 
-		//make sure at least one checkbox and field are filled in
-		if ($this->containsOnlyNull($behaviours) || $this->containsOnlyNull($checkboxes)) {
-			return redirect()->route('create_quiz_route')->with('behaviour-status', 'Behaviours Incomplete');
-		}
+      $checkboxes = array();
+      for ($i=0; $i < 10; $i++) {
+        $checkboxes[$i] = NULL;
+      }
+
+      if(isset($_POST['behaviour-check'])) {
+        if (is_array($_POST['behaviour-check'])) {
+             foreach($_POST['behaviour-check'] as $value){
+                $checkboxes[$value-1] = 'on';
+             }
+          }
+        }
+
+      //make sure at least one checkbox and field are filled in
+      if ($this->containsOnlyNull($behaviours) || $this->containsOnlyNull($checkboxes)) {
+        return redirect()->route('create_quiz_route')->with('behaviour-status', 'Behaviours Incomplete');
+      }
 
 
-		//make sure all the checkboxes are associated with a non null input field
-		foreach ($checkboxes as $key => $value) {
-			if ($value === 'on' && $behaviours[$key] === NULL) {
-				return redirect()->route('create_quiz_route')->with('behaviour-status', 'Checked Fields Must Be Filled In');
-			}
-		}
+      //make sure all the checkboxes are associated with a non null input field
+      foreach ($checkboxes as $key => $value) {
+        if ($value === 'on' && $behaviours[$key] === NULL) {
+          return redirect()->route('create_quiz_route')->with('behaviour-status', 'Checked Fields Must Be Filled In');
+        }
+      }
 
-		// build array having options as the keys, and the checkbutton status as value (on or NULL)
-		$behavioursArray = array();
+      // build array having options as the keys, and the checkbutton status as value (on or NULL)
+      $behavioursArray = array();
 
-		foreach ($behaviours as $key => $value) {
-			if ($value !== NULL) {
-				$behavioursArray[$value] = $checkboxes[$key];
-			}
-		}
+      foreach ($behaviours as $key => $value) {
+        if ($value !== NULL) {
+          $behavioursArray[$value] = $checkboxes[$key];
+        }
+      }
 
-		return $behavioursArray;
-	}
+      return $behavioursArray;
 
-	/**
-	 * Checks whether every element is null, ensuring the user filled out the form.
-	 */
-	function containsOnlyNull($input)
-	{
-		return empty(array_filter($input, function ($a) {
-			return $a !== null;
-		}));
-	}
+    }
 
-	/**
-	 * Read interpretations information from form.
-	 */
-	public function readInterpretations()
-	{
-		//form responses stored in array, null otherwise
-		$interpretations = array(
-			request()->input('inter-one'),
-			request()->input('inter-two'),
-			request()->input('inter-three'),
-			request()->input('inter-four'),
-			request()->input('inter-five'),
-		);
+    /**
+    * Checks whether every element is null, ensuring the user filled out the form.
+    */
+    function containsOnlyNull($input)
+    {
+      return empty(array_filter($input, function ($a) { return $a !== null;}));
+    }
 
-		//whichever radio button (1-5) was selected
-		$radioValue = request()->input('interpretation-radio');
+    /**
+    * Read interpretations information from form.
+    */
+    public function readInterpretations() {
+      //form responses stored in array, null otherwise
+      $interpretations = array(
+        request()->input('inter-one'),
+        request()->input('inter-two'),
+        request()->input('inter-three'),
+        request()->input('inter-four'),
+        request()->input('inter-five'),
+      );
 
-		if ($this->containsOnlyNull($interpretations) || $radioValue === NULL) {
-			return redirect()->route('create_quiz_route')->with('int-status', 'Interpretations Incomplete');
-		}
+      //whichever radio button (1-5) was selected
+      $radioValue = request()->input('interpretation-radio');
 
-		//make sure the radio button corresponds to a non null input field
-		if ($interpretations[$radioValue - 1] === NULL) {
-			return redirect()->route('create_quiz_route')->with('int-status', 'Selected Field Must Be Filled In');
-		}
+      if ($this->containsOnlyNull($interpretations) || $radioValue === NULL) {
+        return redirect()->route('create_quiz_route')->with('int-status', 'Interpretations Incomplete');
+      }
 
-		// build array having options as the keys, and the radio button status as value (on or NULL)
+      //make sure the radio button corresponds to a non null input field
+      if ($interpretations[$radioValue-1] === NULL) {
+        return redirect()->route('create_quiz_route')->with('int-status', 'Selected Field Must Be Filled In');
+      }
 
-		$interpretationsArray = array();
+      // build array having options as the keys, and the radio button status as value (on or NULL)
 
-		foreach ($interpretations as $key => $value) {
-			if ($value !== NULL) {
-				if ($key == $radioValue - 1) {
-					$interpretationsArray[$value] = 'on';
-				} else {
-					$interpretationsArray[$value] = NULL;
-				}
-			}
-		}
+      $interpretationsArray = array();
 
-		return $interpretationsArray;
-	}
+      foreach ($interpretations as $key => $value) {
+        if ($value !== NULL) {
+          if ($key == $radioValue-1) {
+            $interpretationsArray[$value] = 'on';
+          }
+          else {
+            $interpretationsArray[$value] = NULL;
+          }
+        }
+      }
 
-	/**
-	 * Upload the information for the new quiz into the database.
-	 */
-	public function uploadQuiz($videoID, $quizCode, $animal, $behaviours, $interpretations)
-	{
+      return $interpretationsArray;
+    }
 
-		Log::info('>>> stop 1');
-		Log::info('>>> videoID: ' . $videoID);
-		Log::info('>>> animal: ' . $animal);
-		Log::info('>>> quizCode: ' . $quizCode);
+    /**
+    * Upload the information for the new quiz into the database.
+    */
+    public function uploadQuiz($videoID, $quizCode, $animal, $behaviours, $interpretations) {
 
-		$quiz = new Quiz();
-		$quiz->code = $quizCode;
-		$quiz->animal = $animal;
-		$quiz->video = $videoID;
-		$quiz->question = 'Please indicate behaviors and interpretations';
-		$quiz->save();
+      \Log::info('>>> stop 1');
+      \Log::info('>>> videoID: '.$videoID);
+      \Log::info('>>> animal: '.$animal);
+      \Log::info('>>> quizCode: '.$quizCode);
 
-		foreach ($behaviours as $key => $value) {
+      $quiz = new Quiz();
+      $quiz->code = $quizCode;
+      $quiz->animal = $animal;
+      $quiz->video = $videoID;
+      $quiz->question = 'Please indicate behaviors and interpretations';
+      $quiz->save();
 
-			$isSolution = false;
+      foreach ($behaviours as $key => $value) {
 
-			if ($value === 'on') {
-				$isSolution = true;
-			}
+        $isSolution = false;
 
-			$opt = new QuizOption;
-			$opt->quiz_question_id = $quiz->id;
-			$opt->type = 'behaviour';
-			$opt->title = $key;
-			$opt->marking_scheme = 1;
-			$opt->is_solution = $isSolution;
-			Log::info('>>> stop 2');
-			$opt->save();
-		}
+        if ($value === 'on') {
+          $isSolution = true;
+        }
 
-		foreach ($interpretations as $key => $value) {
+        $opt = new QuizOption;
+        $opt->quiz_id = $quiz->id;
+        $opt->type = 'behaviour';
+        $opt->title = $key;
+        $opt->marking_scheme = 1;
+        $opt->is_solution = $isSolution;
+        \Log::info('>>> stop 2');
+        $opt->save();
+      }
 
-			$isSolution = false;
+      foreach ($interpretations as $key => $value) {
 
-			if ($value === 'on') {
-				$isSolution = true;
-			}
+        $isSolution = false;
 
-			$opt = new QuizOption;
-			$opt->quiz_question_id = $quiz->id;
-			$opt->type = 'interpretation';
-			$opt->title = $key;
-			$opt->marking_scheme = 1;
-			$opt->is_solution = $isSolution;
-			Log::info('>>> stop 3');
-			$opt->save();
-		}
-	}
+        if ($value === 'on') {
+          $isSolution = true;
+        }
+
+        $opt = new QuizOption;
+        $opt->quiz_id = $quiz->id;
+        $opt->type = 'interpretation';
+        $opt->title = $key;
+        $opt->marking_scheme = 1;
+        $opt->is_solution = $isSolution;
+        \Log::info('>>> stop 3');
+        $opt->save();
+      }
+    }
 }

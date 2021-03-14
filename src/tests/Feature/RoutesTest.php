@@ -2,24 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\Models\Video;
-use App\Models\Quiz;
+use Bouncer;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Silber\Bouncer\BouncerFacade as Bouncer;
 use Tests\TestCase;
 
 class RoutesTest extends TestCase
 {
     use RefreshDatabase;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        Bouncer::allow('admin')->to(['delete', 'edit', 'create', 'view'], [User::class, Video::class, Quiz::class]);
-        Bouncer::allow('admin')->to('export-users');
-    }
-
     public function test_guest_can_view_login_page()
     {
         $response = $this->get('/');
@@ -86,9 +76,9 @@ class RoutesTest extends TestCase
         $response->assertStatus(200);
     }
 
-    // public function test_guest_can_view_confirmation_page()
-    // {
-    //     $response = $this->get('/confirmation');
-    //     $response->assertOk();
-    // }
+    public function test_guest_can_view_confirmation_page()
+    {
+        $response = $this->get('/confirmation');
+        $response->assertOk();
+    }
 }

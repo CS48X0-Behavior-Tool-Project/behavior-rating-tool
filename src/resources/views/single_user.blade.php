@@ -6,6 +6,8 @@
     </div>
 @endif
 
+<script type="text/javascript" src="{{ URL::asset('javascript/single_user.js') }}"></script>
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -29,7 +31,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="row justify-content-center">
-                                <button type="submit" name="delete-user" class="btn btn-secondary" style="padding:10px">Delete User</button>
+                                <button type="submit" name="delete-user" class="btn btn-secondary" style="padding:10px" onclick="validate(event, '{{$user->first_name}}', '{{$user->last_name}}')">Delete User</button>
                             </div>
                         </div>
                     </div>

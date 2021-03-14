@@ -143,8 +143,12 @@ class PagesController extends Controller
         $b_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'behaviour')->get();
         $i_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'interpretation')->get();
 
-        return $this->adminView(request(), 'admin_edit_quiz')->with(['animals' => $animals,
-            'quiz' => $quiz, 'b_options' => $b_options, 'i_options' => $i_options]);
+        // TODO: might want to instead check if the user can EDIT the quiz, not create
+        if (request()->user()->can('create', Quiz::class)) {
+            return view('admin_edit_quiz')->with(['animals' => $animals,
+                'quiz' => $quiz, 'b_options' => $b_options, 'i_options' => $i_options]);
+        }
+        return redirect()->back();
     }
 
     public function getAddUser()

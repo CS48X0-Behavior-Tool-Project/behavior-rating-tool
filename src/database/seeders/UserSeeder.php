@@ -18,6 +18,6 @@ class UserSeeder extends Seeder
         $user = User::factory()
             ->create();
 
-        $user->assign('student');
+        $user->assign('admin');
     }
 }

@@ -78,16 +78,24 @@ class PagesController extends Controller
 
     public function getUsers()
     {
-        $users = $this->uc->getAllUsers();
+        if (request()->user()->can('view', User::class)){
+            $users = $this->uc->getAllUsers();
 
-        return $this->adminView(request(), 'admin_view_all_users')->with('users', $users);
+            return view('admin_view_all_users')->with('users', $users);
+        } else {
+            abort(403);
+        }
+
     }
 
     public function getUserById($id)
     {
-        $user = $this->uc->getUser($id);
-
-        return $this->adminView(request(), 'single_user')->with('user', $user);
+        if (request()->user()->can('view', User::class)){
+            $user = $this->uc->getUser($id);
+            return view('single_user')->with('user', $user);
+        } else {
+            abort(403);
+        }
     }
 
     public function attemptQuiz($id)
@@ -124,13 +132,18 @@ class PagesController extends Controller
     // Edits a single quiz
     public function getEditQuizByID($id)
     {
-        $animals = Quiz::all()->pluck('animal')->unique();
-        $quiz = Quiz::find($id);
-        $b_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'behaviour')->get();
-        $i_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'interpretation')->get();
+        if (request()->user()->can('edit', Quiz::class)) {
+            $animals = Quiz::all()->pluck('animal')->unique();
+            $quiz = Quiz::find($id);
+            $b_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'behaviour')->get();
+            $i_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'interpretation')->get();
 
-        return $this->adminView(request(), 'admin_edit_quiz')->with(['animals' => $animals,
-            'quiz' => $quiz, 'b_options' => $b_options, 'i_options' => $i_options]);
+
+            return view('admin_edit_quiz')->with(['animals' => $animals,
+                'quiz' => $quiz, 'b_options' => $b_options, 'i_options' => $i_options]);
+        } else {
+            abort(403);
+        }
     }
 
     public function getAddUser()

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "18c31f0bc3a370f3e0be5e960d2970b6",
+    "content-hash": "90c4992f0c7074f7704b95de6aaa078e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2488,6 +2488,57 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "shuchkin/simplexlsx",
+            "version": "0.8.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shuchkin/simplexlsx.git",
+                "reference": "6b6b2a7eed22a38cdb8c5e8ed17e4aa80eb40ced"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shuchkin/simplexlsx/zipball/6b6b2a7eed22a38cdb8c5e8ed17e4aa80eb40ced",
+                "reference": "6b6b2a7eed22a38cdb8c5e8ed17e4aa80eb40ced",
+                "shasum": ""
+            },
+            "require": {
+                "ext-libxml": "*",
+                "ext-simplexml": "*",
+                "ext-zlib": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/SimpleXLSX.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Shuchkin (SMSPILOT)",
+                    "email": "sergey.shuchkin@gmail.com",
+                    "homepage": "http://www.shuchkin.ru/"
+                }
+            ],
+            "description": "Parse and retrieve data from Excel XLSx files. MS Excel 2007 workbooks PHP reader.",
+            "homepage": "https://github.com/shuchkin/simplexlsx",
+            "keywords": [
+                "backend",
+                "excel",
+                "parser",
+                "php",
+                "xlsx"
+            ],
+            "support": {
+                "issues": "https://github.com/shuchkin/simplexlsx/issues",
+                "source": "https://github.com/shuchkin/simplexlsx/tree/0.8.21"
+            },
+            "time": "2021-01-10T23:21:38+00:00"
         },
         {
             "name": "silber/bouncer",

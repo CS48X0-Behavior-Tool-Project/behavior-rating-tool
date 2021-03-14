@@ -5571,8 +5571,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/0200ce6e0f697699bce036c42d91f1daab8039a8",
-                "reference": "0200ce6e0f697699bce036c42d91f1daab8039a8",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/59ee7e2b2efeb644eabea719186db91d11666733",
+                "reference": "59ee7e2b2efeb644eabea719186db91d11666733",
                 "shasum": ""
             },
             "require": {
@@ -5619,7 +5619,6 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-
             "time": "2021-03-03T15:22:44+00:00"
         },
         {

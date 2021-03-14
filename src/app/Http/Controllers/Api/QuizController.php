@@ -18,6 +18,7 @@ class QuizController extends Controller
         // Implement logic to fetch all quizzes
 
         $quizzes = Quiz::all(); 
+
         return $quizzes;
     }
 
@@ -28,6 +29,7 @@ class QuizController extends Controller
         $quizOps = DB::table('quiz_options')
             ->where('quiz_id', $id)
             ->get();
+
         $quizInfor = Quiz::find($id);
         $quizInfor->quiz_question_options = $quizOps;
         return $quizInfor;

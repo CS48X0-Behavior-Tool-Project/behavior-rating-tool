@@ -172,11 +172,9 @@ class UploadController extends Controller
      */
     public function dbInsert($firstName, $lastName, $email, $role)
     {
-        $username = strtolower(substr($firstName, 0, 1) . $lastName); //needed for now, until we get rid of registration tab
         $user = User::create([
             'password' => Hash::make('password'),
             'email' => $email,
-            'name' => $username,
             'first_name' => $firstName,
             'last_name' => $lastName,
             'options' => json_encode((object)[])

@@ -78,6 +78,8 @@ class PagesController extends Controller
             'code' => $quiz->code, 'options' => $quiz->quiz_question_options,
             'video' => $quiz->video
         ]);
+    }
+    
     public function getUsers()
     {
         $users = $this->uc->getAllUsers();

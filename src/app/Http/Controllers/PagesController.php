@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Bouncer;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Api\QuizController;
 
+use App\Models\User;
 use App\Models\Quiz;
+use App\Models\QuizOption;
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
@@ -17,12 +23,17 @@ class PagesController extends Controller
      * These controller methods simply load up the appropriate views from the pages folder.
      */
 
-   public function __construct() {
-     $this->qc = new QuizController();
-   }
+    public function __construct()
+    {
+        $this->qc = new QuizController();
+        $this->middleware('auth')->except('getLoginPage');
+    }
 
     public function getLoginPage()
     {
+        if (Auth::user()) {
+            return redirect()->route('home_route');
+        }
         return view('auth.login');
     }
 
@@ -31,6 +42,11 @@ class PagesController extends Controller
         return view('home');
     }
 
+    /**
+     * ! Token authorization is required
+     * @return View|Factory 
+     * @throws BindingResolutionException 
+     */
     public function getConfirmationPage()
     {
         return view('account_creation');
@@ -42,28 +58,56 @@ class PagesController extends Controller
 
         $quizzes = $this->qc->getAllQuizzes();
 
-        return view('quizzes')->with(['animals'=>$animals, 'quizzes'=>$quizzes]);
+        return view('quizzes')->with(['animals' => $animals, 'quizzes' => $quizzes]);
     }
 
-    public function getQuizById($id) {
+    public function getQuizById($id)
+    {
+        $quiz = $this->qc->getQuiz($id);
 
-      $quiz = $this->qc->getQuiz($id);
-
-      return view('single_quiz')->with(['code' => $quiz->code, 'options' => $quiz->quiz_question_options,
-        'video' => $quiz->video]);
+        return view('single_quiz')->with([
+            'code' => $quiz->code, 'options' => $quiz->quiz_question_options,
+            'video' => $quiz->video
+        ]);
     }
 
     public function getCreateQuiz()
     {
-        // search the database for different animal species to populate a radio button list
-        $animals = Quiz::all()->pluck('animal')->unique();
+        if (request()->user()->can('create', Quiz::class)) {
+            // search the database for different animal species to populate a radio button list
+            $animals = Quiz::all()->pluck('animal')->unique();
 
-        return $this->adminView(request(), 'admin_create_quiz')->with('animals',$animals);
+            return view('admin_create_quiz')->with('animals', $animals);
+        }
+        return redirect()->back();
+    }
+
+    // Selector page for
+    public function getEditQuiz()
+    {
+        $quizzes = Quiz::all();
+
+        return view('edit_quiz_selector')->with('quizzes',$quizzes);
+    }
+
+    // Edits a single quiz
+    public function getEditQuizByID($id)
+    {
+        $animals = Quiz::all()->pluck('animal')->unique();
+        $quiz = Quiz::find($id);
+        $b_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'behaviour')->get();
+        $i_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'interpretation')->get();
+
+        return $this->adminView(request(), 'admin_edit_quiz')->with(['animals' => $animals,
+            'quiz' => $quiz, 'b_options' => $b_options, 'i_options' => $i_options]);
     }
 
     public function getAddUser()
     {
-        return $this->adminView(request(), 'admin_add_user');
+        if (request()->user()->can('create', User::class)) {
+            return view('admin_add_user');
+        }
+        return redirect()->back();
     }
 
     public function getAccountManagement()
@@ -71,18 +115,11 @@ class PagesController extends Controller
         return view('account');
     }
 
-
-    private function adminView(Request $request, $path)
-    {
-        if ($request->user()->isAn('admin')) {
-            return view($path);
-        } else {
-            return abort(404);
-        }
-    }
-
     public function exportData()
     {
-        return view('export');
+        if (request()->user()->can('export-users')) {
+            return view('export');
+        }
+        return redirect()->back();
     }
 }

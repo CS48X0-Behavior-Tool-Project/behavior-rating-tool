@@ -9,6 +9,10 @@ class Attempt extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id', 'options'
+    ];
+
     public function attemptQuiz()
     {
         return $this->hasMany(AttemptQuiz::class);

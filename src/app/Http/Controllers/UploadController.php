@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Bouncer;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
@@ -39,13 +39,17 @@ class UploadController extends Controller
      */
     public function upload()
     {
-
-        if (request()->has('mycsv')) {
-            return $this->uploadFile();
-        } else if (request()->has('add_single_user')) {
-            return $this->uploadUser();
+        // Check administrator privileges
+        if (request()->user()->can('create', User::class)) {
+            if (request()->has('mycsv')) {
+                return $this->uploadFile();
+            } else if (request()->has('add_single_user')) {
+                return $this->uploadUser();
+            } else {
+                return redirect()->route('add_user_route');
+            }
         } else {
-            return redirect()->route('add_user_route');
+            abort(403);
         }
     }
 
@@ -168,11 +172,9 @@ class UploadController extends Controller
      */
     public function dbInsert($firstName, $lastName, $email, $role)
     {
-        $username = strtolower(substr($firstName, 0, 1) . $lastName); //needed for now, until we get rid of registration tab
         $user = User::create([
             'password' => Hash::make('password'),
             'email' => $email,
-            'name' => $username,
             'first_name' => $firstName,
             'last_name' => $lastName,
             'options' => json_encode((object)[])
@@ -185,12 +187,13 @@ class UploadController extends Controller
     }
 
     /**
-    * Send an email to the new user upon account creation, directing them to the website.
-    */
-    public function emailNewUser($email) {
+     * Send an email to the new user upon account creation, directing them to the website.
+     */
+    public function emailNewUser($email)
+    {
 
-      $auth = new EmailAuthentication($email);
-      $auth->requestLink();
+        $auth = new EmailAuthentication($email);
+        $auth->requestLink();
     }
 
     /**

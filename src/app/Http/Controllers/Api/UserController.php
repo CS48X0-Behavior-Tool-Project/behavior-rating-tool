@@ -21,13 +21,13 @@ class UserController extends Controller
     public function getAllUsers()
     {
         // Implement logic to fetch all users
-        $users = User::all(); 
+        $users = User::all();
         return $users;
     }
 
     public function getUser($id)
     {
-        // Implement logic to fetch user
+        return User::find($id);
     }
 
     public function getUserAttempts($id)
@@ -62,7 +62,7 @@ class UserController extends Controller
             $attempt->user_id = $request->route('id');
             $attempt->save();
             $attempt_id = $attempt->id;
-    
+
             Log::info([">>> Creating a new user_attempt, where attempt_id is: ", $attempt_id]);
             $userAttempt = new UserAttempt;
             $userAttempt->user_id = $request->route('id');
@@ -100,7 +100,7 @@ class UserController extends Controller
             $attempt->user_id = $request->route('id');
             $attempt->save();
             $attempt_id = $attempt->id;
-    
+
             Log::info([">>> Creating a new user_attempt, where attempt_id is: ", $attempt_id]);
             $userAttempt = new UserAttempt;
             $userAttempt->user_id = $request->route('id');
@@ -143,7 +143,7 @@ class UserController extends Controller
             $attempt_answers->behavior_answers = json_encode($request->behavior_answers);
             $attempt_answers->interpretation_answers = json_encode($request->interpretation_answers);
             $attempt_answers->save();
-        } 
+        }
         else {
             // insert attempt answers
             Log::info([">>> creating a new attempt_answer_items (attempt_quiz_id): ", $attempt_quiz_id]);
@@ -241,5 +241,23 @@ class UserController extends Controller
     public function deleteUser(Request $request, $id)
     {
         // Implement logic to delete user
+        User::find($id)->delete();
+    }
+
+    /**
+    *  Delete every attempt the user has made, in preparation for the deletion of the user.
+    */
+    public function deleteUserAttempts($id)
+    {
+        $attemptIDs = Attempt::where('user_id','=',$id)->pluck('id')->toArray();
+        foreach ($attemptIDs as $key => $value) {
+          $attemptQuiz = AttemptQuiz::where('attempt_id','=',$value);
+          $attemptQuizID = $attemptQuiz->pluck('id')->toArray()[0];
+          AttemptAnswerItem::where('attempt_quiz_id','=',$attemptQuizID)->delete();
+          $attemptQuiz->delete();
+        }
+
+        Attempt::where('user_id','=',$id)->delete();
+        UserAttempt::where('user_id','=',$id)->delete();
     }
 }

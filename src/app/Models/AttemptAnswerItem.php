@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attempt extends Model
+class AttemptAnswerItem extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -13,4 +13,3 @@ class Attempt extends Model
     ];
 
 }
-

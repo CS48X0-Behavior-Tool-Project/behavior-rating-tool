@@ -27,6 +27,7 @@ class UserController extends Controller
 
     public function getUser($id)
     {
+        // Implement logic to fetch user
         return User::find($id);
     }
 
@@ -59,15 +60,15 @@ class UserController extends Controller
             // create new attempt and corresponding user_attempt
             Log::info(">>> Creating a new attempt.");
             $attempt = new Attempt;
-            $attempt->user_id = $request->route('id');
+            $attempt->user_id = $request->user_id;
             $attempt->save();
             $attempt_id = $attempt->id;
 
             Log::info([">>> Creating a new user_attempt, where attempt_id is: ", $attempt_id]);
             $userAttempt = new UserAttempt;
-            $userAttempt->user_id = $request->route('id');
+            $userAttempt->user_id = $request->user_id;
             $userAttempt->attempt_id = $attempt_id;
-            $userAttempt->scores = 0;
+            $userAttempt->score = 0;
             $userAttempt->save();
             Log::info(">>> DONE: user_attempt created !");
             return response()->json(['success' => true, 'attempt_id' => $attempt_id, 'user_attempt_id' => $userAttempt->id], 200);
@@ -84,8 +85,8 @@ class UserController extends Controller
             if($user_attempt != null) {
                 $attempt_id =  $user_attempt->attempt_id;
                 Log::info([">>> attempt_id is ", $attempt_id]);
-                if($request->has('scores')) {
-                    $user_attempt->scores = $request->scores;
+                if($request->has('score')) {
+                    $user_attempt->score = $request->score;
                     $user_attempt->save();
                 }
             }
@@ -97,18 +98,20 @@ class UserController extends Controller
             // create new attempt and corresponding user_attempt
             Log::info(">>> Creating a new attempt.");
             $attempt = new Attempt;
-            $attempt->user_id = $request->route('id');
+            $attempt->user_id = $request->user_id;
             $attempt->save();
             $attempt_id = $attempt->id;
 
             Log::info([">>> Creating a new user_attempt, where attempt_id is: ", $attempt_id]);
             $userAttempt = new UserAttempt;
-            $userAttempt->user_id = $request->route('id');
+            $userAttempt->user_id = $request->user_id;
             $userAttempt->attempt_id = $attempt_id;
-            $userAttempt->scores = 0;
-            if($request->has('scores')) {
-                $userAttempt->scores = $request->scores;
+            $userAttempt->score = 0;
+            if($request->has('score')) {
+                $userAttempt->score = $request->score;
             }
+            $userAttempt->max_score = $request->max_score;
+            $userAttempt->interpretation_guess = $request->interpretation_guess;
             $userAttempt->save();
             $user_attempt_id = $userAttempt->id;
             Log::info(">>> DONE: user_attempt created !");
@@ -154,20 +157,21 @@ class UserController extends Controller
             $attempt_answer_item->save();
         }
 
-        $scores = $this->getScores($quiz_id, $request->behavior_answers, $request->interpretation_answers);
+        // NOTE: commenting this out for now, scores are being calculated in the QuizAttemptController at the moment
+        //$scores = $this->getScores($quiz_id, $request->behavior_answers, $request->interpretation_answers);
 
         // update user_attempts scores
-        DB::table('user_attempts')
+        /*DB::table('user_attempts')
         ->where('id', $user_attempt_id)
         ->update(['scores' => $scores["scores"], 'behavior_scores' => $scores["behavior_scores"], 'interpretation_guess' => $scores["interpretation_guess"]]);
 
-        Log::info(['>>>>> scores: ', $scores]);
+        Log::info(['>>>>> scores: ', $scores]);*/
 
-        return response()->json(['success' => true, 'scores' => $scores], 200);
+        return response()->json(['success' => true, 200]);// 'score' => $scores], 200);
     }
 
-    private function getScores($quiz_id, $behavior_answers, $interpretation_answers) {
-        
+    /*private function getScores($quiz_id, $behavior_answers, $interpretation_answers) {
+
         $behavior_scores = 0;
         $interpretation_guess = true;
         $scores = 0;
@@ -211,9 +215,9 @@ class UserController extends Controller
                 }
             }
         }
-            
+
         return ['behavior_scores' => $behavior_scores, 'interpretation_guess' => $interpretation_guess, 'scores' => $scores] ;
-    }
+    }*/
 
     public function deleteUserAllAttempts(Request $request, $id) {
         // delete all the user attempts specify an user_id

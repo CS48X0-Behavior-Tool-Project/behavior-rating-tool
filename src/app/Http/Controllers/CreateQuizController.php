@@ -235,7 +235,7 @@ class CreateQuizController extends Controller
 			}
 
 			$opt = new QuizOption;
-			$opt->quiz_question_id = $quiz->id;
+			$opt->quiz_id = $quiz->id;
 			$opt->type = 'behaviour';
 			$opt->title = $key;
 			$opt->marking_scheme = 1;
@@ -253,7 +253,7 @@ class CreateQuizController extends Controller
 			}
 
 			$opt = new QuizOption;
-			$opt->quiz_question_id = $quiz->id;
+			$opt->quiz_id = $quiz->id;
 			$opt->type = 'interpretation';
 			$opt->title = $key;
 			$opt->marking_scheme = 1;

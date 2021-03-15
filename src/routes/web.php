@@ -16,9 +16,9 @@ use App\Http\Controllers\Resources\VideoController;
 
 use App\Http\Controllers\ExportController;
 
+use App\Http\Controllers\QuizAttemptController;
 use App\Http\Controllers\EditQuizController;
 use App\Http\Controllers\SingleUserController;
-
 
 Auth::routes();
 
@@ -121,6 +121,11 @@ Route::post('/create_quiz', [CreateQuizController::class, 'createQuiz']);
  * Route for confirming a new account.
  */
 Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
+
+/*
+* Route for submitting a quiz attempt
+*/
+Route::post('/quizzes/{id}', [QuizAttemptController::class, 'submitQuizAttempt']);
 
 /**
  * Route for exporting data

@@ -36,14 +36,19 @@
         <div class="col-md-12">
             <div class="card">
                 <!-- TODO inserts -->
-                <div class="card-header">Attempting Quiz:  {{$code ?? 'QuizID'}}  {{$attempt ?? 'Attempt#'}}</div>
+                <div class="card-header">Attempting Quiz:  {{$code ?? 'QuizID'}}  {{'Attempt #' . $attempt ?? 'Attempt#'}}</div>
                 <div class="card-body">
 
-                    <form>
+                    <form action="" method="post">
+                      @csrf
                         <!-- Stopwatch -->
                         <div class="col-xs-2">
                             <p class="timer"> <span id="demo">00:00:00</span>  </p>
                         </div>
+
+                        <!-- store starting time -->
+                        <input type="hidden" id="startTime" name="startTime" value={{$time}}>
+
                         <!-- Video -->
                         <div class="row justify-content-center">
                             <iframe src="{{ route('videos.show', ['video' => $video]) }}" width="550" height="300" style="resize: both"></iframe>
@@ -64,7 +69,7 @@
                                         @foreach ($options as $opt)
                                             @if ( $opt->type == "behaviour")
                                                 <span>
-                                                    <input type="checkbox" id="behaviour-check-{{$opt->title}}" name="behaviour-check"></button>
+                                                    <input type="checkbox" id="behaviour-check-{{$opt->title}}" name="behaviour-check[]" value="{{$opt->title}}"></button>
                                                     <label for="behaviour-check-{{$opt->title}}">{{$opt->title}}</label>
                                                 </span>
                                                 <br>
@@ -84,7 +89,7 @@
                                         @foreach ($options as $opt)
                                             @if ( $opt->type == "interpretation")
                                                 <span id="spacing">
-                                                    <input type="radio" id="interpretation-check-{{$opt->title}}" name="interpretation-check"></button>
+                                                    <input type="radio" id="interpretation-check-{{$opt->title}}" name="interpretation-check" value="{{$opt->title}}"></button>
                                                     <label for="interpretation-check-{{$opt->title}}">{{$opt->title}}</label>
                                                 </span>
                                                 <br>

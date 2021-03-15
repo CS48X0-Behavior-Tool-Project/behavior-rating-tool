@@ -12,6 +12,7 @@ use App\Models\Quiz;
 
 use App\Models\Attempt;
 use App\Models\AttemptQuiz;
+use App\Models\UserAttempt;
 
 use App\Models\QuizOption;
 use Illuminate\Contracts\View\View;
@@ -69,7 +70,11 @@ class PagesController extends Controller
         $attemptsPerQuiz = array();
         $quizIDs = Quiz::all()->pluck('id')->toArray();
 
+        $attemptIdPerQuiz = array();
+
         foreach ($quizIDs as $key => $value) {
+
+            $attemptIdList = array();
 
             //count how many attempts the user made on each quiz
             $attemptNumber = 0;
@@ -77,8 +82,12 @@ class PagesController extends Controller
               $quizId = AttemptQuiz::where('attempt_id','=',$value2)->limit(1)->pluck('quiz_id')->toArray();
               if (in_array($value, $quizId)) {
                 $attemptNumber++;
+                $attemptIdList[] = $value2;
               }
             }
+
+            //array has quiz id as key, and a list of each attempt id as value
+            $attemptIdPerQuiz[$value] = $attemptIdList;
 
             //key for this array is the quiz id, value is the number of attempts the user has on that quiz
             $attemptsPerQuiz[$value] = $attemptNumber;
@@ -88,24 +97,82 @@ class PagesController extends Controller
         $uniqueAttempts = array_unique($attemptsPerQuiz);
         sort($uniqueAttempts);
 
-        //key will be the quiz ID, values will be array of scores from each attempt
-        $quizScores = array();
-        foreach ($attemptsPerQuiz as $key => $value) {
+        //key will be the quiz ID, values will be array of behaviour scores from each attempt
+        $behaviourScoresPerQuiz = array();
 
-          if ($value > 0) {
-            $scoreList = array();
-            foreach ($userAttempts as $key => $value) {
-              // code...
+        //key is the quiz ID, values will be array of interpretation scores from each attempt
+        $interpretationScoresPerQuiz = array();
+
+        foreach ($attemptIdPerQuiz as $key => $value) {
+          $behaviourScoreList = array();
+          $interpretationScoreList = array();
+          if (!empty($value)) {
+            foreach ($value as $key2 => $value2) {
+              $behaviourScoreList[$value2] = UserAttempt::where('attempt_id','=',$value2)->pluck('score')->toArray()[0];
+              $interpretationScoreList[$value2] = UserAttempt::where('attempt_id','=',$value2)
+                ->pluck('interpretation_guess')->toArray()[0];
             }
-
+            $behaviourScoresPerQuiz[$key] = $behaviourScoreList;
+            $interpretationScoresPerQuiz[$key] = $interpretationScoreList;
           }
-
-
         }
 
-        print_r($attemptsPerQuiz);
-        //return view('quizzes')->with(['animals' => $animals, 'quizzes' => $quizzes,
-          //'attempts' => $attemptsPerQuiz, 'uniqueAttempts' => $uniqueAttempts]);
+        // TODO: currently just taking the best score from any attempt in both behaviours and interpretations...
+        //       will need to determine a good way to calculate the best attempt
+        //determine the attempt that resulted in the maximum score for each quiz
+        //keys are quiz IDs, values are arrays having attempt ID as the key, and score as the value
+        $bestBehaviourAttempts = array();     //store the best attempt # for each quiz
+        $bestBehaviourScorePerQuiz = array();
+        foreach ($behaviourScoresPerQuiz as $key => $value) {
+          $bestBehaviourScorePerQuiz[$key] = max($value);
+          $bestBehaviourAttempts[$key] = array_search($bestBehaviourScorePerQuiz[$key], $value);
+        }
+
+        $bestInterpretationAttempts = array();
+        $bestInterpretationScorePerQuiz = array();
+        foreach ($interpretationScoresPerQuiz as $key => $value) {
+          $bestInterpretationScorePerQuiz[$key] = max($value);
+          $bestInterpretationAttempts[$key] = array_search($bestInterpretationScorePerQuiz[$key], $value);
+        }
+
+
+        //find the max score per quiz
+        $maxBehaviourScoresList = array();
+        foreach ($bestBehaviourAttempts as $key => $value) {
+          $maxBehaviourScore = UserAttempt::where('attempt_id','=',$value)->pluck('max_score')->toArray()[0];
+          $maxBehaviourScoresList[$key] = $maxBehaviourScore;
+        }
+
+        $maxInterpretationScoresList = array();
+        foreach ($bestInterpretationAttempts as $key => $value) {
+          $maxInterpretationScore = UserAttempt::where('attempt_id','=',$value)->pluck('interpretation_guess')->toArray()[0];
+          if ($maxInterpretationScore != 0) {
+            $maxInterpretationScoresList[$key] = $maxInterpretationScore;
+          }
+        }
+
+        // NOTE: printing stuff for testing, keep until we decide on a scoring method
+        /*print("Behaviour scores: \n");
+        print_r($behaviourScoresPerQuiz);
+        print("\nInterpretation scores: \n");
+        print_r($interpretationScoresPerQuiz);
+        print("\nBest Behaviour scores: \n");
+        print_r($bestBehaviourScorePerQuiz);
+        print("\nBest Interpretation scores: \n");
+        print_r($bestInterpretationScorePerQuiz);
+        print("\nBest Behaviour Attempts: \n");
+        print_r($bestBehaviourAttempts);
+        print("\nBest Interpretation Attempts: \n");
+        print_r($bestInterpretationAttempts);
+        print("\nMax Behaviour Scores: \n");
+        print_r($maxBehaviourScoresList);
+        print("\nMax Interpretation Scores: \n");
+        print_r($maxInterpretationScoresList);*/
+
+        return view('quizzes')->with(['animals' => $animals, 'quizzes' => $quizzes,
+          'attempts' => $attemptsPerQuiz, 'uniqueAttempts' => $uniqueAttempts, 'bestBehaviourScores' => $bestBehaviourScorePerQuiz,
+          'bestInterpretationScores' => $bestInterpretationScorePerQuiz, 'maxBehaviourScores' => $maxBehaviourScoresList,
+          'maxInterpretationScores' => $maxInterpretationScoresList]);
     }
 
     public function getQuizById($id)

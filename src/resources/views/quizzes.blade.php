@@ -21,37 +21,31 @@
     <div class="row col-12">
         <div class="card col-4">
             <div class="card-header">Filter</div>
-            <form action="/quizzes" method="post">
-              @csrf
+
             <div class="card-body">
+              <form action="/quizzes" method="post">
+                @csrf
                 <input id="search" class="form-control" type="text" name="search" placeholder="Search Quizzes..." onkeyup"">
 
                 <!-- Number of attempts filter -->
                 <p class="title" style="margin-top: 15px;">Filter quizzes by your number of attempts</p>
-                <div class="form-group row justify-content-center">
-                    <div>
-                        <span>
-                            <input type="radio" id="one" name="attempts-radio" value="one">
-                            <label for="one"> One</label><br>
-                        </span>
-                        <span>
-                            <input type="radio" id="two" name="attempts-radio" value="two">
-                            <label for="two"> Two</label><br>
-                        </span>
-                        <span>
-                            <input type="radio" id="three" name="attempts-radio" value="three">
-                            <label for="three"> Three</label><br>
-                        </span>
-                        <span>
-                            <input type="radio" id="four" name="attempts-radio" value="four">
-                            <label for="four"> Four</label><br>
-                        </span>
-                        <span>
-                            <input type="radio" id="five_plus" name="attempts-radio" value="five_plus">
-                            <label for="five_plus"> Five +</label><br>
-                        </span>
-                    </div>
+                <div class="row justify-content-center">
+                  <span>
+                      <input type="radio" id="attempt-all" name="attempt-radio" value="all" checked="checked">
+                      <label for="attempt-all" type="text"> All </label>
+                  </span>
                 </div>
+                <!-- foreach, same as animals here for attempts -->
+                @foreach ($uniqueAttempts as $att)
+                <div class="row justify-content-center">
+                  <span>
+                      <input type="radio" id="attempt-{{$att}}" name="attempt-radio" value="{{$att}}"></button>
+                      <label for="attempt-{{$att}}">{{$att}}</label>
+                  </span>
+                </div>
+                @endforeach
+
+
                 <!-- Animal filter -->
                 <p class="title">Filter quizzes by animal</p>
                 <div class="row justify-content-center">
@@ -74,11 +68,23 @@
         </div>
         <div class="card col-8">
             <div class="card-header">Selection</div>
+            @if (session('score-message'))
+                <div class="alert alert-success">
+                    <strong>{{ session('score-message') }}</strong>
+                </div>
+            @endif
+            @if (session('quiz-error-message'))
+                <div class="alert alert-danger">
+                    <strong>{{ session('quiz-error-message') }}</strong>
+                </div>
+            @endif
             Insert selected filter criteria here
+
             <!-- Insert selected filter criteria here TODO -->
             <div class="card-body">
+                <!-- Add number of attempts and best score to the quizzes button TODO -->
                 @foreach ($quizzes as $quiz)
-                    <button class="btn btn-secondary" style="padding: 10px; margin: 10px;" onclick="window.location.href='/quizzes/{{$quiz->id}}'">{{ $quiz->code }}</button>
+                  <button class="btn btn-secondary" style="padding: 10px; margin: 10px;" onclick="window.location.href='/quizzes/{{$quiz->id}}'">{{ $quiz->code }} </br> Attempts: {{$attempts[$quiz->id]}} </br> Best Score: {{ $bestBehaviourScores[$quiz->id] ?? '-' }}/{{ $maxBehaviourScores[$quiz->id] ?? '-' }} B {{ $bestInterpretationScores[$quiz->id] ?? '-'}} I </button>
                 @endforeach
             </div>
         </div>

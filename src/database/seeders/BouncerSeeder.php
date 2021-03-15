@@ -37,7 +37,6 @@ class BouncerSeeder extends Seeder
         $user = User::where('email', env('ADMIN_USER_EMAIL'))->first();
         if (is_null($user)) {
             return User::create([
-                'name' => env('ADMIN_USER_NAME'),
                 'first_name' => env('ADMIN_USER_NAME'),
                 'last_name' => env('ADMIN_USER_NAME'),
                 'email' => env('ADMIN_USER_EMAIL'),

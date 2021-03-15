@@ -26,7 +26,6 @@ class QuizController extends Controller
         else {
             return "No permission.";
         }
-
     }
 
     public function getQuiz($id)

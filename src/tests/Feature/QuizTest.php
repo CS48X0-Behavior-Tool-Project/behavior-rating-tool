@@ -7,6 +7,7 @@ use App\Models\Quiz;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\App;
 use Silber\Bouncer\BouncerFacade as Bouncer;
 use Tests\TestCase;
 

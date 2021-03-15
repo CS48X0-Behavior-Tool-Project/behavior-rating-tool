@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use Bouncer;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Models\Quiz;
+use App\Models\User;
 use App\Models\QuizOption;
 use App\Models\AttemptQuiz;
 use App\Models\AttemptAnswerItem;
@@ -15,16 +16,16 @@ use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
-    public function getAllQuizzes(Request $request)
+    public function getAllQuizzes()
     {
         // Implement logic to fetch all quizzes
 
-        if (Bouncer::can('view-quiz')) {        // TODO: tami 2021.03.14
+        if(Auth::user() and request()->user()->can('conduct-quizzes')) {
             $quizzes = Quiz::all(); 
             return $quizzes;
         }
         else {
-            return "No permission.";
+            return "No permission!";
         }
     }
 
@@ -32,27 +33,41 @@ class QuizController extends Controller
     {
         // Implement logic to fetch quiz
 
-        $quizOps = DB::table('quiz_options')
-            ->where('quiz_id', $id)
-            ->get();
+        if(Auth::user() and request()->user()->can('conduct-quizzes')) {
+            $quizOps = DB::table('quiz_options')
+                ->where('quiz_id', $id)
+                ->get();
 
-        $quizInfor = Quiz::find($id);
-        $quizInfor->quiz_question_options = $quizOps;
-        return $quizInfor;
+            $quizInfor = Quiz::find($id);
+            $quizInfor->quiz_question_options = $quizOps;
+            return $quizInfor;
+        }
+        else {
+            return "No Permission!";
+        }
     }
 
     public function getQuizAttempts($id)
     {
         // Implement logic to fetch quiz attempts
-
-        $attempts = DB::table('attempt_quizzes')
-            ->where('quiz_id', $id)
-            ->get();
-        return $attempts;
+        
+        if(Auth::user() and request()->user()->can('review-my-quizzes')) {
+            $attempts = DB::table('attempt_quizzes')
+                ->where('quiz_id', $id)
+                ->get();
+            return $attempts;
+        }
+        else {
+            return "No Permission!";
+        }
     }
 
     public function createQuiz(Request $request)
     {
+        if (!(Auth::user() and request()->user()->can('create-quizzes'))) {
+            return "No Permission.";
+        }
+
         $quiz = new Quiz;
         $quiz->code = $request->code;
         $quiz->animal = $request->animal;
@@ -62,7 +77,7 @@ class QuizController extends Controller
 
         // iterate each question_options, create quiz_question_option
         $options = $request->quiz_question_options;
-        
+
         foreach ($options as $option) {
             $opt = new QuizOption;
             $opt->quiz_id = $quiz->id;
@@ -78,6 +93,10 @@ class QuizController extends Controller
 
     public function updateQuiz(Request $request, $id)
     {
+        if (!(Auth::user() and request()->user()->can('update-quizzes'))) {
+            return "No Permission!";
+        }
+
         if (Quiz::where('id', $id)->exists()) {
             \Log::info($request);
 
@@ -130,6 +149,9 @@ class QuizController extends Controller
 
     public function deleteQuiz($id)
     {
+        if (!(Auth::user() and request()->user()->can('delete-quizzes'))) {
+            return "No Permission!";
+        }
         Quiz::find($id)->delete();
     }
 }

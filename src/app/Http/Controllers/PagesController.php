@@ -65,6 +65,10 @@ class PagesController extends Controller
 
     public function getQuizList()
     {
+        if (!(Auth::user() and request()->user()->can('conduct-quizzes'))) {
+            abort(403);
+        }
+
         $animals = Quiz::all()->pluck('animal')->unique();
 
         $quizzes = $this->qc->getAllQuizzes();
@@ -205,7 +209,7 @@ class PagesController extends Controller
 
     public function getUsers()
     {
-        if (request()->user()->can('view', User::class)){
+        if (request()->user()->can('view-users-page')){
             $users = $this->uc->getAllUsers();
 
             return view('admin_view_all_users')->with('users', $users);
@@ -217,7 +221,7 @@ class PagesController extends Controller
 
     public function getUserById($id)
     {
-        if (request()->user()->can('view', User::class)){
+        if (request()->user()->can('view-users-page')){
             $user = $this->uc->getUser($id);
             return view('single_user')->with('user', $user);
         } else {
@@ -239,7 +243,7 @@ class PagesController extends Controller
 
     public function getCreateQuiz()
     {
-        if (request()->user()->can('create', Quiz::class)) {
+        if (request()->user()->can('create-quizzes')) {
             // search the database for different animal species to populate a radio button list
             $animals = Quiz::all()->pluck('animal')->unique();
 
@@ -251,15 +255,19 @@ class PagesController extends Controller
     // Selector page for
     public function getEditQuiz()
     {
-        $quizzes = Quiz::all();
+        if (!(Auth::user() and request()->user()->can('update-quizzes'))) {
+            abort(403);
+        }
 
+        $quizzes = Quiz::all();
         return view('edit_quiz_selector')->with('quizzes',$quizzes);
+
     }
 
     // Edits a single quiz
     public function getEditQuizByID($id)
     {
-        if (request()->user()->can('edit', Quiz::class)) {
+        if (request()->user()->can('update-quizzes')) {
             $animals = Quiz::all()->pluck('animal')->unique();
             $quiz = Quiz::find($id);
             $b_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'behaviour')->get();
@@ -275,10 +283,10 @@ class PagesController extends Controller
 
     public function getAddUser()
     {
-        if (request()->user()->can('create', User::class)) {
-            return view('admin_add_user');
+        if (!(request()->user()->can('create-users'))) {
+            abort(403);
         }
-        return redirect()->back();
+        return view('admin_add_user');
     }
 
     public function getAccountManagement()

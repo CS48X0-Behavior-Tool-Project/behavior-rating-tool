@@ -41,7 +41,8 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->user()->can('create', Video::class)) {
+        // if ($request->user()->can('create', Video::class)) {
+        if ($request->user()->can('create-quizzes')) {              // all users who can create quizzes can upload video
             if ($request->has('video')) {
                 try {
                     $uploadedVideo = $request->file('video');

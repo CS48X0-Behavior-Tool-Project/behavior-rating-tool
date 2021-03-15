@@ -70,30 +70,43 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <!-- Admin and TA -->
-                                    @if (Bouncer::is(Auth::user())->an("admin", "ta"))
+                                    @if (request()->user()->can('create-users'))
                                         <a class="dropdown-item" href="{{ url('add_user') }}">
                                             {{ __('Add Users') }}
                                         </a>
+                                    @endif
+                                    @if (request()->user()->can('view-users-page'))
                                         <a class="dropdown-item" href="{{ url('users') }}">
                                             {{ __('View All Users') }}
                                         </a>
+                                    @endif
+                                    @if (request()->user()->can('create-quizzes'))
                                         <a class="dropdown-item" href="{{ url('create_quiz') }}">
                                             {{ __('Create New Quiz') }}
                                         </a>
                                     @endif
                                     <!-- Admin, TA, and Experts -->
-                                    @if (Bouncer::is(Auth::user())->an("admin", "ta", "expert"))
+                                    @if (request()->user()->can('update-quizzes'))
                                         <a class="dropdown-item" href="{{ url('edit_quiz') }}">
                                             {{ __('Edit Quiz') }}
                                         </a>
                                     @endif
                                     <!-- All users  -->
-                                    <a class="dropdown-item" href="{{ url('quizzes') }}">
-                                        {{ __('Quizzes') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ url('account') }}">
-                                        {{ __('Account') }}
-                                    </a>
+                                    @if (request()->user()->can('conduct-quizzes'))
+                                        <a class="dropdown-item" href="{{ url('quizzes') }}">
+                                            {{ __('Quizzes') }}
+                                        </a>
+                                    @endif
+                                    @if (request()->user()->can('export-users'))
+                                        <a class="dropdown-item" href="{{ url('export') }}">
+                                            {{ __('Export') }}
+                                        </a>
+                                    @endif
+                                    @if (request()->user()->can('view-profile'))
+                                        <a class="dropdown-item" href="{{ url('account') }}">
+                                            {{ __('Account') }}
+                                        </a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>

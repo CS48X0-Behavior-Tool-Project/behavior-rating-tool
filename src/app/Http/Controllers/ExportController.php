@@ -41,11 +41,11 @@ class ExportController extends Controller
         if (Auth::user() and request()->user()->can('export-student-quizzes')){
         
             $data = DB::select('select 
-                            u.name, 
                             u.email, 
                             q.code as quiz, 
                             aq.created_at as conducted, 
-                            ua.scores
+                            ua.score,
+                            ua.interpretation_guess
                         from users u
                         inner join user_attempts ua
                             on u.id = ua.user_id
@@ -55,13 +55,13 @@ class ExportController extends Controller
                             on q.id = aq.quiz_id
                         inner join attempt_answer_items aai
                             on aai.attempt_quiz_id = aq.id
-                        order by u.name;');
+                        order by u.email;');
 
-            $csvFile = "username, Email, Quiz Code, Attempts, Scores\n";
+            $csvFile = " User, Quiz Code, Attempted Time, Scores, Interpretation Guess\n";
 
             foreach($data as $row) {
                 // $csvFile .= "{$row['name']},{$row['email']},{$row['quiz']},{$row['conducted']},{$row['scores']}\n";
-                $csvFile .= "{$row->name},{$row->email},{$row->quiz},{$row->conducted},{$row->scores}\n";
+                $csvFile .= "{$row->email},{$row->quiz},{$row->conducted},{$row->score},{$row->interpretation_guess}\n";
             }
 
             return response($csvFile)

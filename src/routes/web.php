@@ -18,6 +18,7 @@ use App\Http\Controllers\ExportController;
 
 use App\Http\Controllers\QuizAttemptController;
 use App\Http\Controllers\EditQuizController;
+use App\Http\Controllers\SingleUserController;
 
 Auth::routes();
 
@@ -75,6 +76,26 @@ Route::get('/quizzes', [PagesController::class, 'getQuizList'])->name('quizzes_r
  * Display the quiz we are attempting
  */
 Route::get('/quizzes/{id}', [PagesController::class, 'getQuizById']);
+
+/**
+ * Show all the users in the system
+ */
+Route::get('/users', [PagesController::class, 'getUsers'])->name('users_route');;
+
+/**
+ * Display the user
+ */
+Route::get('/user/{id}', [PagesController::class, 'getUserById']);
+
+/**
+* Perform an action on the single user page
+*/
+Route::post('/user/{id}', [SingleUserController::class, 'action']);
+
+/**
+ * Route for submitting a login request.  Will need to test when actual webpage is created.
+ */
+Route::post('/', [LoginController::class, 'submit']);
 
 /**
  * Called when the email link to a new user is clicked

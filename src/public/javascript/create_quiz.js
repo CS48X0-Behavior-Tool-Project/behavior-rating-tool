@@ -34,6 +34,7 @@ function updateUI(data, success) {
     updateAlert(success ? data['msg'] : data.statusText, success ? 'success' : 'danger');
     updateVideoID(data['uuid']);
     updateVideoName(data['name']);
+    updateThumbnail(data['uuid']);
 }
 
 /**
@@ -68,4 +69,8 @@ function updateVideoName(name) {
 
 function updateVideoLabel() {
     $("#file-label").text(`${$("#video-upload")[0].files[0].name}`);
+}
+
+function updateThumbnail(uuid) {
+    $("#thumbnail").attr("src", `videos/${uuid}`);
 }

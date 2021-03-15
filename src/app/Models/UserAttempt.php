@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserAttempt extends Model
 {
+    // | id | user_id | attempt_id | scores | created_at | updated_at | options |
     use HasFactory;
 
     protected $fillable = [

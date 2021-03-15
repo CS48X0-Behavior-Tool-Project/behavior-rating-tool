@@ -74,6 +74,9 @@
                                         <a class="dropdown-item" href="{{ url('add_user') }}">
                                             {{ __('Add Users') }}
                                         </a>
+                                        <a class="dropdown-item" href="{{ url('users') }}">
+                                            {{ __('View All Users') }}
+                                        </a>
                                         <a class="dropdown-item" href="{{ url('create_quiz') }}">
                                             {{ __('Create New Quiz') }}
                                         </a>
@@ -91,8 +94,7 @@
                                     <a class="dropdown-item" href="{{ url('account') }}">
                                         {{ __('Account') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                           document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 

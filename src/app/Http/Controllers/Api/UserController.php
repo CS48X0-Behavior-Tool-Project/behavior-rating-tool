@@ -157,19 +157,20 @@ class UserController extends Controller
             $attempt_answer_item->save();
         }
 
-        $scores = $this->getScores($quiz_id, $request->behavior_answers, $request->interpretation_answers);
+        // NOTE: commenting this out for now, scores are being calculated in the QuizAttemptController at the moment
+        //$scores = $this->getScores($quiz_id, $request->behavior_answers, $request->interpretation_answers);
 
         // update user_attempts scores
-        DB::table('user_attempts')
+        /*DB::table('user_attempts')
         ->where('id', $user_attempt_id)
         ->update(['scores' => $scores["scores"], 'behavior_scores' => $scores["behavior_scores"], 'interpretation_guess' => $scores["interpretation_guess"]]);
 
-        Log::info(['>>>>> scores: ', $scores]);
+        Log::info(['>>>>> scores: ', $scores]);*/
 
-        return response()->json(['success' => true, 'scores' => $scores], 200);
+        return response()->json(['success' => true, 200]);// 'score' => $scores], 200);
     }
 
-    private function getScores($quiz_id, $behavior_answers, $interpretation_answers) {
+    /*private function getScores($quiz_id, $behavior_answers, $interpretation_answers) {
 
         $behavior_scores = 0;
         $interpretation_guess = true;
@@ -216,7 +217,7 @@ class UserController extends Controller
         }
 
         return ['behavior_scores' => $behavior_scores, 'interpretation_guess' => $interpretation_guess, 'scores' => $scores] ;
-    }
+    }*/
 
     public function deleteUserAllAttempts(Request $request, $id) {
         // delete all the user attempts specify an user_id

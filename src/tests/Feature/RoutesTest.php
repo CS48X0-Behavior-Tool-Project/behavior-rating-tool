@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Video;
 use App\Models\Quiz;
 use App\Models\User;
+use Database\Seeders\BouncerSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Silber\Bouncer\BouncerFacade as Bouncer;
 use Tests\TestCase;
@@ -16,8 +17,12 @@ class RoutesTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Bouncer::allow('admin')->to(['delete', 'edit', 'create', 'view'], [User::class, Video::class, Quiz::class]);
-        Bouncer::allow('admin')->to('export-users');
+        $this->seed(BouncerSeeder::class);
+    }
+
+    private function fetchAdminUser() {
+        $user = User::where('email', env('ADMIN_USER_EMAIL'))->first();
+        return $user;
     }
 
     public function test_guest_can_view_login_page()
@@ -38,52 +43,46 @@ class RoutesTest extends TestCase
 
     public function test_admin_can_view_home_page()
     {
-        $user = User::factory()->create();
-        $user->assign('admin');
+        $user = $this->fetchAdminUser();
         $response = $this->actingAs($user)
             ->get('/home');
 
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     public function test_admin_can_view_add_user_page()
     {
-        $user = User::factory()->create();
-        $user->assign('admin');
+        $user = $this->fetchAdminUser();
         $response = $this->actingAs($user)
             ->get('/add_user');
 
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     public function test_admin_can_view_create_quiz_page()
     {
-        $user = User::factory()->create();
-        $user->assign('admin');
+        $user = $this->fetchAdminUser();
         $response = $this->actingAs($user)
             ->get('/create_quiz');
-
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     public function test_admin_can_view_account_page()
     {
-        $user = User::factory()->create();
-        $user->assign('admin');
+        $user = $this->fetchAdminUser();
         $response = $this->actingAs($user)
             ->get('/account');
 
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     public function test_admin_can_view_quizzes_page()
     {
-        $user = User::factory()->create();
-        $user->assign('admin');
+        $user = $this->fetchAdminUser();
         $response = $this->actingAs($user)
             ->get('/quizzes');
 
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     // public function test_guest_can_view_confirmation_page()

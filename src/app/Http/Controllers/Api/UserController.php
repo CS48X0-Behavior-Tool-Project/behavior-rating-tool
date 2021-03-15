@@ -23,10 +23,10 @@ class UserController extends Controller
     {
         // Implement logic to fetch all users
         if (!(request()->user()->can('view-users-page'))){
-            return "No Permission!"; 
+            return "No Permission!";
         }
 
-        $users = User::all(); 
+        $users = User::all();
         return $users;
     }
 
@@ -39,7 +39,6 @@ class UserController extends Controller
     public function getUserAttempts($id)
     {
         // Implement logic to fetch user quiz attempts
-
         if(!(Auth::user() and request()->user()->can('conduct-quizzes'))) {
             return "No Permission!";
         }
@@ -264,9 +263,9 @@ class UserController extends Controller
     {
         // Implement logic to delete user
         if (!(request()->user()->can('delete-users'))){
-            return "No Permission!"; 
+            return "No Permission!";
         }
-        
+
         User::find($id)->delete();
     }
 

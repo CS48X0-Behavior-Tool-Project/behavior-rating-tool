@@ -19,12 +19,11 @@ class BouncerSeeder extends Seeder
     {
         Bouncer::allow('admin')->to(['delete', 'edit', 'create', 'view'], [User::class, Video::class, Quiz::class]);
         Bouncer::allow('admin')->to('export-users');
+        $this->createRolePermission();
 
         $adminUser = $this->createAdminAccount();
 
         $adminUser->assign('admin');
-
-        $this->createRolePermission();
     }
 
     /**
@@ -48,17 +47,16 @@ class BouncerSeeder extends Seeder
     }
 
     private function createRolePermission() {
-
         Bouncer::allow('student')->to('view-profile');
         Bouncer::allow('student')->to('edit-profile');
-        Bouncer::allow('student')->to('review-my-quizzes');  
+        Bouncer::allow('student')->to('review-my-quizzes');
         Bouncer::allow('student')->to('conduct-quizzes');
 
         Bouncer::allow('expert')->to('view-profile');
         Bouncer::allow('expert')->to('edit-profile');
         Bouncer::allow('expert')->to('create-quizzes');
         Bouncer::allow('expert')->to('update-quizzes');
-        Bouncer::allow('expert')->to('review-my-quizzes');  
+        Bouncer::allow('expert')->to('review-my-quizzes');
         Bouncer::allow('expert')->to('conduct-quizzes');
 
         Bouncer::allow('TA')->to('view-users-page');
@@ -89,7 +87,5 @@ class BouncerSeeder extends Seeder
         Bouncer::allow('admin')->to('review-my-quizzes');
         Bouncer::allow('admin')->to('review-quizzes');
         Bouncer::allow('admin')->to('export-student-quizzes');
-        Bouncer::allow('admin')->to('conduct-quizzes');
-    
-    }
+        Bouncer::allow('admin')->to('conduct-quizzes');    }
 }

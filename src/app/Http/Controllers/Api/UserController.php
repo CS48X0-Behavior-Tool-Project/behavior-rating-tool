@@ -26,7 +26,7 @@ class UserController extends Controller
             abort(403); 
         }
 
-        $users = User::all(); 
+        $users = User::all();
         return $users;
     }
 
@@ -39,7 +39,6 @@ class UserController extends Controller
     public function getUserAttempts($id)
     {
         // Implement logic to fetch user quiz attempts
-
         if(!(Auth::user() and request()->user()->can('conduct-quizzes'))) {
             abort(403);
         }
@@ -265,8 +264,9 @@ class UserController extends Controller
         // Implement logic to delete user
         if (!(request()->user()->can('delete-users'))){
             abort(403); 
+
         }
-        
+
         User::find($id)->delete();
     }
 

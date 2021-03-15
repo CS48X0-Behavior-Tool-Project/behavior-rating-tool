@@ -25,7 +25,7 @@ class QuizController extends Controller
             return $quizzes;
         }
         else {
-            return "No permission!";
+            abort(403);
         }
     }
 
@@ -43,7 +43,7 @@ class QuizController extends Controller
             return $quizInfor;
         }
         else {
-            return "No Permission!";
+            abort(403);
         }
     }
 
@@ -58,14 +58,14 @@ class QuizController extends Controller
             return $attempts;
         }
         else {
-            return "No Permission!";
+            abort(403);
         }
     }
 
     public function createQuiz(Request $request)
     {
         if (!(Auth::user() and request()->user()->can('create-quizzes'))) {
-            return "No Permission.";
+            abort(403);
         }
 
         $quiz = new Quiz;
@@ -94,7 +94,7 @@ class QuizController extends Controller
     public function updateQuiz(Request $request, $id)
     {
         if (!(Auth::user() and request()->user()->can('update-quizzes'))) {
-            return "No Permission!";
+            abort(403);
         }
 
         if (Quiz::where('id', $id)->exists()) {
@@ -150,7 +150,7 @@ class QuizController extends Controller
     public function deleteQuiz($id)
     {
         if (!(Auth::user() and request()->user()->can('delete-quizzes'))) {
-            return "No Permission!";
+            abort(403);
         }
         Quiz::find($id)->delete();
     }

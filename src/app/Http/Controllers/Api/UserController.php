@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         // Implement logic to fetch all users
         if (!(request()->user()->can('view-users-page'))){
-            return "No Permission!"; 
+            abort(403); 
         }
 
         $users = User::all(); 
@@ -41,7 +41,7 @@ class UserController extends Controller
         // Implement logic to fetch user quiz attempts
 
         if(!(Auth::user() and request()->user()->can('conduct-quizzes'))) {
-            return "No Permission!";
+            abort(403);
         }
 
         $attempts = DB::table('user_attempts')
@@ -56,7 +56,7 @@ class UserController extends Controller
         // insert if new, update if exist (update behavior and interpretation given an user attempt)
 
         if(!(Auth::user() and request()->user()->can('conduct-quizzes'))) {
-            return "No Permission!";
+            abort(403);
         }
 
         $user_id = $request->route('id') ?? -1;
@@ -237,7 +237,7 @@ class UserController extends Controller
         // delete all the user attempts specify an user_id
 
         if (!(Auth::user() and request()->user()->can('delete-quizzes'))) {
-            return "No Permission!";
+            abort(403);
         }
 
         UserAttempt::where('user_id', $id)->delete();
@@ -264,7 +264,7 @@ class UserController extends Controller
     {
         // Implement logic to delete user
         if (!(request()->user()->can('delete-users'))){
-            return "No Permission!"; 
+            abort(403); 
         }
         
         User::find($id)->delete();
@@ -276,7 +276,7 @@ class UserController extends Controller
     public function deleteUserAttempts($id)
     {
         if (!(Auth::user() and request()->user()->can('delete-quizzes'))) {
-            return "No Permission!";
+            abort(403);
         }
 
         $attemptIDs = Attempt::where('user_id','=',$id)->pluck('id')->toArray();

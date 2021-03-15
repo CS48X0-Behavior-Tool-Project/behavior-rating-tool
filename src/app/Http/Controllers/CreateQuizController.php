@@ -35,7 +35,6 @@ class CreateQuizController extends Controller
 
 				return redirect()->route('create_quiz_route')->with('quiz-status', 'Quiz ' . $quizCode . ' Created Successfully');
 			} catch (Exception $e) {
-
 				list($status, $message) = explode(':', $e->getMessage());
 				Log::info('>>> error status: ' . $status);
 				Log::info('>>> error message: ' . $message);
@@ -74,9 +73,9 @@ class CreateQuizController extends Controller
 	 */
 	public function readAnimal()
 	{
-		if (isset($_POST['animal-radio'])) {
+		if (request()->input('animal-radio') != null) {
 
-			$animal = $_POST['animal-radio'][0];
+			$animal = request()->input('animal-radio')[0];
 
 			if ($animal === "New") {
 				$newanimal = request()->input('a-new');
@@ -122,9 +121,10 @@ class CreateQuizController extends Controller
 			$checkboxes[$i] = NULL;
 		}
 
-		if (isset($_POST['behaviour-check'])) {
-			if (is_array($_POST['behaviour-check'])) {
-				foreach ($_POST['behaviour-check'] as $value) {
+		$behaviourCheck = request()->input('behaviour-check');
+		if ($behaviourCheck != null) {
+			if (is_array($behaviourCheck)) {
+				foreach ($behaviourCheck as $value) {
 					$checkboxes[$value - 1] = 'on';
 				}
 			}

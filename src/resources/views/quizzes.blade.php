@@ -17,6 +17,14 @@
 </style>
 
 @section('content')
+
+@if (Bouncer::is(Auth::user())->an("admin", "ta"))
+    <div class="row col-12 justify-content-center">
+        <button class="btn btn-primary" type="button" name="button" onclick="window.location.href='/create_quiz'">Create New Quiz</button>
+    </div>
+    <br>
+@endif
+
 <div class="container">
     <div class="row col-12">
         <div class="card col-4">

@@ -108,11 +108,13 @@
                                             </span>
                                         </div>
                                         @endforeach
-                                        <div class="row-justify-content-center">
-                                            <span id="spacing">
-                                                <input type="radio" id="a-new" name="animal-radio[]" value = "New">
-                                                <input id="animal-new" type="text" class="formLabel" name="a-new" placeholder="Edit me ...">
-                                            </span>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <input type="radio" id="a-new" name="animal-radio[]" value = "New">
+                                                </div>
+                                            </div>
+                                            <input id="animal-new" type="text" class="form-control" name="a-new" placeholder="Edit me ...">
                                         </div>
                                     </div>
                                     <br>

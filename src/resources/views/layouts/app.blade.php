@@ -33,6 +33,16 @@
 <style media="screen">
   .nav-link {
   color: white;
+  letter-spacing: 1px;
+  }
+  nav a:hover {
+    color: black;
+    background-color: white;
+  }
+  .nav-link:active{
+    background-color: white;
+    color: black;
+    letter-spacing: 1px;
   }
 </style>
 
@@ -60,7 +70,7 @@
                               <li class="nav-item">
                                   <!-- Admin and TA -->
                                   @if (Bouncer::is(Auth::user())->an("admin", "ta"))
-                                      <a class="nav-link active" aria-current="page" style="background-color: #fc8403; color: white;" href="{{ url('users') }}">
+                                      <a class="nav-link" href="{{ url('users') }}">
                                           {{ __('Users') }}
                                       </a>
                                   @endif

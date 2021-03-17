@@ -105,16 +105,16 @@ class CreateQuizController extends Controller
 	{
 		//form responses and checkbox status stored in arrays, null otherwise
 		$behaviours = array(
-			request()->input('box-one'),
-			request()->input('box-two'),
-			request()->input('box-three'),
-			request()->input('box-four'),
-			request()->input('box-five'),
-			request()->input('box-six'),
-			request()->input('box-seven'),
-			request()->input('box-eight'),
-			request()->input('box-nine'),
-			request()->input('box-ten'),
+			request()->input('box-1'),
+			request()->input('box-2'),
+			request()->input('box-3'),
+			request()->input('box-4'),
+			request()->input('box-5'),
+			request()->input('box-6'),
+			request()->input('box-7'),
+			request()->input('box-8'),
+			request()->input('box-9'),
+			request()->input('box-10'),
 		);
 
 		$checkboxes = array();
@@ -172,11 +172,11 @@ class CreateQuizController extends Controller
 	{
 		//form responses stored in array, null otherwise
 		$interpretations = array(
-			request()->input('inter-one'),
-			request()->input('inter-two'),
-			request()->input('inter-three'),
-			request()->input('inter-four'),
-			request()->input('inter-five'),
+			request()->input('inter-1'),
+			request()->input('inter-2'),
+			request()->input('inter-3'),
+			request()->input('inter-4'),
+			request()->input('inter-5'),
 		);
 
 		//whichever radio button (1-5) was selected

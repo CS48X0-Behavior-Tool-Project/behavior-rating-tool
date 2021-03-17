@@ -137,7 +137,7 @@
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">
-                                                        <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="1">
+                                                        <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
                                                     </div>
                                                 </div>
                                                 <input id="box-{{$x}}" type="text" class="form-control" name="box-{{$x}}" placeholder="Edit me...">

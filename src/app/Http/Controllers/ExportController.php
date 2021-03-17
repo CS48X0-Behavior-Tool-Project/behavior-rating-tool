@@ -39,29 +39,29 @@ class ExportController extends Controller
 
         // Only Admins should be allowed to access this resource
         if (Auth::user() and request()->user()->can('export-student-quizzes')){
-        
-            $data = DB::select('select 
-                            u.email, 
-                            q.code as quiz, 
-                            aq.created_at as conducted, 
-                            ua.score,
-                            ua.interpretation_guess
-                        from users u
-                        inner join user_attempts ua
-                            on u.id = ua.user_id
-                        inner join attempt_quizzes aq
-                            on ua.attempt_id = aq.attempt_id
-                        inner join quizzes q
-                            on q.id = aq.quiz_id
-                        inner join attempt_answer_items aai
-                            on aai.attempt_quiz_id = aq.id
-                        order by u.email;');
 
-            $csvFile = " User, Quiz Code, Attempted Time, Scores, Interpretation Guess\n";
+            $data = DB::table('users')
+                ->select(
+                    'users.email', 
+                    'quizzes.code as quiz', 
+                    'attempt_quizzes.created_at', 
+                    'user_attempts.score',
+                    'user_attempts.max_score',
+                    'user_attempts.interpretation_guess'
+                    )
+                ->leftJoin('user_attempts', 'users.id', '=', 'user_attempts.user_id')
+                ->leftJoin('attempt_quizzes', 'user_attempts.attempt_id', '=', 'attempt_quizzes.attempt_id')
+                ->leftJoin('quizzes', 'quizzes.id', '=', 'attempt_quizzes.quiz_id')
+                ->leftJoin('attempt_answer_items', 'attempt_answer_items.attempt_quiz_id', '=', 'attempt_quizzes.id')
+                ->orderby('users.email')
+                ->get();
 
-            foreach($data as $row) {
-                // $csvFile .= "{$row['name']},{$row['email']},{$row['quiz']},{$row['conducted']},{$row['scores']}\n";
-                $csvFile .= "{$row->email},{$row->quiz},{$row->conducted},{$row->score},{$row->interpretation_guess}\n";
+            $csvFile = " User, Quiz Code, Attempted Time, Scores, Max Scores, Interpretation Guess\n";
+
+            if(count($data)>0) {
+                foreach($data as $row) {
+                    $csvFile .= "{$row->email},{$row->quiz},{$row->created_at},{$row->score},{$row->max_score},{$row->interpretation_guess}\n";
+                }
             }
 
             return response($csvFile)

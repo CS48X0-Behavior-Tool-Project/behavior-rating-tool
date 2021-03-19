@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Video;
 use Bouncer;
 use Exception;
+use FFMpeg\Exception\InvalidArgumentException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response as FacadeResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use ProtoneMedia\LaravelFFMpeg\Exporters\EncodingException;
+use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 
 class VideoController extends Controller
 {
@@ -89,7 +92,7 @@ class VideoController extends Controller
             $response->header('Content-Type', 'video/mp4');
             return $response;
         } else {
-            abort(404);
+            abort(403);
         }
     }
 
@@ -125,5 +128,25 @@ class VideoController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    /**
+     * Resize a valid mp4 file from storage to 720p
+     * 
+     * @param mixed $filename 
+     * @return string 
+     * @throws InvalidArgumentException 
+     */
+    private function resize($filename) {
+        try {
+            FFMpeg::fromDisk('local')
+                ->open('videos/' . $filename)
+                ->export()
+                ->toDisk('');
+        } catch (EncodingException $e) {
+            $command = $e->getCommand();
+            $errorLog = $e->getErrorOutput();
+            return "{$command}: {$errorLog}";
+        }
     }
 }

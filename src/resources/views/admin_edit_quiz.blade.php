@@ -7,32 +7,7 @@
 @endif
 
 <script type="text/javascript" src="{{ URL::asset('javascript/edit_quiz.js') }}"></script>
-
-<style>
-    .formLabel {
-        text-align: center;
-        color: black;
-        border-radius: 5px;
-        border: 1px solid #dfdfdf;
-        min-width: 75px;
-        min-height: 30px;
-        max-width: 200px;
-    }
-
-    .title {
-        text-align: center;
-        color: black;
-        background-color: #f7f7f7;
-        border-radius: 5px;
-        border: 1px solid #dfdfdf;
-    }
-
-    #spacing {
-        margin-bottom: 10px;
-        display: block;
-    }
-
-</style>
+<link rel="stylesheet" href="{{ URL::asset('css/admin_create_quiz.css') }}">
 
 @section('content')
     <div class="container">

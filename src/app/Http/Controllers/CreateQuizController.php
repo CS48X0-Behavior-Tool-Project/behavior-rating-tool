@@ -18,7 +18,7 @@ class CreateQuizController extends Controller
 
 	public function createQuiz()
 	{
-		if (request()->user()->can('edit', Quiz::class)) {
+		if (request()->user()->can('create', Quiz::class)) {
 			try {
 				$videoID = $this->readVideo();
 				$animal = $this->readAnimal();

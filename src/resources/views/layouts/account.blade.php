@@ -84,8 +84,8 @@
                                   <a class="nav-link" href="#">Review</a>
                               </li>
                               <li class="nav-item">
-                                  <a class="nav-link" href="{{ url('account') }}">
-                                      {{ __('Account') }}
+                                  <a class="nav-link active" href="{{ url('account') }}">
+                                      <strong>{{ __('Account') }}</strong>
                                   </a>
                               </li>
                               <li class="nav-item">

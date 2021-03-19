@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.users')
 
 @if (session('status'))
     <div class="alert alert-success" role="alert">
@@ -7,6 +7,14 @@
 @endif
 
 @section('content')
+
+@if (Bouncer::is(Auth::user())->an("admin", "ta"))
+    <div class="row col-12 justify-content-center">
+        <button class="btn btn-primary" type="button" name="button" onclick="window.location.href='/add_users'">Add Users</button>
+    </div>
+    <br>
+@endif
+
 <div class="container">
     <div class="row col-12">
         <!-- Filter -->

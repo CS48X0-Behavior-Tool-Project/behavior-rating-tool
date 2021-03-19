@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.users')
 
 @if (session('status'))
     <div class="alert alert-success" role="alert">

@@ -101,17 +101,25 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         @foreach($animals as $data)
-                                        <div class="row-justify-content-center">
-                                            <span id="spacing">
-                                                @if ($data == $quiz->animal)
-                                                    <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}" checked="true">
-                                                    <label for="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
-                                                @else
-                                                    <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
-                                                    <label for="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
-                                                @endif
-                                            </span>
-                                        </div>
+                                            @if ($data == $quiz->animal)
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <input type="radio" id="a-{{$data}}" name="animal-radio[]" value="{{$data}}" checked="true">
+                                                    </div>
+                                                </div>
+                                                <label for="a-{{$data}}" id="a-{{$data}}" type="text" class="form-control" name="a-{{$data}}"> {{$data}} </label>
+                                            </div>
+                                            @else
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <input type="radio" id="a-{{$data}}" name="animal-radio[]" value="{{$data}}">
+                                                        </div>
+                                                    </div>
+                                                    <label for="a-{{$data}}" id="a-{{$data}}" type="text" class="form-control" name="a-{{$data}}"> {{$data}} </label>
+                                                </div>
+                                            @endif
                                         @endforeach
                                         <div class="row-justify-content-center">
                                             <span id="spacing">

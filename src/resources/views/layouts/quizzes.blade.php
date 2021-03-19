@@ -76,8 +76,8 @@
                                   @endif
                               </li>
                               <li class="nav-item">
-                                  <a class="nav-link" href="{{ url('quizzes') }}">
-                                      {{ __('Quizzes') }}
+                                  <a class="nav-link active" href="{{ url('quizzes') }}">
+                                      <strong>{{ __('Quizzes') }}</strong>
                                   </a>
                               </li>
                               <li class="nav-item">

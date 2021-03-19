@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.quizzes')
 
 @if (session('status'))
     <div class="alert alert-success" role="alert">
@@ -101,18 +101,22 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         @foreach($animals as $data)
-                                        <div class="row-justify-content-center">
-                                            <span id="spacing">
-                                                <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
-                                                <label for="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
-                                            </span>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <input type="radio" id="a-{{$data}}" name="animal-radio[]" value="{{$data}}">
+                                                </div>
+                                            </div>
+                                            <label for="a-{{$data}}" id="a-{{$data}}" type="text" class="form-control" name="a-{{$data}}"> {{$data}} </label>
                                         </div>
                                         @endforeach
-                                        <div class="row-justify-content-center">
-                                            <span id="spacing">
-                                                <input type="radio" id="a-new" name="animal-radio[]" value = "New">
-                                                <input id="animal-new" type="text" class="formLabel" name="a-new" placeholder="Edit me ...">
-                                            </span>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <input type="radio" id="a-new" name="animal-radio[]" value = "New">
+                                                </div>
+                                            </div>
+                                            <input id="animal-new" type="text" class="form-control" name="a-new" placeholder="Edit me ...">
                                         </div>
                                     </div>
                                     <br>
@@ -131,46 +135,16 @@
                                 <h6 style="text-align:center;">Check the correct answers</h6>
                                 <div class="form-group row justify-content-center">
                                     <div>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-one" name="behaviour-check[]" value="1">
-                                            <input id="box-one" type="text" class="formLabel" name="box-one" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-two" name="behaviour-check[]" value="2">
-                                            <input id="box-two" type="text" class="formLabel" name="box-two" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-three" name="behaviour-check[]" value="3">
-                                            <input id="box-three" type="text" class="formLabel" name="box-three" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-four" name="behaviour-check[]" value="4">
-                                            <input id="box-four" type="text" class="formLabel" name="box-four" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-five" name="behaviour-check[]" value="5">
-                                            <input id="box-five" type="text" class="formLabel" name="box-five" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-six" name="behaviour-check[]" value="6">
-                                            <input id="box-six" type="text" class="formLabel" name="box-six" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-seven" name="behaviour-check[]" value="7">
-                                            <input id="box-seven" type="text" class="formLabel" name="box-seven" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-eight" name="behaviour-check[]" value="8">
-                                            <input id="box-eight" type="text" class="formLabel" name="box-eight" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-nine" name="behaviour-check[]" value="9">
-                                            <input id="box-nine" type="text" class="formLabel" name="box-nine" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="checkbox" id="b-ten" name="behaviour-check[]" value="10">
-                                            <input id="box-ten" type="text" class="formLabel" name="box-ten" placeholder="Edit me ...">
-                                        </span>
+                                        @foreach(range(1,10) as $x)
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
+                                                    </div>
+                                                </div>
+                                                <input id="box-{{$x}}" type="text" class="form-control" name="box-{{$x}}" placeholder="Edit me...">
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
                                 @if (session('behaviour-status'))
@@ -186,27 +160,16 @@
                                 <h6 style="text-align:center;">Select the correct answers</h6>
                                 <div class="form-group row justify-content-center">
                                     <div>
-                                        <span id="spacing">
-                                            <input type="radio" id="i-one" name="interpretation-radio" value="1">
-                                            <input id="inter-one" type="text" class="formLabel" name="inter-one" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="radio" id="i-two" name="interpretation-radio" value="2">
-                                            <input id="inter-two" type="text" class="formLabel" name="inter-two" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="radio" id="i-three" name="interpretation-radio" value="3">
-                                            <input id="inter-three" type="text" class="formLabel" name="inter-three" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <input type="radio" id="i-four" name="interpretation-radio" value="4">
-                                            <input id="inter-four" type="text" class="formLabel" name="inter-four" placeholder="Edit me ...">
-                                        </span>
-                                        <span id="spacing">
-                                            <!-- TODO ZAK changed these ID -->
-                                            <input type="radio" id="i-fve" name="interpretation-radio" value="5">
-                                            <input id="inter-fve" type="text" class="formLabel" name="inter-five" placeholder="Edit me ...">
-                                        </span>
+                                        @foreach(range(1,5) as $x)
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
+                                                    </div>
+                                                </div>
+                                                <input id="inter-{{$x}}" type="text" class="form-control" name="inter-{{$x}}" placeholder="Edit me ...">
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
                                 @if (session('int-status'))

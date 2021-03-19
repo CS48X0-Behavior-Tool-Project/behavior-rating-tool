@@ -70,8 +70,8 @@
                               <li class="nav-item">
                                   <!-- Admin and TA -->
                                   @if (Bouncer::is(Auth::user())->an("admin", "ta"))
-                                      <a class="nav-link" href="{{ url('users') }}">
-                                          {{ __('Users') }}
+                                      <a class="nav-link active" href="{{ url('users') }}">
+                                          <strong>{{ __('Users') }}</strong>
                                       </a>
                                   @endif
                               </li>

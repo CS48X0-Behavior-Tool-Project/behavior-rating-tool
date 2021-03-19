@@ -101,17 +101,25 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         @foreach($animals as $data)
-                                        <div class="row-justify-content-center">
-                                            <span id="spacing">
-                                                @if ($data == $quiz->animal)
-                                                    <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}" checked="true">
-                                                    <label for="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
-                                                @else
-                                                    <input type="radio" id="a-{{$data}}" name="animal-radio[]" value = "{{$data}}">
-                                                    <label for="a-{{$data}}" type="text" name="a-{{$data}}"> {{$data}} </label>
-                                                @endif
-                                            </span>
-                                        </div>
+                                            @if ($data == $quiz->animal)
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <input type="radio" id="a-{{$data}}" name="animal-radio[]" value="{{$data}}" checked="true">
+                                                    </div>
+                                                </div>
+                                                <label for="a-{{$data}}" id="a-{{$data}}" type="text" class="form-control" name="a-{{$data}}"> {{$data}} </label>
+                                            </div>
+                                            @else
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <input type="radio" id="a-{{$data}}" name="animal-radio[]" value="{{$data}}">
+                                                        </div>
+                                                    </div>
+                                                    <label for="a-{{$data}}" id="a-{{$data}}" type="text" class="form-control" name="a-{{$data}}"> {{$data}} </label>
+                                                </div>
+                                            @endif
                                         @endforeach
                                         <div class="row-justify-content-center">
                                             <span id="spacing">
@@ -140,22 +148,34 @@
                                         @foreach (range(0,9) as $x)
                                             <!-- If it exists and is correct -->
                                             @if (@isset($b_options[$x]) and $b_options[$x]->is_solution)
-                                                <span id="spacing">
-                                                    <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" checked="true" value="{{$x}}">
-                                                    <input id="box-{{$x}}" type="text" class="formLabel" name="box-{{$x}}" placeholder="Edit me ..." value="{{$b_options[$x]->title}}">
-                                                </span>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" checked="true" value="{{$x}}">
+                                                        </div>
+                                                    </div>
+                                                    <input id="box-{{$x}}" type="text" class="form-control" name="box-{{$x}}" placeholder="Edit me..." value="{{$b_options[$x]->title}}">
+                                                </div>
                                             <!-- If it exists and is NOT correct -->
                                             @elseif (@isset($b_options[$x]))
-                                                <span id="spacing">
-                                                    <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
-                                                    <input id="box-{{$x}}" type="text" class="formLabel" name="box-{{$x}}" placeholder="Edit me ..." value="{{$b_options[$x]->title}}">
-                                                </span>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
+                                                        </div>
+                                                    </div>
+                                                    <input id="box-{{$x}}" type="text" class="form-control" name="box-{{$x}}" placeholder="Edit me..." value="{{$b_options[$x]->title}}">
+                                                </div>
                                             <!-- Doesn't exist -->
                                             @else
-                                                <span id="spacing">
-                                                    <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
-                                                    <input id="box-{{$x}}" type="text" class="formLabel" name="box-{{$x}}" placeholder="Edit me ...">
-                                                </span>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
+                                                        </div>
+                                                    </div>
+                                                    <input id="box-{{$x}}" type="text" class="form-control" name="box-{{$x}}" placeholder="Edit me...">
+                                                </div>
                                             @endif
                                         @endforeach
                                     </div>
@@ -177,22 +197,34 @@
                                         @foreach (range(0,4) as $x)
                                             <!-- If it exists and is correct -->
                                             @if (@isset($i_options[$x]) and $i_options[$x]->is_solution)
-                                                <span id="spacing">
-                                                    <input type="radio" id="i-{{$x}}" name="interpretation-radio" checked="true" value="{{$x}}">
-                                                    <input id="inter-{{$x}}" type="text" class="formLabel" name="inter-{{$x}}" placeholder="Edit me ..."  value="{{$i_options[$x]->title}}">
-                                                </span>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <input type="radio" id="i-{{$x}}" name="interpretation-radio" checked="true" value="{{$x}}">
+                                                        </div>
+                                                    </div>
+                                                    <input id="inter-{{$x}}" type="text" class="form-control" name="inter-{{$x}}" placeholder="Edit me ..." value="{{$i_options[$x]->title}}">
+                                                </div>
                                             <!-- If it exists and is NOT correct -->
                                             @elseif (@isset($i_options[$x]))
-                                                <span id="spacing">
-                                                    <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
-                                                    <input id="inter-{{$x}}" type="text" class="formLabel" name="inter-{{$x}}" placeholder="Edit me ..." value="{{$i_options[$x]->title}}">
-                                                </span>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
+                                                        </div>
+                                                    </div>
+                                                    <input id="inter-{{$x}}" type="text" class="form-control" name="inter-{{$x}}" placeholder="Edit me ..." value="{{$i_options[$x]->title}}">
+                                                </div>
                                             @else
                                             <!-- Doesn't exist -->
-                                                <span id="spacing">
-                                                    <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
-                                                    <input id="inter-{{$x}}" type="text" class="formLabel" name="inter-{{$x}}" placeholder="Edit me ...">
-                                                </span>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
+                                                        </div>
+                                                    </div>
+                                                    <input id="inter-{{$x}}" type="text" class="form-control" name="inter-{{$x}}" placeholder="Edit me ...">
+                                                </div>
                                             @endif
                                         @endforeach
                                     </div>

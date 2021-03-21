@@ -66,61 +66,6 @@
                         @guest
                             <!-- Guests see nothing here -->
                         @else
-
-<!--                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <!-- Admin and TA -->
-                                    @if (request()->user()->can('create-users'))
-                                        <a class="dropdown-item" href="{{ url('add_user') }}">
-                                            {{ __('Add Users') }}
-                                        </a>
-                                    @endif
-                                    @if (request()->user()->can('view-users-page'))
-                                        <a class="dropdown-item" href="{{ url('users') }}">
-                                            {{ __('View All Users') }}
-                                        </a>
-                                    @endif
-                                    @if (request()->user()->can('create-quizzes'))
-                                        <a class="dropdown-item" href="{{ url('create_quiz') }}">
-                                            {{ __('Create New Quiz') }}
-                                        </a>
-                                    @endif
-                                    <!-- Admin, TA, and Experts -->
-                                    @if (request()->user()->can('update-quizzes'))
-                                        <a class="dropdown-item" href="{{ url('edit_quiz') }}">
-                                            {{ __('Edit Quiz') }}
-                                        </a>
-                                    @endif
-                                    <!-- All users  -->
-                                    @if (request()->user()->can('conduct-quizzes'))
-                                        <a class="dropdown-item" href="{{ url('quizzes') }}">
-                                            {{ __('Quizzes') }}
-                                        </a>
-                                    @endif
-                                    @if (request()->user()->can('export-users'))
-                                        <a class="dropdown-item" href="{{ url('export') }}">
-                                            {{ __('Export') }}
-                                        </a>
-                                    @endif
-                                    @if (request()->user()->can('view-profile'))
-                                        <a class="dropdown-item" href="{{ url('account') }}">
-                                            {{ __('Account') }}
-                                        </a>
-                                    @endif
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li> -->
-                            
                             <ul class="nav nav-tabs">
                               <li class="nav-item">
                                   <!-- Admin and TA -->
@@ -131,8 +76,8 @@
                                   @endif
                               </li>
                               <li class="nav-item">
-                                  <a class="nav-link" href="{{ url('quizzes') }}">
-                                      {{ __('Quizzes') }}
+                                  <a class="nav-link active" href="{{ url('quizzes') }}">
+                                      <strong>{{ __('Quizzes') }}</strong>
                                   </a>
                               </li>
                               <li class="nav-item">

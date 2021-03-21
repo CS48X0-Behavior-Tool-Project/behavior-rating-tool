@@ -47,7 +47,8 @@ class ExportController extends Controller
                     'attempt_quizzes.created_at', 
                     'user_attempts.score',
                     'user_attempts.max_score',
-                    'user_attempts.interpretation_guess'
+                    'user_attempts.interpretation_guess',
+                    'user_attempts.options'
                     )
                 ->leftJoin('user_attempts', 'users.id', '=', 'user_attempts.user_id')
                 ->leftJoin('attempt_quizzes', 'user_attempts.attempt_id', '=', 'attempt_quizzes.attempt_id')
@@ -56,11 +57,17 @@ class ExportController extends Controller
                 ->orderby('users.email')
                 ->get();
 
-            $csvFile = " User, Quiz Code, Attempted Time, Scores, Max Scores, Interpretation Guess\n";
+            $csvFile = " User, Quiz Code, Attempted Time, Time Spent, Scores, Max Scores, Interpretation Guess\n";
 
             if(count($data)>0) {
                 foreach($data as $row) {
-                    $csvFile .= "{$row->email},{$row->quiz},{$row->created_at},{$row->score},{$row->max_score},{$row->interpretation_guess}\n";
+                    $options = $row->options;
+
+                    $time = null;
+                    if(isset($option['time'])) {
+                        $time = $option['time'];
+                    }
+                    $csvFile .= "{$row->email},{$row->quiz},{$row->created_at},{$time},{$row->score},{$row->max_score},{$row->interpretation_guess}\n";
                 }
             }
 

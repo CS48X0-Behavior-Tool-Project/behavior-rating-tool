@@ -99,15 +99,12 @@ class QuizAttemptController extends Controller
       foreach ($behaviours as $key => $value) {
 
         //points if they guess the right answer, or don't guess the wrong answer
-        //deductions otherwise
+        //zero points otherwise
         if($answerKey[$value] === 1 && in_array($value, $behaviourSelection)) {
           $score += $behaviourValues[$key];
         }
         else if ($answerKey[$value] === 0 && !in_array($value, $behaviourSelection)) {
           $score += $behaviourValues[$key];
-        }
-        else {
-          $score -= $behaviourValues[$key];
         }
 
       }

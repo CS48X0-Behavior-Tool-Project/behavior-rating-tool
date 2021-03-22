@@ -118,9 +118,12 @@ class UploadController extends Controller
 
         $user_count_message = $new_user_count . '/' . count($data) . " users added.";
 
+        $duplicateEmailCount = count($duplicateEmailsArray);
+
         return redirect()->back()
             ->with('user_count_message', $user_count_message)
-            ->with('duplicate_email_error', $duplicateEmailsArray);
+            ->with('duplicate_email_error', $duplicateEmailsArray)
+            ->with('duplicate_email_count', $duplicateEmailCount);
     }
 
     /**

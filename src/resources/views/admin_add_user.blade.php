@@ -124,7 +124,16 @@
                         @endif
                         @if ($message = Session::get('duplicate_email_error') and $count = Session::get('duplicate_email_count'))
                                 <ul class="list-group">
-                                    <li class="list-group-item invalid-feedback">{{$count ?? "num"}} Duplicate Emails Found</li>
+                                    <li class="list-group-item invalid-feedback">{{$count}} Duplicate Emails Found</li>
+                                    @foreach ($message as $email)
+                                        <li class="list-group-item list-group-item-danger text-left"> {{ $email }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                        @endif
+                        @if ($message = Session::get('invalid_email_error') and $count = Session::get('invalid_email_count'))
+                                <ul class="list-group">
+                                    <li class="list-group-item invalid-feedback">{{$count}} Emails Are Invalid</li>
                                     @foreach ($message as $email)
                                         <li class="list-group-item list-group-item-danger text-left"> {{ $email }}
                                         </li>

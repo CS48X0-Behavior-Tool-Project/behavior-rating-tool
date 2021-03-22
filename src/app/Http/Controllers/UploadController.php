@@ -83,6 +83,7 @@ class UploadController extends Controller
         $new_user_count = 0;
         $failed_entry_count = 0;
         $duplicateEmailsArray = [];
+        $invalidEmailsArray = [];
 
         foreach ($data as $value) {
             $firstName = $value[0];
@@ -109,6 +110,9 @@ class UploadController extends Controller
                 if (isset($failedRules['email']['Unique'])) {
                     array_push($duplicateEmailsArray, $email);
                 }
+                if (isset($failedRules['email']['Email'])) {
+                    array_push($invalidEmailsArray, $email);
+                }
                 $failed_entry_count++;
             } else {
                 $this->dbInsert($firstName, $lastName, $email, 'student');
@@ -119,11 +123,14 @@ class UploadController extends Controller
         $user_count_message = $new_user_count . '/' . count($data) . " users added.";
 
         $duplicateEmailCount = count($duplicateEmailsArray);
+        $invalidEmailCount = count($invalidEmailsArray);
 
         return redirect()->back()
             ->with('user_count_message', $user_count_message)
             ->with('duplicate_email_error', $duplicateEmailsArray)
-            ->with('duplicate_email_count', $duplicateEmailCount);
+            ->with('duplicate_email_count', $duplicateEmailCount)
+            ->with('invalid_email_error', $invalidEmailsArray)
+            ->with('invalid_email_count', $invalidEmailCount);
     }
 
     /**

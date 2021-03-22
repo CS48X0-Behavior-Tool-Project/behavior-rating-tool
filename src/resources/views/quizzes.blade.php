@@ -6,15 +6,7 @@
     </div>
 @endif
 
-<style media="screen">
-    .title {
-        text-align: center;
-        color: black;
-        background-color: #f7f7f7;
-        border-radius: 5px;
-        border: 1px solid #dfdfdf;
-    }
-</style>
+<link rel="stylesheet" href="{{ URL::asset('css/quizzes.css') }}">
 
 @section('content')
 

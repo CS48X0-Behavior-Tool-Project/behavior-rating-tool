@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreVideoRequest;
+use App\Jobs\ConvertVideoForStreaming;
 use App\Models\Video;
 use Bouncer;
+use Carbon\Carbon;
 use Exception;
 use FFMpeg\Exception\InvalidArgumentException;
 use Illuminate\Http\Request;
@@ -42,33 +45,29 @@ class VideoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreVideoRequest $request)
     {
         if ($request->user()->can('create', Video::class)) {
             if ($request->has('video')) {
                 try {
-                    $uploadedVideo = $request->file('video');
-                    $clientfilename = basename($uploadedVideo->getClientOriginalName(), '.' . $uploadedVideo->getClientOriginalExtension());
-
-                    // Create database entry for the video
-                    $dbVideo = Video::create([
-                        'name' => $clientfilename,
-                        'created_at' => now(),
+                    $video = Video::create([
+                        'disk' => 'video_storage',
+                        'original_name' => $request->file('video')->getClientOriginalName(),
+                        'path' => $request->file('video')->store('temp', 'video_storage'),
+                        'name' => $request->file('video')->getClientOriginalName(),
+                        'created_at' => Carbon::now(),
                     ]);
 
-                    // Save video to storage/videos
-                    $uploadedVideo->storeAs(
-                        'videos',
-                        $dbVideo->id . '.' . $uploadedVideo->getClientOriginalExtension()
-                    );
+                    // Dispatch a queue event to update video size and filetype
+                    $this->dispatch(new ConvertVideoForStreaming($video));
 
                     return response()->json([
                         'msg' => 'Video uploaded successfully',
-                        'uuid' => $dbVideo->id,
-                        'name' => $clientfilename,
+                        'uuid' => $video->id,
+                        'name' => $video->name,
                     ]);
                 } catch (Exception $exception) {
-                    abort(404);
+                    abort(500, 'Failed to process video');
                 }
             } else {
                 abort(404);
@@ -87,8 +86,9 @@ class VideoController extends Controller
     public function show($id)
     {
         if (Auth::user()) {
-            $video = Storage::disk('local')->get('videos/' . $id . '.mp4');
-            $response = FacadeResponse::make($video, 200);
+            $video = Video::find($id);
+            $videoFile = Storage::disk('video_storage')->get($video->path);
+            $response = FacadeResponse::make($videoFile, 200);
             $response->header('Content-Type', 'video/mp4');
             return $response;
         } else {
@@ -128,25 +128,5 @@ class VideoController extends Controller
     public function destroy($id)
     {
         //
-    }
-    
-    /**
-     * Resize a valid mp4 file from storage to 720p
-     * 
-     * @param mixed $filename 
-     * @return string 
-     * @throws InvalidArgumentException 
-     */
-    private function resize($filename) {
-        try {
-            FFMpeg::fromDisk('local')
-                ->open('videos/' . $filename)
-                ->export()
-                ->toDisk('');
-        } catch (EncodingException $e) {
-            $command = $e->getCommand();
-            $errorLog = $e->getErrorOutput();
-            return "{$command}: {$errorLog}";
-        }
     }
 }

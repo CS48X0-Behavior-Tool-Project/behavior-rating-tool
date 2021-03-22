@@ -14,7 +14,9 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     zip \
     curl \
-    unzip \
+    unzip \ 
+    ffmpeg \
+    supervisor \
     && docker-php-ext-configure gd \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install pdo_mysql \
@@ -22,7 +24,13 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install zip \
     && docker-php-source delete
 
+RUN pecl install -o -f redis \
+    &&  rm -rf /tmp/pear \
+    &&  docker-php-ext-enable redis
+
 COPY apache/vhost.conf /etc/apache2/sites-available/000-default.conf
+
+COPY supervisor/videos.conf /etc/supervisor/conf.d/videos.conf
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 

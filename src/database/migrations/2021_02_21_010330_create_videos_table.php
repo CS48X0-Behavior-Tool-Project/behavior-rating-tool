@@ -16,6 +16,10 @@ class CreateVideosTable extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('original_name');
+            $table->string('disk');
+            $table->string('path');
+            $table->datetime('converted_at')->nullable();
             $table->timestamps();
         });
     }

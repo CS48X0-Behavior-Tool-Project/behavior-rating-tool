@@ -25,7 +25,7 @@ class QuizAttemptController extends Controller
       $time_post = microtime(true);
 
       // TODO: store time taken for this attempt
-      $exec_time = $time_post - $time_pre;
+      $attempt_time = $time_post - $time_pre;
 
       $behaviourSelections = request()->input('behaviour-check');
       $interpretationSelection = request()->input('interpretation-check');
@@ -45,6 +45,7 @@ class QuizAttemptController extends Controller
         'score' => $scores[0],
         'max_score' => $scores[1],
         'interpretation_guess' => $interpretationGuess,
+        'time' => $attempt_time,
       ]);
 
       $this->uc->upsertUserAttempts($request);

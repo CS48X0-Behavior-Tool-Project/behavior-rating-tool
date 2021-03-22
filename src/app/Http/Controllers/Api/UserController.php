@@ -112,6 +112,10 @@ class UserController extends Controller
             }
             $userAttempt->max_score = $request->max_score;
             $userAttempt->interpretation_guess = $request->interpretation_guess;
+            if ($request->has('time')) {
+                $jsonObj['time'] = round($request->time, 2);
+                $userAttempt->options = json_encode($jsonObj);
+            }
             $userAttempt->save();
             $user_attempt_id = $userAttempt->id;
             Log::info(">>> DONE: user_attempt created !");

@@ -10,7 +10,7 @@
 
 @if (Bouncer::is(Auth::user())->an("admin", "ta"))
     <div class="row col-12 justify-content-center">
-        <button class="btn btn-primary" type="button" name="button" onclick="window.location.href='/add_users'">Add Users</button>
+        <button class="btn btn-primary" type="button" name="button" onclick="window.location.href='/add_user'">Add Users</button>
     </div>
     <br>
 @endif

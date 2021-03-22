@@ -8,27 +8,7 @@
 
 <!-- Timer Script -->
 <script type="text/javascript" src="{{ URL::asset('javascript/single_quiz.js') }}"></script>
-
-<style>
-    .title {
-        text-align: center;
-        color: black;
-        background-color: #f7f7f7;
-        border-radius: 5px;
-        border: 1px solid #dfdfdf;
-    }
-
-    .timer {
-        text-align: right;
-    }
-    p span {
-        color: black;
-        background-color: #f7f7f7;
-        border-radius: 5px;
-        padding: 10px;
-        border: 1px solid #dfdfdf;
-    }
-</style>
+<link rel="stylesheet" href="{{ URL::asset('css/single_quiz.css') }}">
 
 @section('content')
 <div class="container">

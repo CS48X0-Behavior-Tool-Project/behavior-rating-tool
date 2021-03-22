@@ -88,22 +88,23 @@ class QuizAttemptController extends Controller
 
       $answerKey = array();
 
+
+
       //create the answer key, with behaviours as keys and truth/false as the values
       foreach ($behaviours as $key => $value) {
         $answerKey[$value] = $behaviourSolutions[$key];
-
-        if ($answerKey[$value] === 1) {
-          $maxScore += $behaviourValues[$key];
-        }
+        $maxScore += $behaviourValues[$key];
       }
 
-      foreach ($behaviourSelection as $key => $value) {
+      foreach ($behaviours as $key => $value) {
 
-        if($answerKey[$value] === 1) {
+        //points if they guess the right answer, or don't guess the wrong answer
+        //zero points otherwise
+        if($answerKey[$value] === 1 && in_array($value, $behaviourSelection)) {
           $score += $behaviourValues[$key];
         }
-        else {
-          $score -= $behaviourValues[$key];
+        else if ($answerKey[$value] === 0 && !in_array($value, $behaviourSelection)) {
+          $score += $behaviourValues[$key];
         }
 
       }

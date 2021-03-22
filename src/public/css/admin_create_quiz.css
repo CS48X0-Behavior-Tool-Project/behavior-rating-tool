@@ -1,0 +1,22 @@
+.formLabel {
+    text-align: center;
+    color: black;
+    border-radius: 5px;
+    border: 1px solid #dfdfdf;
+    min-width: 75px;
+    min-height: 30px;
+    max-width: 200px;
+}
+
+.title {
+    text-align: center;
+    color: black;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    border: 1px solid #dfdfdf;
+}
+
+#spacing {
+    margin-bottom: 10px;
+    display: block;
+}

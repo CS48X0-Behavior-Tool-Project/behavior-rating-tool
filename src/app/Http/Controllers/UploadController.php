@@ -86,6 +86,7 @@ class UploadController extends Controller
         $invalidEmailsArray = [];
         $missingFirstNamesArray = [];
         $missingLastNamesArray = [];
+        $missingEmailsArray = [];
 
         foreach ($data as $value) {
             $firstName = $value[0];
@@ -121,6 +122,9 @@ class UploadController extends Controller
                 if (isset($failedRules['last_name']['Required'])) {
                     array_push($missingLastNamesArray, "Name: " . $firstName . " " . $lastName . "      Email: " . $email);
                 }
+                if (isset($failedRules['email']['Required'])) {
+                    array_push($missingEmailsArray, "Name: " . $firstName . " " . $lastName);
+                }
                 $failed_entry_count++;
             } else {
                 $this->dbInsert($firstName, $lastName, $email, 'student');
@@ -134,6 +138,7 @@ class UploadController extends Controller
         $invalidEmailCount = count($invalidEmailsArray);
         $missingFirstNamesCount = count($missingFirstNamesArray);
         $missingLastNamesCount = count($missingLastNamesArray);
+        $missingEmailsCount = count($missingEmailsArray);
 
         return redirect()->back()
             ->with('user_count_message', $user_count_message)
@@ -144,7 +149,9 @@ class UploadController extends Controller
             ->with('missing_firstnames_error', $missingFirstNamesArray)
             ->with('missing_firstnames_count', $missingFirstNamesCount)
             ->with('missing_lastnames_error', $missingLastNamesArray)
-            ->with('missing_lastnames_count', $missingLastNamesCount);
+            ->with('missing_lastnames_count', $missingLastNamesCount)
+            ->with('missing_emails_error', $missingEmailsArray)
+            ->with('missing_emails_count', $missingEmailsCount);
     }
 
     /**

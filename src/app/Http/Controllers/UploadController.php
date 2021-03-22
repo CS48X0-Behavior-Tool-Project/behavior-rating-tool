@@ -84,6 +84,8 @@ class UploadController extends Controller
         $failed_entry_count = 0;
         $duplicateEmailsArray = [];
         $invalidEmailsArray = [];
+        $missingFirstNamesArray = [];
+        $missingLastNamesArray = [];
 
         foreach ($data as $value) {
             $firstName = $value[0];
@@ -113,6 +115,12 @@ class UploadController extends Controller
                 if (isset($failedRules['email']['Email'])) {
                     array_push($invalidEmailsArray, $email);
                 }
+                if (isset($failedRules['first_name']['Required'])) {
+                    array_push($missingFirstNamesArray, "Name: " . $firstName . " " . $lastName . "      Email: " . $email);
+                }
+                if (isset($failedRules['last_name']['Required'])) {
+                    array_push($missingLastNamesArray, "Name: " . $firstName . " " . $lastName . "      Email: " . $email);
+                }
                 $failed_entry_count++;
             } else {
                 $this->dbInsert($firstName, $lastName, $email, 'student');
@@ -124,13 +132,19 @@ class UploadController extends Controller
 
         $duplicateEmailCount = count($duplicateEmailsArray);
         $invalidEmailCount = count($invalidEmailsArray);
+        $missingFirstNamesCount = count($missingFirstNamesArray);
+        $missingLastNamesCount = count($missingLastNamesArray);
 
         return redirect()->back()
             ->with('user_count_message', $user_count_message)
             ->with('duplicate_email_error', $duplicateEmailsArray)
             ->with('duplicate_email_count', $duplicateEmailCount)
             ->with('invalid_email_error', $invalidEmailsArray)
-            ->with('invalid_email_count', $invalidEmailCount);
+            ->with('invalid_email_count', $invalidEmailCount)
+            ->with('missing_firstnames_error', $missingFirstNamesArray)
+            ->with('missing_firstnames_count', $missingFirstNamesCount)
+            ->with('missing_lastnames_error', $missingLastNamesArray)
+            ->with('missing_lastnames_count', $missingLastNamesCount);
     }
 
     /**

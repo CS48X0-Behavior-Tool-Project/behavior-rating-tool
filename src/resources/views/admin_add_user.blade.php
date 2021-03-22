@@ -140,6 +140,24 @@
                                     @endforeach
                                 </ul>
                         @endif
+                        @if ($message = Session::get('missing_firstnames_error') and $count = Session::get('missing_firstnames_count'))
+                                <ul class="list-group">
+                                    <li class="list-group-item invalid-feedback">{{$count}} Missing First Names</li>
+                                    @foreach ($message as $missing)
+                                        <li class="list-group-item list-group-item-danger text-left"> {{ $missing }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                        @endif
+                        @if ($message = Session::get('missing_lastnames_error') and $count = Session::get('missing_lastnames_count'))
+                                <ul class="list-group">
+                                    <li class="list-group-item invalid-feedback">{{$count}} Missing Last Names</li>
+                                    @foreach ($message as $missing)
+                                        <li class="list-group-item list-group-item-danger text-left"> {{ $missing }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                        @endif
                         <br>
                         <div align="center">
                             <img src="images/user_example2.png" alt="example csv" max_width="col-md-6">

@@ -54,13 +54,13 @@ Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz'])->name('cre
  * Edit quiz page
  */
 Route::get('/edit_quiz', [PagesController::class, 'getEditQuiz'])->name('edit_quiz_route');
-Route::get('/edit_quiz/{id}', [PagesController::class, 'getEditQuizByID']);
+Route::get('/edit_quiz/{id}', [PagesController::class, 'getEditQuizByID'])->name('edit_quiz_id_route');
 
 
 /**
-*  Submit the updated quiz with new changes.
-*/
-Route::post('/edit_quiz/{id}', [EditQuizController::class, 'updateQuiz']);
+ *  Submit the updated quiz with new changes.
+ */
+Route::post('/edit_quiz/{id}', [EditQuizController::class, 'updateQuiz'])->name('edit_quiz_post');
 
 /**
  * Account management page (first/last names, email, password changes)
@@ -88,8 +88,8 @@ Route::get('/users', [PagesController::class, 'getUsers'])->name('users_route');
 Route::get('/user/{id}', [PagesController::class, 'getUserById']);
 
 /**
-* Perform an action on the single user page
-*/
+ * Perform an action on the single user page
+ */
 Route::post('/user/{id}', [SingleUserController::class, 'action']);
 
 /**

@@ -8,29 +8,12 @@
 
 <!-- Timer Script -->
 <script type="text/javascript" src="{{ URL::asset('javascript/single_quiz.js') }}"></script>
+
 <!-- Validate responses selected -->
 <script type="text/javascript" src="{{ URL::asset('javascript/validate_single_quiz.js') }}"></script>
 
-<style>
-    .title {
-        text-align: center;
-        color: black;
-        background-color: #f7f7f7;
-        border-radius: 5px;
-        border: 1px solid #dfdfdf;
-    }
+<link rel="stylesheet" href="{{ URL::asset('css/single_quiz.css') }}">
 
-    .timer {
-        text-align: right;
-    }
-    p span {
-        color: black;
-        background-color: #f7f7f7;
-        border-radius: 5px;
-        padding: 10px;
-        border: 1px solid #dfdfdf;
-    }
-</style>
 
 @section('content')
 <div class="container">

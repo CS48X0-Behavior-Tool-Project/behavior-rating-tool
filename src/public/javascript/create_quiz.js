@@ -34,7 +34,8 @@ function updateUI(data, success) {
     updateAlert(success ? data['msg'] : data.statusText, success ? 'success' : 'danger');
     updateVideoID(data['uuid']);
     updateVideoName(data['name']);
-    updateThumbnail(data['uuid']);
+
+    if (success) updateThumbnail(data['uuid']);
 }
 
 /**

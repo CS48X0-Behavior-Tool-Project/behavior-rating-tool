@@ -18,10 +18,10 @@ class ExportController extends Controller
         // Only Admins should be allowed to access this resource
         if (Auth::user() and request()->user()->can('export-users')) {
             $table = User::all();
-            $csvFile = "username,First Name,Last Name,Email\n";
+            $csvFile = "First Name,Last Name,Email\n";
 
             foreach ($table as $row) {
-                $csvFile .= "{$row['name']},{$row['first_name']},{$row['last_name']},{$row['email']}\n";
+                $csvFile .= "{$row['first_name']},{$row['last_name']},{$row['email']}\n";
             }
 
             return response($csvFile)

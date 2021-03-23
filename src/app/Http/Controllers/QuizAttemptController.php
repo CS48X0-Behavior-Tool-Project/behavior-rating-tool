@@ -25,7 +25,7 @@ class QuizAttemptController extends Controller
       $time_post = microtime(true);
 
       // TODO: store time taken for this attempt
-      $exec_time = $time_post - $time_pre;
+      $attempt_time = $time_post - $time_pre;
 
       $behaviourSelections = request()->input('behaviour-check');
       $interpretationSelection = request()->input('interpretation-check');
@@ -45,6 +45,7 @@ class QuizAttemptController extends Controller
         'score' => $scores[0],
         'max_score' => $scores[1],
         'interpretation_guess' => $interpretationGuess,
+        'time' => $attempt_time,
       ]);
 
       $this->uc->upsertUserAttempts($request);
@@ -88,22 +89,23 @@ class QuizAttemptController extends Controller
 
       $answerKey = array();
 
+
+
       //create the answer key, with behaviours as keys and truth/false as the values
       foreach ($behaviours as $key => $value) {
         $answerKey[$value] = $behaviourSolutions[$key];
-
-        if ($answerKey[$value] === 1) {
-          $maxScore += $behaviourValues[$key];
-        }
+        $maxScore += $behaviourValues[$key];
       }
 
-      foreach ($behaviourSelection as $key => $value) {
+      foreach ($behaviours as $key => $value) {
 
-        if($answerKey[$value] === 1) {
+        //points if they guess the right answer, or don't guess the wrong answer
+        //zero points otherwise
+        if($answerKey[$value] === 1 && in_array($value, $behaviourSelection)) {
           $score += $behaviourValues[$key];
         }
-        else {
-          $score -= $behaviourValues[$key];
+        else if ($answerKey[$value] === 0 && !in_array($value, $behaviourSelection)) {
+          $score += $behaviourValues[$key];
         }
 
       }

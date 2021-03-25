@@ -23,7 +23,7 @@
                     <div class="card-body">
                         <div class="row justify-content-center">
                             <div class="col">
-                                <iframe id="thumbnail" src="" width="col-md-4" height="200"></iframe>
+                                <iframe id="thumbnail" src="videos/{{$quiz->video}}" width="col-md-4" height="200"></iframe>
                                 <br>
                                 <br>
                                 <p class="title" id="import-video">Import Video</p>
@@ -32,7 +32,6 @@
                                         <div class="custom-file" >
                                             <div class=" row justify-content-center">
                                                 <input type="file" class="custom-file-input" name="video" id="video-upload" accept="video/*" onchange="updateVideoLabel();">
-                                                <!-- TODO Display video $quiz->video here -->
                                                 <label class="custom-file-label" for="video" id="file-label" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Choose file</label>
                                             </div>
                                         </div>

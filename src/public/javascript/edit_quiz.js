@@ -1,3 +1,7 @@
+function updateThumbnail(uuid) {
+    $("#thumbnail").attr("src", `videos/${uuid}`);
+}
+
 function validate(event) {
     // Video upload check
     impVideo = document.getElementById("import-video");

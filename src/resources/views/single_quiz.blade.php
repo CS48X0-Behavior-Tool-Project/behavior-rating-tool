@@ -15,7 +15,6 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <!-- TODO inserts -->
                 <div class="card-header">Attempting Quiz:  {{$code ?? 'QuizID'}}  {{'Attempt #' . $attempt ?? 'Attempt#'}}</div>
                 <div class="card-body">
 
@@ -31,7 +30,9 @@
 
                         <!-- Video -->
                         <div class="row justify-content-center">
-                            <iframe src="{{ route('videos.show', ['video' => $video]) }}" width="550" height="300" style="resize: both"></iframe>
+                            <video id="thumbnail" class="" width="100%" style="max-width: 100%; resize: both;" controls>
+                                <source src="{{ route('videos.show', ['video' => $video]) }}" type="video/mp4"/>
+                            </video>
                         </div>
                         <br>
                         <!-- Questions -->

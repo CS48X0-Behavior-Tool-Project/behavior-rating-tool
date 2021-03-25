@@ -35,7 +35,6 @@ class CreateQuizController extends Controller
 
 				return redirect()->route('create_quiz_route')->with('quiz-status', 'Quiz ' . $quizCode . ' Created Successfully');
 			} catch (Exception $e) {
-
 				list($status, $message) = explode(':', $e->getMessage());
 				Log::info('>>> error status: ' . $status);
 				Log::info('>>> error message: ' . $message);
@@ -74,9 +73,9 @@ class CreateQuizController extends Controller
 	 */
 	public function readAnimal()
 	{
-		if (isset($_POST['animal-radio'])) {
+		if (request()->input('animal-radio') != null) {
 
-			$animal = $_POST['animal-radio'][0];
+			$animal = request()->input('animal-radio')[0];
 
 			if ($animal === "New") {
 				$newanimal = request()->input('a-new');
@@ -105,16 +104,16 @@ class CreateQuizController extends Controller
 	{
 		//form responses and checkbox status stored in arrays, null otherwise
 		$behaviours = array(
-			request()->input('box-one'),
-			request()->input('box-two'),
-			request()->input('box-three'),
-			request()->input('box-four'),
-			request()->input('box-five'),
-			request()->input('box-six'),
-			request()->input('box-seven'),
-			request()->input('box-eight'),
-			request()->input('box-nine'),
-			request()->input('box-ten'),
+			request()->input('box-1'),
+			request()->input('box-2'),
+			request()->input('box-3'),
+			request()->input('box-4'),
+			request()->input('box-5'),
+			request()->input('box-6'),
+			request()->input('box-7'),
+			request()->input('box-8'),
+			request()->input('box-9'),
+			request()->input('box-10'),
 		);
 
 		$checkboxes = array();
@@ -122,9 +121,10 @@ class CreateQuizController extends Controller
 			$checkboxes[$i] = NULL;
 		}
 
-		if (isset($_POST['behaviour-check'])) {
-			if (is_array($_POST['behaviour-check'])) {
-				foreach ($_POST['behaviour-check'] as $value) {
+		$behaviourCheck = request()->input('behaviour-check');
+		if ($behaviourCheck != null) {
+			if (is_array($behaviourCheck)) {
+				foreach ($behaviourCheck as $value) {
 					$checkboxes[$value - 1] = 'on';
 				}
 			}
@@ -172,11 +172,11 @@ class CreateQuizController extends Controller
 	{
 		//form responses stored in array, null otherwise
 		$interpretations = array(
-			request()->input('inter-one'),
-			request()->input('inter-two'),
-			request()->input('inter-three'),
-			request()->input('inter-four'),
-			request()->input('inter-five'),
+			request()->input('inter-1'),
+			request()->input('inter-2'),
+			request()->input('inter-3'),
+			request()->input('inter-4'),
+			request()->input('inter-5'),
 		);
 
 		//whichever radio button (1-5) was selected

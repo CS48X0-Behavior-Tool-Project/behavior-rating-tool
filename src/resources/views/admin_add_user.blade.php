@@ -122,11 +122,47 @@
                             </div>
 
                         @endif
-                        @if ($message = Session::get('duplicate_email_error'))
+                        @if ($message = Session::get('duplicate_email_error') and $count = Session::get('duplicate_email_count'))
                                 <ul class="list-group">
-                                    <li class="list-group-item invalid-feedback">Duplicate Emails Found</li>
+                                    <li class="list-group-item invalid-feedback">{{$count}} Duplicate Emails Found</li>
                                     @foreach ($message as $email)
                                         <li class="list-group-item list-group-item-danger text-left"> {{ $email }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                        @endif
+                        @if ($message = Session::get('invalid_email_error') and $count = Session::get('invalid_email_count'))
+                                <ul class="list-group">
+                                    <li class="list-group-item invalid-feedback">{{$count}} Emails Are Invalid</li>
+                                    @foreach ($message as $email)
+                                        <li class="list-group-item list-group-item-danger text-left"> {{ $email }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                        @endif
+                        @if ($message = Session::get('missing_emails_error') and $count = Session::get('missing_emails_count'))
+                                <ul class="list-group">
+                                    <li class="list-group-item invalid-feedback">{{$count}} Missing Emails</li>
+                                    @foreach ($message as $missing)
+                                        <li class="list-group-item list-group-item-danger text-left"> {{ $missing }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                        @endif
+                        @if ($message = Session::get('missing_firstnames_error') and $count = Session::get('missing_firstnames_count'))
+                                <ul class="list-group">
+                                    <li class="list-group-item invalid-feedback">{{$count}} Missing First Names</li>
+                                    @foreach ($message as $missing)
+                                        <li class="list-group-item list-group-item-danger text-left"> {{ $missing }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                        @endif
+                        @if ($message = Session::get('missing_lastnames_error') and $count = Session::get('missing_lastnames_count'))
+                                <ul class="list-group">
+                                    <li class="list-group-item invalid-feedback">{{$count}} Missing Last Names</li>
+                                    @foreach ($message as $missing)
+                                        <li class="list-group-item list-group-item-danger text-left"> {{ $missing }}
                                         </li>
                                     @endforeach
                                 </ul>

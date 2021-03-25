@@ -18,6 +18,8 @@ class UserSeeder extends Seeder
         $user = User::factory()
             ->create();
 
-        $user->assign('admin');
+        // This generates a student user with student roles
+        // Do not change this specific role
+        $user->assign('student');
     }
 }

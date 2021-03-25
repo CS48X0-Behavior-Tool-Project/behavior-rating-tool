@@ -8,7 +8,12 @@
 
 <!-- Timer Script -->
 <script type="text/javascript" src="{{ URL::asset('javascript/single_quiz.js') }}"></script>
+
+<!-- Validate responses selected -->
+<script type="text/javascript" src="{{ URL::asset('javascript/validate_single_quiz.js') }}"></script>
+
 <link rel="stylesheet" href="{{ URL::asset('css/single_quiz.css') }}">
+
 
 @section('content')
 <div class="container">
@@ -38,7 +43,7 @@
                         <div class="row">
                             <!-- Behaviours -->
                             <div class="col">
-                                <p class="title">Behaviours</p>
+                                <p class="title" id="behaviour-info">Behaviours</p>
 
                                 <h6 style="text-align:center;">Select all the behaviours you see in the video</h6>
                                 <p style="text-align:center;">+1 Right answers</p>
@@ -61,7 +66,7 @@
                             </div>
                             <!-- Interpretation -->
                             <div class="col">
-                                <p class="title">Interpretation</p>
+                                <p class="title" id="interpretation-info">Interpretation</p>
                                 <h6 style="text-align:center;">Select your interpretation based on the behaviours displayed</h6>
                                 <p style="text-align:center;">This is either right or wrong</p>
                                 <div class="form-group row justify-content-center">
@@ -81,7 +86,7 @@
                         </div>
 
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" onclick="validate(event)">
                                 Submit Responses
                             </button>
                         </div>

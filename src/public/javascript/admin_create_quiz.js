@@ -1,3 +1,47 @@
+// Add more behaviour fields
+$(document).ready(function () {
+    var next = 10;
+    $("#add-behaviour").click(function(e){
+        e.preventDefault();
+        var addto = "#field-b" + next;
+        next = next + 1;
+        var nextInput =
+        `<div class="input-group mb-3" id="field-b` + next + `">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" id="b-` + next + `" name="behaviour-check[]" value="` + next + `">
+                </div>
+            </div>
+            <input id="box-` + next + `" type="text" class="form-control" name="box-` + next + `" placeholder="Edit me...">
+        </div>`;
+        var newInput = $(nextInput);
+        $(addto).after(newInput);
+    });
+
+});
+
+// Add more interpretation fields
+$(document).ready(function () {
+    var next = 5;
+    $("#add-interpretation").click(function(e){
+        e.preventDefault();
+        var addto = "#field-i" + next;
+        next = next + 1;
+        var nextInput =
+        `<div class="input-group mb-3" id="field-i` + next + `">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="radio" id="i-` + next + `" name="interpretation-radio" value="` + next + `">
+                </div>
+            </div>
+            <input id="inter-` + next + `" type="text" class="form-control" name="inter-` + next + `" placeholder="Edit me ...">
+        </div>`;
+        var newInput = $(nextInput);
+        $(addto).after(newInput);
+    });
+
+});
+
 function validate(event) {
     // Video upload check
     impVideo = document.getElementById("import-video");

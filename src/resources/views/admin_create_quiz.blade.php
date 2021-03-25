@@ -6,7 +6,6 @@
     </div>
 @endif
 
-<script type="text/javascript" src="{{ URL::asset('javascript/admin_create_quiz.js') }}"></script>
 <link rel="stylesheet" href="{{ URL::asset('css/admin_create_quiz.css') }}">
 
 @section('content')
@@ -111,7 +110,7 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         @foreach(range(1,10) as $x)
-                                            <div class="input-group mb-3">
+                                            <div class="input-group mb-3" id="field-b{{$x}}">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">
                                                         <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
@@ -121,6 +120,7 @@
                                             </div>
                                         @endforeach
                                     </div>
+                                    <button class="btn btn-secondary" type="button" id="add-behaviour"> Add more behaviours </button>
                                 </div>
                                 @if (session('behaviour-status'))
                                     <div class="alert alert-danger">
@@ -136,7 +136,7 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         @foreach(range(1,5) as $x)
-                                            <div class="input-group mb-3">
+                                            <div class="input-group mb-3" id="field-i{{$x}}">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">
                                                         <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
@@ -146,6 +146,7 @@
                                             </div>
                                         @endforeach
                                     </div>
+                                    <button class="btn btn-secondary" type="button" id="add-interpretation"> Add more interpretations </button>
                                 </div>
                                 @if (session('int-status'))
                                     <div class="alert alert-danger">
@@ -174,4 +175,5 @@
 @section('end-body-scripts')
     {{-- All ajax related scripts should be moved to the end-body-scripts section --}}
     <script src="{{ asset('/javascript/create_quiz.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('javascript/admin_create_quiz.js') }}"></script>
 @endsection

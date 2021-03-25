@@ -42,15 +42,15 @@
                         <!-- Grad Year -->
                         <div class="form-group row justify-content-center">
                             <div class="col-md-7">
-                                <select class="form-control" id="gradYearSelect">
+                                <select class="form-control" id="gradYearSelect" name="year">
                                     <option selected>Select your anticipated grad year</option>
                                     <option id="na">N/A (for admin, expert and TA use)</option>
-                                    <option id="current">{{now()->year}}</option>
-                                    <option id="1">{{now()->year +1}}</option>
-                                    <option id="2">{{now()->year +2}}</option>
-                                    <option id="3">{{now()->year +3}}</option>
-                                    <option id="4">{{now()->year +4}}</option>
-                                    <option id="5">{{now()->year +5}}</option>
+                                    <option id="current" value="{{now()->year}}">{{now()->year}}</option>
+                                    <option id="1" value="{{now()->year +1}}">{{now()->year +1}}</option>
+                                    <option id="2" value="{{now()->year +2}}">{{now()->year +2}}</option>
+                                    <option id="3" value="{{now()->year +3}}">{{now()->year +3}}</option>
+                                    <option id="4" value="{{now()->year +4}}">{{now()->year +4}}</option>
+                                    <option id="5" value="{{now()->year +5}}">{{now()->year +5}}</option>
                                 </select>
                             </div>
                         </div>

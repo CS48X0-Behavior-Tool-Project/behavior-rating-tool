@@ -44,6 +44,9 @@
     color: black;
     letter-spacing: 1px;
   }
+  h4 {
+    color: white;
+  }
 </style>
 
 <body>
@@ -52,15 +55,7 @@
             <div class="container">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-dark">
-                      @guest
-                          <a class="navbar-brand" href="{{ route('login') }}">
-                              {{ config('app.name') }}
-                          </a>
-                      @else
-                          <a class="navbar-brand" href="{{ url('/home') }}">
-                              {{ config('app.name') }}
-                          </a>
-                      @endguest
+                        <h4>{{ config('app.name') }}</h4>
                     </ul>
                     <!-- Right Side Of Navbar -->
                         @guest

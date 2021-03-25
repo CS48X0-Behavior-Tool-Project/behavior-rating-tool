@@ -31,9 +31,12 @@
                         </div>
                         <div class="col-md-4">
                             <div class="row justify-content-center">
+                            <!--
                             @if (request()->user()->can('delete-users'))
                                 <button type="submit" name="delete-user" class="btn btn-secondary" style="padding:10px" onclick="validate(event, '{{$user->first_name}}', '{{$user->last_name}}')">Delete User</button>
                             @endif
+                            -->
+                                <button type="submit" name="delete-user" class="btn btn-secondary" style="padding:10px" onclick="return confirm('Are you sure you want to delete {{$user->first_name}} {{$user->last_name}}?  All associated records will be removed.  This action is irreversible.')">Delete User</button>
                             </div>
                         </div>
                     </div>

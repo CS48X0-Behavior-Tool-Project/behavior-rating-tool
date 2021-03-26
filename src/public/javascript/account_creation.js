@@ -51,7 +51,7 @@ function validate(event) {
     if (mismatch_password) {
         event.preventDefault();
         console.log("not a match");
-        alert("The new passwords you entered do not math");
+        alert("The new passwords you entered do not match");
     } else {
         return true;
     }

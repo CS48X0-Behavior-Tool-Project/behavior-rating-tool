@@ -29,7 +29,9 @@ class NewAccountController extends Controller
     $user = auth()->user();
     $jsonobj = json_decode($user->options, true);
     $jsonobj['experience'] = $surveyResponse;
-    $jsonobj['grad_year'] = $gradYear;
+    if ($gradYear != "") {
+      $jsonobj['grad_year'] = $gradYear;
+    }
     $user->options = json_encode($jsonobj);
     $user->save();
 

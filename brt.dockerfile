@@ -30,7 +30,7 @@ RUN pecl install -o -f redis \
 
 COPY apache/vhost.conf /etc/apache2/sites-available/000-default.conf
 
-COPY supervisor/videos.conf /etc/supervisor/conf.d/videos.conf
+COPY src/videos.conf /etc/supervisor/conf.d/videos.conf
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 

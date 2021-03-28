@@ -97,6 +97,28 @@
                                 </button>
                             </form>
                         </div>
+                        <div align="center">
+                                <button type="submit" class="btn btn-primary" onclick="downloadObjectAsJson();">
+                                    {{ __('Download JSON') }}
+                                </button>
+                        </div>
+
+                        <script>
+                        function downloadObjectAsJson(){
+                            // TODO: get the file path working
+                            var exportObj = "{{asset('/template_files/json_template.json')}}";
+                            var exportName = "template";
+                            //window.alert(exportObj);
+                            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+                            var downloadAnchorNode = document.createElement('a');
+                            downloadAnchorNode.setAttribute("href",     dataStr);
+                            downloadAnchorNode.setAttribute("download", exportName + ".json");
+                            document.body.appendChild(downloadAnchorNode); // required for firefox
+                            downloadAnchorNode.click();
+                            downloadAnchorNode.remove();
+                          }
+                        </script>
+
                         <br>
                         <div align="center">
                             <p

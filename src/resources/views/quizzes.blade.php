@@ -22,58 +22,69 @@
     });
 </script>
 
-<div class="container-fluid flex-row">
-    <div class="row">
-        <div class="card col-2">
+<div class="container-flex mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-12 col-lg-3">
             <div class="card-header">Filter</div>
             <div class="card-body">
                 {{-- <form action="/quizzes" method="post"> --}}
-                    @csrf
-                    <input class="form-control mb-2" id="myInput" type="text" placeholder="Search Quizzes..">
+                @csrf
+                <input class="form-control" id="myInput" type="text" placeholder="Search Quizzes..">
 
-                    <!-- Number of attempts filter -->
-                    <p class="title mb-2">Filter quizzes by your number of attempts</p>
-                    <div class="row justify-content-left">
-                        <span>
-                            <input type="radio" id="attempt-all" name="attempt-radio" value="all" checked="checked">
-                            <label for="attempt-all" type="text"> All </label>
-                        </span>
-                    </div>
-                    <!-- foreach, same as animals here for attempts -->
-                    @foreach ($uniqueAttempts as $att)
-                    <div class="row justify-content-left">
-                        <span>
-                            <input type="radio" id="attempt-{{ $att }}" name="attempt-radio" value="{{ $att }}"></button>
-                            <label for="attempt-{{ $att }}">{{ $att }}</label>
-                        </span>
-                    </div>
-                    @endforeach
 
-                    <!-- Animal filter -->
-                    <p class="title">Filter quizzes by animal</p>
-                    <div class="row justify-content-left">
-                        <span>
-                            <input type="radio" id="animal-all" name="animal-radio" value="all" checked="checked">
-                            <label for="animal-all" type="text">All</label>
-                        </span>
+                <!-- Number of attempts filter -->
+                <div class="card-header">
+                    <span>Filter quizzes by your number of attempts</span>
+                </div>
+                <div class="card-body justify-content-left">
+                    <input type="radio" id="attempt-all" name="attempt-radio" value="all" checked="checked">
+                    <label for="attempt-all" type="text">All</label>
+                </div>
+
+
+                <!-- foreach, same as animals here for attempts -->
+                @foreach ($uniqueAttempts as $att)
+                <div class="card-body justify-content-left">
+                    <span>
+                        <input type="radio" id="attempt-{{ $att }}" name="attempt-radio" value="{{ $att }}"></button>
+                        <label for="attempt-{{ $att }}">{{ $att }}</label>
+                    </span>
+                </div>
+                @endforeach
+
+
+                <!-- Animal filter -->
+                <div class="card-header">
+                    <span>Filter quizzes by animal</span>
+                </div>
+                <span>
+                    <div class="card-body justify-content-left">
+                        <label for="animal-all" type="text">All</label>
+                        <input type="radio" id="animal-all" name="animal-radio" value="all" checked="checked">
                     </div>
-                    @foreach($animals as $data)
-                    <div class="d-flex justify-content-left">
-                        <span>
-                            <input type="radio" id="animal-{{ $data }}" name="animal-radio" value="{{ $data }}">
-                            <label for="animal-{{ $data }}" type="text">{{ $data }}</label>
-                        </span>
-                    </div>
-                    @endforeach
+                </span>
+
+
+                @foreach($animals as $data)
+                <div class="justify-content-left">
+                    <span>
+                        <input type="radio" id="animal-{{ $data }}" name="animal-radio" value="{{ $data }}">
+                        <label for="animal-{{ $data }}" type="text">{{ $data }}</label>
+                    </span>
+                </div>
+                @endforeach
+
 
                 {{-- </form> --}}
             </div>
         </div>
-        <div class="col-10">
-            <div class="card-header"> Selection
-                @if (Bouncer::is(Auth::user())->an("admin", "ta"))
-                <button class="btn btn-primary float-right" type="button" name="button" onclick="window.location.href='/create_quiz'">Create New Quiz</button>
-                @endif
+        <div class="col">
+            <div class="card-header">
+                <span>Selection
+                    @if (Bouncer::is(Auth::user())->an("admin", "ta"))
+                    <button class="btn btn-primary btn-lg float-end" type="button" name="button" onclick="window.location.href='/create_quiz'">+ Create New Quiz</button>
+                    @endif
+                </span>
             </div>
 
             @if (session('score-message'))
@@ -86,7 +97,6 @@
                 <strong>{{ session('quiz-error-message') }}</strong>
             </div>
             @endif
-            Insert selected filter criteria here
 
             <!-- TODO: Insert selected filter criteria here -->
             <div class="table-responsive table-response-md table-response-lg">

@@ -29,50 +29,49 @@
             <div class="card sticky-top">
                 <div class="card-header">Filter</div>
                 <div class="card-body">
-                    {{-- <form action="/quizzes" method="post"> --}}
-                    @csrf
-                    <input class="form-control mb-3" id="myInput" type="text" placeholder="Search Quizzes..">
+                    <form action="/quizzes" method="post">
+                        @csrf
+                        <input class="form-control mb-3" id="myInput" type="text" placeholder="Search Quizzes..">
 
+                        <!-- Number of attempts filter -->
+                        <div class="card-header">
+                            <span>Filter quizzes by your number of attempts</span>
+                        </div>
+                        <div class="card-body">
+                            <span>
+                                <input type="radio" id="attempt-all" name="attempt-radio" value="all" checked="checked">
+                                <label for="attempt-all" type="text">All</label>
+                            </span>
+                        </div>
 
-                    <!-- Number of attempts filter -->
-                    <div class="card-header">
-                        <span>Filter quizzes by your number of attempts</span>
-                    </div>
-                    <div class="card-body">
-                        <span>
-                            <input type="radio" id="attempt-all" name="attempt-radio" value="all" checked="checked">
-                            <label for="attempt-all" type="text">All</label>
-                        </span>
-                    </div>
-
-                    <!-- foreach, same as animals here for attempts -->
-                    @foreach ($uniqueAttempts as $att)
-                    <div class="card-body">
-                        <span>
-                            <input type="radio" id="attempt-{{ $att }}" name="attempt-radio" value="{{ $att }}">
-                            <label for="attempt-{{ $att }}">{{ $att }}</label>
-                        </span>
-                    </div>
-                    @endforeach
-
-                    <!-- Animal filter -->
-                    <div class="card-header">
-                        <span>Filter quizzes by animal</span>
-                    </div>
-                    <div class="card-body">
-                        <span>
-                            <input type="radio" id="animal-all" name="animal-radio" value="all" checked="checked">
-                            <label for="animal-all" type="text">All</label>
-                        </span>
-
-                        @foreach($animals as $data)
-                        <span>
-                            <input type="radio" id="animal-{{ $data }}" name="animal-radio" value="{{ $data }}">
-                            <label for="animal-{{ $data }}" type="text">{{ $data }}</label>
-                        </span>
+                        <!-- foreach, same as animals here for attempts -->
+                        @foreach ($uniqueAttempts as $att)
+                        <div class="card-body">
+                            <span>
+                                <input type="radio" id="attempt-{{ $att }}" name="attempt-radio" value="{{ $att }}">
+                                <label for="attempt-{{ $att }}">{{ $att }}</label>
+                            </span>
+                        </div>
                         @endforeach
-                    </div>
-                    {{-- </form> --}}
+
+                        <!-- Animal filter -->
+                        <div class="card-header">
+                            <span>Filter quizzes by animal</span>
+                        </div>
+                        <div class="card-body">
+                            <span>
+                                <input type="radio" id="animal-all" name="animal-radio" value="all" checked="checked">
+                                <label for="animal-all" type="text">All</label>
+                            </span><br>
+
+                            @foreach($animals as $data)
+                            <span>
+                                <input type="radio" id="animal-{{ $data }}" name="animal-radio" value="{{ $data }}">
+                                <label for="animal-{{ $data }}" type="text">{{ $data }}</label><br>
+                            </span>
+                            @endforeach
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -110,22 +109,24 @@
                                 <th scope="col">Best Behaviour Score</th>
                                 <th scope="col">Behaviour Scores</th>
                                 <th scope="col">Best Interpretation Scores</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody id="myTable">
                             {{-- TODO: Add number of attempts and best score to the quizzes button --}}
                             @foreach ($quizzes as $quiz) {{-- ekmu: Not the cleanest implementation of clickeable rows, but time constraints.. --}}
-                            <tr style="cursor: pointer;" onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">
+                            <tr>
                                 <th scope="row">{{ $quiz->code ?? 'EMPTY' }}</th>
                                 <td>{{ $attempts[$quiz->id] ?? 'EMPTY' }}</td>
                                 <td>{{ $bestBehaviourScores[$quiz->id] ?? 'EMPTY' }}</td>
                                 <td>{{ $maxBehaviourScores[$quiz->id] ?? 'EMPTY' }}</td>
                                 <td>{{ $bestInterpretationScores[$quiz->id] ?? 'EMPTY' }}</td>
-                                @if (Bouncer::is(Auth::user())->an('admin', 'ta', 'expert'))
-                                <td>
-                                    <button class="btn btn-primary type="button" name="edit_button" onclick="window.location='{{ route('edit_quiz_id_route', ['id' => $quiz->id]) }}'">Edit Quiz</button>
+                                <td class="p-1">
+                                    <button type="button" class="btn btn-primary btn-sm btn-block" name="view_button" onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">Take Quiz</button>
+                                    @if (Bouncer::is(Auth::user())->an('admin', 'ta', 'expert'))
+                                    <button type="button" class="btn btn-secondary btn-sm btn-block" name="edit_button" onclick="window.location='{{ route('edit_quiz_id_route', ['id' => $quiz->id]) }}'">Edit Quiz</button>
+                                    @endif
                                 </td>
-                                @endif
                             </tr>
                             @endforeach
                         </tbody>

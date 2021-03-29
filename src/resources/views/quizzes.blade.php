@@ -82,17 +82,19 @@
             <div class="table-responsive table-response-md table-response-lg">
                 <table class="table table-hover">
                     <thead class="table-active">
+                        {{-- Headers of table --}}
                         <tr>
-                            <th scope="col">First</th>
-                            <th scope="col">Second</th>
-                            <th scope="col">Tres</th>
-                            <th scope="col">Four</th>
-                            <th scope="col">Five</th>
+                            <th scope="col">Quiz code</th>
+                            <th scope="col">Attempts</th>
+                            <th scope="col">Best Behaviour Score</th>
+                            <th scope="col">Behaviour Scores</th>
+                            <th scope="col">Best Interpretation Scores</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Add number of attempts and best score to the quizzes button TODO -->
+                        {{-- TODO: Add number of attempts and best score to the quizzes button --}}
                         @foreach ($quizzes as $quiz)
+                        {{-- ekmu: Not the cleanest implementation of clickeable rows, but time constraints.. --}}
                         <tr onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">
                             <th scope="row">{{ $quiz->code ?? 'EMPTY' }}</th>
                             <td>{{ $attempts[$quiz->id] ?? 'EMPTY' }}</td>

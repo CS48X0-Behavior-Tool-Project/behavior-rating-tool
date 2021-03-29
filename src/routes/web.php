@@ -20,6 +20,8 @@ use App\Http\Controllers\QuizAttemptController;
 use App\Http\Controllers\EditQuizController;
 use App\Http\Controllers\SingleUserController;
 
+use App\Http\Controllers\JsonController;
+
 Auth::routes();
 
 Route::resource('users', UserController::class);
@@ -106,6 +108,11 @@ Route::get('/confirmation/{token}', [UploadController::class, 'validateToken']);
  * Route for creating new users.
  */
 Route::post('/add_user', [UploadController::class, 'upload']);
+
+/**
+* Route for downloading the json template.
+*/
+Route::post('/add_user/json_download', [JsonController::class, 'downloadJsonTemplate']);
 
 /**
  * Route for account management page.

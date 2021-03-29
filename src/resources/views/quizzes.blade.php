@@ -10,19 +10,30 @@
 
 @section('content')
 
+{{-- ekmu: This will likely be removed, I suspect it won't play nice with pagination --}}
+<script>
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+</script>
+
 <div class="container-fluid flex-row">
     <div class="row">
         <div class="card col-2">
-            <div class="card-header container-fluid">Filter</div>
-
+            <div class="card-header">Filter</div>
             <div class="card-body">
-                <form action="/quizzes" method="post">
+                {{-- <form action="/quizzes" method="post"> --}}
                     @csrf
-                    <input id="search" class="form-control" type="text" name="search" placeholder="Search Quizzes..." onkeyup"">
+                    <input class="form-control mb-2" id="myInput" type="text" placeholder="Search Quizzes..">
 
                     <!-- Number of attempts filter -->
                     <p class="title mb-2">Filter quizzes by your number of attempts</p>
-                    <div class="row mb-2 justify-content-center">
+                    <div class="row justify-content-left">
                         <span>
                             <input type="radio" id="attempt-all" name="attempt-radio" value="all" checked="checked">
                             <label for="attempt-all" type="text"> All </label>
@@ -30,7 +41,7 @@
                     </div>
                     <!-- foreach, same as animals here for attempts -->
                     @foreach ($uniqueAttempts as $att)
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-left">
                         <span>
                             <input type="radio" id="attempt-{{ $att }}" name="attempt-radio" value="{{ $att }}"></button>
                             <label for="attempt-{{ $att }}">{{ $att }}</label>
@@ -38,17 +49,16 @@
                     </div>
                     @endforeach
 
-
                     <!-- Animal filter -->
                     <p class="title">Filter quizzes by animal</p>
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-left">
                         <span>
                             <input type="radio" id="animal-all" name="animal-radio" value="all" checked="checked">
                             <label for="animal-all" type="text">All</label>
                         </span>
                     </div>
                     @foreach($animals as $data)
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-left">
                         <span>
                             <input type="radio" id="animal-{{ $data }}" name="animal-radio" value="{{ $data }}">
                             <label for="animal-{{ $data }}" type="text">{{ $data }}</label>
@@ -56,10 +66,10 @@
                     </div>
                     @endforeach
 
-                </form>
+                {{-- </form> --}}
             </div>
         </div>
-        <div class="card col-10">
+        <div class="col-10">
             <div class="card-header"> Selection
                 @if (Bouncer::is(Auth::user())->an("admin", "ta"))
                 <button class="btn btn-primary float-right" type="button" name="button" onclick="window.location.href='/create_quiz'">Create New Quiz</button>
@@ -91,7 +101,7 @@
                             <th scope="col">Best Interpretation Scores</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="myTable">
                         {{-- TODO: Add number of attempts and best score to the quizzes button --}}
                         @foreach ($quizzes as $quiz)
                         {{-- ekmu: Not the cleanest implementation of clickeable rows, but time constraints.. --}}

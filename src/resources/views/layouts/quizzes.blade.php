@@ -31,76 +31,79 @@
 </head>
 
 <style media="screen">
-  .nav-link {
-  color: white;
-  letter-spacing: 1px;
-  }
-  nav a:hover {
-    color: black;
-    background-color: white;
-  }
-  .nav-link:active{
-    background-color: white;
-    color: black;
-    letter-spacing: 1px;
-  }
-  h4 {
-    color: white;
-  }
+    .nav-link {
+        color: white;
+        letter-spacing: 1px;
+    }
+
+    nav a:hover {
+        color: black;
+        background-color: white;
+    }
+
+    .nav-link:active {
+        background-color: white;
+        color: black;
+        letter-spacing: 1px;
+    }
+
+    h4 {
+        color: white;
+    }
 </style>
 
 <body>
     <div id="app">
         <nav class="navbar navbar-expand navbar-dark shadow-sm" style="background-color: #fc8403;">
-            <div class="container">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-dark">
-                        <h4>{{ config('app.name') }}</h4>
-                    </ul>
-                    <!-- Right Side Of Navbar -->
-                        @guest
-                            <!-- Guests see nothing here -->
-                        @else
-                            <ul class="nav nav-tabs">
-                              <li class="nav-item">
-                                  <!-- Admin and TA -->
-                                  @if (Bouncer::is(Auth::user())->an("admin", "ta"))
-                                      <a class="nav-link" href="{{ url('users') }}">
-                                          {{ __('Users') }}
-                                      </a>
-                                  @endif
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link active" href="{{ url('quizzes') }}">
-                                      <strong>{{ __('Quizzes') }}</strong>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">Review</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="{{ url('account') }}">
-                                      {{ __('Account') }}
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                      {{ __('Logout') }}
-                                  </a>
-                                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                      @csrf
-                                  </form>
-                              </li>
-                            </ul>
-                        @endguest
-
-                </div>
+            <div class="container-fluid">
+                <!-- Left Side Of Navbar -->
+                <ul class="nav navbar-dark">
+                    <h4>{{ config('app.name') }}</h4>
+                </ul>
+                <!-- Right Side Of Navbar -->
+                @guest
+                <!-- Guests see nothing here -->
+                @else
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <!-- Admin and TA -->
+                        @if (Bouncer::is(Auth::user())->an('admin', 'ta'))
+                        <a class="nav-link" href="{{ url('users') }}">
+                            {{ __('Users') }}
+                        </a>
+                        @endif
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url('quizzes') }}">
+                            <strong>{{ __('Quizzes') }}</strong>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Review</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('account') }}">
+                            {{ __('Account') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
+                </ul>
+                @endguest
             </div>
-        </nav>
+    </div>
+    </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+    <main class="container-fluid">
+        @yield('content')
+    </main>
     </div>
     @yield('end-body-scripts')
 </body>

@@ -29,3 +29,10 @@ mysql/*
 /src/Homestead.yaml
 /src/npm-debug.log
 /src/yarn-error.log
+
+# Supervisor
+/src/supervisord.log
+/src/supervisord.pid
+
+# Videos
+*.mp4

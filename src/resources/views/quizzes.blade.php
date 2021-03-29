@@ -10,28 +10,19 @@
 
 @section('content')
 
-@if (Bouncer::is(Auth::user())->an("admin", "ta"))
-<div class="container container-md container-lg container-xl justify-content-center">
-    <button class="btn btn-primary" type="button" name="button" onclick="window.location.href='/create_quiz'">Create New
-        Quiz</button>
-</div>
-<br>
-@endif
-
-<div class="container container-md container-lg container-xl">
-    <div class="row col-1b2">
-        <div class="card col-4">
-            <div class="card-header">Filter</div>
+<div class="container-fluid flex-row">
+    <div class="row">
+        <div class="card col-2">
+            <div class="card-header container-fluid">Filter</div>
 
             <div class="card-body">
                 <form action="/quizzes" method="post">
                     @csrf
-                    <input id="search" class="form-control" type="text" name="search" placeholder="Search Quizzes..."
-                        onkeyup"">
+                    <input id="search" class="form-control" type="text" name="search" placeholder="Search Quizzes..." onkeyup"">
 
                     <!-- Number of attempts filter -->
-                    <p class="title" style="margin-top: 15px;">Filter quizzes by your number of attempts</p>
-                    <div class="row justify-content-center">
+                    <p class="title mb-2">Filter quizzes by your number of attempts</p>
+                    <div class="row mb-2 justify-content-center">
                         <span>
                             <input type="radio" id="attempt-all" name="attempt-radio" value="all" checked="checked">
                             <label for="attempt-all" type="text"> All </label>
@@ -41,8 +32,8 @@
                     @foreach ($uniqueAttempts as $att)
                     <div class="row justify-content-center">
                         <span>
-                            <input type="radio" id="attempt-{{$att}}" name="attempt-radio" value="{{$att}}"></button>
-                            <label for="attempt-{{$att}}">{{$att}}</label>
+                            <input type="radio" id="attempt-{{ $att }}" name="attempt-radio" value="{{ $att }}"></button>
+                            <label for="attempt-{{ $att }}">{{ $att }}</label>
                         </span>
                     </div>
                     @endforeach
@@ -53,14 +44,14 @@
                     <div class="row justify-content-center">
                         <span>
                             <input type="radio" id="animal-all" name="animal-radio" value="all" checked="checked">
-                            <label for="animal-all" type="text"> All </label>
+                            <label for="animal-all" type="text">All</label>
                         </span>
                     </div>
                     @foreach($animals as $data)
-                    <div class="row justify-content-center">
+                    <div class="d-flex justify-content-center">
                         <span>
-                            <input type="radio" id="animal-{{$data}}" name="animal-radio" value="{{$data}}">
-                            <label for="animal-{{$data}}" type="text"> {{$data}} </label>
+                            <input type="radio" id="animal-{{ $data }}" name="animal-radio" value="{{ $data }}">
+                            <label for="animal-{{ $data }}" type="text">{{ $data }}</label>
                         </span>
                     </div>
                     @endforeach
@@ -68,13 +59,10 @@
                 </form>
             </div>
         </div>
-        <div class="card col-8">
-            <div class="card-header">
-                Selection
+        <div class="card col-10">
+            <div class="card-header"> Selection
                 @if (Bouncer::is(Auth::user())->an("admin", "ta"))
-                <button class="btn btn-primary float-right" type="button" name="button"
-                    onclick="window.location.href='/create_quiz'">Create New
-                    Quiz</button>
+                <button class="btn btn-primary float-right" type="button" name="button" onclick="window.location.href='/create_quiz'">Create New Quiz</button>
                 @endif
             </div>
 
@@ -105,20 +93,14 @@
                     <tbody>
                         <!-- Add number of attempts and best score to the quizzes button TODO -->
                         @foreach ($quizzes as $quiz)
-                        <tr>
+                        <tr onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">
                             <th scope="row">{{ $quiz->code ?? 'EMPTY' }}</th>
                             <td>{{ $attempts[$quiz->id] ?? 'EMPTY' }}</td>
                             <td>{{ $bestBehaviourScores[$quiz->id] ?? 'EMPTY' }}</td>
                             <td>{{ $maxBehaviourScores[$quiz->id] ?? 'EMPTY' }}</td>
                             <td>{{ $bestInterpretationScores[$quiz->id] ?? 'EMPTY' }}</td>
                         </tr>
-                        {{-- ekmu: This should be replaced by a row inside a table --}}
-                        {{-- <button class="btn btn-secondary" style="padding: 10px; margin: 10px;"
-                            onclick="window.location.href='/quizzes/{{$quiz->id}}'">{{ $quiz->code }} </br> Attempts:
-                        {{ $attempts[$quiz->id] }} </br> Best Score:
-                        {{ $bestBehaviourScores[$quiz->id] ?? '-' }} / {{ $maxBehaviourScores[$quiz->id] ?? '-' }} B
-                        {{ $bestInterpretationScores[$quiz->id] ?? '-'}} I
-                        </button> --}}
+                        </button>
                         @endforeach
                     </tbody>
                 </table>

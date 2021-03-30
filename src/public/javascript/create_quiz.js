@@ -10,6 +10,14 @@ jQuery(function() {
         $("#video-name").val(this.value + "" + $("#video-id").val());
     });
 
+    $(document).ready(function(){
+        $("#animal-new").on("input", function(){
+            $("#a-new").val(this.value);
+            $("#video-name").val(this.value + "" + $("#video-id").val());
+        })
+    });
+
+
     $("#upload-button").on('click', function(e) {
         e.preventDefault();
         var formData = new FormData($('#upload-form')[0]);

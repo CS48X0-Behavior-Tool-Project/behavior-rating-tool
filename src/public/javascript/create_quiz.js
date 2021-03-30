@@ -6,6 +6,10 @@ jQuery(function() {
         }
     });
 
+    $('input[type=radio][name="animal-radio[]"]').change(function() {
+        $("#video-name").val(this.value + "" + $("#video-id").val());
+    });
+
     $("#upload-button").on('click', function(e) {
         e.preventDefault();
         var formData = new FormData($('#upload-form')[0]);

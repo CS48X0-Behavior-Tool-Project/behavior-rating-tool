@@ -64,7 +64,7 @@
                                 </div>
                                 <!-- TODO this field should populate with Cow1 or whatever the video name will end up being, so they can change it if they want. -->
                                 <div class="form-group row">
-                                    <label for="name-id" class="col-md-3 col-form-label text-md-right">Name</label>
+                                    <label for="video-name" class="col-md-3 col-form-label text-md-right">Name</label>
                                     <div class="col-md-9">
                                         <input id="video-name" type="text" class="form-control" name="video-name" placeholder="Quiz Name">
                                     </div>
@@ -174,4 +174,5 @@
 @section('end-body-scripts')
     {{-- All ajax related scripts should be moved to the end-body-scripts section --}}
     <script src="{{ asset('/javascript/create_quiz.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('javascript/admin_create_quiz.js') }}"></script>
 @endsection

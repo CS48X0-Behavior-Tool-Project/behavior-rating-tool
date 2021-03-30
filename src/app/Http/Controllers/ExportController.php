@@ -26,10 +26,13 @@ class ExportController extends Controller
                         'users.last_name',
                         'users.options->grad_year as grad_year',
                         'users.options->experience as experience',
+                        'assigned_roles.entity_id',
+                        'assigned_roles.id',
+                        'roles.id',
                         'roles.title as role'
                     )
                     ->leftJoin('assigned_roles', 'assigned_roles.entity_id', '=', 'users.id')
-                    ->leftJoin('roles', 'roles.id', '=', 'assigned_roles.id')
+                    ->leftJoin('roles', 'roles.id', '=', 'assigned_roles.role_id')
                     ->get();
 
                     Log::info($users);

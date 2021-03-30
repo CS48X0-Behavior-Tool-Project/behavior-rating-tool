@@ -1,3 +1,16 @@
+jQuery(function() {
+    $('input[type=radio][name="animal-radio[]"]').change(function() {
+        $("#video-name").val(this.value + "" + $("#video-id").val());
+    });
+
+    $(document).ready(function(){
+        $("#animal-new").on("input", function(){
+            $("#a-new").val(this.value);
+            $("#video-name").val(this.value + "" + $("#video-id").val());
+        })
+    });
+}
+
 function validate(event) {
     // Video upload check
     impVideo = document.getElementById("import-video");

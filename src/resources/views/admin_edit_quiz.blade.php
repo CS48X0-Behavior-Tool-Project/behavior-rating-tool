@@ -97,10 +97,14 @@
                                             @endif
                                         @endforeach
                                         <div class="row-justify-content-center">
-                                            <span id="spacing">
-                                                <input type="radio" id="a-new" name="animal-radio[]" value = "New">
-                                                <input id="animal-new" type="text" class="formLabel" name="a-new" placeholder="Edit me ...">
-                                            </span>
+                                          <div class="input-group mb-3">
+                                              <div class="input-group-prepend">
+                                                  <div class="input-group-text">
+                                                      <input type="radio" id="a-new" name="animal-radio[]" value = "New">
+                                                  </div>
+                                              </div>
+                                              <input id="animal-new" type="text" class="form-control" name="a-new" placeholder="Edit me ...">
+                                          </div>
                                         </div>
                                     </div>
                                     <br>
@@ -120,10 +124,12 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         <!-- For each possible behaviour sent forward -->
-                                        @foreach (range(0,9) as $x)
+                                        <!-- TODO we need to have the number of answers sent forward because it could be god knows how much
+                                              or we need to stop when we reach one that doesn't exist -->
+                                        @foreach (range(1,10) as $x)
                                             <!-- If it exists and is correct -->
                                             @if (@isset($b_options[$x]) and $b_options[$x]->is_solution)
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-3" id="field-b{{$x}}">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">
                                                             <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" checked="true" value="{{$x}}">
@@ -133,7 +139,7 @@
                                                 </div>
                                             <!-- If it exists and is NOT correct -->
                                             @elseif (@isset($b_options[$x]))
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-3" id="field-b{{$x}}">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">
                                                             <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
@@ -143,7 +149,7 @@
                                                 </div>
                                             <!-- Doesn't exist -->
                                             @else
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-3" id="field-b{{$x}}">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">
                                                             <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
@@ -154,6 +160,7 @@
                                             @endif
                                         @endforeach
                                     </div>
+                                    <button class="btn btn-secondary" type="button" id="add-behaviour"> Add more behaviours </button>
                                 </div>
                                 @if (session('behaviour-status'))
                                     <div class="alert alert-danger">
@@ -169,10 +176,10 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         <!-- For each possible interpretation sent forward -->
-                                        @foreach (range(0,4) as $x)
+                                        @foreach (range(1,5) as $x)
                                             <!-- If it exists and is correct -->
                                             @if (@isset($i_options[$x]) and $i_options[$x]->is_solution)
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-3" id="field-i{{$x}}">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">
                                                             <input type="radio" id="i-{{$x}}" name="interpretation-radio" checked="true" value="{{$x}}">
@@ -182,7 +189,7 @@
                                                 </div>
                                             <!-- If it exists and is NOT correct -->
                                             @elseif (@isset($i_options[$x]))
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-3" id="field-i{{$x}}">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">
                                                             <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
@@ -192,7 +199,7 @@
                                                 </div>
                                             @else
                                             <!-- Doesn't exist -->
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-3" id="field-i{{$x}}">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">
                                                             <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
@@ -203,6 +210,7 @@
                                             @endif
                                         @endforeach
                                     </div>
+                                    <button class="btn btn-secondary" type="button" id="add-interpretation"> Add more interpretations </button>
                                 </div>
                                 @if (session('int-status'))
                                     <div class="alert alert-danger">
@@ -231,4 +239,5 @@
 @section('end-body-scripts')
     {{-- All ajax related scripts should be moved to the end-body-scripts section --}}
     <script src="{{ asset('/javascript/create_quiz.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('javascript/edit_quiz.js') }}"></script>
 @endsection

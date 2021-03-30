@@ -21,8 +21,24 @@ $(document).ready(function(){
     })
 });
 
+// Anticipated grad year
+$(document).ready(function(){
+    $("#gradYearSelect").on("input", function(){
+        if($("#gradYearSelect").val() == "Select your anticipated grad year"){
+            document.getElementById("gradYearSelect").style.borderColor = "red";
+        } else {
+            document.getElementById("gradYearSelect").style.borderColor = "#ced4da";
+        }
+    })
+});
+
 // Validates that new email and password fields are equal
 function validate(event) {
+    if($("#gradYearSelect").val() == "Select your anticipated grad year"){
+        event.preventDefault();
+        alert("You must select an anticipated grad year. Select N/A if you are not a graduating student.");
+    }
+
     var mismatch_password = true;
 
     // Password validation
@@ -34,6 +50,7 @@ function validate(event) {
 
     if (mismatch_password) {
         event.preventDefault();
+        console.log("not a match");
         alert("The new passwords you entered do not match");
     } else {
         return true;

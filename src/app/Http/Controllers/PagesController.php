@@ -100,6 +100,8 @@ class PagesController extends Controller
         $uniqueAttempts = array_unique($attemptsPerQuiz);
         sort($uniqueAttempts);
 
+        $attemptScorePerQuiz = array();
+
         foreach ($attemptIdPerQuiz as $quizID => $attemptIDs) {
           if (!empty($attemptIDs)) {
             $attemptScoreList = array();

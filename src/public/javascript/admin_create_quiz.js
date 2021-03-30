@@ -6,14 +6,14 @@ $(document).ready(function () {
         var addto = "#field-b" + next;
         next = next + 1;
         var nextInput =
-        `<div class="input-group mb-3" id="field-b` + next + `">
+        `<form><div class="input-group mb-3" id="field-b` + next + `">
             <div class="input-group-prepend">
                 <div class="input-group-text">
                     <input type="checkbox" id="b-` + next + `" name="behaviour-check[]" value="` + next + `">
                 </div>
             </div>
             <input id="box-` + next + `" type="text" class="form-control" name="box-` + next + `" placeholder="Edit me...">
-        </div>`;
+        </div></form>`;
         var newInput = $(nextInput);
         $(addto).after(newInput);
     });

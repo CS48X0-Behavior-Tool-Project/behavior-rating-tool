@@ -28,8 +28,8 @@ class ExportController extends Controller
                         'users.options->experience as experience',
                         'roles.title as role'
                     )
-                    ->join('assigned_roles', 'assigned_roles.entity_id', '=', 'users.id')
-                    ->join('roles', 'roles.id', '=', 'assigned_roles.id')
+                    ->leftJoin('assigned_roles', 'assigned_roles.entity_id', '=', 'users.id')
+                    ->leftJoin('roles', 'roles.id', '=', 'assigned_roles.id')
                     ->get();
 
                     Log::info($users);

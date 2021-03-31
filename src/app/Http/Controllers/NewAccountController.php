@@ -20,13 +20,18 @@ class NewAccountController extends Controller
       'password' => Hash::make(request()->input('password'))
     ])->save();
 
-
     //store survey response as json object in users db table
     $surveyResponse = request()->input('experience');
+
+    //store graduation year as json object in users db table
+    $gradYear = request()->input('year');
 
     $user = auth()->user();
     $jsonobj = json_decode($user->options, true);
     $jsonobj['experience'] = $surveyResponse;
+    if ($gradYear != "") {
+      $jsonobj['grad_year'] = $gradYear;
+    }
     $user->options = json_encode($jsonobj);
     $user->save();
 

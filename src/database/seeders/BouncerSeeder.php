@@ -61,19 +61,19 @@ class BouncerSeeder extends Seeder
         Bouncer::allow('expert')->to('review-my-quizzes');  
         Bouncer::allow('expert')->to('conduct-quizzes');
 
-        Bouncer::allow('TA')->to('view-users-page');
-        Bouncer::allow('TA')->to('create-users');
-        Bouncer::allow('TA')->to('edit-users');
-        Bouncer::allow('TA')->to('import-users');
-        Bouncer::allow('TA')->to('export-users');
-        Bouncer::allow('TA')->to('view-profile');
-        Bouncer::allow('TA')->to('edit-profile');
-        Bouncer::allow('TA')->to('create-quizzes');
-        Bouncer::allow('TA')->to('update-quizzes');
-        Bouncer::allow('TA')->to('review-my-quizzes');      // review page by a student
-        Bouncer::allow('TA')->to('review-quizzes');         // review for all students
-        Bouncer::allow('TA')->to('export-student-quizzes');
-        Bouncer::allow('TA')->to('conduct-quizzes');
+        Bouncer::allow('ta')->to('view-users-page');
+        Bouncer::allow('ta')->to('create-users');
+        Bouncer::allow('ta')->to('edit-users');
+        Bouncer::allow('ta')->to('import-users');
+        Bouncer::allow('ta')->to('export-users');
+        Bouncer::allow('ta')->to('view-profile');
+        Bouncer::allow('ta')->to('edit-profile');
+        Bouncer::allow('ta')->to('create-quizzes');
+        Bouncer::allow('ta')->to('update-quizzes');
+        Bouncer::allow('ta')->to('review-my-quizzes');      // review page by a student
+        Bouncer::allow('ta')->to('review-quizzes');         // review for all students
+        Bouncer::allow('ta')->to('export-student-quizzes');
+        Bouncer::allow('ta')->to('conduct-quizzes');
 
         Bouncer::allow('admin')->to('view-users-page');
         Bouncer::allow('admin')->to('create-users');

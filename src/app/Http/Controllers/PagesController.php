@@ -248,7 +248,7 @@ class PagesController extends Controller
         return redirect()->back();
     }
 
-    // Selector page for
+    // Selector page for editing quizzes
     public function getEditQuiz()
     {
         $quizzes = Quiz::all();

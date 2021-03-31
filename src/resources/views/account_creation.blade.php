@@ -2,8 +2,6 @@
 
 @section('content')
 
-<script type="text/javascript" src="{{ URL::asset('javascript/account_creation.js') }}"></script>
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -41,6 +39,23 @@
                             </div>
                         </div>
                         <br>
+                        <!-- Grad Year -->
+                        <div class="form-group row justify-content-center">
+                            <div class="col-md-7">
+                                <select class="form-control" id="gradYearSelect" name="year">
+                                    <option selected>Select your anticipated grad year</option>
+                                    <option id="na" value="">N/A (for admin, expert and TA use)</option>
+                                    <option id="current" value="{{now()->year}}">{{now()->year}}</option>
+                                    <option id="1" value="{{now()->year +1}}">{{now()->year +1}}</option>
+                                    <option id="2" value="{{now()->year +2}}">{{now()->year +2}}</option>
+                                    <option id="3" value="{{now()->year +3}}">{{now()->year +3}}</option>
+                                    <option id="4" value="{{now()->year +4}}">{{now()->year +4}}</option>
+                                    <option id="5" value="{{now()->year +5}}">{{now()->year +5}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+
                         <p style="text-align:center;">Please indicate how much previous experience you have with horses</p>
                         <!-- Sruvey -->
                         <div class="form-group row justify-content-center">
@@ -73,12 +88,10 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary" onclick="validate(event)">
-                                    {{ __('Create Account') }}
-                                </button>
-                            </div>
+                        <div class="form-group row justify-content-center">
+                            <button type="submit" class="btn btn-primary" onclick="validate(event)">
+                                {{ __('Create Account') }}
+                            </button>
                         </div>
 
                     </form>
@@ -87,4 +100,9 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('end-body-scripts')
+    {{-- All ajax related scripts should be moved to the end-body-scripts section --}}
+    <script src="{{ URL::asset('javascript/account_creation.js') }}"></script>
 @endsection

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Bouncer;
+use Illuminate\Support\Facades\Log;
 
 class ExportController extends Controller
 {
@@ -15,13 +16,31 @@ class ExportController extends Controller
 
     public function exportUsers()
     {
-        // Only Admins should be allowed to access this resource
-        if (Auth::user() and Bouncer::is(request()->user())->an('admin')) {
-            $table = User::all();
-            $csvFile = "username,First Name,Last Name,Email\n";
+        // Only Admins should be allowed to access this resource | have ability to export-users
+        // if (Auth::user() and Bouncer::is(request()->user())->an('admin')) {
+            if (Auth::user() and request()->user()->can('export-users')) {
+                $users = DB::table('users')
+                    ->select(   
+                        'users.email',
+                        'users.first_name',
+                        'users.last_name',
+                        'users.options->grad_year as grad_year',
+                        'users.options->experience as experience',
+                        'assigned_roles.entity_id',
+                        'assigned_roles.id',
+                        'roles.id',
+                        'roles.title as role'
+                    )
+                    ->leftJoin('assigned_roles', 'assigned_roles.entity_id', '=', 'users.id')
+                    ->leftJoin('roles', 'roles.id', '=', 'assigned_roles.role_id')
+                    ->get();
 
-            foreach ($table as $row) {
-                $csvFile .= "{$row['name']},{$row['first_name']},{$row['last_name']},{$row['email']}\n";
+                    Log::info($users);
+
+            $csvFile = "Email,First Name,Last Name,Grad_Year,Experience,Role\n";
+
+            foreach ($users as $row) {
+                $csvFile .= "{$row->email},{$row->first_name},{$row->last_name},{$row->grad_year},{$row->experience},{$row->role}\n";
             }
 
             return response($csvFile)
@@ -38,30 +57,32 @@ class ExportController extends Controller
     public function exportUserAttempts() { 
 
         // Only Admins should be allowed to access this resource
-        if (Auth::user() and Bouncer::is(request()->user())->an('admin')){
-        
-            $data = DB::select('select 
-                            u.name, 
-                            u.email, 
-                            q.code as quiz, 
-                            aq.created_at as conducted, 
-                            ua.scores
-                        from users u
-                        inner join user_attempts ua
-                            on u.id = ua.user_id
-                        inner join attempt_quizzes aq
-                            on ua.attempt_id = aq.attempt_id
-                        inner join quizzes q
-                            on q.id = aq.quiz_id
-                        inner join attempt_answer_items aai
-                            on aai.attempt_quiz_id = aq.id
-                        order by u.name;');
 
-            $csvFile = "username, Email, Quiz Code, Attempts, Scores\n";
+        if (Auth::user() and request()->user()->can('export-student-quizzes')){
 
-            foreach($data as $row) {
-                // $csvFile .= "{$row['name']},{$row['email']},{$row['quiz']},{$row['conducted']},{$row['scores']}\n";
-                $csvFile .= "{$row->name},{$row->email},{$row->quiz},{$row->conducted},{$row->scores}\n";
+            $data = DB::table('users')
+                ->select(
+                    'users.email', 
+                    'quizzes.code as quiz', 
+                    'attempt_quizzes.created_at', 
+                    'user_attempts.score',
+                    'user_attempts.max_score',
+                    'user_attempts.interpretation_guess',
+                    'user_attempts.options->time as time'
+                    )
+                ->join('user_attempts', 'users.id', '=', 'user_attempts.user_id')
+                ->join('attempt_quizzes', 'user_attempts.attempt_id', '=', 'attempt_quizzes.attempt_id')
+                ->join('quizzes', 'quizzes.id', '=', 'attempt_quizzes.quiz_id')
+                ->join('attempt_answer_items', 'attempt_answer_items.attempt_quiz_id', '=', 'attempt_quizzes.id')
+                ->orderby('users.email')
+                ->get();
+                Log::info($data);
+            $csvFile = " User, Quiz Code, Attempted Time, Time Spent(sec), Scores, Max Scores, Interpretation Guess\n";
+
+            if(count($data)>0) {
+                foreach($data as $row) {
+                    $csvFile .= "{$row->email},{$row->quiz},{$row->created_at},{$row->time},{$row->score},{$row->max_score},{$row->interpretation_guess}\n";
+                }
             }
 
             return response($csvFile)

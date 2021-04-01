@@ -1,4 +1,10 @@
 jQuery(function() {
+    $body = $("body");
+    $(document).on({
+        ajaxStart: function() { $body.addClass("loading");    },
+        ajaxStop: function() { $body.removeClass("loading"); }
+    });
+
     $('input[type=radio][name="animal-radio[]"]').change(function() {
         $("#video-name").val(this.value + "" + $("#video-id").val());
     });

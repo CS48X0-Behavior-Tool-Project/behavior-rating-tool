@@ -43,7 +43,7 @@
                                             <button class="btn btn-secondary" id="upload-button">Upload</button>
                                         </div>
                                         <br>
-                                        <div class="modal">    </div>
+                                        <div class="modal"></div>
                                         <div>{{ session('message') }}</div>
 
                                         @if(session('errors'))

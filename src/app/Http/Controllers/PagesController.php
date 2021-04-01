@@ -43,14 +43,9 @@ class PagesController extends Controller
     public function getLoginPage()
     {
         if (Auth::user()) {
-            return redirect()->route('home_route');
+            return redirect()->route('quizzes_route');
         }
         return view('auth.login');
-    }
-
-    public function getHomePage()
-    {
-        return view('home');
     }
 
     /**

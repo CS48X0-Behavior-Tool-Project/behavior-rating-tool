@@ -31,7 +31,8 @@ jQuery(function() {
  * @param {string} err Error message if received
  */
 function updateUI(data, success) {
-    updateAlert(success ? data['msg'] : data.statusText, success ? 'success' : 'danger');
+    var message = data.responseJSON['errors'] === undefined ? 'Server was unable to process video.' : data.responseJSON['errors']['video'][0];
+    updateAlert(success ? data['msg'] : message, success ? 'success' : 'danger');
     updateVideoID(data['uuid']);
     updateVideoName(data['name']);
 

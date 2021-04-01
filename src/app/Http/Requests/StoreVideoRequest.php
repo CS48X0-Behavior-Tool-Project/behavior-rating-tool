@@ -27,7 +27,16 @@ class StoreVideoRequest extends FormRequest
     public function rules()
     {
         return [
-            'video' => 'required|file|mimetypes:video/mp4,video/mpeg,video/x-matroska,video/x-ms-wmv',
+            'video' => 'required|file|max:200000|mimes:mp4,mpeg,mkv',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'video.required' => 'A video file is required.',
+            'video.max' => 'A max file size of 200mb is allowed.',
+            'video.mimes' => 'Only mp4, mpeg, and mkv are allowed.'
         ];
     }
 }

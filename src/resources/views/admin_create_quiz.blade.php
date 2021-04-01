@@ -67,6 +67,14 @@
                                         </div>
                                         <br>
 
+                                        <div>{{ session('message') }}</div>
+
+                                        @if(session('errors'))
+                                            <div class="alert alert-danger">
+                                                <strong>{{ $errors->first('video') }}</strong>
+                                            </div>
+                                        @endif
+
                                         @if (session('video-status'))
                                             <div class="alert alert-danger">
                                                 <strong>{{ session('video-status') }}</strong>

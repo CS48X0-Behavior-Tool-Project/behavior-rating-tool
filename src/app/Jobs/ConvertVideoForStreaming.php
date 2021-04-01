@@ -44,6 +44,7 @@ class ConvertVideoForStreaming implements ShouldQueue
             ->open($this->video->path)
 
             // We are updating the size of the video to 720p
+            // This is a 16:9 resolution, should be updated for other resolutions
             ->addFilter(function ($filters) {
                 $filters->resize(new Dimension(720, 480));
             })

@@ -33,7 +33,7 @@
                                     <form action="{{ route('videos.store') }}" id="upload-form" method="post" enctype="multipart/form-data"> @csrf
                                         <div class="custom-file" >
                                             <div class=" row justify-content-center">
-                                                <input type="file" class="custom-file-input" name="video" id="video-upload" accept="video/*" onchange="updateVideoLabel();">
+                                                <input type="file" class="custom-file-input" name="video" id="video-upload" accept="video/mp4,video/mpeg,video/x-matroska" onchange="updateVideoLabel();">
                                                 <label class="custom-file-label" for="video" id="file-label" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Choose file</label>
                                             </div>
                                         </div>
@@ -43,6 +43,14 @@
                                             <button class="btn btn-secondary" id="upload-button">Upload</button>
                                         </div>
                                         <br>
+
+                                        <div>{{ session('message') }}</div>
+
+                                        @if(session('errors'))
+                                            <div class="alert alert-danger">
+                                                <strong>{{ $errors->first('video') }}</strong>
+                                            </div>
+                                        @endif
 
                                         @if (session('video-status'))
                                             <div class="alert alert-danger">

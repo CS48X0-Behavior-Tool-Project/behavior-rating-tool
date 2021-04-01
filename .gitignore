@@ -1,6 +1,9 @@
 # Environment Vars
 .env
 
+# Videos
+*.mp4
+
 # Packages
 **/vendor
 **/node_modules
@@ -29,3 +32,7 @@ mysql/*
 /src/Homestead.yaml
 /src/npm-debug.log
 /src/yarn-error.log
+
+# Supervisor
+supervisord.log
+supervisord.pid

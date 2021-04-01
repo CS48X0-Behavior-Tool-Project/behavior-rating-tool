@@ -34,5 +34,8 @@ mysql/*
 /src/yarn-error.log
 
 # Supervisor
-supervisord.log
-supervisord.pid
+/src/supervisord.log
+/src/supervisord.pid
+
+# Videos
+*.mp4

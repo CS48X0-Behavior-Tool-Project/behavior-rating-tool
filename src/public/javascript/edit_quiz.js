@@ -1,22 +1,3 @@
-jQuery(function() {
-    $body = $("body");
-    $(document).on({
-        ajaxStart: function() { $body.addClass("loading");    },
-        ajaxStop: function() { $body.removeClass("loading"); }
-    });
-
-    $('input[type=radio][name="animal-radio[]"]').change(function() {
-        $("#video-name").val(this.value + "" + $("#video-id").val());
-    });
-
-    $(document).ready(function(){
-        $("#animal-new").on("input", function(){
-            $("#a-new").val(this.value);
-            $("#video-name").val(this.value + "" + $("#video-id").val());
-        })
-    });
-})
-
 function updateThumbnail(uuid) {
     $("#thumbnail").attr("src", `videos/${uuid}`);
 }

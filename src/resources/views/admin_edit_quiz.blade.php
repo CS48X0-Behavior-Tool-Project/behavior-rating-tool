@@ -6,7 +6,6 @@
     </div>
 @endif
 
-<script type="text/javascript" src="{{ URL::asset('javascript/edit_quiz.js') }}"></script>
 <link rel="stylesheet" href="{{ URL::asset('css/admin_create_quiz.css') }}">
 
 @section('content')
@@ -232,4 +231,5 @@
 @section('end-body-scripts')
     {{-- All ajax related scripts should be moved to the end-body-scripts section --}}
     <script src="{{ asset('/javascript/create_quiz.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('javascript/edit_quiz.js') }}"></script>
 @endsection

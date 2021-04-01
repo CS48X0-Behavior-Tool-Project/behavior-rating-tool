@@ -19,6 +19,7 @@ jQuery(function() {
         $("#animal-new").on("input", function(){
             $("#a-new").val(this.value);
             $("#video-name").val(this.value + "" + $("#video-id").val());
+            $("#a-new").prop("checked", true);
         })
     });
 

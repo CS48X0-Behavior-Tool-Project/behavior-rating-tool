@@ -33,11 +33,6 @@ Route::resource('videos', VideoController::class);
 Route::get('/', [PagesController::class, 'getLoginPage'])->name('login_page');
 
 /**
- * Home page is the landing page when we first log in to the website
- */
-Route::get('/home', [PagesController::class, 'getHomePage'])->name('home_route');
-
-/**
  * Account creation/confirmation page
  */
 Route::get('/confirmation', [PagesController::class, 'getConfirmationPage'])->name('confirmation_route');

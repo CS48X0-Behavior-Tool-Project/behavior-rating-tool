@@ -30,6 +30,8 @@
     @yield('view_specific_styles')
 </head>
 
+<link rel="stylesheet" href="{{ URL::asset('css/navbar.css') }}">
+
 <body>
     <div id="app">
         <nav class="navbar navbar-expand navbar-dark shadow-sm" style="background-color: #fc8403;">

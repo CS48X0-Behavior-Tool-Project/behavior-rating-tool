@@ -84,7 +84,12 @@
             <div class="card-body">
                 <!-- Add number of attempts and best score to the quizzes button TODO -->
                 @foreach ($quizzes as $quiz)
-                  <button class="btn btn-secondary" style="padding: 10px; margin: 10px;" onclick="window.location.href='/quizzes/{{$quiz->id}}'">{{ $quiz->code }} </br> Attempts: {{$attempts[$quiz->id]}} </br> Best Score: {{ $bestBehaviourScores[$quiz->id] ?? '-' }}/{{ $maxBehaviourScores[$quiz->id] ?? '-' }} B {{ $bestInterpretationScores[$quiz->id] ?? '-'}} I </button>
+                  <button class="btn btn-secondary" style="padding: 10px; margin: 10px;" 
+                    onclick="window.location.href='/quizzes/{{$quiz->id}}'">{{ $quiz->code }} 
+                    </br> Attempts: {{$attempts[$quiz->id]}} 
+                    </br> Best Score: 
+                    {{ $bestBehaviourScores[$quiz->id] ?? '-' }}/{{ $maxBehaviourScores[$quiz->id] ?? '-' }} B 
+                    {{ $bestInterpretationScores[$quiz->id] ?? '-'}} I </button>
                 @endforeach
             </div>
         </div>

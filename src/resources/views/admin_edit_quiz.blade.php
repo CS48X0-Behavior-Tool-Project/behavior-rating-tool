@@ -22,8 +22,10 @@
                     @endif
                     <div class="card-body">
                         <div class="row justify-content-center">
-                            <div class="col">
-                                <iframe id="thumbnail" src="" width="col-md-4" height="200"></iframe>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <video id="thumbnail" class="" width="100%" style="max-width: 100%" controls>
+                                    <source src="{{ route('videos.show', ['video' => $quiz->video]) }}" type="video/mp4"/>
+                                </video>
                                 <br>
                                 <br>
                                 <p class="title" id="import-video">Import Video</p>
@@ -32,7 +34,6 @@
                                         <div class="custom-file" >
                                             <div class=" row justify-content-center">
                                                 <input type="file" class="custom-file-input" name="video" id="video-upload" accept="video/*" onchange="updateVideoLabel();">
-                                                <!-- TODO Display video $quiz->video here -->
                                                 <label class="custom-file-label" for="video" id="file-label" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Choose file</label>
                                             </div>
                                         </div>
@@ -112,7 +113,7 @@
                                 </div>
 
                             </div>
-                            <div class="col">
+                            <div class="col-sm-12 col-md-3 col-lg-4">
                                 <p class="title" id="behaviour-info">Behaviours</p>
                                 <h6 style="text-align:center;">Enter all the behaviours to included in the quiz</h6>
                                 <p style="text-align:center;">Fields left "Edit me..." or blank will not be included in the quiz</p>
@@ -161,7 +162,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="col">
+                            <div class="col-sm-12 col-md-3 col-lg-4">
                                 <p class="title" id="interpretation-info">Interpretation</p>
                                 <h6 style="text-align:center;">Enter all the interpretations to included in the quiz</h6>
                                 <p style="text-align:center;">Fields left "Edit me..." or blank will not be included in the quiz</p>

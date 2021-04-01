@@ -15,6 +15,7 @@ use App\Auth\EmailAuthentication;
 use App\Models\UserLoginToken;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 use SimpleXLSX;
 
@@ -204,7 +205,7 @@ class UploadController extends Controller
     public function dbInsert($firstName, $lastName, $email, $role)
     {
         $user = User::create([
-            'password' => Hash::make('password'),
+            'password' => Hash::make(Str::random(10)),
             'email' => $email,
             'first_name' => $firstName,
             'last_name' => $lastName,

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Video;
 use App\Models\Quiz;
 use App\Models\User;
+use Carbon\Carbon;
 use Database\Seeders\QuizSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Silber\Bouncer\BouncerFacade as Bouncer;
@@ -25,6 +26,9 @@ class QuizTest extends TestCase
         // Create a fake video for testing
         Video::create([
             'name' => 'test',
+            'original_name' => 'fake_original_name',
+            'disk' => 'fake_disk',
+            'path' => 'fake_path'
         ]);
     }
 

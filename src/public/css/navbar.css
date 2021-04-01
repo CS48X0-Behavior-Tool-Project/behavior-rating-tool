@@ -1,0 +1,25 @@
+.nav-link {
+color: white;
+letter-spacing: 1px;
+}
+nav a:hover {
+  color: black;
+  background-color: white;
+}
+.nav-link:active{
+  background-color: white;
+  color: black;
+  letter-spacing: 1px;
+}
+h4 a{
+  color: white;
+}
+h4 {
+  color: white;
+}
+h4 a:hover{
+  background-color: #fc8403;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}

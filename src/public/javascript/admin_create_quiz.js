@@ -1,4 +1,3 @@
-
 function validate(event) {
     // Video upload check
     impVideo = document.getElementById("import-video");

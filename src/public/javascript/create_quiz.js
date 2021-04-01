@@ -51,7 +51,7 @@ function updateUI(data, success) {
     var message = data?.responseJSON?.['errors'] === undefined ? 'Server was unable to process video.' : data.responseJSON['errors']['video'][0];
     updateAlert(success ? data['msg'] : message, success ? 'success' : 'danger');
     updateVideoID(data['uuid']);
-    updateVideoName(data['name']);
+    updateVideoName(data['uuid']);
 
     if (success) updateThumbnail(data['uuid']);
 }
@@ -78,12 +78,16 @@ function updateVideoID(uuid) {
 }
 
 /**
- * Updates name input field to match uploaded video name
- *
- * @param {string} name Name of uploaded video
+ * Updates name input field to be the new ID number
+ * If an animal is already selected make the name field the animal and ID
+ * @param {string} uuid UUID of uploaded video
  */
-function updateVideoName(name) {
-    $("#video-name").val(name);
+function updateVideoName(uuid) {
+    if ($('input[name="animal-radio[]"]:checked').val()) {
+        $("#video-name").val($('input[name="animal-radio[]"]:checked').val() + "" + uuid);
+    } else {
+        $("#video-name").val(uuid);
+    }
 }
 
 function updateVideoLabel() {

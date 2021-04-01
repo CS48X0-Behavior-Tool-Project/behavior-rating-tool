@@ -15,7 +15,7 @@ jQuery(function() {
             $("#video-name").val(this.value + "" + $("#video-id").val());
         })
     });
-}
+})
 
 function updateThumbnail(uuid) {
     $("#thumbnail").attr("src", `videos/${uuid}`);

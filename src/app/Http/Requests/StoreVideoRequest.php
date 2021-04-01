@@ -27,7 +27,7 @@ class StoreVideoRequest extends FormRequest
     public function rules()
     {
         return [
-            'video' => 'required|file|mimetypes:video/mp4,video/mpeg,video/x-matroska',
+            'video' => 'required|file|mimetypes:video/mp4,video/mpeg,video/x-matroska,video/x-ms-wmv',
         ];
     }
 }

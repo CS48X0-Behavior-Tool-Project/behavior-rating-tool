@@ -7,6 +7,7 @@ jQuery(function(){
     });
     $(document).ready(function() {
           $('#dataTable').dataTable();
+          $('#dataTableSmall').dataTable();
     });
 
 

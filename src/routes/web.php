@@ -80,11 +80,6 @@ Route::get('/quizzes/{id}', [PagesController::class, 'getQuizById']);
 Route::get('/users', [PagesController::class, 'getUsers'])->name('users_route');;
 
 /**
- * Display the user
- */
-Route::get('/user/{id}', [PagesController::class, 'getUserById']);
-
-/**
  * Perform an action on the single user page
  */
 Route::get('/users/{actionName}/{id}', [SingleUserController::class, 'action']);

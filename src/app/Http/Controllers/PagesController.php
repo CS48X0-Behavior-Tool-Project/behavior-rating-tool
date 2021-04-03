@@ -113,7 +113,7 @@ class PagesController extends Controller
         $bestInterpretationScorePerQuiz = array();
 
         // $value is an array of UserAttempts objects, for example below
-        // 1 => [ 'id' => 1, 'attempt_id' => 1, 'user_id' => 2, 'score' => 4 ], 
+        // 1 => [ 'id' => 1, 'attempt_id' => 1, 'user_id' => 2, 'score' => 4 ],
         // 2 => [ 'id' => 2, 'attempt_id' => 2, 'user_id' => 2, 'score' => 5 ]
         foreach ($attemptScorePerQuiz as $quizID => $value) {
             // Sort the two columns descending (highest to lowest) to achieve the best attempt overall
@@ -161,16 +161,6 @@ class PagesController extends Controller
             abort(403);
         }
 
-    }
-
-    public function getUserById($id)
-    {
-        if (request()->user()->can('view', User::class)){
-            $user = $this->uc->getUser($id);
-            return view('single_user')->with('user', $user);
-        } else {
-            abort(403);
-        }
     }
 
     public function attemptQuiz($id)

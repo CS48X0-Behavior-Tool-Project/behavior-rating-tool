@@ -69,15 +69,15 @@
                                 <tr>
                                     <td>{{$user->first_name}}</td>
                                     <td>{{$user->last_name}}</td>
-                                    <td> <a href="#" class="btn btn-info" style="margin-left: 10px">View User's Quizzes</a></td>
+                                    <td> <a href="{{ url('users/quizzes/'.$user->id.'/') }}" class="btn btn-info" style="margin-left: 10px">View User's Quizzes</a></td>
                                     <td>
                                         <div class="dropdown">
                                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Edit User
                                           </button>
                                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                              <a class="dropdown-item" href="#">Reset {{$user->first_name}}'s Password</a>
-                                              <a class="dropdown-item" href="#">Delete {{$user->first_name}} {{$user->last_name}}</a>
+                                              <a class="dropdown-item" href="{{ url('users/reset/'.$user->id.'/') }}">Reset {{$user->first_name}}'s Password</a>
+                                              <a class="dropdown-item" href="{{ url('users/delete/'.$user->id.'/') }}">Delete {{$user->first_name}} {{$user->last_name}}</a>
                                           </div>
                                         </div>
                                     </td>
@@ -115,9 +115,9 @@
                                               User Options
                                           </button>
                                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                              <a class="dropdown-item" href="#">View {{$user->first_name}}'s Quizzes</a>
-                                              <a class="dropdown-item" href="#">Reset {{$user->first_name}}'s Password</a>
-                                              <a class="dropdown-item" href="#">Delete {{$user->first_name}} {{$user->last_name}}</a>
+                                              <a class="dropdown-item" href="{{ url('users/quizzes/'.$user->id.'/') }}">View {{$user->first_name}}'s Quizzes</a>
+                                              <a class="dropdown-item" href="{{ url('users/reset/'.$user->id.'/') }}">Reset {{$user->first_name}}'s Password</a>
+                                              <a class="dropdown-item" href="{{ url('users/delete/'.$user->id.'/') }}">Delete {{$user->first_name}} {{$user->last_name}}</a>
                                           </div>
                                         </div>
                                     </td>

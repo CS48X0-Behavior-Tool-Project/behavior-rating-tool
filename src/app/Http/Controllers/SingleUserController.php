@@ -17,17 +17,17 @@ class SingleUserController extends Controller
       $this->uc = new UserController();
     }
 
-    public function action($id) {
-      if (isset($_POST['reset-password'])) {
+    public function action($actionName, $id) {
+      if ($actionName == 'reset') {
         $name = $this->resetPassword($id);
         return redirect()->route('users_route')
           ->with('reset-message', 'User ' . $name . ' has been sent a password reset email.');
       }
-      else if (isset($_POST['delete-user'])) {
+      else if ($actionName == 'delete') {
         $name = $this->deleteUser($id);
         return redirect()->route('users_route')->with('deletion-message', 'User ' . $name . ' has been deleted.');
       }
-      else if (isset($_POST['view-quizzes'])) {
+      else if ($actionName == 'quizzes') {
         $this->viewUserQuizzes($id);
       }
     }

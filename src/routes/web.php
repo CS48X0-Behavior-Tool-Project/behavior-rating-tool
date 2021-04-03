@@ -87,7 +87,7 @@ Route::get('/user/{id}', [PagesController::class, 'getUserById']);
 /**
  * Perform an action on the single user page
  */
-Route::post('/user/{id}', [SingleUserController::class, 'action']);
+Route::get('/users/{actionName}/{id}', [SingleUserController::class, 'action']);
 
 /**
  * Route for submitting a login request.  Will need to test when actual webpage is created.

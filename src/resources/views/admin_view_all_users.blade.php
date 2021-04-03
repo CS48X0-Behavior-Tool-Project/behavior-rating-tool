@@ -77,7 +77,7 @@
                                           </button>
                                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                               <a class="dropdown-item" href="{{ url('users/reset/'.$user->id.'/') }}">Reset {{$user->first_name}}'s Password</a>
-                                              <a class="dropdown-item" href="{{ url('users/delete/'.$user->id.'/') }}">Delete {{$user->first_name}} {{$user->last_name}}</a>
+                                              <a class="dropdown-item" href="{{ url('users/delete/'.$user->id.'/') }}" onclick="return confirm('Are you sure you want to delete {{$user->first_name}} {{$user->last_name}}?  All associated records will be removed.  This action is irreversible.')">Delete {{$user->first_name}} {{$user->last_name}}</a>
                                           </div>
                                         </div>
                                     </td>
@@ -117,7 +117,7 @@
                                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                               <a class="dropdown-item" href="{{ url('users/quizzes/'.$user->id.'/') }}">View {{$user->first_name}}'s Quizzes</a>
                                               <a class="dropdown-item" href="{{ url('users/reset/'.$user->id.'/') }}">Reset {{$user->first_name}}'s Password</a>
-                                              <a class="dropdown-item" href="{{ url('users/delete/'.$user->id.'/') }}">Delete {{$user->first_name}} {{$user->last_name}}</a>
+                                              <a class="dropdown-item" href="{{ url('users/delete/'.$user->id.'/') }}" onclick="return confirm('Are you sure you want to delete {{$user->first_name}} {{$user->last_name}}?  All associated records will be removed.  This action is irreversible.')">Delete {{$user->first_name}} {{$user->last_name}}</a>
                                           </div>
                                         </div>
                                     </td>

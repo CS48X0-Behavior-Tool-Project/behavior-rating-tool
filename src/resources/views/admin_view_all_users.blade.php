@@ -69,7 +69,7 @@
                                 <tr>
                                     <td>{{$user->first_name}}</td>
                                     <td>{{$user->last_name}}</td>
-                                    <td> <a href="#" class="btn btn-primary" style="margin-left: 10px">View User's Quizzes</a></td>
+                                    <td> <a href="#" class="btn btn-info" style="margin-left: 10px">View User's Quizzes</a></td>
                                     <td>
                                         <div class="dropdown">
                                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -30,7 +30,21 @@
     @yield('view_specific_styles')
 </head>
 
-<link rel="stylesheet" href="{{ URL::asset('css/navbar.css') }}">
+<style media="screen">
+  .nav-link {
+  color: white;
+  letter-spacing: 1px;
+  }
+  nav a:hover {
+    color: black;
+    background-color: white;
+  }
+  .nav-link:active{
+    background-color: white;
+    color: black;
+    letter-spacing: 1px;
+  }
+</style>
 
 <body>
     <div id="app">
@@ -38,7 +52,15 @@
             <div class="container">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-dark">
-                        <h4><a href="{{ url('quizzes') }}">{{ config('app.name') }}</a></h4>
+                      @guest
+                          <a class="navbar-brand" href="{{ route('login') }}">
+                              {{ config('app.name') }}
+                          </a>
+                      @else
+                          <a class="navbar-brand" href="{{ url('/home') }}">
+                              {{ config('app.name') }}
+                          </a>
+                      @endguest
                     </ul>
                     <!-- Right Side Of Navbar -->
                         @guest
@@ -54,18 +76,18 @@
                                   @endif
                               </li>
                               <li class="nav-item">
-                                  <a class="nav-link active" href="{{ url('quizzes') }}">
-                                      <strong>{{ __('Quizzes') }}</strong>
+                                  <a class="nav-link" href="{{ url('quizzes') }}">
+                                      {{ __('Quizzes') }}
                                   </a>
                               </li>
                               <li class="nav-item">
-                                <a class="nav-link" href="{{ url('review') }}">
-                                    {{ __('Review') }}
+                                  <a class="nav-link active" href="{{ url('review') }}">
+                                      <strong>{{ __('Review') }}</strong>
                                   </a>
                               </li>
                               <li class="nav-item">
-                                  <a class="nav-link" href="{{ url('account') }}">
-                                      {{ __('Account') }}
+                                <a class="nav-link" href="{{ url('account') }}">
+                                    {{ __('Account') }}
                                   </a>
                               </li>
                               <li class="nav-item">
@@ -82,31 +104,6 @@
                 </div>
             </div>
         </nav>
-        @if (Bouncer::is(Auth::user())->an("admin", "expert"))
-            <p class="title"
-              style="text-align: center;
-              color: black;
-              background-color: #f7f7f7;
-              border-radius: 5px;
-              border: 1px solid #dfdfdf;">
-                  You are currently logged in as an
-                  {{ Auth::user()->roles[0]->name}}:
-                  {{ Auth::user()->first_name ?? 'John'}}
-                  {{ Auth::user()->last_name ?? 'Smith'}}
-            </p>
-        @else
-            <p class="title"
-              style="text-align: center;
-              color: black;
-              background-color: #f7f7f7;
-              border-radius: 5px;
-              border: 1px solid #dfdfdf;">
-                  You are currently logged in as a
-                  {{ Auth::user()->roles[0]->name ?? 'Student'}}:
-                  {{ Auth::user()->first_name ?? 'John'}}
-                  {{ Auth::user()->last_name ?? 'Smith'}}
-            </p>
-        @endif
 
         <main class="py-4">
             @yield('content')

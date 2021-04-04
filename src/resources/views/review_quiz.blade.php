@@ -20,7 +20,6 @@
                                 <th>Attempted At</th>
                                 <th>Time Spent</th>
                                 <th>Score</th>
-                                <th>Max Score</th>
                                 <th>Interpretation Guess</th>
                             </tr>
                         </thead>
@@ -30,8 +29,7 @@
                                 <td><a href="{{ url('quizzes/review/'.$data->user_attempt_id) }}"> {{$data->quiz}}</th>
                                 <td>{{$data->created_at}}</td>
                                 <td>{{$data->time}}</td>
-                                <td>{{$data->score}}</td>
-                                <td>{{$data->max_score}}</td>
+                                <td>{{$data->score}} / {{$data->max_score}}</td> 
                                 <td>{{$data->interpretation_guess}}</td>                  
                             </tr>
                         @endforeach

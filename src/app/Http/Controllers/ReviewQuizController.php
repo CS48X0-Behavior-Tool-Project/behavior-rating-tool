@@ -55,12 +55,32 @@ class ReviewQuizController extends Controller
 
             Log::info(['>>> ReviewQuizController - getUserQuizzes: ',$quizzes]);
 
-            return view('review_quiz')->with('quizzes',$quizzes);
+            $admin_data = $this->getAllStudentQuizzes();
+
+            return view('review_quiz')->with(['quizzes' => $quizzes, 'admin_data' => $admin_data]);
         }
         else
         {
             return redirect()->route('login')->with('validate', 'Please login first.');
         }
+    }
+
+    public function exportUserQuizSummary() {
+        $admin_data = $this->getAllStudentQuizzes();
+        $csvFile = "Student,Quiz Code,Attempt Numbers,Best Scores, Time Spent\n";
+
+        foreach ($admin_data as $row) {
+            // $csvFile .= "{$row['email']},{$row['code']},{$row['attempts']},{$row['score']},{$row['time']}\n";
+            $csvFile .= "{$row->email},{$row->code},{$row->attempts},{$row->score},{$row->time}\n";
+        
+        }
+
+        return response($csvFile)
+            ->withHeaders([
+                'Content-Type' => 'text/csv',
+                'Cache-Control' => 'no-store, no-cache',
+                'Content-Disposition' => 'attachment; filename=student_quiz_summary.csv',
+            ]);
     }
 
     public function getReviewQuizByUserAttemptId($userAttemptId) 
@@ -120,6 +140,29 @@ class ReviewQuizController extends Controller
         ->where('user_attempts.id', $userAttemptId)
         ->first();
 
+        return $data;
+    }
+
+    private function getAllStudentQuizzes() {
+        $data = DB::table('users')
+        ->select( 
+            'users.email',
+            'quizzes.code',
+            'user_attempts.id as user_attempt_id',
+            'user_attempts.score',
+            'user_attempts.max_score',
+            'user_attempts.interpretation_guess',
+            'user_attempts.options->time as time',
+            DB::raw('count(*) over (partition by users.email, quizzes.code) as attempts'),
+            DB::raw('row_number() over (partition by users.email, quizzes.code order by user_attempts.interpretation_guess desc, user_attempts.score desc) as best_index')
+        )
+        ->join('user_attempts', 'user_attempts.user_id','=','users.id')
+        ->join('attempt_quizzes', 'attempt_quizzes.attempt_id','=','user_attempts.attempt_id')
+        ->join('quizzes', 'quizzes.id','=','attempt_quizzes.quiz_id')
+        ->get();
+
+        $data = $data->where('best_index', '=', '1');
+        Log::info(['>>> review-by-admin: getAllStudentQuizzes: ',$data]);
         return $data;
     }
 }

@@ -27,10 +27,9 @@
                         <tbody>
                         @foreach($quizzes as $data)
                             <tr style="border: 1px solid #f2d296;">    
-                                <th><a href="{{ url('quizzes/'.$data->quiz_id) }}"> {{$data->quiz}}</th>
-                                <!-- TODO: need to redirect to review/userattemptsID which will load quiz page and answers -->
+                                <th><a href="{{ url('quizzes/review/'.$data->user_attempt_id) }}"> {{$data->quiz}}</th>
                                 <th>{{$data->created_at}}</th>
-                                <th>{{$data->created_at}}</th>
+                                <th>{{$data->time}}</th>
                                 <th>{{$data->score}}</th>
                                 <th>{{$data->max_score}}</th>
                                 <th>{{$data->interpretation_guess}}</th>                  

@@ -94,7 +94,8 @@ Route::post('/user/{id}', [SingleUserController::class, 'action']);
  * Display review page
  */
 Route::get('/review', [ReviewQuizController::class, 'getUserQuizzes'])->name('users_review');
-Route::get('/review/{id}', [ReviewQuizController::class, 'getReviewbyUserAttemptID']);
+// Route::get('/review/{id}', [ReviewQuizController::class, 'getReviewbyUserAttemptID']);
+Route::get('/quizzes/review/{id}', [ReviewQuizController::class, 'getReviewQuizByUserAttemptId']);   // id is user_attempt_id
 
 /**
  * Route for submitting a login request.  Will need to test when actual webpage is created.

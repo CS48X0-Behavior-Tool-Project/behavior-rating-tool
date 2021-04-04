@@ -62,7 +62,8 @@
                                   <a class="nav-link" href="#">Review</a>
                               </li> -->
                               <li class="nav-item">
-                                  <a class="nav-link" href="{{ url('review') }}">Review
+                                  <a class="nav-link" href="{{ url('review') }}">
+                                    {{ __('Review') }}
                                   </a>
                               </li>
                               <li class="nav-item">

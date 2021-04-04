@@ -10,42 +10,62 @@ use App\Models\Quiz;
 use App\Models\QuizOption;
 use App\Models\AttemptQuiz;
 use App\Models\AttemptAnswerItem;
+use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
     public function getAllQuizzes()
     {
         // Implement logic to fetch all quizzes
-        
-        $quizzes = Quiz::all();
-        return $quizzes;
+
+        if(Auth::user() and request()->user()->can('conduct-quizzes')) {
+            $quizzes = Quiz::all(); 
+            return $quizzes;
+        }
+        else {
+            abort(403);
+        }
     }
 
     public function getQuiz($id)
     {
         // Implement logic to fetch quiz
 
-        $quizOps = DB::table('quiz_options')
-            ->where('quiz_id', $id)
-            ->get();
+        if(Auth::user() and request()->user()->can('conduct-quizzes')) {
+            $quizOps = DB::table('quiz_options')
+                ->where('quiz_id', $id)
+                ->get();
 
-        $quizInfor = Quiz::find($id);
-        $quizInfor->quiz_question_options = $quizOps;
-        return $quizInfor;
+            $quizInfor = Quiz::find($id);
+            $quizInfor->quiz_question_options = $quizOps;
+            return $quizInfor;
+        }
+        else {
+            abort(403);
+        }
     }
 
     public function getQuizAttempts($id)
     {
         // Implement logic to fetch quiz attempts
 
-        $attempts = DB::table('attempt_quizzes')
-            ->where('quiz_id', $id)
-            ->get();
-        return $attempts;
+        if(Auth::user() and request()->user()->can('review-my-quizzes')) {
+            $attempts = DB::table('attempt_quizzes')
+                ->where('quiz_id', $id)
+                ->get();
+            return $attempts;
+        }
+        else {
+            abort(403);
+        }
     }
 
     public function createQuiz(Request $request)
     {
+        if (!(Auth::user() and request()->user()->can('create-quizzes'))) {
+            abort(403);
+        }
+
         $quiz = new Quiz;
         $quiz->code = $request->code;
         $quiz->animal = $request->animal;
@@ -72,6 +92,10 @@ class QuizController extends Controller
 
     public function updateQuiz(Request $request, $id)
     {
+        if (!(Auth::user() and request()->user()->can('update-quizzes'))) {
+            abort(403);
+        }
+
         if (Quiz::where('id', $id)->exists()) {
             \Log::info($request);
 
@@ -124,6 +148,9 @@ class QuizController extends Controller
 
     public function deleteQuiz($id)
     {
+        if (!(Auth::user() and request()->user()->can('delete-quizzes'))) {
+            abort(403);
+        }
         Quiz::find($id)->delete();
     }
 }

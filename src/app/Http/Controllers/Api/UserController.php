@@ -15,12 +15,17 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function getAllUsers()
     {
         // Implement logic to fetch all users
+        if (!(request()->user()->can('view-users-page'))){
+            abort(403); 
+        }
+
         $users = User::all();
         return $users;
     }
@@ -34,6 +39,10 @@ class UserController extends Controller
     public function getUserAttempts($id)
     {
         // Implement logic to fetch user quiz attempts
+        if(!(Auth::user() and request()->user()->can('conduct-quizzes'))) {
+            abort(403);
+        }
+
         $attempts = DB::table('user_attempts')
         ->where('user_id', $id)
         ->get();
@@ -44,6 +53,10 @@ class UserController extends Controller
     public function upsertUserAttempts(Request $request)
     {
         // insert if new, update if exist (update behavior and interpretation given an user attempt)
+
+        if(!(Auth::user() and request()->user()->can('conduct-quizzes'))) {
+            abort(403);
+        }
 
         $user_id = $request->route('id') ?? -1;
         $attempt_id = -1;
@@ -225,6 +238,9 @@ class UserController extends Controller
 
     public function deleteUserAllAttempts(Request $request, $id) {
         // delete all the user attempts specify an user_id
+        if (!(Auth::user() and request()->user()->can('delete-quizzes'))) {
+            abort(403);
+        }
 
         UserAttempt::where('user_id', $id)->delete();
         Attempt::where('user_id', $id)->delete();
@@ -249,6 +265,10 @@ class UserController extends Controller
     public function deleteUser(Request $request, $id)
     {
         // Implement logic to delete user
+        if (!(request()->user()->can('delete-users'))){
+            abort(403); 
+        }
+
         User::find($id)->delete();
     }
 
@@ -257,6 +277,10 @@ class UserController extends Controller
     */
     public function deleteUserAttempts($id)
     {
+        if (!(Auth::user() and request()->user()->can('delete-quizzes'))) {
+            abort(403);
+        }
+
         $attemptIDs = Attempt::where('user_id','=',$id)->pluck('id')->toArray();
         foreach ($attemptIDs as $key => $value) {
           $attemptQuiz = AttemptQuiz::where('attempt_id','=',$value);

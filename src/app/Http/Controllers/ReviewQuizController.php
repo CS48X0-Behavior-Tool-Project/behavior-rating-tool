@@ -67,12 +67,10 @@ class ReviewQuizController extends Controller
 
     public function exportUserQuizSummary() {
         $admin_data = $this->getAllStudentQuizzes();
-        $csvFile = "Student,Quiz Code,Attempt Numbers,Best Scores, Time Spent\n";
+        $csvFile = "Student,Quiz Code,Number of Attempts,Best Score,Interpretation, Best Time\n";
 
         foreach ($admin_data as $row) {
-            // $csvFile .= "{$row['email']},{$row['code']},{$row['attempts']},{$row['score']},{$row['time']}\n";
-            $csvFile .= "{$row->email},{$row->code},{$row->attempts},{$row->score},{$row->time}\n";
-        
+            $csvFile .= "{$row->email},{$row->code},{$row->attempts},'{$row->score}/{$row->max_score},{$row->interpretation_guess}, {$row->time}\n";
         }
 
         return response($csvFile)

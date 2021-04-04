@@ -92,6 +92,12 @@
                                         @endforeach
                                     </div>
                                 </div>
+                                <br>
+                                <div style="float: right;">
+                                <strong>*</strong>
+                                    <span style="background-color:#86EA89"><i>You got right</i></span>
+                                    <span style="background-color:yellow"><i>You got wrong</i></span>
+                                </div>
                             </div>
                         </div>
                     </form>

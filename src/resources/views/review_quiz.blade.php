@@ -19,8 +19,8 @@
                                 <th>Quiz Code</a></th>
                                 <th>Attempted At</th>
                                 <th>Time Spent</th>
-                                <th>Scores</th>
-                                <th>Max Scores</th>
+                                <th>Score</th>
+                                <th>Max Score</th>
                                 <th>Interpretation Guess</th>
                             </tr>
                         </thead>
@@ -47,11 +47,15 @@
                     <table style="width: 100%;">
                         <thead>
                             <tr style="border: 1px solid #f2d296;">
-                                <th>Student</a></th>
-                                <th>Quiz Code</th>
-                                <th>Attempt Numbers</th>
-                                <th>Best Scores</th>
-                                <th>Time spent</th>
+                                <th scope="col" rowspan="2">Student</a></th>
+                                <th scope="col" rowspan="2">Quiz Code</th>
+                                <th scope="col" rowspan="2">Number of Attempts</th>
+                                <th scope="colgroup" colspan="2" class="text-center">Best Score</th>
+                                <th scope="col" rowspan="2">Best Time</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Behaviours</th>
+                                <th scope="col">Interpretation</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,7 +64,8 @@
                                 <td>{{$row->email}}</td>
                                 <td>{{$row->code}}</td>
                                 <td>{{$row->attempts}}</td>
-                                <td>{{$row->score}}</td>
+                                <td>{{$row->score}} / {{$row->max_score}}</td>
+                                <td>{{$row->interpretation_guess}}</td>
                                 <td>{{$row->time}}</td>                  
                             </tr>
                         @endforeach

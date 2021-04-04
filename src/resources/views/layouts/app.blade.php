@@ -58,8 +58,12 @@
                                       {{ __('Quizzes') }}
                                   </a>
                               </li>
-                              <li class="nav-item">
+                              <!-- <li class="nav-item">
                                   <a class="nav-link" href="#">Review</a>
+                              </li> -->
+                              <li class="nav-item">
+                                  <a class="nav-link" href="{{ url('review') }}">Review
+                                  </a>
                               </li>
                               <li class="nav-item">
                                   <a class="nav-link" href="{{ url('account') }}">

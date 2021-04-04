@@ -19,6 +19,7 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\QuizAttemptController;
 use App\Http\Controllers\EditQuizController;
 use App\Http\Controllers\SingleUserController;
+use App\Http\Controllers\ReviewQuizController;
 
 use App\Http\Controllers\JsonController;
 
@@ -88,6 +89,12 @@ Route::get('/user/{id}', [PagesController::class, 'getUserById']);
  * Perform an action on the single user page
  */
 Route::post('/user/{id}', [SingleUserController::class, 'action']);
+
+/**
+ * Display review page
+ */
+Route::get('/review', [ReviewQuizController::class, 'getUserQuizzes'])->name('users_review');
+Route::get('/review/{id}', [ReviewQuizController::class, 'getReviewbyUserAttemptID']);
 
 /**
  * Route for submitting a login request.  Will need to test when actual webpage is created.

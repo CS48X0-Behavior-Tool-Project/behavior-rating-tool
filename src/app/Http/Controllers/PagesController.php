@@ -241,4 +241,16 @@ class PagesController extends Controller
         }
         return redirect()->back();
     }
+
+    // public function userQuizReview()
+    // {
+    //     if (request()->user()->can('view', User::class)){
+    //         $users = $this->uc->getAllUsers();
+
+    //         return view('admin_view_all_users')->with('users', $users);
+    //     } else {
+    //         abort(403);
+    //     }
+
+    // }
 }

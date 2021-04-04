@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -39,6 +40,65 @@ class UserController extends Controller
         ->get();
         Log::info($attempts);
         return $attempts;
+    }
+
+    public function getUserQuizScores($id) { 
+
+        // if (Auth::user() and request()->user()->can('export-student-quizzes')){
+        if (Auth::user()){
+
+            $data = DB::table('users')
+                ->select(
+                    'users.email', 
+                    'quizzes.code as quiz', 
+                    'quizzes.id as quiz_id',
+                    'attempt_quizzes.created_at', 
+                    'user_attempts.score',
+                    'user_attempts.max_score',
+                    'user_attempts.interpretation_guess',
+                    'user_attempts.options',
+                    'attempt_answer_items.id as attempt_answer_id',
+                    'attempt_answer_items.behavior_answers',
+                    'attempt_answer_items.interpretation_answers'
+                    )
+                ->join('user_attempts', 'users.id', '=', 'user_attempts.user_id')
+                ->join('attempt_quizzes', 'user_attempts.attempt_id', '=', 'attempt_quizzes.attempt_id')
+                ->join('quizzes', 'quizzes.id', '=', 'attempt_quizzes.quiz_id')
+                ->join('attempt_answer_items', 'attempt_answer_items.attempt_quiz_id', '=', 'attempt_quizzes.id')
+                ->orderby('users.email')
+                ->where('users.id', $id)
+                ->get();
+
+            // $csvFile = " User, Quiz Code, Attempted Time, Time Spent, Scores, Max Scores, Interpretation Guess\n";
+
+            Log::info(['>>> api/UserController - getUserQuizScores: ',$data]);
+
+            if(count($data)>0) {
+
+                return $data;
+
+                // foreach($data as $row) {
+                //     $options = $row->options;
+
+                //     $time = null;
+                //     if(isset($option['time'])) {
+                //         $time = $option['time'];
+                //     }
+                //     $csvFile .= "{$row->email},{$row->quiz},{$row->created_at},{$time},{$row->score},{$row->max_score},{$row->interpretation_guess}\n";
+                // }
+            }
+
+            // return response($csvFile)
+            //     ->withHeaders([
+            //         'Content-Type' => 'text/csv',
+            //         'Cache-Control' => 'no-store, no-cache',
+            //         'Content-Disposition' => 'attachment; filename=user_quizzes.csv',
+            //     ]);
+        }
+        else
+        {
+            return redirect()->route('login')->with('validate', 'Please login first.');
+        }
     }
 
     public function upsertUserAttempts(Request $request)

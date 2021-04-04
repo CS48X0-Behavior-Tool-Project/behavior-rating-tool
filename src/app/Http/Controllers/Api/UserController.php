@@ -22,7 +22,7 @@ class UserController extends Controller
     public function getAllUsers()
     {
         // Implement logic to fetch all users
-        if (!(request()->user()->can('view-users-page'))){
+        if (!(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('view-users-page'))){
             abort(403); 
         }
 
@@ -39,7 +39,7 @@ class UserController extends Controller
     public function getUserAttempts($id)
     {
         // Implement logic to fetch user quiz attempts
-        if(!(Auth::user() and request()->user()->can('conduct-quizzes'))) {
+        if(!(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('conduct-quizzes'))) {
             abort(403);
         }
 
@@ -54,7 +54,7 @@ class UserController extends Controller
     {
         // insert if new, update if exist (update behavior and interpretation given an user attempt)
 
-        if(!(Auth::user() and request()->user()->can('conduct-quizzes'))) {
+        if(!(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('conduct-quizzes'))) {
             abort(403);
         }
 
@@ -238,7 +238,7 @@ class UserController extends Controller
 
     public function deleteUserAllAttempts(Request $request, $id) {
         // delete all the user attempts specify an user_id
-        if (!(Auth::user() and request()->user()->can('delete-quizzes'))) {
+        if (!(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('delete-quizzes'))) {
             abort(403);
         }
 
@@ -265,7 +265,7 @@ class UserController extends Controller
     public function deleteUser(Request $request, $id)
     {
         // Implement logic to delete user
-        if (!(request()->user()->can('delete-users'))){
+        if (!(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('delete-users'))){
             abort(403); 
         }
 
@@ -277,7 +277,7 @@ class UserController extends Controller
     */
     public function deleteUserAttempts($id)
     {
-        if (!(Auth::user() and request()->user()->can('delete-quizzes'))) {
+        if (!(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('delete-quizzes'))) {
             abort(403);
         }
 

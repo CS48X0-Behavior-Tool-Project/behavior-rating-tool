@@ -47,14 +47,14 @@
                             <ul class="nav nav-tabs">
                               <li class="nav-item">
                                   <!-- Admin and TA -->
-                                  @if (request()->user()->can('view-users-page'))
+                                  @if (Bouncer::is(Auth::user())->an("admin") || request()->user()->can('view-users-page'))
                                       <a class="nav-link" href="{{ url('users') }}">
                                           {{ __('Users') }}
                                       </a>
                                   @endif
                               </li>
                               <li class="nav-item">
-                                  @if (request()->user()->can('conduct-quizzes'))
+                                  @if (Bouncer::is(Auth::user())->an("admin") || request()->user()->can('conduct-quizzes'))
                                     <a class="nav-link" href="{{ url('quizzes') }}">
                                         {{ __('Quizzes') }}
                                     </a>
@@ -69,7 +69,7 @@
                                   </a>
                               </li>
 
-                              @if (request()->user()->can('export-users'))
+                              @if (Bouncer::is(Auth::user())->an("admin") || request()->user()->can('export-users'))
                               <li class="nav-item">
                                   <a class="nav-link" href="{{ url('export') }}">
                                       {{ __('Export') }}

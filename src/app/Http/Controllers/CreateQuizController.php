@@ -8,6 +8,7 @@ use App\Models\Quiz;
 use App\Models\QuizOption;
 use App\Models\Video;
 use Illuminate\Support\Facades\Log;
+use Bouncer;
 
 class CreateQuizController extends Controller
 {
@@ -18,7 +19,7 @@ class CreateQuizController extends Controller
 
 	public function createQuiz()
 	{
-		if (request()->user()->can('create', Quiz::class)) {
+		if (Bouncer::is(Auth::user())->an("admin") || request()->user()->can('create', Quiz::class)) {
 			try {
 				$videoID = $this->readVideo();
 				$animal = $this->readAnimal();

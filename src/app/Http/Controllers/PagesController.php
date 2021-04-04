@@ -157,7 +157,7 @@ class PagesController extends Controller
 
     public function getUsers()
     {
-        if (request()->user()->can('view-users-page')){
+        if (Bouncer::is(Auth::user())->an("admin") || request()->user()->can('view-users-page')){
             $users = $this->uc->getAllUsers();
 
             return view('admin_view_all_users')->with('users', $users);
@@ -169,7 +169,7 @@ class PagesController extends Controller
 
     public function getUserById($id)
     {
-        if (request()->user()->can('view-users-page')){
+        if (Bouncer::is(Auth::user())->an("admin") || request()->user()->can('view-users-page')){
             $user = $this->uc->getUser($id);
             return view('single_user')->with('user', $user);
         } else {
@@ -191,7 +191,7 @@ class PagesController extends Controller
 
     public function getCreateQuiz()
     {
-        if (request()->user()->can('create-quizzes')) {
+        if (Bouncer::is(Auth::user())->an("admin") || request()->user()->can('create-quizzes')) {
             // search the database for different animal species to populate a radio button list
             $animals = Quiz::all()->pluck('animal')->unique();
 
@@ -203,7 +203,7 @@ class PagesController extends Controller
     // Selector page for editing quizzes
     public function getEditQuiz()
     {
-        if (!(Auth::user() and request()->user()->can('update-quizzes'))) {
+        if (!(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('update-quizzes'))) {
             abort(403);
         }
 
@@ -214,7 +214,7 @@ class PagesController extends Controller
     // Edits a single quiz
     public function getEditQuizByID($id)
     {   
-        if (request()->user()->can('update-quizzes')) {
+        if (Bouncer::is(Auth::user())->an("admin") || request()->user()->can('update-quizzes')) {
             $animals = Quiz::all()->pluck('animal')->unique();
             $quiz = Quiz::find($id);
             $b_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'behaviour')->get();
@@ -230,7 +230,7 @@ class PagesController extends Controller
 
     public function getAddUser()
     {
-        if (!(request()->user()->can('create-users'))) {
+        if (!(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('create-users'))) {
             abort(403);
         }
         return view('admin_add_user');
@@ -243,7 +243,7 @@ class PagesController extends Controller
 
     public function exportData()
     {
-        if (request()->user()->can('export-users')) {
+        if (Bouncer::is(Auth::user())->an("admin") || request()->user()->can('export-users')) {
             return view('export');
         }
         return redirect()->back();

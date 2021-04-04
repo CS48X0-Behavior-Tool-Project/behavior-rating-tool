@@ -8,6 +8,7 @@ use Exception;
 use App\Http\Controllers\Api\QuizController;
 use App\Models\QuizOption;
 use Illuminate\Support\Facades\Log;
+use Bouncer;
 
 class EditQuizController extends Controller
 {
@@ -20,7 +21,7 @@ class EditQuizController extends Controller
 
   public function updateQuiz($id)
   {
-    if (request()->user()->can('edit', Quiz::class)) {
+    if (Bouncer::is(Auth::user())->an("admin") || request()->user()->can('edit', Quiz::class)) {
       try {
         $videoID = request()->input('video-id');
         $quizCode = request()->input('video-name');

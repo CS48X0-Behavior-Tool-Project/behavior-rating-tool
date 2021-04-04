@@ -11,6 +11,7 @@ use App\Models\QuizOption;
 use App\Models\AttemptQuiz;
 use App\Models\AttemptAnswerItem;
 use Illuminate\Support\Facades\Auth;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class QuizController extends Controller
 {
@@ -18,7 +19,7 @@ class QuizController extends Controller
     {
         // Implement logic to fetch all quizzes
 
-        if(Auth::user() and request()->user()->can('conduct-quizzes')) {
+        if(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('conduct-quizzes')) {
             $quizzes = Quiz::all(); 
             return $quizzes;
         }
@@ -31,7 +32,7 @@ class QuizController extends Controller
     {
         // Implement logic to fetch quiz
 
-        if(Auth::user() and request()->user()->can('conduct-quizzes')) {
+        if(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('conduct-quizzes')) {
             $quizOps = DB::table('quiz_options')
                 ->where('quiz_id', $id)
                 ->get();
@@ -49,7 +50,7 @@ class QuizController extends Controller
     {
         // Implement logic to fetch quiz attempts
 
-        if(Auth::user() and request()->user()->can('review-my-quizzes')) {
+        if(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('review-my-quizzes')) {
             $attempts = DB::table('attempt_quizzes')
                 ->where('quiz_id', $id)
                 ->get();
@@ -62,7 +63,7 @@ class QuizController extends Controller
 
     public function createQuiz(Request $request)
     {
-        if (!(Auth::user() and request()->user()->can('create-quizzes'))) {
+        if (!(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('create-quizzes'))) {
             abort(403);
         }
 
@@ -92,7 +93,7 @@ class QuizController extends Controller
 
     public function updateQuiz(Request $request, $id)
     {
-        if (!(Auth::user() and request()->user()->can('update-quizzes'))) {
+        if (!(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('update-quizzes'))) {
             abort(403);
         }
 
@@ -148,7 +149,7 @@ class QuizController extends Controller
 
     public function deleteQuiz($id)
     {
-        if (!(Auth::user() and request()->user()->can('delete-quizzes'))) {
+        if (!(Bouncer::is(Auth::user())->an("admin") || request()->user()->can('delete-quizzes'))) {
             abort(403);
         }
         Quiz::find($id)->delete();

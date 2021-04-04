@@ -18,7 +18,7 @@ class ExportController extends Controller
     {
         // Only Admins should be allowed to access this resource | have ability to export-users
         // if (Auth::user() and Bouncer::is(request()->user())->an('admin')) {
-            if (Auth::user() and request()->user()->can('export-users')) {
+            if (Bouncer::is(Auth::user())->an("admin") || request()->user()->can('export-users')) {
                 $users = DB::table('users')
                     ->select(   
                         'users.email',
@@ -58,7 +58,7 @@ class ExportController extends Controller
 
         // Only Admins should be allowed to access this resource
 
-        if (Auth::user() and request()->user()->can('export-student-quizzes')){
+        if (Bouncer::is(Auth::user())->an("admin") || request()->user()->can('export-student-quizzes')){
 
             $data = DB::table('users')
                 ->select(

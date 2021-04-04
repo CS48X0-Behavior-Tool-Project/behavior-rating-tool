@@ -57,9 +57,6 @@
                                                 @endif
 
                                                 </span>
-                                                @if ( $opt->is_solution == 1)
-                                                    <label style="color:green"> <strong> -- Solution </strong> </label>
-                                                @endif
                                                 <br>
                                             @endif
                                         @endforeach
@@ -90,9 +87,6 @@
                                                 @endif
 
                                                 </span>
-                                                @if ( $opt->is_solution == 1)
-                                                    <label style="color:green"> <strong> -- Solution </strong> </label>
-                                                @endif
                                                 <br>
                                             @endif
                                         @endforeach

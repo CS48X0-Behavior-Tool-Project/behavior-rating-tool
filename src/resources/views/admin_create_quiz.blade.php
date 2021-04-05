@@ -24,7 +24,7 @@
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-6 col-lg-4">
                                 <video id="thumbnail" class="" width="100%" style="max-width: 100%" controls>
-                                    <source src="" type="video/mp4"/>
+                                    <source class="video-box" src="" type="video/mp4"/>
                                 </video>
                                 <br>
                                 <br>

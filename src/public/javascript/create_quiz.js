@@ -96,5 +96,6 @@ function updateVideoLabel() {
 }
 
 function updateThumbnail(uuid) {
-    $("#thumbnail").attr("src", `videos/${uuid}`);
+    $("#thumbnail").attr("src", `${location.origin}/videos/${uuid}`);
+    $("#video-box").attr("src", `${location.origin}/videos/${uuid}`);
 }

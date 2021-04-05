@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Video;
 use App\Models\Quiz;
 use App\Models\User;
+use Database\Seeders\QuizSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Silber\Bouncer\BouncerFacade as Bouncer;
 use Tests\TestCase;
@@ -18,6 +19,7 @@ class RoutesTest extends TestCase
         parent::setUp();
         Bouncer::allow('admin')->to(['delete', 'edit', 'create', 'view'], [User::class, Video::class, Quiz::class]);
         Bouncer::allow('admin')->to('export-users');
+        $this->seed(QuizSeeder::class);
     }
 
     public function test_guest_can_view_login_page()
@@ -41,7 +43,7 @@ class RoutesTest extends TestCase
         $user = User::factory()->create();
         $user->assign('admin');
         $response = $this->actingAs($user)
-            ->get('/add_user');
+            ->get('/user/add');
 
         $response->assertStatus(200);
     }
@@ -51,7 +53,7 @@ class RoutesTest extends TestCase
         $user = User::factory()->create();
         $user->assign('admin');
         $response = $this->actingAs($user)
-            ->get('/create_quiz');
+            ->get('/quiz/create');
 
         $response->assertStatus(200);
     }
@@ -71,7 +73,7 @@ class RoutesTest extends TestCase
         $user = User::factory()->create();
         $user->assign('admin');
         $response = $this->actingAs($user)
-            ->get('/quizzes');
+            ->get('/quiz/list');
 
         $response->assertStatus(200);
     }

@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Password;
 
 class UserController extends Controller
 {
@@ -234,6 +235,13 @@ class UserController extends Controller
     {
     }
 
+    public function resetUserPassword(Request $request, $id) {
+        Password::sendResetLink(['id' => $id]);        //function exists in PasswordBroker class
+        $user = User::find($id);
+        $name = $user->first_name . ' ' . $user->last_name;
+        return $name;
+    }
+
     public function updateUser(Request $request, $id)
     {
         $user = $request->user();
@@ -247,8 +255,7 @@ class UserController extends Controller
     }
 
     public function deleteUser(Request $request, $id)
-    {
-        // Implement logic to delete user
+    {   
         User::find($id)->delete();
     }
 

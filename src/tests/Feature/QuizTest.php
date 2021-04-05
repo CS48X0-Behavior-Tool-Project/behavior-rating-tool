@@ -49,7 +49,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/create_quiz', [
+            ->post('/quiz/create', [
                 'video-id' => '1',
                 'video-name' => 'Rabbit1',
                 'animal-radio' => ['New'],
@@ -73,7 +73,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/create_quiz');
+        $response->assertRedirect('/quiz/create');
         $response->assertSessionHas('quiz-status', 'Quiz Rabbit1 Created Successfully');
     }
 
@@ -82,7 +82,7 @@ class QuizTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)
-            ->post('/create_quiz', [
+            ->post('/quiz/create', [
                 'video-id' => '1',
                 'video-name' => 'test',
                 'animal-radio' => ['New'],
@@ -114,7 +114,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/create_quiz', [
+            ->post('/quiz/create', [
                 'video-id' => '2',
                 'video-name' => 'test',
                 'animal-radio' => ['New'],
@@ -138,7 +138,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/create_quiz');
+        $response->assertRedirect('/quiz/create');
         $response->assertSessionHas('video-status', 'Video ID Mismatch');
     }
 
@@ -147,7 +147,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/create_quiz', [
+            ->post('/quiz/create', [
                 'video-id' => '1',
                 'video-name' => 'test',
                 'animal-radio' => null,
@@ -171,7 +171,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/create_quiz');
+        $response->assertRedirect('/quiz/create');
         $response->assertSessionHas('animal-status', 'No Animal Selected');
     }
 
@@ -180,7 +180,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/create_quiz', [
+            ->post('/quiz/create', [
                 'video-id' => '1',
                 'video-name' => 'test',
                 'animal-radio' => ['New'],
@@ -204,7 +204,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/create_quiz');
+        $response->assertRedirect('/quiz/create');
         $response->assertSessionHas('animal-status', 'Animal Field Empty');
     }
 
@@ -213,7 +213,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/create_quiz', [
+            ->post('/quiz/create', [
                 'video-id' => '1',
                 'video-name' => 'test',
                 'animal-radio' => ['New'],
@@ -237,7 +237,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/create_quiz');
+        $response->assertRedirect('/quiz/create');
         $response->assertSessionHas('behaviour-status', 'Behaviours Incomplete');
     }
 
@@ -246,7 +246,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/create_quiz', [
+            ->post('/quiz/create', [
                 'video-id' => '1',
                 'video-name' => 'test',
                 'animal-radio' => ['New'],
@@ -269,7 +269,7 @@ class QuizTest extends TestCase
                 'inter-4' => null,
                 'inter-5' => null,
             ]);
-        $response->assertRedirect('/create_quiz');
+        $response->assertRedirect('/quiz/create');
         $response->assertSessionHas('behaviour-status', 'Checked Fields Must Be Filled In');
     }
 
@@ -278,7 +278,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/create_quiz', [
+            ->post('/quiz/create', [
                 'video-id' => '1',
                 'video-name' => 'test',
                 'animal-radio' => ['New'],
@@ -302,7 +302,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/create_quiz');
+        $response->assertRedirect('/quiz/create');
         $response->assertSessionHas('int-status', 'Interpretations Incomplete');
     }
 
@@ -311,7 +311,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/create_quiz', [
+            ->post('/quiz/create', [
                 'video-id' => '1',
                 'video-name' => 'test',
                 'animal-radio' => ['New'],
@@ -335,7 +335,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/create_quiz');
+        $response->assertRedirect('/quiz/create');
         $response->assertSessionHas('int-status', 'Selected Field Must Be Filled In');
     }
 
@@ -344,7 +344,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/edit_quiz/1', [
+            ->post('/quiz/edit/1', [
                 'video-id' => '1',
                 'video-name' => 'Horse001',
                 'animal-radio' => ['New'],
@@ -368,7 +368,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/quiz/edit');
         $response->assertSessionHas('edit-status', 'Successfully Edited Quiz Horse001');
     }
 
@@ -377,7 +377,7 @@ class QuizTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)
-            ->post('/edit_quiz/1', [
+            ->post('/quiz/edit/1', [
                 'video-id' => '1',
                 'video-name' => 'Horse001',
                 'animal-radio' => ['New'],
@@ -409,7 +409,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/edit_quiz/1', [
+            ->post('/quiz/edit/1', [
                 'video-id' => '1',
                 'video-name' => 'Horse001',
                 'animal-radio' => null,
@@ -433,7 +433,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/quiz/edit');
         $response->assertSessionHas('animal-status', 'No Animal Selected');
     }
 
@@ -442,7 +442,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/edit_quiz/1', [
+            ->post('/quiz/edit/1', [
                 'video-id' => '1',
                 'video-name' => 'Horse001',
                 'animal-radio' => ['New'],
@@ -466,7 +466,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/quiz/edit');
         $response->assertSessionHas('animal-status', 'Animal Field Empty');
     }
 
@@ -475,7 +475,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/edit_quiz/1', [
+            ->post('/quiz/edit/1', [
                 'video-id' => '1',
                 'video-name' => 'Horse001',
                 'animal-radio' => ['New'],
@@ -499,7 +499,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/quiz/edit');
         $response->assertSessionHas('behaviour-status', 'Behaviours Incomplete');
     }
 
@@ -508,7 +508,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/edit_quiz/1', [
+            ->post('/quiz/edit/1', [
                 'video-id' => '1',
                 'video-name' => 'Horse001',
                 'animal-radio' => ['New'],
@@ -532,7 +532,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/quiz/edit');
         $response->assertSessionHas('behaviour-status', 'Checked Fields Must Be Filled In');
     }
 
@@ -541,7 +541,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/edit_quiz/1', [
+            ->post('/quiz/edit/1', [
                 'video-id' => '1',
                 'video-name' => 'Horse001',
                 'animal-radio' => ['New'],
@@ -565,7 +565,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/quiz/edit');
         $response->assertSessionHas('int-status', 'Interpretations Incomplete');
     }
 
@@ -574,7 +574,7 @@ class QuizTest extends TestCase
         $user = $this->createAdmin();
 
         $response = $this->actingAs($user)
-            ->post('/edit_quiz/1', [
+            ->post('/quiz/edit/1', [
                 'video-id' => '1',
                 'video-name' => 'Horse001',
                 'animal-radio' => ['New'],
@@ -598,7 +598,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/quiz/edit');
         $response->assertSessionHas('int-status', 'Selected Field Must Be Filled In');
     }
 }

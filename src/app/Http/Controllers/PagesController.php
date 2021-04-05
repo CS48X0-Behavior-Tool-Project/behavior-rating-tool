@@ -42,7 +42,7 @@ class PagesController extends Controller
     public function getLoginPage()
     {
         if (Auth::user()) {
-            return redirect()->route('quizzes_route');
+            return redirect()->route('quiz.get.index');
         }
         return view('auth.login');
     }
@@ -147,7 +147,7 @@ class PagesController extends Controller
         }
       }
 
-      return view('single_quiz')->with(['code' => $quiz->code, 'options' => $quiz->quiz_question_options,
+      return view('single_quiz')->with(['id' => $quiz->id, 'code' => $quiz->code, 'options' => $quiz->quiz_question_options,
         'video' => $quiz->video, 'attempt' => $attemptNumber, 'time' => microtime(true)]);
     }
 

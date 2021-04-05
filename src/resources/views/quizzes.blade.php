@@ -27,7 +27,7 @@
 
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
-<div class="container">
+<div class="container-fluid" style="max-width: 1200px">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">Quizzes</div>

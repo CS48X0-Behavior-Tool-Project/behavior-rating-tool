@@ -35,10 +35,10 @@ class ReviewQuizController extends Controller
             $id = Auth::id();
             $quizzes = DB::table('users')
             ->select(
-                'users.email', 
-                'quizzes.code as quiz', 
+                'users.email',
+                'quizzes.code as quiz',
                 'quizzes.id as quiz_id',
-                'attempt_quizzes.created_at', 
+                'attempt_quizzes.created_at',
                 'user_attempts.id as user_attempt_id',
                 'user_attempts.score',
                 'user_attempts.max_score',
@@ -57,7 +57,7 @@ class ReviewQuizController extends Controller
 
             $admin_data = $this->getAllStudentQuizzes();
 
-            return view('review_quiz')->with(['quizzes' => $quizzes, 'admin_data' => $admin_data]);
+            return view('review_all')->with(['quizzes' => $quizzes, 'admin_data' => $admin_data]);
         }
         else
         {
@@ -81,17 +81,17 @@ class ReviewQuizController extends Controller
             ]);
     }
 
-    public function getReviewQuizByUserAttemptId($userAttemptId) 
+    public function getReviewQuizByUserAttemptId($userAttemptId)
     {
         $quiz = $this->getQuizByUserAttemptID($userAttemptId);
-        $studentAnswers = $this->getAnswers($userAttemptId);  
-        
-        return view('review_single')->with(['code' => $quiz->code, 
+        $studentAnswers = $this->getAnswers($userAttemptId);
+
+        return view('review_quiz')->with(['code' => $quiz->code,
                                             'options' => $quiz->quiz_question_options,
-                                            'video' => $quiz->video, 
+                                            'video' => $quiz->video,
                                             'score' => $studentAnswers->score,
                                             'interpretation_guess' => $studentAnswers->interpretation_guess,
-                                            'behavior_answers' => json_decode($studentAnswers->behavior_answers, true), 
+                                            'behavior_answers' => json_decode($studentAnswers->behavior_answers, true),
                                             'interpretation_answers' => json_decode($studentAnswers->interpretation_answers, true),
                                             'time' => isset($studentAnswers->time)?$studentAnswers->time:'N/A']);
     }
@@ -121,9 +121,9 @@ class ReviewQuizController extends Controller
 
         $data = DB::table('user_attempts')
         ->select(
-            'quizzes.code as quiz', 
+            'quizzes.code as quiz',
             'quizzes.id as quiz_id',
-            'attempt_quizzes.created_at', 
+            'attempt_quizzes.created_at',
             'user_attempts.score',
             'user_attempts.max_score',
             'user_attempts.interpretation_guess',
@@ -143,7 +143,7 @@ class ReviewQuizController extends Controller
 
     private function getAllStudentQuizzes() {
         $data = DB::table('users')
-        ->select( 
+        ->select(
             'users.email',
             'quizzes.code',
             'user_attempts.id as user_attempt_id',

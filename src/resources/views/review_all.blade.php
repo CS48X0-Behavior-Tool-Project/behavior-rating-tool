@@ -24,11 +24,18 @@
         <div class="col-md-12">
 
             <div class="card">
-                <div class="card-header">{{ __('Review My Quizzes') }}</div>
+                @if($admin_data == 'STUDENT')
+                    <div class="card-header">{{ __('Review Student Quizzes: ') }} </div>
+                @else
+                    <div class="card-header">{{ __('Review My Quizzes') }}</div>
+                @endif
                 <div class="card-body">
                     <table class="table table-bordered" id="review_mine" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                @if($admin_data == 'STUDENT')
+                                    <th scope="col" rowspan="2">Student</th>
+                                @endif
                                 <th scope="col" rowspan="2">Quiz Code</th>
                                 <th scope="col" rowspan="2">Attempted At</th>
                                 <th scope="col" rowspan="2">Time Spent</th>
@@ -42,6 +49,9 @@
                         <tbody>
                             @foreach($quizzes as $data)
                                 <tr>
+                                    @if($admin_data == 'STUDENT')
+                                    <td>{{$data->first_name}} {{$data->last_name}}</td>
+                                    @endif
                                     <td><a href="{{ url('quizzes/review/'.$data->user_attempt_id) }}"> {{$data->quiz}}</th>
                                     <td>{{$data->created_at}}</td>
                                     <td>{{$data->time}}</td>
@@ -54,7 +64,7 @@
                 </div>
             </div>
             <br/>
-            @if (Bouncer::is(Auth::user())->an("admin", "ta"))
+            @if (Bouncer::is(Auth::user())->an("admin", "ta") && $admin_data!='STUDENT')
             <div class="card">
                 <div class="card-header">{{ __('Review All Student Quizzes') }}</div>
                 <div class="card-body">
@@ -76,7 +86,7 @@
                             @foreach($admin_data as $row)
                                 <tr style="border: 1px solid #f2d296;">
                                     <td>{{$row->first_name}} {{$row->last_name}}</td>
-                                    <td>{{$row->code}}</td>
+                                    <td><a href="{{ url('quizzes/review/'.$row->id.'/'.$row->code) }}"> {{$row->code}}</td>
                                     <td>{{$row->attempts}}</td>
                                     <td>{{$row->time}}</td>
                                     <td>{{$row->score}} / {{$row->max_score}}</td>

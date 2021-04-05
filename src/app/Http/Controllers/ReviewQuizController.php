@@ -96,6 +96,45 @@ class ReviewQuizController extends Controller
                                             'time' => isset($studentAnswers->time)?$studentAnswers->time:'N/A']);
     }
 
+    public function getReviewUserQuiz($id, $quiz) {
+        if (Auth::user()){
+            $quizzes = DB::table('users')
+            ->select(
+                'users.id',
+                'users.email',
+                'users.first_name',
+                'users.last_name',
+                'quizzes.code as quiz',
+                'quizzes.id as quiz_id',
+                'attempt_quizzes.created_at',
+                'user_attempts.id as user_attempt_id',
+                'user_attempts.score',
+                'user_attempts.max_score',
+                'user_attempts.interpretation_guess',
+                'user_attempts.options->time as time'
+                )
+            ->join('user_attempts', 'users.id', '=', 'user_attempts.user_id')
+            ->join('attempt_quizzes', 'user_attempts.attempt_id', '=', 'attempt_quizzes.attempt_id')
+            ->join('quizzes', 'quizzes.id', '=', 'attempt_quizzes.quiz_id')
+            ->join('attempt_answer_items', 'attempt_answer_items.attempt_quiz_id', '=', 'attempt_quizzes.id')
+            ->orderby('quizzes.code')
+            ->where('users.id', $id)
+            ->where('quizzes.code', $quiz)
+            ->get();
+
+            Log::info(['>>> ReviewQuizController - getReviewUserQuiz: ',$quizzes]);
+
+            // $admin_data = $this->getAllStudentQuizzes();
+
+            // return view('review_all')->with(['quizzes' => $quizzes, 'admin_data' => $admin_data]);
+            return view('review_all')->with(['quizzes' => $quizzes, 'admin_data' => 'STUDENT']);  // if admin_data==STUDENT, means admin revice single user quiz
+        }
+        else
+        {
+            return redirect()->route('login')->with('validate', 'Please login first.');
+        }
+    }
+
     private function getQuizByUserAttemptID($userAttemptId)
     {
         // Implement logic to fetch quiz by userAttemptID
@@ -144,6 +183,7 @@ class ReviewQuizController extends Controller
     private function getAllStudentQuizzes() {
         $data = DB::table('users')
         ->select(
+            'users.id',
             'users.email',
             'users.first_name',
             'users.last_name',

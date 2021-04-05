@@ -33,11 +33,6 @@ Route::resource('videos', VideoController::class);
 Route::get('/', [PagesController::class, 'getLoginPage'])->name('login_page');
 
 /**
- * Account creation/confirmation page
- */
-Route::get('/confirmation', [PagesController::class, 'getConfirmationPage'])->name('confirmation_route');
-
-/**
  * Add user page
  */
 Route::get('/add_user', [PagesController::class, 'getAddUser'])->name('add_user_route');
@@ -124,9 +119,9 @@ Route::post('/create_quiz', [CreateQuizController::class, 'createQuiz']);
  */
 Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
 
-/*
-* Route for submitting a quiz attempt
-*/
+/** 
+ * Route for submitting a quiz attempt
+ */
 Route::post('/quizzes/{id}', [QuizAttemptController::class, 'submitQuizAttempt']);
 
 /**

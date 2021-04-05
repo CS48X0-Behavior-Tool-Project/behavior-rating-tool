@@ -47,16 +47,6 @@ class PagesController extends Controller
         return view('auth.login');
     }
 
-    /**
-     * ! Token authorization is required
-     * @return View|Factory
-     * @throws BindingResolutionException
-     */
-    public function getConfirmationPage()
-    {
-        return view('account_creation');
-    }
-
     public function getQuizList()
     {
         $animals = Quiz::all()->pluck('animal')->unique();

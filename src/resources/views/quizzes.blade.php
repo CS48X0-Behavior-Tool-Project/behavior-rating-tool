@@ -6,135 +6,95 @@
 </div>
 @endif
 
-<link rel="stylesheet" href="{{ URL::asset('css/quizzes.css') }}">
-
 @section('content')
 
-{{-- ekmu: This will likely be removed, I suspect it won't play nice with pagination --}}
-<script>
-    $(document).ready(function(){
-      $("#myInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#myTable tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-      });
-    });
-</script>
+@if (Bouncer::is(Auth::user())->an("admin", "ta"))
+<div class="row justify-content-center">
+    <button class="btn btn-primary" type="button" name="button" onclick="window.location.href='/create_quiz'">Create New Quiz</button>
+</div>
+<br>
+@endif
 
-<div class="container-flex mx-auto">
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-12 col-lg-3">
-            {{-- ekmu: May need to add padding for the sticky filter card. --}}
-            <div class="card sticky-top">
-                <div class="card-header">Filter</div>
-                <div class="card-body">
-                    <form action="/quizzes" method="post">
-                        @csrf
-                        <input class="form-control mb-3" id="myInput" type="text" placeholder="Search Quizzes..">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
-                        <!-- Number of attempts filter -->
-                        <div class="card-header">
-                            <span>Filter quizzes by your number of attempts</span>
-                        </div>
-                        <div class="card-body">
-                            <span>
-                                <input type="radio" id="attempt-all" name="attempt-radio" value="all" checked="checked">
-                                <label for="attempt-all" type="text">All</label>
-                            </span>
-                        </div>
+<link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-                        <!-- foreach, same as animals here for attempts -->
-                        @foreach ($uniqueAttempts as $att)
-                        <div class="card-body">
-                            <span>
-                                <input type="radio" id="attempt-{{ $att }}" name="attempt-radio" value="{{ $att }}">
-                                <label for="attempt-{{ $att }}">{{ $att }}</label>
-                            </span>
-                        </div>
-                        @endforeach
+<!-- Bootstrap core JavaScript-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-                        <!-- Animal filter -->
-                        <div class="card-header">
-                            <span>Filter quizzes by animal</span>
-                        </div>
-                        <div class="card-body">
-                            <span>
-                                <input type="radio" id="animal-all" name="animal-radio" value="all" checked="checked">
-                                <label for="animal-all" type="text">All</label>
-                            </span><br>
+<!-- Page level plugin JavaScript-->
+<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 
-                            @foreach($animals as $data)
-                            <span>
-                                <input type="radio" id="animal-{{ $data }}" name="animal-radio" value="{{ $data }}">
-                                <label for="animal-{{ $data }}" type="text">{{ $data }}</label><br>
-                            </span>
-                            @endforeach
-                        </div>
-                    </form>
-                </div>
+<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
+<div class="container">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">Quizzes</div>
+
+            @if (session('score-message'))
+            <div class="alert alert-success">
+                <strong>{{ session('score-message') }}</strong>
             </div>
-        </div>
+            @endif
 
-        <div class="col-md-12 col-lg-9">
-            <div class="card">
-                <div class="card-header">
-                    <span>Selection
-                        @if (Bouncer::is(Auth::user())->an("admin", "ta"))
-                        <button class="btn btn-primary float-end" type="button" name="button" onclick="window.location.href='/create_quiz'">+ Create New Quiz</button>
-                        @endif
-                    </span>
-                </div>
+            @if (session('quiz-error-message'))
+            <div class="alert alert-danger">
+                <strong>{{ session('quiz-error-message') }}</strong>
+            </div>
+            @endif
 
-                @if (session('score-message'))
-                <div class="alert alert-success">
-                    <strong>{{ session('score-message') }}</strong>
-                </div>
-                @endif
-
-                @if (session('quiz-error-message'))
-                <div class="alert alert-danger">
-                    <strong>{{ session('quiz-error-message') }}</strong>
-                </div>
-                @endif
-
-                <!-- TODO: Insert selected filter criteria here -->
-                <div class="table-responsive table-response-md table-response-lg">
-                    <table class="table table-hover">
-                        <thead class="table-active">
-                            {{-- Headers of table --}}
-                            <tr>
-                                <th scope="col">Quiz code</th>
-                                <th scope="col">Attempts</th>
-                                <th scope="col">Best Behaviour Score</th>
-                                <th scope="col">Behaviour Scores</th>
-                                <th scope="col">Best Interpretation Scores</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="myTable">
-                            {{-- TODO: Add number of attempts and best score to the quizzes button --}}
-                            @foreach ($quizzes as $quiz) {{-- ekmu: Not the cleanest implementation of clickeable rows, but time constraints.. --}}
-                            <tr>
-                                <th scope="row">{{ $quiz->code ?? 'EMPTY' }}</th>
-                                <td>{{ $attempts[$quiz->id] ?? 'EMPTY' }}</td>
-                                <td>{{ $bestBehaviourScores[$quiz->id] ?? 'EMPTY' }}</td>
-                                <td>{{ $maxBehaviourScores[$quiz->id] ?? 'EMPTY' }}</td>
-                                <td>{{ $bestInterpretationScores[$quiz->id] ?? 'EMPTY' }}</td>
-                                <td class="p-1">
-                                    <button type="button" class="btn btn-primary btn-sm btn-block" name="view_button" onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">Take Quiz</button>
-                                    @if (Bouncer::is(Auth::user())->an('admin', 'ta', 'expert'))
-                                    <button type="button" class="btn btn-secondary btn-sm btn-block" name="edit_button" onclick="window.location='{{ route('edit_quiz_id_route', ['id' => $quiz->id]) }}'">Edit Quiz</button>
-                                    @endif
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+            <div class="d-none d-sm-none d-md-block">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col" rowspan="2">Quiz Code</th>
+                            <th scope="col" rowspan="2">Attempts</th>
+                            <th scope="colgroup" colspan="2" class="text-center">Best Score</th>
+                            <th scope="col" rowspan="2">Take Quiz</th>
+                            @if (Bouncer::is(Auth::user())->an("admin", "ta"))
+                              <th scope="col" rowspan="2">Edit Quiz</th>
+                            @endif
+                        </tr>
+                        <tr>
+                          <th scope="col">Behaviours</th>
+                          <th scope="col">Interpretation</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th scope="col" rowspan="2">Quiz Code</th>
+                            <th scope="col" rowspan="2">Attempts</th>
+                            <th scope="colgroup" colspan="2" class="text-center">Best Score</th>
+                            <th scope="col" rowspan="2">Take Quiz</th>
+                            @if (Bouncer::is(Auth::user())->an("admin", "ta"))
+                              <th scope="col" rowspan="2">Edit Quiz</th>
+                            @endif
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach ($quizzes as $quiz)
+                        <tr>
+                            <th scope="row">{{ $quiz->code ?? 'ERROR' }}</th>
+                            <td>{{ $attempts[$quiz->id] ?? '-' }}</td>
+                            <td>{{ $bestBehaviourScores[$quiz->id] ?? '-' }} / {{ $maxBehaviourScores[$quiz->id] ?? '-'}}</td>
+                            <td>{{ $bestInterpretationScores[$quiz->id] ?? '-' }}</td>
+                            <td>Take Quiz</td>
+                            @if (Bouncer::is(Auth::user())->an('admin', 'ta'))
+                            <td>Edit Quiz</td>
+                            @endif
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
 
+@endsection
+
+@section('end-body-scripts')
+    {{-- All ajax related scripts should be moved to the end-body-scripts section --}}
+    <script src="{{ asset('/javascript/quizzes.js') }}"></script>
 @endsection

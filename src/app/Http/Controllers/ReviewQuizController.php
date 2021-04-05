@@ -145,6 +145,8 @@ class ReviewQuizController extends Controller
         $data = DB::table('users')
         ->select(
             'users.email',
+            'users.first_name',
+            'users.last_name',
             'quizzes.code',
             'user_attempts.id as user_attempt_id',
             'user_attempts.score',

@@ -19,9 +19,9 @@
 
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
-<div class="container-fluid">
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
 
             <div class="card">
                 <div class="card-header">{{ __('Review My Quizzes') }}</div>
@@ -75,7 +75,7 @@
                         <tbody>
                             @foreach($admin_data as $row)
                                 <tr style="border: 1px solid #f2d296;">
-                                    <td>{{$row->email}}</td>
+                                    <td>{{$row->first_name}} {{$row->last_name}}</td>
                                     <td>{{$row->code}}</td>
                                     <td>{{$row->attempts}}</td>
                                     <td>{{$row->time}}</td>

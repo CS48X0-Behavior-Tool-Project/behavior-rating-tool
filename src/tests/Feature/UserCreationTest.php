@@ -33,7 +33,7 @@ class UserCreationTest extends TestCase
      */
     // public function test_non_authenticated_user_can_not_view_add_users()
     // {
-    //     $response = $this->get('/add_user')
+    //     $response = $this->get('/user/add')
     //         ->assertUnauthorized();
     // }
 
@@ -43,14 +43,14 @@ class UserCreationTest extends TestCase
     // public function test_authenticated_user_can_not_view_add_users()
     // {
     //     $this->actingAs(User::class());
-    //     $response = $this->get('add_user')
+    //     $response = $this->get('/user/add')
     //         ->assertUnauthorized();
     // }
 
     public function test_submission_of_single_valid_user()
     {
         $user = $this->createAdmin();
-        $response = $this->actingAs($user)->from('/add_user')->post('/add_user', [
+        $response = $this->actingAs($user)->from('/user/add')->post('/user/add', [
             'first_name' => 'Test',
             'last_name' => 'User',
             'email' => 'test@example.com',
@@ -58,13 +58,13 @@ class UserCreationTest extends TestCase
             'add_single_user' => null
         ]);
         $this->assertCount(2, User::all());
-        $response->assertRedirect('/add_user');
+        $response->assertRedirect('/user/add');
     }
 
     public function test_submission_of_single_null_first_name_user()
     {
         $user = $this->createAdmin();
-        $response = $this->actingAs($user)->from('/add_user')->post('/add_user', [
+        $response = $this->actingAs($user)->from('/user/add')->post('/user/add', [
             'first_name' => null,
             'last_name' => 'User',
             'email' => 'test@example.com',
@@ -75,14 +75,14 @@ class UserCreationTest extends TestCase
         $response->assertSessionHasErrors([
             'first_name'
         ]);
-        $response->assertRedirect('/add_user');
+        $response->assertRedirect('/user/add');
     }
 
     public function test_submission_of_single_null_last_name_user()
     {
         $user = $this->createAdmin();
 
-        $response = $this->actingAs($user)->from('/add_user')->post('/add_user', [
+        $response = $this->actingAs($user)->from('/user/add')->post('/user/add', [
             'first_name' => 'Test',
             'last_name' => null,
             'email' => 'test@example.com',
@@ -90,14 +90,14 @@ class UserCreationTest extends TestCase
             'add_single_user' => null
         ]);
         $this->assertCount(1, User::all());
-        $response->assertRedirect('/add_user');
+        $response->assertRedirect('/user/add');
     }
 
     public function test_submission_of_single_null_email_user()
     {
         $user = $this->createAdmin();
 
-        $response = $this->actingAs($user)->from('/add_user')->post('/add_user', [
+        $response = $this->actingAs($user)->from('/user/add')->post('/user/add', [
             'first_name' => 'Test',
             'last_name' => 'User',
             'email' => null,
@@ -105,14 +105,14 @@ class UserCreationTest extends TestCase
             'add_single_user' => null
         ]);
         $this->assertCount(1, User::all());
-        $response->assertRedirect('/add_user'); // response status 500, should redirect the user back to the page with an error
+        $response->assertRedirect('/user/add'); // response status 500, should redirect the user back to the page with an error
     }
 
     public function test_submission_of_single_null_role_user()
     {
         $user = $this->createAdmin();
 
-        $response = $this->actingAs($user)->from('/add_user')->post('/add_user', [
+        $response = $this->actingAs($user)->from('/user/add')->post('/user/add', [
             'first_name' => 'Test',
             'last_name' => 'User',
             'email' => 'test@example.com',
@@ -120,7 +120,7 @@ class UserCreationTest extends TestCase
             'add_single_user' => null
         ]);
         $this->assertCount(1, User::all());
-        $response->assertRedirect('/add_user');
+        $response->assertRedirect('/user/add');
     }
 
     public function test_user_through_csv()
@@ -145,12 +145,12 @@ class UserCreationTest extends TestCase
             )
         ];
 
-        $response = $this->actingAs($user)->from('/add_user')->postJson(
-            '/add_user',
+        $response = $this->actingAs($user)->from('/user/add')->postJson(
+            '/user/add',
             $inputs
         );
 
         $this->assertCount(2, User::all());
-        $response->assertRedirect('/add_user');
+        $response->assertRedirect('/user/add');
     }
 }

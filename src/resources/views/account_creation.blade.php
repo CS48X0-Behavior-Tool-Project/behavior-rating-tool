@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">Activate Your Account</div>
                 <div class="card-body">
-                    <form method="POST" action="/confirmation">
+                    <form method="POST" action="{{ route('confirmation.post.create') }}/confirmation">
                       @csrf
                         <!-- Password -->
                         <div class="form-group row">

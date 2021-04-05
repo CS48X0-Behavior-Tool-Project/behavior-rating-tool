@@ -10,7 +10,7 @@
 
 @if (Bouncer::is(Auth::user())->an("admin", "ta"))
     <div class="row col-12 justify-content-center">
-        <button class="btn btn-primary" type="button" name="button" onclick="window.location.href='/add_user'">Add Users</button>
+        <button class="btn btn-primary" type="button" name="button" onclick="window.location.href='{{ route('user.post.upload') }}'">Add Users</button>
     </div>
     <br>
 @endif
@@ -48,7 +48,7 @@
               <!-- TODO add filter options here, search bar and letter to select first letter of first and last name -->
                 @foreach ($users as $user)
                     <p style="padding:5px"> {{$user->first_name}} {{$user->last_name}}
-                    <a href="{{ url('/user/' . $user->id) }}" class="btn btn-secondary" style="margin-left: 10px">View User</a>
+                    <a href="{{ url('/user/get/' . $user->id) }}" class="btn btn-secondary" style="margin-left: 10px">View User</a>
                     </p>
                 @endforeach
             </div>

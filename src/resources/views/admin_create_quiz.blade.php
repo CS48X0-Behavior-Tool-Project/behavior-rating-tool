@@ -63,7 +63,7 @@
                                 </div>
                                 <br>
 
-                                <form action="/create_quiz" method="post">
+                                <form action="{{ route('quiz.post.create') }}" method="post">
                                 @csrf
                                 <p class="title">Video information</p>
                                 <div class="form-group row">

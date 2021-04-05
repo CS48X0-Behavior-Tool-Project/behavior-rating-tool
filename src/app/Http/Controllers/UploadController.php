@@ -47,7 +47,7 @@ class UploadController extends Controller
             } else if (request()->has('add_single_user')) {
                 return $this->uploadUser();
             } else {
-                return redirect()->route('add_user_route');
+                return redirect()->route('user.get.add');
             }
         } else {
             abort(403);
@@ -240,6 +240,6 @@ class UploadController extends Controller
         }
         //login the user and redirect them to the account confirmation page where they set their password and take the survey
         Auth::login($token->user);
-        return redirect()->route('confirmation_route');
+        return view('account_creation');
     }
 }

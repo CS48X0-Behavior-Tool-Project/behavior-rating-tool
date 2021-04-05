@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">{{ __('Add Single User') }}</div>
                     <div class="card-body">
-                        <form method="POST" action="/add_user">
+                        <form method="POST" action="{{ route('user.post.upload') }}">
                             @csrf
                             <!-- Name -->
                             <div class="form-group row">
@@ -99,7 +99,7 @@
                         </div>
                         <br>
                         <div align="center">
-                            <form method="post" action="/add_user/json_download">
+                            <form method="post" action="{{ route('user.post.template') }}">
                               @csrf
                                 <button type="submit" class="btn btn-primary" name="jsonButton">
                                     {{ __('Download JSON Template') }}
@@ -111,7 +111,7 @@
                             <p
                                 style="text-align:center; color: black; background-color: #f7f7f7;border-radius: 5px;border: 1px solid #dfdfdf;">
                                 Add Multiple Users from a File</p>
-                            <form action="/add_user" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('user.post.upload') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <input type="file" name="mycsv" id="users_upload" />
                                 <input type="submit" class="btn btn-secondary" value="Upload">

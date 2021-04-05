@@ -6,7 +6,6 @@
     </div>
 @endif
 
-<script type="text/javascript" src="{{ URL::asset('javascript/edit_quiz.js') }}"></script>
 <link rel="stylesheet" href="{{ URL::asset('css/admin_create_quiz.css') }}">
 
 @section('content')
@@ -33,7 +32,7 @@
                                     <form action="{{ route('videos.store') }}" id="upload-form" method="post" enctype="multipart/form-data"> @csrf
                                         <div class="custom-file" >
                                             <div class=" row justify-content-center">
-                                                <input type="file" class="custom-file-input" name="video" id="video-upload" accept="video/*" onchange="updateVideoLabel();">
+                                                <input type="file" class="custom-file-input" name="video" id="video-upload" accept="video/mp4,video/mpeg,video/x-matroska" onchange="updateVideoLabel();">
                                                 <label class="custom-file-label" for="video" id="file-label" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Choose file</label>
                                             </div>
                                         </div>
@@ -51,8 +50,8 @@
                                         @endif
                                     </form>
                                 </div>
-                                <div style="display:none" id="upload-alert" role="alert">
-                                </div>
+                                <div class="modal"></div>
+                                <div style="display:none" id="upload-alert" role="alert"></div>
                                 <br>
 
                                 <form action="/edit_quiz/{{$quiz->id}}" method="post">
@@ -98,10 +97,14 @@
                                             @endif
                                         @endforeach
                                         <div class="row-justify-content-center">
-                                            <span id="spacing">
-                                                <input type="radio" id="a-new" name="animal-radio[]" value = "New">
-                                                <input id="animal-new" type="text" class="formLabel" name="a-new" placeholder="Edit me ...">
-                                            </span>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <input type="radio" id="a-new" name="animal-radio[]" value="New">
+                                                    </div>
+                                                </div>
+                                                <input id="animal-new" type="text" class="form-control" name="a-new" placeholder="Enter new animal ...">
+                                            </div>
                                         </div>
                                     </div>
                                     <br>
@@ -232,4 +235,5 @@
 @section('end-body-scripts')
     {{-- All ajax related scripts should be moved to the end-body-scripts section --}}
     <script src="{{ asset('/javascript/create_quiz.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('javascript/edit_quiz.js') }}"></script>
 @endsection

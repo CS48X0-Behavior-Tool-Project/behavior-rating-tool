@@ -25,7 +25,7 @@ class CreateQuizController extends Controller
 				$behaviours = $this->readBehaviours();
 				$interpretations = $this->readInterpretations();
 
-				$quizCode = ucfirst($animal) . $videoID;
+				$quizCode = request()->input('video-name');
 
 
 				Log::info('>>> videoID: ' . $videoID);
@@ -50,7 +50,6 @@ class CreateQuizController extends Controller
 	public function readVideo()
 	{
 		$videoID = request()->input('video-id');
-		$videoName = request()->input('video-name');
 
 		// NOTE: videos are stored in storage\app\videos and automatically stored in the database
 		//should be able to store just the video id with the quiz information and use that to find the video later

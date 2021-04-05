@@ -6,6 +6,8 @@
     </div>
 @endif
 
+<script type="text/javascript" src="{{ URL::asset('javascript/single_user.js') }}"></script>
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -13,7 +15,7 @@
             <div class="card">
                 <div class="card-header">{{$user->first_name}} {{$user->last_name}}</div>
 
-                <form method="post" action="{{ route('user.post.action', $user->id) }}">
+                <form method="post" action="">
                 @csrf
                 <div class="card-body">
                     <div class="row">

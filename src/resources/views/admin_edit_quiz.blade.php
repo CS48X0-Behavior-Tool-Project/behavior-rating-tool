@@ -54,7 +54,7 @@
                                 <div style="display:none" id="upload-alert" role="alert"></div>
                                 <br>
 
-                                <form action="{{ route('quiz.post.update', $quiz->id) }}" method="post">
+                                <form action="/edit_quiz/{{$quiz->id}}" method="post">
                                 @csrf
                                 <p class="title">Video information</p>
                                 <div class="form-group row">

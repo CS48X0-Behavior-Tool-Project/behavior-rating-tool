@@ -23,7 +23,7 @@
                 <div class="card-header">Attempting Quiz:  {{$code ?? 'QuizID'}}  {{'Attempt #' . $attempt ?? 'Attempt#'}}</div>
                 <div class="card-body">
 
-                    <form action="{{ route('quiz.post.submit', $id) }}" method="post">
+                    <form action="" method="post">
                       @csrf
                         <!-- Stopwatch -->
                         <div class="col-xs-2">
@@ -53,7 +53,7 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         @foreach ($options as $opt)
-                                            @if ($opt->type == "behaviour")
+                                            @if ( $opt->type == "behaviour")
                                                 <span>
                                                     <input type="checkbox" id="behaviour-check-{{$opt->title}}" name="behaviour-check[]" value="{{$opt->title}}"></button>
                                                     <label for="behaviour-check-{{$opt->title}}">{{$opt->title}}</label>

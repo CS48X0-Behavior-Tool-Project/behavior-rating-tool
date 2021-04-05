@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewAccountController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\AccountController;
@@ -23,87 +24,114 @@ use App\Http\Controllers\JsonController;
 
 Auth::routes();
 
-// Resource controllers
+Route::resource('users', UserController::class);
 Route::resource('videos', VideoController::class);
 
 /**
  * Login page is the landing page when we first visit the website
- * ! prefix: login
- * ! name: login
- * * Example: route name is login.get.index, actual route is /
  */
-Route::group(['as' => 'login'], function() {
-    Route::get('/', [PagesController::class, 'getLoginPage'])->name('.get.index');
-
-    Route::post('/', [LoginController::class, 'submit'])->name('.post.login');
-});
+Route::get('/', [PagesController::class, 'getLoginPage'])->name('login_page');
 
 /**
- * User related routes
- * ! prefix: user
- * ! name: user
- * * Example: route name is user.get.user, actual route is /user/{id}
+ * Account creation/confirmation page
  */
-Route::group(['prefix' => 'user', 'as' => 'user'], function() {
-    Route::get('/add', [PagesController::class, 'getAddUser'])->name('.get.add');
-    Route::get('/list', [PagesController::class, 'getUsers'])->name('.get.index');
-    Route::get('/get/{id}', [PagesController::class, 'getUserById'])->name('.get.user');
-
-    Route::post('/action/{id}', [SingleUserController::class, 'action'])->name('.post.action');
-    Route::post('/add', [UploadController::class, 'upload'])->name('.post.upload');
-    Route::post('/template', [JsonController::class, 'downloadJsonTemplate'])->name('.post.template');
-});
+Route::get('/confirmation', [PagesController::class, 'getConfirmationPage'])->name('confirmation_route');
 
 /**
- * Account related routes
- * ! prefix: account
- * ! name: account
- * * Example: route name is account.get.index, actual route is /account
+ * Add user page
  */
-Route::group(['prefix' => 'account', 'as' => 'account'], function() {
-    Route::get('/', [PagesController::class, 'getAccountManagement'])->name('.get.index');
-
-    Route::post('/', [AccountController::class, 'update'])->name('.post.index');
-});
+Route::get('/add_user', [PagesController::class, 'getAddUser'])->name('add_user_route');
 
 /**
- * Routes for everything quiz related
- * ! prefix: quizzes
- * ! name: quizzes
- * * Example: route name is quiz.get.edit, actual route is /quiz/edit
+ * Create quiz page
  */
-Route::group(['prefix' => 'quiz', 'as' => 'quiz'], function() {
-    Route::get('/list', [PagesController::class, 'getQuizList'])->name('.get.index');
-    Route::get('/display/{id}', [PagesController::class, 'getQuizById'])->name('.get.quiz');
-    Route::get('/edit', [PagesController::class, 'getEditQuiz'])->name('.get.edit');
-    Route::get('/edit/{id}', [PagesController::class, 'getEditQuizByID'])->name('.get.edit.id');
-    Route::get('/create', [PagesController::class, 'getCreateQuiz'])->name('.get.create');
-
-    Route::post('/edit/{id}', [EditQuizController::class, 'updateQuiz'])->name('.post.update');
-    Route::post('/create', [CreateQuizController::class, 'createQuiz'])->name('.post.create');
-    Route::post('/submit/{id}', [QuizAttemptController::class, 'submitQuizAttempt'])->name('.post.submit');
-});
+Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz'])->name('create_quiz_route');
 
 /**
- * Routes for account confirmation
- * ! prefix: confirmation
- * ! name: confirmation
- * * Example: route name is confirmation.get.token, actual route is /confirmation/{token}
+ * Edit quiz page
  */
-Route::group(['prefix' => 'confirmation', 'as' => 'confirmation'], function() {
-    Route::get('/{token}', [UploadController::class, 'validateToken'])->name('.get.token');
+Route::get('/edit_quiz', [PagesController::class, 'getEditQuiz'])->name('edit_quiz_route');
+Route::get('/edit_quiz/{id}', [PagesController::class, 'getEditQuizByID'])->name('edit_quiz_id_route');
 
-    Route::post('/', [NewAccountController::class, 'createAccount'])->name('.post.create');
-});
 
 /**
- * Routes for exporting data
- * ! prefix: export
- * ! name: export
- * * Example: route name is export.get.index, actual route is /export
+ *  Submit the updated quiz with new changes.
  */
-Route::group(['prefix' => 'export', 'as' => 'export'], function() {
-    Route::get('/', [PagesController::class, 'exportData'])->name('.get.index');
-    Route::get('/users', [ExportController::class, 'exportUsers'])->name('.get.users');
-    Route::get('/quizzes', [ExportController::class, 'exportUserAttempts'])->name('.get.quizzes');
-});
+Route::post('/edit_quiz/{id}', [EditQuizController::class, 'updateQuiz'])->name('edit_quiz_post');
+
+/**
+ * Account management page (first/last names, email, password changes)
+ */
+Route::get('/account', [PagesController::class, 'getAccountManagement'])->name('account_route');
+
+/**
+ * List of possible quizzes to attempt
+ */
+Route::get('/quizzes', [PagesController::class, 'getQuizList'])->name('quizzes_route');
+
+/**
+ * Display the quiz we are attempting
+ */
+Route::get('/quizzes/{id}', [PagesController::class, 'getQuizById']);
+
+/**
+ * Show all the users in the system
+ */
+Route::get('/users', [PagesController::class, 'getUsers'])->name('users_route');;
+
+/**
+ * Display the user
+ */
+Route::get('/user/{id}', [PagesController::class, 'getUserById']);
+
+/**
+ * Perform an action on the single user page
+ */
+Route::post('/user/{id}', [SingleUserController::class, 'action']);
+
+/**
+ * Route for submitting a login request.  Will need to test when actual webpage is created.
+ */
+Route::post('/', [LoginController::class, 'submit']);
+
+/**
+ * Called when the email link to a new user is clicked
+ */
+Route::get('/confirmation/{token}', [UploadController::class, 'validateToken']);
+
+/**
+ * Route for creating new users.
+ */
+Route::post('/add_user', [UploadController::class, 'upload']);
+
+/**
+* Route for downloading the json template.
+*/
+Route::post('/add_user/json_download', [JsonController::class, 'downloadJsonTemplate']);
+
+/**
+ * Route for account management page.
+ */
+Route::post('/account', [AccountController::class, 'update']);
+
+/**
+ * Route for creating a new quiz.
+ */
+Route::post('/create_quiz', [CreateQuizController::class, 'createQuiz']);
+
+/**
+ * Route for confirming a new account.
+ */
+Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
+
+/*
+* Route for submitting a quiz attempt
+*/
+Route::post('/quizzes/{id}', [QuizAttemptController::class, 'submitQuizAttempt']);
+
+/**
+ * Route for exporting data
+ */
+Route::get('/export', [PagesController::class, 'exportData']);
+Route::get('/export/users', [ExportController::class, 'exportUsers'])->name('export_users_route');
+Route::get('/export/user_quizzes', [ExportController::class, 'exportUserAttempts'])->name('export_user_quizzes_route');

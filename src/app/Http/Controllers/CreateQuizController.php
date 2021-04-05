@@ -33,12 +33,12 @@ class CreateQuizController extends Controller
 
 				$this->uploadQuiz($videoID, $quizCode, $animal, $behaviours, $interpretations);
 
-				return redirect()->route('quiz.get.create')->with('quiz-status', 'Quiz ' . $quizCode . ' Created Successfully');
+				return redirect()->route('create_quiz_route')->with('quiz-status', 'Quiz ' . $quizCode . ' Created Successfully');
 			} catch (Exception $e) {
 				list($status, $message) = explode(':', $e->getMessage());
 				Log::info('>>> error status: ' . $status);
 				Log::info('>>> error message: ' . $message);
-				return redirect()->route('quiz.get.create')->with($status, $message);
+				return redirect()->route('create_quiz_route')->with($status, $message);
 			}
 		}
 		return abort(403);
@@ -61,7 +61,7 @@ class CreateQuizController extends Controller
 
 		if ($videoID === NULL || !$video->exists()) {
 			throw new Exception("video-status:" . "Video ID Mismatch");
-			return redirect()->route('quiz.get.create')->with('video-status', 'Video ID Mismatch');
+			return redirect()->route('create_quiz_route')->with('video-status', 'Video ID Mismatch');
 		}
 
 		return $videoID;
@@ -83,14 +83,14 @@ class CreateQuizController extends Controller
 					$species = $newanimal;
 				} else {
 					throw new Exception("animal-status:" . "Animal Field Empty");
-					return redirect()->route('quiz.get.create')->with('animal-status', 'Animal Field Empty');
+					return redirect()->route('create_quiz_route')->with('animal-status', 'Animal Field Empty');
 				}
 			} else {
 				$species = $animal;
 			}
 		} else {
 			throw new Exception("animal-status:" . "No Animal Selected");
-			return redirect()->route('quiz.get.create')->with('animal-status', 'No Animal Selected');
+			return redirect()->route('create_quiz_route')->with('animal-status', 'No Animal Selected');
 		}
 
 		return $species;
@@ -131,14 +131,14 @@ class CreateQuizController extends Controller
 
 		//make sure at least one checkbox and field are filled in
 		if ($this->containsOnlyNull($behaviours) || $this->containsOnlyNull($checkboxes)) {
-			return redirect()->route('quiz.get.create')->with('behaviour-status', 'Behaviours Incomplete');
+			return redirect()->route('create_quiz_route')->with('behaviour-status', 'Behaviours Incomplete');
 		}
 
 
 		//make sure all the checkboxes are associated with a non null input field
 		foreach ($checkboxes as $key => $value) {
 			if ($value === 'on' && $behaviours[$key] === NULL) {
-				return redirect()->route('quiz.get.create')->with('behaviour-status', 'Checked Fields Must Be Filled In');
+				return redirect()->route('create_quiz_route')->with('behaviour-status', 'Checked Fields Must Be Filled In');
 			}
 		}
 
@@ -182,12 +182,12 @@ class CreateQuizController extends Controller
 		$radioValue = request()->input('interpretation-radio');
 
 		if ($this->containsOnlyNull($interpretations) || $radioValue === NULL) {
-			return redirect()->route('quiz.get.create')->with('int-status', 'Interpretations Incomplete');
+			return redirect()->route('create_quiz_route')->with('int-status', 'Interpretations Incomplete');
 		}
 
 		//make sure the radio button corresponds to a non null input field
 		if ($interpretations[$radioValue - 1] === NULL) {
-			return redirect()->route('quiz.get.create')->with('int-status', 'Selected Field Must Be Filled In');
+			return redirect()->route('create_quiz_route')->with('int-status', 'Selected Field Must Be Filled In');
 		}
 
 		// build array having options as the keys, and the radio button status as value (on or NULL)

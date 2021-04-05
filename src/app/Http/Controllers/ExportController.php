@@ -50,7 +50,7 @@ class ExportController extends Controller
                     'Content-Disposition' => 'attachment; filename=users.csv',
                 ]);
         } else {
-            return redirect()->route('login.get.index')->with('validate', 'Please login first.');
+            return redirect()->route('login_page')->with('validate', 'Please login first.');
         }
     }
 
@@ -94,7 +94,7 @@ class ExportController extends Controller
         }
         else
         {
-            return redirect()->route('login.get.index')->with('validate', 'Please login first.');
+            return redirect()->route('login')->with('validate', 'Please login first.');
         }
     }
 

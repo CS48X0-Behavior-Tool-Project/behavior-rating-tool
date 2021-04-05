@@ -20,12 +20,12 @@ class SingleUserController extends Controller
     public function action($id) {
       if (isset($_POST['reset-password'])) {
         $name = $this->resetPassword($id);
-        return redirect()->route('user.get.index')
+        return redirect()->route('users_route')
           ->with('reset-message', 'User ' . $name . ' has been sent a password reset email.');
       }
       else if (isset($_POST['delete-user'])) {
         $name = $this->deleteUser($id);
-        return redirect()->route('user.get.index')->with('deletion-message', 'User ' . $name . ' has been deleted.');
+        return redirect()->route('users_route')->with('deletion-message', 'User ' . $name . ' has been deleted.');
       }
       else if (isset($_POST['view-quizzes'])) {
         $this->viewUserQuizzes($id);
@@ -41,7 +41,7 @@ class SingleUserController extends Controller
 
     private function deleteUser($id) {
       // TODO: request that the admin confirm that they want to delete the user
-      $user = User::find($id);
+      $user = $this->uc->getUser($id);
       $name = $user->first_name . ' ' . $user->last_name;
       $this->uc->deleteUserAttempts($id);
       $this->uc->deleteUser(new Request(), $id);

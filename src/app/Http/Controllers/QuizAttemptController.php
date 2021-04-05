@@ -31,7 +31,7 @@ class QuizAttemptController extends Controller
       $interpretationSelection = request()->input('interpretation-check');
 
       if ($behaviourSelections === NULL || $interpretationSelection === NULL ) {
-        return redirect()->route('quiz.get.index')->with('quiz-error-message', 'Please select at least one option in each section.');
+        return redirect()->route('quizzes_route')->with('quiz-error-message', 'Please select at least one option in each section.');
       }
 
       $scores = $this->calcScore($id, $behaviourSelections);
@@ -65,7 +65,7 @@ class QuizAttemptController extends Controller
 
       $scoreMessage .= $interpretationMessage;
 
-      return redirect()->route('quiz.get.index')->with('score-message', $scoreMessage);
+      return redirect()->route('quizzes_route')->with('score-message', $scoreMessage);
     }
 
     /**

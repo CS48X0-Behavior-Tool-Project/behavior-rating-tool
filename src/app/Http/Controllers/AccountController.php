@@ -50,7 +50,7 @@ class AccountController extends Controller
       $this->changePassword();
     }
 
-    return redirect()->route('account.get.index')
+    return redirect()->route('account_route')
       ->with('name_message', $name_msg)
       ->with('email_message', $email_msg)
       ->with('email_error', $email_err_msg)

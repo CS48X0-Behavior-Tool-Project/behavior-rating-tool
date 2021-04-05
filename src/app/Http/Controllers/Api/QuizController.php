@@ -23,6 +23,7 @@ class QuizController extends Controller
     public function getQuiz($id)
     {
         // Implement logic to fetch quiz
+
         $quizOps = DB::table('quiz_options')
             ->where('quiz_id', $id)
             ->get();

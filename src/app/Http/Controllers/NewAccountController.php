@@ -39,6 +39,6 @@ class NewAccountController extends Controller
     // TODO: find a way to block future access to this page, they only need to do the survey once, and
     // changing password needs to be done on account management page
 
-    return redirect()->route('quiz.get.index');
+    return redirect()->route('quizzes_route');
   }
 }

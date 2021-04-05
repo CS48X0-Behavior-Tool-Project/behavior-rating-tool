@@ -38,7 +38,7 @@
             <div class="container">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-dark">
-                        <h4><a href="{{ route('quiz.get.index') }}">{{ config('app.name') }}</a></h4>
+                        <h4><a href="{{ url('quizzes') }}">{{ config('app.name') }}</a></h4>
                     </ul>
                     <!-- Right Side Of Navbar -->
                         @guest
@@ -48,13 +48,13 @@
                               <li class="nav-item">
                                   <!-- Admin and TA -->
                                   @if (Bouncer::is(Auth::user())->an("admin", "ta"))
-                                      <a class="nav-link" href="{{ route('user.get.index') }}">
+                                      <a class="nav-link" href="{{ url('users') }}">
                                           {{ __('Users') }}
                                       </a>
                                   @endif
                               </li>
                               <li class="nav-item">
-                                  <a class="nav-link" href="{{ route('quiz.get.index') }}">
+                                  <a class="nav-link" href="{{ url('quizzes') }}">
                                       {{ __('Quizzes') }}
                                   </a>
                               </li>
@@ -62,7 +62,7 @@
                                   <a class="nav-link" href="#">Review</a>
                               </li>
                               <li class="nav-item">
-                                  <a class="nav-link active" href="{{ route('account.get.index') }}">
+                                  <a class="nav-link active" href="{{ url('account') }}">
                                       <strong>{{ __('Account') }}</strong>
                                   </a>
                               </li>

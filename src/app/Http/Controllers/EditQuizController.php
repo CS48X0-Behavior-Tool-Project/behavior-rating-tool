@@ -32,12 +32,12 @@ class EditQuizController extends Controller
 
         $this->editQuiz($id, $videoID, $quizCode, $animal, $behaviours, $interpretations);
 
-        return redirect()->route('quiz.get.edit')->with('edit-status', 'Successfully Edited Quiz ' . $quizCode);
+        return redirect()->route('edit_quiz_route')->with('edit-status', 'Successfully Edited Quiz ' . $quizCode);
       } catch (Exception $e) {
         list($status, $message) = explode(':', $e->getMessage());
         Log::info('>>> error status: ' . $status);
         Log::info('>>> error message: ' . $message);
-        return redirect()->route('quiz.get.edit')->with($status, $message);
+        return redirect()->route('create_quiz_route')->with($status, $message);
       }
     }
     return abort(403);
@@ -59,13 +59,13 @@ class EditQuizController extends Controller
         if ($newanimal !== NULL) {
           $species = $newanimal;
         } else {
-          return redirect()->route('quiz.get.edit.id', ['id' => $id])->with('animal-status', 'Animal Field Empty');
+          return redirect()->route('edit_quiz_id_route', ['id' => $id])->with('animal-status', 'Animal Field Empty');
         }
       } else {
         $species = $animal;
       }
     } else {
-      return redirect()->route('quiz.get.edit.id', ['id' => $id])->with('animal-status', 'No Animal Selected');
+      return redirect()->route('edit_quiz_id_route', ['id' => $id])->with('animal-status', 'No Animal Selected');
     }
 
     return $species;
@@ -107,14 +107,14 @@ class EditQuizController extends Controller
 
     //make sure at least one checkbox and field are filled in
     if ($this->containsOnlyNull($behaviours) || $this->containsOnlyNull($checkboxes)) {
-      return redirect()->route('quiz.get.edit.id', ['id' => $id])->with('behaviour-status', 'Behaviours Incomplete');
+      return redirect()->route('edit_quiz_id_route', ['id' => $id])->with('behaviour-status', 'Behaviours Incomplete');
     }
 
 
     //make sure all the checkboxes are associated with a non null input field
     foreach ($checkboxes as $key => $value) {
       if ($value === 'on' && $behaviours[$key] === NULL) {
-        return redirect()->route('quiz.get.edit.id', ['id' => $id])->with('behaviour-status', 'Checked Fields Must Be Filled In');
+        return redirect()->route('edit_quiz_id_route', ['id' => $id])->with('behaviour-status', 'Checked Fields Must Be Filled In');
       }
     }
 
@@ -160,12 +160,12 @@ class EditQuizController extends Controller
 
 
     if ($this->containsOnlyNull($interpretations) || $radioValue === NULL) {
-      return redirect()->route('quiz.get.edit.id', ['id' => $id])->with('int-status', 'Interpretations Incomplete');
+      return redirect()->route('edit_quiz_id_route', ['id' => $id])->with('int-status', 'Interpretations Incomplete');
     }
 
     //make sure the radio button corresponds to a non null input field
     if ($interpretations[$radioValue] === NULL) {
-      return redirect()->route('quiz.get.edit.id', ['id' => $id])->with('int-status', 'Selected Field Must Be Filled In');
+      return redirect()->route('edit_quiz_id_route', ['id' => $id])->with('int-status', 'Selected Field Must Be Filled In');
     }
 
     // build array having options as the keys, and the radio button status as value (on or NULL)

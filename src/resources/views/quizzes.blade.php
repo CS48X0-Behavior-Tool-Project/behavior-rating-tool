@@ -12,7 +12,7 @@
 
 @if (Bouncer::is(Auth::user())->an("admin", "ta"))
     <div class="row col-12 justify-content-center">
-        <button class="btn btn-primary" type="button" name="button" onclick="window.location.href='/quiz/create'">Create New Quiz</button>
+        <button class="btn btn-primary" type="button" name="button" onclick="window.location.href='/create_quiz'">Create New Quiz</button>
     </div>
     <br>
 @endif
@@ -23,7 +23,7 @@
             <div class="card-header">Filter</div>
 
             <div class="card-body">
-              <form action="{{ route('quiz.get.index') }}" method="post">
+              <form action="/quizzes" method="post">
                 @csrf
                 <input id="search" class="form-control" type="text" name="search" placeholder="Search Quizzes..." onkeyup"">
 
@@ -85,7 +85,7 @@
                 <!-- Add number of attempts and best score to the quizzes button TODO -->
                 @foreach ($quizzes as $quiz)
                   <button class="btn btn-secondary" style="padding: 10px; margin: 10px;" 
-                    onclick="window.location.href='{{ route('quiz.get.quiz', $quiz->id) }}'">{{ $quiz->code }} 
+                    onclick="window.location.href='/quizzes/{{$quiz->id}}'">{{ $quiz->code }} 
                     </br> Attempts: {{$attempts[$quiz->id]}} 
                     </br> Best Score: 
                     {{ $bestBehaviourScores[$quiz->id] ?? '-' }}/{{ $maxBehaviourScores[$quiz->id] ?? '-' }} B 

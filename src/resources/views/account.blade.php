@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <form id="account" action="{{ route('account.post.index') }}" method="post">
+            <form id="account" action="/account" method="post">
               @csrf
               <div class="card">
                   <div class="card-header">

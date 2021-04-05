@@ -6,7 +6,7 @@ jQuery(function(){
         }
     });
     $(document).ready(function() {
-          $('#dataTable').dataTable();
+          $('#dataTable').DataTable();
     });
 
 

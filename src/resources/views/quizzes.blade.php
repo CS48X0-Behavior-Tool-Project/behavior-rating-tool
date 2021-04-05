@@ -44,54 +44,46 @@
             </div>
             @endif
 
-            <div class="d-none d-sm-none d-md-block">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th scope="col" rowspan="2">Quiz Code</th>
-                            <th scope="col" rowspan="2">Attempts</th>
-                            <th scope="colgroup" colspan="2" class="text-center">Best Score</th>
-                            <th scope="col" rowspan="2">Take Quiz</th>
-                            @if (Bouncer::is(Auth::user())->an("admin", "ta"))
-                              <th scope="col" rowspan="2">Edit Quiz</th>
-                            @endif
-                        </tr>
-                        <tr>
-                          <th scope="col">Behaviours</th>
-                          <th scope="col">Interpretation</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th scope="col" rowspan="2">Quiz Code</th>
-                            <th scope="col" rowspan="2">Attempts</th>
-                            <th scope="colgroup" colspan="2" class="text-center">Best Score</th>
-                            <th scope="col" rowspan="2">Take Quiz</th>
-                            @if (Bouncer::is(Auth::user())->an("admin", "ta"))
-                              <th scope="col" rowspan="2">Edit Quiz</th>
-                            @endif
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        @foreach ($quizzes as $quiz)
-                        <tr>
-                            <th scope="row">{{ $quiz->code ?? 'ERROR' }}</th>
-                            <td>{{ $attempts[$quiz->id] ?? '-' }}</td>
-                            <td>{{ $bestBehaviourScores[$quiz->id] ?? '-' }} / {{ $maxBehaviourScores[$quiz->id] ?? '-'}}</td>
-                            <td>{{ $bestInterpretationScores[$quiz->id] ?? '-' }}</td>
-                            <td>Take Quiz</td>
-                            @if (Bouncer::is(Auth::user())->an('admin', 'ta'))
-                            <td>Edit Quiz</td>
-                            @endif
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <div class="card-body">
+                <div class="d-none d-sm-none d-md-block">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th scope="col" rowspan="2">Quiz Code</th>
+                                <th scope="col" rowspan="2">Attempts</th>
+                                <th scope="colgroup" colspan="2" class="text-center">Best Score</th>
+
+                                <th scope="col" rowspan="2" style="white-space: nowrap; width: 5%">Take Quiz</th>
+                                @if (Bouncer::is(Auth::user())->an("admin", "ta"))
+                                  <th scope="col" rowspan="2" style="white-space: nowrap; width: 5%">Edit Quiz</th>
+                                @endif
+                            </tr>
+                            <tr>
+                                <th scope="col">Behaviours</th>
+                                <th scope="col">Interpretation</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach ($quizzes as $quiz)
+                            <tr>
+                                <td>{{ $quiz->code ?? 'ERROR' }}</td>
+                                <td>{{ $attempts[$quiz->id] ?? '-' }}</td>
+                                <td>{{ $bestBehaviourScores[$quiz->id] ?? '-' }} / {{ $maxBehaviourScores[$quiz->id] ?? '-'}}</td>
+                                <td>{{ $bestInterpretationScores[$quiz->id] ?? '-' }}</td>
+                                <td><button class="btn btn-info" type="button" name="button" onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">Take Quiz</button></td>
+                                @if (Bouncer::is(Auth::user())->an('admin', 'ta'))
+                                <td><button class="btn btn-secondary" type="button" name="button" onclick="window.location='{{ route('edit_quiz_id_route', ['id' => $quiz->id]) }}'">Edit Quiz</button></td>
+                                @endif
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('end-body-scripts')

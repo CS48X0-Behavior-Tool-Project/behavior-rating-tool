@@ -23,7 +23,7 @@
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-6 col-lg-4">
                                 <video id="thumbnail" class="" width="100%" style="max-width: 100%" controls>
-                                    <source src="{{ route('videos.show', ['video' => $quiz->video]) }}" type="video/mp4"/>
+                                    <source class="video-box" src="{{ route('videos.show', ['video' => $quiz->video]) }}" type="video/mp4"/>
                                 </video>
                                 <br>
                                 <br>

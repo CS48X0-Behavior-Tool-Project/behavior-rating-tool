@@ -45,6 +45,7 @@
             @endif
 
             <div class="card-body">
+                <!-- Computer Screens -->
                 <div class="d-none d-sm-none d-md-block">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -76,6 +77,61 @@
                                 <td><button class="btn btn-secondary" type="button" name="button" onclick="window.location='{{ route('edit_quiz_id_route', ['id' => $quiz->id]) }}'">Edit Quiz</button></td>
                                 @endif
                             </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Mobile Screens -->
+                <div class="d-block d-sm-block d-md-none d-lg-none d-xl-none">
+                    <table class="table table-bordered" id="dataTableSmall" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Quiz Code</th>
+                                <th style="white-space: nowrap; width: 5%">Attempt Information</th>
+                                <th style="white-space: nowrap; width: 5%">Options</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Quiz Code</th>
+                                <th>Attempt Information</th>
+                                <th>Options</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach($quizzes as $quiz)
+                                <tr>
+                                    <td>{{ $quiz->code ?? 'ERROR' }}</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Attempts
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item disabled">Attempts: {{ $attempts[$quiz->id] ?? '-' }}</a>
+                                                <a class="dropdown-item disabled">Best Behaviour Score: {{ $bestBehaviourScores[$quiz->id] ?? '-' }} / {{ $maxBehaviourScores[$quiz->id] ?? '-'}}</a>
+                                                <a class="dropdown-item disabled">Best Interpretation Score: {{ $bestInterpretationScores[$quiz->id] ?? '-' }}</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @if (Bouncer::is(Auth::user())->an('student', 'expert'))
+                                            <button class="btn btn-info" type="button" name="button" onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">Take Quiz</button>
+                                        @elseif (Bouncer::is(Auth::user())->an('admin', 'ta'))
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                  Quiz Options
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="{{ route('quiz.show', ['id' => $quiz->id]) }}">Take Quiz</a>
+                                                    <a class="dropdown-item" href="{{ route('edit_quiz_id_route', ['id' => $quiz->id]) }}">Edit Quiz</a>
+                                                    <!-- TODO inable deleteing quizzes and update href -->
+                                                    <a class="dropdown-item" href="#" onclick="return confirm('Are you sure you want to delete {{$quiz->code}}?  All associated records will be removed.  This action is irreversible.')">Delete {{$quiz->code}}</a>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>

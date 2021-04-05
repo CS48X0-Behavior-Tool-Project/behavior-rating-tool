@@ -20,6 +20,8 @@ use App\Http\Controllers\QuizAttemptController;
 use App\Http\Controllers\EditQuizController;
 use App\Http\Controllers\SingleUserController;
 
+use App\Http\Controllers\JsonController;
+
 Auth::routes();
 
 Route::resource('users', UserController::class);
@@ -29,11 +31,6 @@ Route::resource('videos', VideoController::class);
  * Login page is the landing page when we first visit the website
  */
 Route::get('/', [PagesController::class, 'getLoginPage'])->name('login_page');
-
-/**
- * Home page is the landing page when we first log in to the website
- */
-Route::get('/home', [PagesController::class, 'getHomePage'])->name('home_route');
 
 /**
  * Account creation/confirmation page
@@ -106,6 +103,11 @@ Route::get('/confirmation/{token}', [UploadController::class, 'validateToken']);
  * Route for creating new users.
  */
 Route::post('/add_user', [UploadController::class, 'upload']);
+
+/**
+* Route for downloading the json template.
+*/
+Route::post('/add_user/json_download', [JsonController::class, 'downloadJsonTemplate']);
 
 /**
  * Route for account management page.

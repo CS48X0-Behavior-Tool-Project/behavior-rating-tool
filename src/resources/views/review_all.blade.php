@@ -15,7 +15,8 @@
 <!-- Bootstrap core JavaScript-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<!-- Page level plugin JavaScript-->
+<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
@@ -68,6 +69,11 @@
             <div class="card">
                 <div class="card-header">{{ __('Review All Student Quizzes') }}</div>
                 <div class="card-body">
+                    <div style="display: flex; justify-content: flex-end">
+                        <a href="{{ route('export_all_student_quizzes') }}"><strong>Download Data</strong></a>
+                    </div>
+                    <br>
+
                     <table class="table table-bordered" id="review_all" width="100%" cellspacing="0">
                         <thead>
                             <tr>
@@ -87,6 +93,10 @@
                                 <tr style="border: 1px solid #f2d296;">
                                     <td>{{$row->first_name}} {{$row->last_name}}</td>
                                     <td><a href="{{ url('quizzes/review/'.$row->id.'/'.$row->code) }}"> {{$row->code}}</td>
+                                <tr>
+                                    <!-- TODO this should show the users review page -->
+                                    <!-- <td><a href="#">{{$row->first_name}} {{$row->last_name}}</a></td>
+                                    <td>{{$row->code}}</td> -->
                                     <td>{{$row->attempts}}</td>
                                     <td>{{$row->time}}</td>
                                     <td>{{$row->score}} / {{$row->max_score}}</td>
@@ -95,12 +105,6 @@
                             @endforeach
                         </tbody>
                     </table>
-
-
-                    <div style="display: flex; justify-content: flex-end">
-                        <a href="{{ route('export_all_student_quizzes') }}"><strong>Download</strong></a>
-                    </div>
-
                 </div>
             </div>
             @endif

@@ -27,6 +27,10 @@ class QuizAttemptController extends Controller
       // TODO: store time taken for this attempt
       $attempt_time = $time_post - $time_pre;
 
+      $mins = floor ($attempt_time / 60);
+      $secs = $attempt_time % 60;
+      $attempt_time = $mins . ":" . sprintf("%02d", $secs);
+
       $behaviourSelections = request()->input('behaviour-check');
       $interpretationSelection = request()->input('interpretation-check');
 

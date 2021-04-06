@@ -20,7 +20,7 @@
                       @csrf
                         <!-- Stopwatch -->
                         <div style="text-align:right;">
-                            {{'Score: Behavior ' . $score . ', Interpretation ' . $interpretation_guess}}
+                            {{'Score: Behavior ' . $behaviour_score . ' / ' . $max_behaviour_score . ', Interpretation ' . $interpretation_score}}
                         </div>
 
                         <!-- Video -->

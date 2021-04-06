@@ -82,8 +82,9 @@ class ReviewQuizController extends Controller
         return view('review_quiz')->with(['code' => $quiz->code,
                                             'options' => $quiz->quiz_question_options,
                                             'video' => $quiz->video,
-                                            'score' => $studentAnswers->score,
-                                            'interpretation_guess' => $studentAnswers->interpretation_guess,
+                                            'behaviour_score' => $studentAnswers->score,
+                                            'max_behaviour_score' => $studentAnswers->max_score,
+                                            'interpretation_score' => $studentAnswers->interpretation_guess,
                                             'behavior_answers' => json_decode($studentAnswers->behavior_answers, true),
                                             'interpretation_answers' => json_decode($studentAnswers->interpretation_answers, true),
                                             'time' => isset($studentAnswers->time)?$studentAnswers->time:'N/A']);

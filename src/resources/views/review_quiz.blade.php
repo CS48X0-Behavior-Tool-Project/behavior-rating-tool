@@ -30,111 +30,73 @@
                         </video>
                     </div>
                     <br>
-
+                    <h6 style="text-align: center">Below are the responses you selected. Correct responses are highlighted.</h6>
                     <div class="row">
                         <!-- Behaviours -->
                         <div class="col">
                             <p class="title">Behaviours</p>
-                            <h6>Below you can see the behaviours you select. Those that are correct are highlighted</h6>
+                            @if ($behaviour_score == $max_behaviour_score)
+                                <h6 style="text-align: center">You correctly selected all behaviours.</h6>
+                            @elseif ($behaviour_score > 0)
+                                <h6 style="text-align: center">You correctly selected some behaviours.</h6>
+                            @else
+                                <h6 style="text-align: center">You did not correctly select any behaviours.</h6>
+                            @endif
+
                             <div class="row justify-content-center">
-                                @foreach ($options as $opt)
-                                    @if ( $opt->type == "behaviour")
+                                <div>
+                                  @foreach ($options as $opt)
+                                      @if ( $opt->type == "behaviour")
 
-                                        @if(in_array($opt->title, $behavior_answers,true))
-                                            @if ( $opt->is_solution == 1)
-                                                <span style="background-color:#86EA89">
+                                          @if(in_array($opt->title, $behavior_answers,true))
+                                              @if ( $opt->is_solution == 1)
+                                                  <span style="background-color:#86EA89">
+                                              @endif
+                                              <input type="checkbox" id="behaviour-check-{{$opt->title}}" name="behaviour-check[]" disabled value="{{$opt->title}}" checked></button>
+                                              <label for="behaviour-check-{{$opt->title}}">{{$opt->title}}</label>
+                                          @else
+                                              <input type="checkbox" id="behaviour-check-{{$opt->title}}" name="behaviour-check[]" disabled value="{{$opt->title}}"></button>
+                                              <label for="behaviour-check-{{$opt->title}}">{{$opt->title}}</label>
+                                          @endif
+
+                                          </span>
+                                          <br>
+                                      @endif
+                                  @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Interpretation -->
+                        <div class="col">
+                            <p class=title>Interpretation</p>
+                            @if ($interpretation_score == 1)
+                            <h6 style="text-align: center">Your interpretation was correct</h6>
+                            @else
+                            <h6 style="text-align: center">Your interpretation was incorrect</h6>
+                            @endif
+                            <div class="row justify-content-center">
+                                <div class="">
+                                    @foreach ($options as $opt)
+                                        @if ( $opt->type == "interpretation")
+                                            @if($opt->title == $interpretation_answers)
+                                                @if ( $opt->is_solution == 1)
+                                                    <span style="background-color:#86EA89">
+                                                @endif
+                                                <input type="radio" id="interpretation-check-{{$opt->title}}" name="interpretation-check" disabled  value="{{$opt->title}}" checked></button>
+                                                <label for="interpretation-check-{{$opt->title}}">{{$opt->title}}</label>
                                             @else
-                                                <span span style="background-color:yellow">
+                                                <input type="radio" id="interpretation-check-{{$opt->title}}" name="interpretation-check" disabled  value="{{$opt->title}}"></button>
+                                                <label for="interpretation-check-{{$opt->title}}">{{$opt->title}}</label>
                                             @endif
-                                            <input type="checkbox" id="behaviour-check-{{$opt->title}}" name="behaviour-check[]" disabled value="{{$opt->title}}" checked></button>
-                                            <label for="behaviour-check-{{$opt->title}}">{{$opt->title}}</label>
-                                        @else
-                                            <input type="checkbox" id="behaviour-check-{{$opt->title}}" name="behaviour-check[]" disabled value="{{$opt->title}}"></button>
-                                            <label for="behaviour-check-{{$opt->title}}">{{$opt->title}}</label>
+                                            </span>
+                                            <br>
                                         @endif
-
-                                        </span>
-                                        <br>
-                                    @endif
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
-                        <!-- Questions -->
-                        <div class="row">
-                            <!-- Behaviours -->
-                            <div class="col">
-                                <p class="title">Behaviours</p>
-
-                                <h6 style="text-align:center;">Select all the behaviours you see in the video</h6>
-                                <p style="text-align:center;">+1 Right answers</p>
-                                <p style="text-align:center;">-1 Wrong answers</p>
-
-                                <div class="form-group row justify-content-center">
-                                    <div>
-                                        @foreach ($options as $opt)
-                                            @if ( $opt->type == "behaviour")
-
-                                                @if(in_array($opt->title, $behavior_answers,true))
-                                                    @if ( $opt->is_solution == 1)
-                                                        <span style="background-color:#86EA89">
-                                                    @else
-                                                        <span span style="background-color:yellow">
-                                                    @endif
-                                                    <input type="checkbox" id="behaviour-check-{{$opt->title}}" name="behaviour-check[]" disabled value="{{$opt->title}}" checked></button>
-                                                    <label for="behaviour-check-{{$opt->title}}">{{$opt->title}}</label>
-                                                @else
-                                                    <input type="checkbox" id="behaviour-check-{{$opt->title}}" name="behaviour-check[]" disabled value="{{$opt->title}}"></button>
-                                                    <label for="behaviour-check-{{$opt->title}}">{{$opt->title}}</label>
-                                                @endif
-
-                                                </span>
-                                                <br>
-                                            @endif
-                                        @endforeach
-
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Interpretation -->
-                            <div class="col">
-                                <p class="title">Interpretation</p>
-                                <h6 style="text-align:center;">Select your interpretation based on the behaviours displayed</h6>
-                                <p style="text-align:center;">This is either right or wrong</p>
-                                <div class="form-group row justify-content-center">
-                                    <div>
-                                        @foreach ($options as $opt)
-                                            @if ( $opt->type == "interpretation")
-                                                @if($opt->title == $interpretation_answers)
-                                                    @if ( $opt->is_solution == 1)
-                                                        <span style="background-color:#86EA89">
-                                                    @else
-                                                        <span span style="background-color:yellow">
-                                                    @endif
-                                                    <input type="radio" id="interpretation-check-{{$opt->title}}" name="interpretation-check" disabled  value="{{$opt->title}}" checked></button>
-                                                    <label for="interpretation-check-{{$opt->title}}">{{$opt->title}}</label>
-                                                @else
-                                                    <input type="radio" id="interpretation-check-{{$opt->title}}" name="interpretation-check" disabled  value="{{$opt->title}}"></button>
-                                                    <label for="interpretation-check-{{$opt->title}}">{{$opt->title}}</label>
-                                                @endif
-
-                                                </span>
-                                                <br>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <br>
-                                <div style="float: right;">
-                                <strong>*</strong>
-                                    <span style="background-color:#86EA89"><i>You got right</i></span>
-                                    <span style="background-color:yellow"><i>You got wrong</i></span>
-                                </div>
-                            </div>
-                        </div>
-
+                </div>
             </div>
         </div>
     </div>

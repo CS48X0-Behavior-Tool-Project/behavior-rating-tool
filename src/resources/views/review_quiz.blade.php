@@ -25,7 +25,9 @@
 
                         <!-- Video -->
                         <div class="row justify-content-center">
-                            <iframe src="{{ route('videos.show', ['video' => $video]) }}" width="550" height="300" style="resize: both"></iframe>
+                            <video id="thumbnail" class="" width="80%" style="max-width: 100%; resize: both;" controls>
+                                <source src="{{ route('videos.show', ['video' => $video]) }}" type="video/mp4"/>
+                            </video>
                         </div>
                         <br>
                         <!-- Questions -->

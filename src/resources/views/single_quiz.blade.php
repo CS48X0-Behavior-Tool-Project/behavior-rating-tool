@@ -35,7 +35,7 @@
 
                         <!-- Video -->
                         <div class="row justify-content-center">
-                            <video id="thumbnail" class="" width="100%" style="max-width: 100%; resize: both;" controls>
+                            <video id="thumbnail" class="" width="80%" style="max-width: 100%; resize: both;" controls>
                                 <source src="{{ route('videos.show', ['video' => $video]) }}" type="video/mp4"/>
                             </video>
                         </div>

@@ -90,7 +90,7 @@
                         </thead>
                         <tbody>
                             @foreach($admin_data as $row)
-                                <tr style="border: 1px solid #f2d296;">
+                                <tr>
                                     <td>{{$row->first_name}} {{$row->last_name}}</td>
                                     <td><a href="{{ url('quizzes/review/'.$row->id.'/'.$row->code) }}"> {{$row->code}}</td>
                                     <td>{{$row->attempts}}</td>

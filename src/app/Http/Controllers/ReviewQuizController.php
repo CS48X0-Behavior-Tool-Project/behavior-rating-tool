@@ -10,13 +10,6 @@ use Illuminate\Support\Facades\Log;
 
 use App\Models\User;
 use App\Models\Quiz;
-use App\Models\Attempt;
-use App\Models\AttemptQuiz;
-use App\Models\UserAttempt;
-use App\Models\QuizOption;
-use Illuminate\Contracts\View\View;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\DB;
 
 

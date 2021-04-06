@@ -93,10 +93,6 @@
                                 <tr style="border: 1px solid #f2d296;">
                                     <td>{{$row->first_name}} {{$row->last_name}}</td>
                                     <td><a href="{{ url('quizzes/review/'.$row->id.'/'.$row->code) }}"> {{$row->code}}</td>
-                                <tr>
-                                    <!-- TODO this should show the users review page -->
-                                    <!-- <td><a href="#">{{$row->first_name}} {{$row->last_name}}</a></td>
-                                    <td>{{$row->code}}</td> -->
                                     <td>{{$row->attempts}}</td>
                                     <td>{{$row->time}}</td>
                                     <td>{{$row->score}} / {{$row->max_score}}</td>

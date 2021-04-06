@@ -113,6 +113,7 @@ class UserController extends Controller
             }
             $userAttempt->max_score = $request->max_score;
             $userAttempt->interpretation_guess = $request->interpretation_guess;
+            $userAttempt->attempt_number = $request->attempt;
             if ($request->has('time')) {
                 $jsonObj['time'] = round($request->time, 2);
                 $userAttempt->options = json_encode($jsonObj);

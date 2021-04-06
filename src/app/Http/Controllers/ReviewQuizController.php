@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 use App\Models\User;
 use App\Models\Quiz;
+use App\Models\UserAttempt;
 use Illuminate\Support\Facades\DB;
 
 
@@ -79,12 +80,16 @@ class ReviewQuizController extends Controller
         $quiz = $this->getQuizByUserAttemptID($userAttemptId);
         $studentAnswers = $this->getAnswers($userAttemptId);
 
+        //extract the attempt number
+        $attemptNumber = UserAttempt::where('attempt_id','=',$userAttemptId)->pluck('attempt_number')->toArray()[0];
+
         return view('review_quiz')->with(['code' => $quiz->code,
                                             'options' => $quiz->quiz_question_options,
                                             'video' => $quiz->video,
                                             'behaviour_score' => $studentAnswers->score,
                                             'max_behaviour_score' => $studentAnswers->max_score,
                                             'interpretation_score' => $studentAnswers->interpretation_guess,
+                                            'attempt' => $attemptNumber,
                                             'behavior_answers' => json_decode($studentAnswers->behavior_answers, true),
                                             'interpretation_answers' => json_decode($studentAnswers->interpretation_answers, true),
                                             'time' => isset($studentAnswers->time)?$studentAnswers->time:'N/A']);

@@ -45,6 +45,7 @@ class QuizAttemptController extends Controller
         'score' => $scores[0],
         'max_score' => $scores[1],
         'interpretation_guess' => $interpretationGuess,
+        'attempt' => request()->input('attempt'),
         'time' => $attempt_time,
       ]);
 

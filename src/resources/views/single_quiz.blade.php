@@ -33,6 +33,9 @@
                         <!-- store starting time -->
                         <input type="hidden" id="startTime" name="startTime" value={{$time}}>
 
+                        <!-- store attempt number -->
+                        <input type="hidden" id="attempt" name="attempt" value={{$attempt}}>
+
                         <!-- Video -->
                         <div class="row justify-content-center">
                             <video id="thumbnail" class="" width="80%" style="max-width: 100%; resize: both;" controls>

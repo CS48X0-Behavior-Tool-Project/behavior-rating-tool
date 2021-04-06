@@ -51,7 +51,7 @@ class QuizTest extends TestCase
         $response = $this->actingAs($user)
             ->post('/create_quiz', [
                 'video-id' => '1',
-                'video-name' => 'test',
+                'video-name' => 'Rabbit1',
                 'animal-radio' => ['New'],
                 'a-new' => 'Rabbit',
                 'behaviour-check' => ['1', '2'],

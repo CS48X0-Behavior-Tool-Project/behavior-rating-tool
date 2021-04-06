@@ -24,7 +24,7 @@
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-6 col-lg-4">
                                 <video id="thumbnail" class="" width="100%" style="max-width: 100%" controls>
-                                    <source src="" type="video/mp4"/>
+                                    <source class="video-box" src="" type="video/mp4"/>
                                 </video>
                                 <br>
                                 <br>
@@ -43,7 +43,7 @@
                                             <button class="btn btn-secondary" id="upload-button">Upload</button>
                                         </div>
                                         <br>
-
+                                        <div class="modal"></div>
                                         <div>{{ session('message') }}</div>
 
                                         @if(session('errors'))
@@ -74,7 +74,7 @@
                                 </div>
                                 <!-- TODO this field should populate with Cow1 or whatever the video name will end up being, so they can change it if they want. -->
                                 <div class="form-group row">
-                                    <label for="name-id" class="col-md-3 col-form-label text-md-right">Name</label>
+                                    <label for="video-name" class="col-md-3 col-form-label text-md-right">Name</label>
                                     <div class="col-md-9">
                                         <input id="video-name" type="text" class="form-control" name="video-name" placeholder="Quiz Name">
                                     </div>
@@ -184,4 +184,5 @@
 @section('end-body-scripts')
     {{-- All ajax related scripts should be moved to the end-body-scripts section --}}
     <script src="{{ asset('/javascript/create_quiz.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('javascript/admin_create_quiz.js') }}"></script>
 @endsection

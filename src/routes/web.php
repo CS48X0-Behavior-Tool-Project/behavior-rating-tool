@@ -19,6 +19,7 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\QuizAttemptController;
 use App\Http\Controllers\EditQuizController;
 use App\Http\Controllers\SingleUserController;
+use App\Http\Controllers\ReviewQuizController;
 
 use App\Http\Controllers\JsonController;
 
@@ -31,11 +32,6 @@ Route::resource('videos', VideoController::class);
  * Login page is the landing page when we first visit the website
  */
 Route::get('/', [PagesController::class, 'getLoginPage'])->name('login_page');
-
-/**
- * Account creation/confirmation page
- */
-Route::get('/confirmation', [PagesController::class, 'getConfirmationPage'])->name('confirmation_route');
 
 /**
  * Add user page
@@ -72,7 +68,7 @@ Route::get('/quizzes', [PagesController::class, 'getQuizList'])->name('quizzes_r
 /**
  * Display the quiz we are attempting
  */
-Route::get('/quizzes/{id}', [PagesController::class, 'getQuizById']);
+Route::get('/quizzes/{id}', [PagesController::class, 'getQuizById'])->name('quiz.show');
 
 /**
  * Show all the users in the system
@@ -83,6 +79,14 @@ Route::get('/users', [PagesController::class, 'getUsers'])->name('users_route');
  * Perform an action on the single user page
  */
 Route::get('/users/{actionName}/{id}', [SingleUserController::class, 'action']);
+
+/**
+ * Display review page
+ */
+Route::get('/review', [ReviewQuizController::class, 'getUserQuizzes'])->name('users_review');
+// Route::get('/review/{id}', [ReviewQuizController::class, 'getReviewbyUserAttemptID']);
+Route::get('/quizzes/review/{id}', [ReviewQuizController::class, 'getReviewQuizByUserAttemptId']);   // id is user_attempt_id
+Route::get('/quizzes/review/{id}/{quiz}', [ReviewQuizController::class, 'getReviewUserQuiz']);   // id, quiz is quiz_code
 
 /**
  * Route for submitting a login request.  Will need to test when actual webpage is created.
@@ -119,9 +123,9 @@ Route::post('/create_quiz', [CreateQuizController::class, 'createQuiz']);
  */
 Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
 
-/*
-* Route for submitting a quiz attempt
-*/
+/** 
+ * Route for submitting a quiz attempt
+ */
 Route::post('/quizzes/{id}', [QuizAttemptController::class, 'submitQuizAttempt']);
 
 /**
@@ -130,3 +134,5 @@ Route::post('/quizzes/{id}', [QuizAttemptController::class, 'submitQuizAttempt']
 Route::get('/export', [PagesController::class, 'exportData']);
 Route::get('/export/users', [ExportController::class, 'exportUsers'])->name('export_users_route');
 Route::get('/export/user_quizzes', [ExportController::class, 'exportUserAttempts'])->name('export_user_quizzes_route');
+Route::get('/export/user_quizzes_summary', [ReviewQuizController::class, 'exportUserQuizSummary'])->name('export_all_student_quizzes');
+

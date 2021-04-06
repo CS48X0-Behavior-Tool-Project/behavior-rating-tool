@@ -47,16 +47,6 @@ class PagesController extends Controller
         return view('auth.login');
     }
 
-    /**
-     * ! Token authorization is required
-     * @return View|Factory
-     * @throws BindingResolutionException
-     */
-    public function getConfirmationPage()
-    {
-        return view('account_creation');
-    }
-
     public function getQuizList()
     {
         $animals = Quiz::all()->pluck('animal')->unique();
@@ -231,4 +221,16 @@ class PagesController extends Controller
         }
         return redirect()->back();
     }
+
+    // public function userQuizReview()
+    // {
+    //     if (request()->user()->can('view', User::class)){
+    //         $users = $this->uc->getAllUsers();
+
+    //         return view('admin_view_all_users')->with('users', $users);
+    //     } else {
+    //         abort(403);
+    //     }
+
+    // }
 }

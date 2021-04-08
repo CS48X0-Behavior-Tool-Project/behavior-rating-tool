@@ -119,7 +119,7 @@
                                 <h6 style="text-align:center;">Check the correct answers</h6>
                                 <div class="form-group row justify-content-center">
                                     <div>
-                                        @foreach(range(1,10) as $x)
+                                        @foreach(range(0,9) as $x)
                                             <div class="input-group mb-3" id="field-b{{$x}}">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">
@@ -131,7 +131,7 @@
                                         @endforeach
                                     </div>
                                     <div>
-                                        @foreach(range(11,30) as $x)
+                                        @foreach(range(10,29) as $x)
                                             <div class="input-group mb-3" id="field-b{{$x}}" style="display: none">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">
@@ -160,7 +160,7 @@
                                 <h6 style="text-align:center;">Select the correct answers</h6>
                                 <div class="form-group row justify-content-center">
                                     <div>
-                                        @foreach(range(1,5) as $x)
+                                        @foreach(range(0,4) as $x)
                                             <div class="input-group mb-3" id="field-i{{$x}}">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">
@@ -172,7 +172,7 @@
                                         @endforeach
                                     </div>
                                     <div>
-                                        @foreach(range(6,30) as $x)
+                                        @foreach(range(5,29) as $x)
                                             <div class="input-group mb-3" id="field-i{{$x}}" style="display: none">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">

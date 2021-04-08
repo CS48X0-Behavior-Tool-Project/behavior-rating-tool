@@ -11,7 +11,7 @@ $(document).ready(function(){
     })
 });
 
-// If the new password field is changed, the confirm field gets a red border
+// If the new email field is changed, the confirm field gets a red border
 $(document).ready(function(){
     $("#email").on("input", function(){
         document.getElementById("email").style.borderColor = "#ced4da";
@@ -23,7 +23,7 @@ $(document).ready(function(){
     })
 });
 
-// The confirm password field loses its red border when password values equal
+// The confirm email field loses its red border when email values equal
 $(document).ready(function(){
     $("#email-confirm").on("input", function(){
         if($("#email").val() == $("#email-confirm").val()){
@@ -35,6 +35,18 @@ $(document).ready(function(){
 });
 
 // Passwords
+
+// When old password is input, prompt for new password
+$(document).ready(function(){
+    $("#old-password").on("input", function(){
+        if($("#password").val() == ""){
+            document.getElementById("password").style.borderColor = "red";
+        }
+        if($("#password-confirm").val() == ""){
+            document.getElementById("password-confirm").style.borderColor = "red";
+        }
+    })
+});
 
 // If the new password field is changed, the confirm field gets a red border
 $(document).ready(function(){
@@ -73,6 +85,12 @@ function validate(event) {
     var emailconf = $("#email-confirm").val();
     if (email == emailconf) {
         mismatch_email = false;
+    }
+
+    // If old password is filled in and new password is empty
+    if($("#old-password").val() != "" && $("#password").val() == ""){
+        event.preventDefault();
+        alert("Please enter a new password or remove your old password");
     }
 
     // Password validation

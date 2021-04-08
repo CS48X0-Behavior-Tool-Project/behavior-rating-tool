@@ -1,7 +1,20 @@
 // Emails
+// When old email is input, prompt for new email
+$(document).ready(function(){
+    $("#old-email").on("input", function(){
+        if($("#email").val() == ""){
+            document.getElementById("email").style.borderColor = "red";
+        }
+        if($("#email-confirm").val() == ""){
+            document.getElementById("email-confirm").style.borderColor = "red";
+        }
+    })
+});
+
 // If the new password field is changed, the confirm field gets a red border
 $(document).ready(function(){
     $("#email").on("input", function(){
+        document.getElementById("email").style.borderColor = "#ced4da";
         if($("#email").val() != "" && $("#email").val() != $("#email-confirm").val()){
           document.getElementById("email-confirm").style.borderColor = "red";
         } else {
@@ -49,6 +62,12 @@ $(document).ready(function(){
 function validate(event) {
     var mismatch_email = true;
     var mismatch_password = true;
+    // If old email is filled in and new email is empty
+    if($("#old-email").val() != "" && $("#email").val() == ""){
+        event.preventDefault();
+        alert("Please enter a new email or remove your old email");
+    }
+
     // Email validation
     var email = $("#email").val();
     var emailconf = $("#email-confirm").val();

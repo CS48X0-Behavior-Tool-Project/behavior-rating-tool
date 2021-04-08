@@ -6,7 +6,6 @@
     </div>
 @endif
 
-<script type="text/javascript" src="{{ URL::asset('javascript/edit_quiz.js') }}"></script>
 <link rel="stylesheet" href="{{ URL::asset('css/admin_create_quiz.css') }}">
 
 @section('content')
@@ -22,8 +21,10 @@
                     @endif
                     <div class="card-body">
                         <div class="row justify-content-center">
-                            <div class="col">
-                                <iframe id="thumbnail" src="" width="col-md-4" height="200"></iframe>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <video id="thumbnail" class="" width="100%" style="max-width: 100%" controls>
+                                    <source class="video-box" src="{{ route('videos.show', ['video' => $quiz->video]) }}" type="video/mp4"/>
+                                </video>
                                 <br>
                                 <br>
                                 <p class="title" id="import-video">Import Video</p>
@@ -31,8 +32,7 @@
                                     <form action="{{ route('videos.store') }}" id="upload-form" method="post" enctype="multipart/form-data"> @csrf
                                         <div class="custom-file" >
                                             <div class=" row justify-content-center">
-                                                <input type="file" class="custom-file-input" name="video" id="video-upload" accept="video/*" onchange="updateVideoLabel();">
-                                                <!-- TODO Display video $quiz->video here -->
+                                                <input type="file" class="custom-file-input" name="video" id="video-upload" accept="video/mp4,video/mpeg,video/x-matroska" onchange="updateVideoLabel();">
                                                 <label class="custom-file-label" for="video" id="file-label" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Choose file</label>
                                             </div>
                                         </div>
@@ -50,8 +50,8 @@
                                         @endif
                                     </form>
                                 </div>
-                                <div style="display:none" id="upload-alert" role="alert">
-                                </div>
+                                <div class="modal"></div>
+                                <div style="display:none" id="upload-alert" role="alert"></div>
                                 <br>
 
                                 <form action="/edit_quiz/{{$quiz->id}}" method="post">
@@ -97,14 +97,14 @@
                                             @endif
                                         @endforeach
                                         <div class="row-justify-content-center">
-                                          <div class="input-group mb-3">
-                                              <div class="input-group-prepend">
-                                                  <div class="input-group-text">
-                                                      <input type="radio" id="a-new" name="animal-radio[]" value = "New">
-                                                  </div>
-                                              </div>
-                                              <input id="animal-new" type="text" class="form-control" name="a-new" placeholder="Edit me ...">
-                                          </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <input type="radio" id="a-new" name="animal-radio[]" value="New">
+                                                    </div>
+                                                </div>
+                                                <input id="animal-new" type="text" class="form-control" name="a-new" placeholder="Enter new animal ...">
+                                            </div>
                                         </div>
                                     </div>
                                     <br>
@@ -116,7 +116,7 @@
                                 </div>
 
                             </div>
-                            <div class="col">
+                            <div class="col-sm-12 col-md-3 col-lg-4">
                                 <p class="title" id="behaviour-info">Behaviours</p>
                                 <h6 style="text-align:center;">Enter all the behaviours to included in the quiz</h6>
                                 <p style="text-align:center;">Fields left "Edit me..." or blank will not be included in the quiz</p>
@@ -168,7 +168,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="col">
+                            <div class="col-sm-12 col-md-3 col-lg-4">
                                 <p class="title" id="interpretation-info">Interpretation</p>
                                 <h6 style="text-align:center;">Enter all the interpretations to included in the quiz</h6>
                                 <p style="text-align:center;">Fields left "Edit me..." or blank will not be included in the quiz</p>

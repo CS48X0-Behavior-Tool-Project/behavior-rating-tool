@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 use Exception;
 use App\Http\Controllers\Api\QuizController;
 use App\Models\QuizOption;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EditQuizController extends Controller
 {
@@ -18,6 +22,13 @@ class EditQuizController extends Controller
     $this->qc = new QuizController();
   }
 
+  /**
+   * @param mixed $id
+   * @return RedirectResponse|void
+   * @throws BindingResolutionException
+   * @throws HttpException
+   * @throws NotFoundHttpException
+   */
   public function updateQuiz($id)
   {
     if (request()->user()->can('edit', Quiz::class)) {

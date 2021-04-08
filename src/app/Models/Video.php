@@ -16,5 +16,10 @@ class Video extends Model
      */
     protected $fillable = [
         'name',
+        'original_name',
+        'disk',
+        'path',
+        'uploaded_at',
+        'converted_at',
     ];
 }

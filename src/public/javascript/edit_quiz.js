@@ -42,6 +42,11 @@ $(document).ready(function () {
 
 });
 
+function updateThumbnail(uuid) {
+    $("#thumbnail").attr("src", `${location.origin}/videos/${uuid}`);
+    $("#video-box").attr("src", `${location.origin}/videos/${uuid}`);
+}
+
 function validate(event) {
     // Video upload check
     impVideo = document.getElementById("import-video");

@@ -30,21 +30,7 @@
     @yield('view_specific_styles')
 </head>
 
-<style media="screen">
-  .nav-link {
-  color: white;
-  letter-spacing: 1px;
-  }
-  nav a:hover {
-    color: black;
-    background-color: white;
-  }
-  .nav-link:active{
-    background-color: white;
-    color: black;
-    letter-spacing: 1px;
-  }
-</style>
+<link rel="stylesheet" href="{{ URL::asset('css/navbar.css') }}">
 
 <body>
     <div id="app">
@@ -52,15 +38,7 @@
             <div class="container">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-dark">
-                      @guest
-                          <a class="navbar-brand" href="{{ route('login') }}">
-                              {{ config('app.name') }}
-                          </a>
-                      @else
-                          <a class="navbar-brand" href="{{ url('/home') }}">
-                              {{ config('app.name') }}
-                          </a>
-                      @endguest
+                        <h4><a href="{{ url('quizzes') }}">{{ config('app.name') }}</a></h4>
                     </ul>
                     <!-- Right Side Of Navbar -->
                         @guest
@@ -81,7 +59,9 @@
                                   </a>
                               </li>
                               <li class="nav-item">
-                                  <a class="nav-link" href="#">Review</a>
+                                <a class="nav-link" href="{{ url('review') }}">
+                                    {{ __('Review') }}
+                                  </a>
                               </li>
                               <li class="nav-item">
                                   <a class="nav-link" href="{{ url('account') }}">

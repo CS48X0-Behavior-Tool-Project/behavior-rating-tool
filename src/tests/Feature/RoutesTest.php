@@ -36,16 +36,6 @@ class RoutesTest extends TestCase
     //     $response->assertStatus(200);
     // }
 
-    public function test_admin_can_view_home_page()
-    {
-        $user = User::factory()->create();
-        $user->assign('admin');
-        $response = $this->actingAs($user)
-            ->get('/home');
-
-        $response->assertStatus(200);
-    }
-
     public function test_admin_can_view_add_user_page()
     {
         $user = User::factory()->create();

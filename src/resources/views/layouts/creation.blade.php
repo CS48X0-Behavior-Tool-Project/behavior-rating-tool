@@ -30,21 +30,7 @@
     @yield('view_specific_styles')
 </head>
 
-<style media="screen">
-  .nav-link {
-  color: white;
-  letter-spacing: 1px;
-  }
-  nav a:hover {
-    color: black;
-    background-color: white;
-  }
-  .nav-link:active{
-    background-color: white;
-    color: black;
-    letter-spacing: 1px;
-  }
-</style>
+<link rel="stylesheet" href="{{ URL::asset('css/navbar.css') }}">
 
 <body>
     <div id="app">
@@ -52,9 +38,7 @@
             <div class="container">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-dark">
-                        <a class="navbar-brand" href="{{ route('login') }}">
-                            {{ config('app.name') }}
-                        </a>
+                        <h4>{{ config('app.name') }}</h4>
                     </ul>
                 </div>
             </div>

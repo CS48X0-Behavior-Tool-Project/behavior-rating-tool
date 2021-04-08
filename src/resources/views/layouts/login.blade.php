@@ -30,9 +30,19 @@
     @yield('view_specific_styles')
 </head>
 
+<link rel="stylesheet" href="{{ URL::asset('css/navbar.css') }}">
+
 <body>
     <div id="app">
-
+        <nav class="navbar navbar-expand navbar-dark shadow-sm" style="background-color: #fc8403;">
+            <div class="container">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="nav navbar-dark">
+                        <h4>{{ config('app.name') }}</h4>
+                    </ul>
+                    <!-- Right Side Of Navbar -->
+            </div>
+        </nav>
         <main class="py-4">
             @yield('content')
         </main>

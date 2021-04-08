@@ -15,6 +15,7 @@ use App\Auth\EmailAuthentication;
 use App\Models\UserLoginToken;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 use SimpleXLSX;
 
@@ -204,7 +205,7 @@ class UploadController extends Controller
     public function dbInsert($firstName, $lastName, $email, $role)
     {
         $user = User::create([
-            'password' => Hash::make('password'),
+            'password' => Hash::make(Str::random(10)),
             'email' => $email,
             'first_name' => $firstName,
             'last_name' => $lastName,
@@ -222,7 +223,6 @@ class UploadController extends Controller
      */
     public function emailNewUser($email)
     {
-
         $auth = new EmailAuthentication($email);
         $auth->requestLink();
     }
@@ -233,12 +233,11 @@ class UploadController extends Controller
     public function validateToken(Request $request, UserLoginToken $token)
     {
         $token->delete();
-
-        if ($token->isExpired()) {
-            return;
+        if (is_null($token) or $token->isExpired()) {
+            return redirect()->back();
         }
         //login the user and redirect them to the account confirmation page where they set their password and take the survey
         Auth::login($token->user);
-        return redirect()->route('confirmation_route');
+        return view('account_creation');
     }
 }

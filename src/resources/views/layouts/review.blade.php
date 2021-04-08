@@ -12,11 +12,16 @@
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <!-- Page Specific Scripts -->
     @yield('view_specific_scripts')
@@ -49,18 +54,18 @@
                                   @endif
                               </li>
                               <li class="nav-item">
-                                  <a class="nav-link active" href="{{ url('quizzes') }}">
-                                      <strong>{{ __('Quizzes') }}</strong>
+                                  <a class="nav-link" href="{{ url('quizzes') }}">
+                                      {{ __('Quizzes') }}
                                   </a>
                               </li>
                               <li class="nav-item">
-                                <a class="nav-link" href="{{ url('review') }}">
-                                    {{ __('Review') }}
+                                  <a class="nav-link active" href="{{ url('review') }}">
+                                      <strong>{{ __('Review') }}</strong>
                                   </a>
                               </li>
                               <li class="nav-item">
-                                  <a class="nav-link" href="{{ url('account') }}">
-                                      {{ __('Account') }}
+                                <a class="nav-link" href="{{ url('account') }}">
+                                    {{ __('Account') }}
                                   </a>
                               </li>
                               <li class="nav-item">
@@ -77,35 +82,10 @@
                 </div>
             </div>
         </nav>
-        @if (Bouncer::is(Auth::user())->an("admin", "expert"))
-            <p class="title"
-              style="text-align: center;
-              color: black;
-              background-color: #f7f7f7;
-              border-radius: 5px;
-              border: 1px solid #dfdfdf;">
-                  You are currently logged in as an
-                  {{ Auth::user()->roles[0]->name}}:
-                  {{ Auth::user()->first_name ?? 'John'}}
-                  {{ Auth::user()->last_name ?? 'Smith'}}
-            </p>
-        @else
-            <p class="title"
-              style="text-align: center;
-              color: black;
-              background-color: #f7f7f7;
-              border-radius: 5px;
-              border: 1px solid #dfdfdf;">
-                  You are currently logged in as a
-                  {{ Auth::user()->roles[0]->name ?? 'Student'}}:
-                  {{ Auth::user()->first_name ?? 'John'}}
-                  {{ Auth::user()->last_name ?? 'Smith'}}
-            </p>
-        @endif
 
-    <main class="container-fluid mt-2">
-        @yield('content')
-    </main>
+        <main class="py-4">
+            @yield('content')
+        </main>
     </div>
     @yield('end-body-scripts')
 </body>

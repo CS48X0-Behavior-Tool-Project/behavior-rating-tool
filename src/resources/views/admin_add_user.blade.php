@@ -93,7 +93,16 @@
                         <div align="center">
                             <form method="get" action="template_files/add_user_template.csv">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Download Template File') }}
+                                    {{ __('Download CSV Template') }}
+                                </button>
+                            </form>
+                        </div>
+                        <br>
+                        <div align="center">
+                            <form method="post" action="/add_user/json_download">
+                              @csrf
+                                <button type="submit" class="btn btn-primary" name="jsonButton">
+                                    {{ __('Download JSON Template') }}
                                 </button>
                             </form>
                         </div>

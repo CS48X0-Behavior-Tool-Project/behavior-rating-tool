@@ -130,7 +130,22 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    <button class="btn btn-secondary" type="button" id="add-behaviour"> Add more behaviours </button>
+                                    <div>
+                                        @foreach(range(11,30) as $x)
+                                            <div class="input-group mb-3" id="field-b{{$x}}" style="display: none">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
+                                                    </div>
+                                                </div>
+                                                <input id="box-{{$x}}" type="text" class="form-control" name="box-{{$x}}" placeholder="Edit me...">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="form-group row justify-content-center">
+                                    <button class="btn btn" type="button" id="add-behaviour" style="margin-right: 5px; background-color: #fc8403; color: white">More Behvaiours</button>
+                                    <button class="btn btn-secondary" type="button" id="remove-behaviour" style="margin-left: 5px">Fewer Behvaiours</button>
                                 </div>
                                 @if (session('behaviour-status'))
                                     <div class="alert alert-danger">
@@ -156,7 +171,22 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    <button class="btn btn-secondary" type="button" id="add-interpretation"> Add more interpretations </button>
+                                    <div>
+                                        @foreach(range(6,30) as $x)
+                                            <div class="input-group mb-3" id="field-i{{$x}}" style="display: none">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
+                                                    </div>
+                                                </div>
+                                                <input id="inter-{{$x}}" type="text" class="form-control" name="inter-{{$x}}" placeholder="Edit me ...">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="form-group row justify-content-center">
+                                    <button class="btn" type="button" id="add-interpretation" style="margin-right: 5px; background-color: #fc8403; color: white">More Interpretations</button>
+                                    <button class="btn btn-secondary" type="button" id="remove-interpretation" style="margin-left: 5px">Fewer Interpretations</button>
                                 </div>
                                 @if (session('int-status'))
                                     <div class="alert alert-danger">
@@ -167,7 +197,7 @@
                         </div>
 
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary" onclick="validate(event)">
+                            <button type="submit" class="btn btn-primary" onclick="validate(event)" style="margin-top: 30px">
                                 Create Quiz
                             </button>
                         </div>

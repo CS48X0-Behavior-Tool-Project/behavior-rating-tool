@@ -1,10 +1,10 @@
 // Add more behaviour fields
 jQuery(function() {
-    var nextBehaviour = 11;
+    var nextBehaviour = 10;
     const MAX_BEHAVIOURS = 30;
     const MIN_BEHAVIOURS = 10;
 
-    var nextInterpretation = 6;
+    var nextInterpretation = 5;
     const MAX_INTERPRETATION = 30;
     const MIN_INTERPRETATION = 5;
 
@@ -16,8 +16,8 @@ jQuery(function() {
             var field = "#field-b"+nextBehaviour;
             $(field).show();
 
-            if (nextBehaviour >= MAX_BEHAVIOURS+1){
-                nextBehaviour = MAX_BEHAVIOURS+1;
+            if (nextBehaviour >= MAX_BEHAVIOURS){
+                nextBehaviour = MAX_BEHAVIOURS;
             } else {
                 nextBehaviour++;
             }
@@ -28,8 +28,8 @@ jQuery(function() {
     $(document).ready(function () {
         $("#remove-behaviour").click(function(e){
             e.preventDefault();
-            if (nextBehaviour < MIN_BEHAVIOURS+2){
-                nextBehaviour = MIN_BEHAVIOURS+2;
+            if (nextBehaviour < MIN_BEHAVIOURS+1){
+                nextBehaviour = MIN_BEHAVIOURS+1;
             } else {
                 nextBehaviour--;
             }
@@ -46,8 +46,8 @@ jQuery(function() {
             var field = "#field-i"+nextInterpretation;
             $(field).show();
 
-            if (nextInterpretation >= MAX_INTERPRETATION+1){
-                nextInterpretation = MAX_INTERPRETATION+1;
+            if (nextInterpretation >= MAX_INTERPRETATION){
+                nextInterpretation = MAX_INTERPRETATION;
             } else {
                 nextInterpretation++;
             }
@@ -58,8 +58,8 @@ jQuery(function() {
     $(document).ready(function () {
         $("#remove-interpretation").click(function(e){
             e.preventDefault();
-            if (nextInterpretation < MIN_INTERPRETATION+2){
-                nextInterpretation = MIN_INTERPRETATION+2;
+            if (nextInterpretation < MIN_INTERPRETATION+1){
+                nextInterpretation = MIN_INTERPRETATION+1;
             } else {
                 nextInterpretation--;
             }

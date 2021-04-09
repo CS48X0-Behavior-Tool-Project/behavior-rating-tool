@@ -3,7 +3,7 @@ function validate(event) {
     nameField = document.getElementById("video-name");
     if($(nameField).val() == ""){
         event.preventDefault();
-        alert("The Name field cannot be left blank");
+        alert("The name field cannot be left blank");
         nameField.style.borderColor = "red";
     } else {
         nameField.style.borderColor = "#dfdfdf";

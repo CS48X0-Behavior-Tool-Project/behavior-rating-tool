@@ -36,6 +36,10 @@ class EditQuizController extends Controller
         $videoID = request()->input('video-id');
         $quizCode = request()->input('video-name');
 
+        if ($quizCode == NULL) {
+					return redirect()->route('edit_quiz_id_route')->with('name-status', 'Name field cannot be empty');
+				}
+
         $animal = $this->readAnimal($id);
 
         $behaviours = $this->readBehaviours($id);
@@ -48,7 +52,7 @@ class EditQuizController extends Controller
         list($status, $message) = explode(':', $e->getMessage());
         Log::info('>>> error status: ' . $status);
         Log::info('>>> error message: ' . $message);
-        return redirect()->route('create_quiz_route')->with($status, $message);
+        return redirect()->route('edit_quiz_id_route')->with($status, $message);
       }
     }
     return abort(403);

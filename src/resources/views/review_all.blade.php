@@ -53,7 +53,7 @@
                                     @if($admin_data == 'STUDENT')
                                     <td>{{$data->first_name}} {{$data->last_name}}</td>
                                     @endif
-                                    <td><a href="{{ url('quizzes/review/'.$data->user_attempt_id) }}"> {{$data->quiz}}</th>
+                                    <td><a href="{{ url('review/'.$data->user_attempt_id) }}"> {{$data->quiz}}</th>
                                     <td>{{$data->created_at}}</td>
                                     <td>{{$data->time}}</td>
                                     <td>{{$data->score}} / {{$data->max_score}}</td>
@@ -91,8 +91,8 @@
                         <tbody>
                             @foreach($admin_data as $row)
                                 <tr>
-                                    <td>{{$row->first_name}} {{$row->last_name}}</td>
-                                    <td><a href="{{ url('quizzes/review/'.$row->id.'/'.$row->code) }}"> {{$row->code}}</td>
+                                    <td><a href="{{ url('review/'.$row->id.'/all') }}"> {{$row->first_name}} {{$row->last_name}}</td>
+                                    <td><a href="{{ url('review/'.$row->id.'/'.$row->code) }}"> {{$row->code}}</td>
                                     <td>{{$row->attempts}}</td>
                                     <td>{{$row->time}}</td>
                                     <td>{{$row->score}} / {{$row->max_score}}</td>

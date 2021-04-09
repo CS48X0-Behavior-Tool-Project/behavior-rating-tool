@@ -96,6 +96,9 @@ class ReviewQuizController extends Controller
     }
 
     public function getReviewUserQuiz($id, $quiz) {
+        if($quiz == 'all') {
+            $quiz = '%';
+        }
         if (Auth::user()){
             $quizzes = DB::table('users')
             ->select(
@@ -118,7 +121,7 @@ class ReviewQuizController extends Controller
             ->join('attempt_answer_items', 'attempt_answer_items.attempt_quiz_id', '=', 'attempt_quizzes.id')
             ->orderby('quizzes.code')
             ->where('users.id', $id)
-            ->where('quizzes.code', $quiz)
+            ->where('quizzes.code', 'LIKE', $quiz)
             ->get();
 
             Log::info(['>>> ReviewQuizController - getReviewUserQuiz: ',$quizzes]);

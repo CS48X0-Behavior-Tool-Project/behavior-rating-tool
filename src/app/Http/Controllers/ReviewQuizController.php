@@ -122,6 +122,9 @@ class ReviewQuizController extends Controller
         if($quiz == 'all') {
             $quiz = '%';
         }
+        if($id == 'all') {
+            $id = '%';
+        }
         if (Auth::user()){
             $quizzes = DB::table('users')
             ->select(
@@ -143,7 +146,7 @@ class ReviewQuizController extends Controller
             ->join('quizzes', 'quizzes.id', '=', 'attempt_quizzes.quiz_id')
             ->join('attempt_answer_items', 'attempt_answer_items.attempt_quiz_id', '=', 'attempt_quizzes.id')
             ->orderby('quizzes.code')
-            ->where('users.id', $id)
+            ->where('users.id','LIKE', $id)
             ->where('quizzes.code', 'LIKE', $quiz)
             ->get();
 

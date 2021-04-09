@@ -94,7 +94,7 @@
                             @foreach($admin_data as $row)
                                 <tr>
                                     <td><a href="{{ url('review/'.$row->id.'/all') }}"> {{$row->first_name}} {{$row->last_name}}</td>
-                                    <td><a href="{{ url('review/'.$row->id.'/'.$row->code) }}"> {{$row->code}}</td>
+                                    <td><a href="{{ url('review/'.'all/'.$row->code) }}"> {{$row->code}}</td>
                                     <td>{{$row->attempts}}</td>
                                     <td>{{$row->time}}</td>
                                     <td>{{$row->score}} / {{$row->max_score}}</td>

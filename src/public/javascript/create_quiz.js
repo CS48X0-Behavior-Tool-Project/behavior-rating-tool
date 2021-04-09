@@ -13,6 +13,7 @@ jQuery(function() {
 
     $('input[type=radio][name="animal-radio[]"]').change(function() {
         $("#video-name").val(this.value + "" + $("#video-id").val());
+        $("#video-name").css({"borderColor": "#dfdfdf"});
     });
 
     $(document).ready(function(){
@@ -20,7 +21,15 @@ jQuery(function() {
             $("#a-new").val(this.value);
             $("#video-name").val(this.value + "" + $("#video-id").val());
             $("#a-new").prop("checked", true);
-        })
+        });
+
+        $("#video-name").on("input", function(){
+            if($("#video-name").val() == ""){
+                $("#video-name").css({"borderColor": "red"});
+            } else {
+                $("#video-name").css({"borderColor": "#dfdfdf"});
+            }
+        });
     });
 
 
@@ -86,8 +95,10 @@ function updateVideoID(uuid) {
 function updateVideoName(uuid) {
     if ($('input[name="animal-radio[]"]:checked').val()) {
         $("#video-name").val($('input[name="animal-radio[]"]:checked').val() + "" + uuid);
+        $("#video-name").css({"borderColor": "#dfdfdf"});
     } else {
         $("#video-name").val(uuid);
+        $("#video-name").css({"borderColor": "#dfdfdf"});
     }
 }
 

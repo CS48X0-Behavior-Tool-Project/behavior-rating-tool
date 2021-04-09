@@ -29,12 +29,14 @@ jQuery(function() {
         $("#remove-behaviour").click(function(e){
             e.preventDefault();
             if (nextBehaviour < MIN_BEHAVIOURS+1){
-                nextBehaviour = MIN_BEHAVIOURS+1;
+                nextBehaviour = MIN_BEHAVIOURS;
             } else {
                 nextBehaviour--;
             }
 
             var field = "#field-b"+nextBehaviour;
+            var input = "#box-"+nextBehaviour;
+            $(input).val("");
             $(field).hide();
         });
     });

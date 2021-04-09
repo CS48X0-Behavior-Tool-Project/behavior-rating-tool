@@ -41,8 +41,6 @@ class EditQuizController extends Controller
         $behaviours = $this->readBehaviours($id);
 
         $interpretations = $this->readInterpretations($id);
-        print_r($interpretations);
-        return;
 
         $this->editQuiz($id, $videoID, $quizCode, $animal, $behaviours, $interpretations);
 

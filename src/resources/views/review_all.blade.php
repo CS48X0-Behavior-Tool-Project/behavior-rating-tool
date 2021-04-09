@@ -20,6 +20,10 @@
 
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
+<!-- Icon styles -->
+<link rel="stylesheet" href="{{ URL::asset('css/admin_create_quiz.css') }}">
+
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">

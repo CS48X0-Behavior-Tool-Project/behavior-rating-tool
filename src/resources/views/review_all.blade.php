@@ -73,18 +73,16 @@
             <div class="card">
                 <div class="card-header">{{ __('Review All Student Quizzes') }}</div>
                 <div class="card-body">
-                    <div class="form-group row justify-content-center">
-                        <button class="btn btn" type="button" id="add-behaviour" style="margin-right: 5px; background-color: #fc8403; color: white">
-                            <i class="fas fa-plus"></i> More
-                        </button>
-                        <button class="btn btn-secondary" type="button" id="remove-behaviour" style="margin-left: 5px">
-                            <i class="fas fa-minus"></i> Less
-                        </button>
-                    </div>
                     <div style="display: flex; justify-content: flex-end">
-                        <!-- <strong>Download</strong>&nbsp&nbsp -->
-                        <a href="{{ route('export_all_student_quizzes') }}"><strong>Download CSV</strong></a>&nbsp&nbsp
-                        <a href="{{ route('export_all_student_quizzes_json') }}"><strong>JSON</strong></a>
+                        <div class="dropdown">
+                            <button type="button" class="btn btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #fc8403; color: white">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('export_all_student_quizzes') }}">CSV</a>
+                                <a class="dropdown-item" href="{{ route('export_all_student_quizzes_json') }}">JSON</a>
+                            </div>
+                        </div>
                     </div>
                     <br>
 

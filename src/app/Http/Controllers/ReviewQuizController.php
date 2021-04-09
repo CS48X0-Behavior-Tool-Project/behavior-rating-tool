@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Log;
 
 use App\Models\User;
 use App\Models\Quiz;
+use App\Models\UserAttempt;
 use Illuminate\Support\Facades\DB;
+use \stdClass;
 
 
 class ReviewQuizController extends Controller
@@ -74,22 +76,55 @@ class ReviewQuizController extends Controller
             ]);
     }
 
+    public function exportUserQuizSummaryJson() {
+        $admin_data = $this->getAllStudentQuizzes();
+        $file = array();
+        foreach ($admin_data as $row) {
+            $single = new stdClass();
+            $single->student = $row->email;
+            $single->quiz_code = $row->code;
+            $single->number_of_attempts = $row->attempts;
+            $single->best_score = $row->score."/".$row->max_score;
+            $single->interpretation_guess = $row->interpretation_guess; 
+            $single->best_time = $row->time;
+            array_push($file, $single);
+        }
+
+        return response($file)
+            ->withHeaders([
+                'Content-Type' => 'application/json; charset=utf-8',
+                'Cache-Control' => 'no-store, no-cache',
+                'Content-Disposition' => 'attachment; filename=student_quiz_summary.json',
+            ]);
+    }
+
     public function getReviewQuizByUserAttemptId($userAttemptId)
     {
         $quiz = $this->getQuizByUserAttemptID($userAttemptId);
         $studentAnswers = $this->getAnswers($userAttemptId);
 
+        //extract the attempt number
+        $attemptNumber = UserAttempt::where('attempt_id','=',$userAttemptId)->pluck('attempt_number')->toArray()[0];
+
         return view('review_quiz')->with(['code' => $quiz->code,
                                             'options' => $quiz->quiz_question_options,
                                             'video' => $quiz->video,
-                                            'score' => $studentAnswers->score,
-                                            'interpretation_guess' => $studentAnswers->interpretation_guess,
+                                            'behaviour_score' => $studentAnswers->score,
+                                            'max_behaviour_score' => $studentAnswers->max_score,
+                                            'interpretation_score' => $studentAnswers->interpretation_guess,
+                                            'attempt' => $attemptNumber,
                                             'behavior_answers' => json_decode($studentAnswers->behavior_answers, true),
                                             'interpretation_answers' => json_decode($studentAnswers->interpretation_answers, true),
                                             'time' => isset($studentAnswers->time)?$studentAnswers->time:'N/A']);
     }
 
     public function getReviewUserQuiz($id, $quiz) {
+        if($quiz == 'all') {
+            $quiz = '%';
+        }
+        if($id == 'all') {
+            $id = '%';
+        }
         if (Auth::user()){
             $quizzes = DB::table('users')
             ->select(
@@ -111,8 +146,8 @@ class ReviewQuizController extends Controller
             ->join('quizzes', 'quizzes.id', '=', 'attempt_quizzes.quiz_id')
             ->join('attempt_answer_items', 'attempt_answer_items.attempt_quiz_id', '=', 'attempt_quizzes.id')
             ->orderby('quizzes.code')
-            ->where('users.id', $id)
-            ->where('quizzes.code', $quiz)
+            ->where('users.id','LIKE', $id)
+            ->where('quizzes.code', 'LIKE', $quiz)
             ->get();
 
             Log::info(['>>> ReviewQuizController - getReviewUserQuiz: ',$quizzes]);

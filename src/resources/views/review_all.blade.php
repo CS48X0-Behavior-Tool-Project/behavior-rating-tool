@@ -53,7 +53,7 @@
                                     @if($admin_data == 'STUDENT')
                                     <td>{{$data->first_name}} {{$data->last_name}}</td>
                                     @endif
-                                    <td><a href="{{ url('quizzes/review/'.$data->user_attempt_id) }}"> {{$data->quiz}}</th>
+                                    <td><a href="{{ url('review/'.$data->user_attempt_id) }}"> {{$data->quiz}}</th>
                                     <td>{{$data->created_at}}</td>
                                     <td>{{$data->time}}</td>
                                     <td>{{$data->score}} / {{$data->max_score}}</td>
@@ -70,7 +70,9 @@
                 <div class="card-header">{{ __('Review All Student Quizzes') }}</div>
                 <div class="card-body">
                     <div style="display: flex; justify-content: flex-end">
-                        <a href="{{ route('export_all_student_quizzes') }}"><strong>Download Data</strong></a>
+                        <!-- <strong>Download</strong>&nbsp&nbsp -->
+                        <a href="{{ route('export_all_student_quizzes') }}"><strong>Download CSV</strong></a>&nbsp&nbsp
+                        <a href="{{ route('export_all_student_quizzes_json') }}"><strong>JSON</strong></a>
                     </div>
                     <br>
 
@@ -90,9 +92,9 @@
                         </thead>
                         <tbody>
                             @foreach($admin_data as $row)
-                                <tr style="border: 1px solid #f2d296;">
-                                    <td>{{$row->first_name}} {{$row->last_name}}</td>
-                                    <td><a href="{{ url('quizzes/review/'.$row->id.'/'.$row->code) }}"> {{$row->code}}</td>
+                                <tr>
+                                    <td><a href="{{ url('review/'.$row->id.'/all') }}"> {{$row->first_name}} {{$row->last_name}}</td>
+                                    <td><a href="{{ url('review/'.'all/'.$row->code) }}"> {{$row->code}}</td>
                                     <td>{{$row->attempts}}</td>
                                     <td>{{$row->time}}</td>
                                     <td>{{$row->score}} / {{$row->max_score}}</td>

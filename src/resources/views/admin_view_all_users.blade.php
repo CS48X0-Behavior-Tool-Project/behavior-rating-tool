@@ -50,16 +50,16 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
                                 <th style="white-space: nowrap; width: 5%">View User Progress</th>
                                 <th style="white-space: nowrap; width: 5%">Edit User</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
                                 <th>View User Progress</th>
                                 <th>Edit User</th>
                             </tr>
@@ -67,8 +67,8 @@
                         <tbody>
                             @foreach($users as $user)
                                 <tr>
-                                    <td>{{$user->first_name}}</td>
-                                    <td>{{$user->last_name}}</td>
+                                    <td>{{$user->first_name}} {{$user->last_name}}</td>
+                                    <td>{{$user->email}}</td>
                                     <td> <a href="{{ url('users/quizzes/'.$user->id.'/') }}" class="btn btn-info" style="margin-left: 10px">View User's Quizzes</a></td>
                                     <td>
                                         <div class="dropdown">
@@ -92,23 +92,23 @@
                     <table class="table table-bordered" id="dataTableSmall" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
                                 <th style="white-space: nowrap; width: 5%">Options</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
                                 <th>Options</th>
                             </tr>
                         </tfoot>
                         <tbody>
                             @foreach($users as $user)
                                 <tr>
-                                    <td>{{$user->first_name}}</td>
-                                    <td>{{$user->last_name}}</td>
+                                    <td>{{$user->first_name}} {{$user->last_name}}</td>
+                                    <td>{{$user->email}}</td>
                                     <td>
                                         <div class="dropdown">
                                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

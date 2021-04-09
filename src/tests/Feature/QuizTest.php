@@ -368,7 +368,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/quizzes');
         $response->assertSessionHas('edit-status', 'Successfully Edited Quiz Horse001');
     }
 
@@ -433,7 +433,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/edit_quiz/1');
         $response->assertSessionHas('animal-status', 'No Animal Selected');
     }
 
@@ -466,7 +466,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/edit_quiz/1');
         $response->assertSessionHas('animal-status', 'Animal Field Empty');
     }
 
@@ -499,7 +499,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/edit_quiz/1');
         $response->assertSessionHas('behaviour-status', 'Behaviours Incomplete');
     }
 
@@ -532,7 +532,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/edit_quiz/1');
         $response->assertSessionHas('behaviour-status', 'Checked Fields Must Be Filled In');
     }
 
@@ -565,7 +565,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/edit_quiz/1');
         $response->assertSessionHas('int-status', 'Interpretations Incomplete');
     }
 
@@ -598,7 +598,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/edit_quiz/1');
         $response->assertSessionHas('int-status', 'Selected Field Must Be Filled In');
     }
 }

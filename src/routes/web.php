@@ -139,4 +139,4 @@ Route::get('/export', [PagesController::class, 'exportData']);
 Route::get('/export/users', [ExportController::class, 'exportUsers'])->name('export_users_route');
 Route::get('/export/user_quizzes', [ExportController::class, 'exportUserAttempts'])->name('export_user_quizzes_route');
 Route::get('/export/user_quizzes_summary', [ReviewQuizController::class, 'exportUserQuizSummary'])->name('export_all_student_quizzes');
-
+Route::get('/export/user_quizzes_summary_json', [ReviewQuizController::class, 'exportUserQuizSummaryJson'])->name('export_all_student_quizzes_json');

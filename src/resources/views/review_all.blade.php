@@ -70,7 +70,9 @@
                 <div class="card-header">{{ __('Review All Student Quizzes') }}</div>
                 <div class="card-body">
                     <div style="display: flex; justify-content: flex-end">
-                        <a href="{{ route('export_all_student_quizzes') }}"><strong>Download Data</strong></a>
+                        <!-- <strong>Download</strong>&nbsp&nbsp -->
+                        <a href="{{ route('export_all_student_quizzes') }}"><strong>Download CSV</strong></a>&nbsp&nbsp
+                        <a href="{{ route('export_all_student_quizzes_json') }}"><strong>JSON</strong></a>
                     </div>
                     <br>
 

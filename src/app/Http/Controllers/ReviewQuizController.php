@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Quiz;
 use App\Models\UserAttempt;
 use Illuminate\Support\Facades\DB;
+use \stdClass;
 
 
 class ReviewQuizController extends Controller
@@ -72,6 +73,28 @@ class ReviewQuizController extends Controller
                 'Content-Type' => 'text/csv',
                 'Cache-Control' => 'no-store, no-cache',
                 'Content-Disposition' => 'attachment; filename=student_quiz_summary.csv',
+            ]);
+    }
+
+    public function exportUserQuizSummaryJson() {
+        $admin_data = $this->getAllStudentQuizzes();
+        $file = array();
+        foreach ($admin_data as $row) {
+            $single = new stdClass();
+            $single->student = $row->email;
+            $single->quiz_code = $row->code;
+            $single->number_of_attempts = $row->attempts;
+            $single->best_score = $row->score."/".$row->max_score;
+            $single->interpretation_guess = $row->interpretation_guess; 
+            $single->best_time = $row->time;
+            array_push($file, $single);
+        }
+
+        return response($file)
+            ->withHeaders([
+                'Content-Type' => 'application/json; charset=utf-8',
+                'Cache-Control' => 'no-store, no-cache',
+                'Content-Disposition' => 'attachment; filename=student_quiz_summary.json',
             ]);
     }
 

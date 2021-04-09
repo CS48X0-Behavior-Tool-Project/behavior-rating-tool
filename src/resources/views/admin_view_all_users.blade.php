@@ -22,10 +22,13 @@
 <!-- Bootstrap core JavaScript-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<!-- Page level plugin JavaScript-->
+<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
+<!-- Icon styles -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
 <div class="container">
     <div class="card col-12">
@@ -45,6 +48,19 @@
 
         <div class="card-body">
             <div class="container">
+                <div style="display: flex; justify-content: flex-end">
+                    <div class="dropdown">
+                        <button type="button" class="btn btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #fc8403; color: white">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ route('export_users_route') }}">CSV</a>
+                            <!-- TODO -->
+                            <a class="dropdown-item" href="#">JSON</a>
+                        </div>
+                    </div>
+                </div>
+                <br>
                 <!-- Computer Screens -->
                 <div class="d-none d-sm-none d-md-block">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

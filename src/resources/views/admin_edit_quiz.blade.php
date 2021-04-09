@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="name-id" class="col-md-3 col-form-label text-md-right">Name</label>
+                                    <label for="video-name" class="col-md-3 col-form-label text-md-right">Name</label>
                                     <div class="col-md-9">
                                         <input id="video-name" type="text" class="form-control" name="video-name" value="{{$quiz->code}}">
                                     </div>

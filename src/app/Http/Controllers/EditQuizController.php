@@ -43,7 +43,7 @@ class EditQuizController extends Controller
 
         $this->editQuiz($id, $videoID, $quizCode, $animal, $behaviours, $interpretations);
 
-        return redirect()->route('edit_quiz_route')->with('edit-status', 'Successfully Edited Quiz ' . $quizCode);
+        return redirect()->route('quizzes_route')->with('edit-status', 'Successfully Edited Quiz ' . $quizCode);
       } catch (Exception $e) {
         list($status, $message) = explode(':', $e->getMessage());
         Log::info('>>> error status: ' . $status);

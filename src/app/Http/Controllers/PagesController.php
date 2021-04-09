@@ -103,7 +103,7 @@ class PagesController extends Controller
         $bestInterpretationScorePerQuiz = array();
 
         // $value is an array of UserAttempts objects, for example below
-        // 1 => [ 'id' => 1, 'attempt_id' => 1, 'user_id' => 2, 'score' => 4 ], 
+        // 1 => [ 'id' => 1, 'attempt_id' => 1, 'user_id' => 2, 'score' => 4 ],
         // 2 => [ 'id' => 2, 'attempt_id' => 2, 'user_id' => 2, 'score' => 5 ]
         foreach ($attemptScorePerQuiz as $quizID => $value) {
             // Sort the two columns descending (highest to lowest) to achieve the best attempt overall
@@ -184,14 +184,6 @@ class PagesController extends Controller
             return view('admin_create_quiz')->with('animals', $animals);
         }
         return redirect()->back();
-    }
-
-    // Selector page for editing quizzes
-    public function getEditQuiz()
-    {
-        $quizzes = Quiz::all();
-
-        return view('edit_quiz_selector')->with('quizzes',$quizzes);
     }
 
     // Edits a single quiz

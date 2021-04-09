@@ -44,6 +44,12 @@
             </div>
             @endif
 
+            @if (session('edit-status'))
+            <div class="alert alert-success">
+                <strong>{{ session('edit-status') }}</strong>
+            </div>
+            @endif
+
             <div class="card-body">
                 <!-- Computer Screens -->
                 <div class="d-none d-sm-none d-md-block">

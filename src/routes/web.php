@@ -46,7 +46,6 @@ Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz'])->name('cre
 /**
  * Edit quiz page
  */
-Route::get('/edit_quiz', [PagesController::class, 'getEditQuiz'])->name('edit_quiz_route');
 Route::get('/edit_quiz/{id}', [PagesController::class, 'getEditQuizByID'])->name('edit_quiz_id_route');
 
 
@@ -128,7 +127,7 @@ Route::post('/create_quiz', [CreateQuizController::class, 'createQuiz']);
  */
 Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
 
-/** 
+/**
  * Route for submitting a quiz attempt
  */
 Route::post('/quizzes/{id}', [QuizAttemptController::class, 'submitQuizAttempt']);
@@ -140,4 +139,3 @@ Route::get('/export', [PagesController::class, 'exportData']);
 Route::get('/export/users', [ExportController::class, 'exportUsers'])->name('export_users_route');
 Route::get('/export/user_quizzes', [ExportController::class, 'exportUserAttempts'])->name('export_user_quizzes_route');
 Route::get('/export/user_quizzes_summary', [ReviewQuizController::class, 'exportUserQuizSummary'])->name('export_all_student_quizzes');
-

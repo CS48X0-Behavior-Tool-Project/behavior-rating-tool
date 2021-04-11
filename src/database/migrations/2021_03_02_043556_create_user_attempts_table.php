@@ -20,6 +20,7 @@ class CreateUserAttemptsTable extends Migration
             $table->integer('score')->nullable();
             $table->integer('max_score')->nullable();
             $table->boolean('interpretation_guess')->default(0);
+            $table->integer('attempt_number')->nullable();
             $table->timestamps();
             $table->jsonb('options')->nullable();
 

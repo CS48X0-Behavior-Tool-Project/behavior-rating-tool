@@ -18,7 +18,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Attempting Quiz:  {{$code ?? 'QuizID'}}  {{'Attempt #' . $attempt ?? 'Attempt#'}}</div>
                 <div class="card-body">
@@ -33,9 +33,12 @@
                         <!-- store starting time -->
                         <input type="hidden" id="startTime" name="startTime" value={{$time}}>
 
+                        <!-- store attempt number -->
+                        <input type="hidden" id="attempt" name="attempt" value={{$attempt}}>
+
                         <!-- Video -->
                         <div class="row justify-content-center">
-                            <video id="thumbnail" class="" width="100%" style="max-width: 100%; resize: both;" controls>
+                            <video id="thumbnail" class="" width="80%" style="max-width: 100%; resize: both;" controls>
                                 <source src="{{ route('videos.show', ['video' => $video]) }}" type="video/mp4"/>
                             </video>
                         </div>

@@ -36,6 +36,10 @@ class EditQuizController extends Controller
         $videoID = request()->input('video-id');
         $quizCode = request()->input('video-name');
 
+        if ($quizCode == NULL) {
+					return redirect()->route('edit_quiz_id_route')->with('name-status', 'Name field cannot be empty');
+				}
+
         $animal = $this->readAnimal($id);
 
         $behaviours = $this->readBehaviours($id);

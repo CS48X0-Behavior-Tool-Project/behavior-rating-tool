@@ -8,7 +8,7 @@
 
 @section('content')
 
-@if (Bouncer::is(Auth::user())->an("admin", "ta"))
+@if (request()->user()->can('create-quizzes'))
 <div class="row justify-content-center">
     <button class="btn btn-primary" type="button" name="button" onclick="window.location.href='/create_quiz'">Create New Quiz</button>
 </div>
@@ -55,7 +55,7 @@
                                 <th scope="colgroup" colspan="2" class="text-center">Best Score</th>
 
                                 <th scope="col" rowspan="2" style="white-space: nowrap; width: 5%">Take Quiz</th>
-                                @if (Bouncer::is(Auth::user())->an("admin", "ta", "expert"))
+                                @if (request()->user()->can('update-quizzes'))
                                   <th scope="col" rowspan="2" style="white-space: nowrap; width: 5%">Edit Quiz</th>
                                 @endif
                             </tr>
@@ -73,7 +73,7 @@
                                 <td>{{ $bestBehaviourScores[$quiz->id] ?? '-' }} / {{ $maxBehaviourScores[$quiz->id] ?? '-'}}</td>
                                 <td>{{ $bestInterpretationScores[$quiz->id] ?? '-' }}</td>
                                 <td><button class="btn btn-info" type="button" name="button" onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">Take Quiz</button></td>
-                                @if (Bouncer::is(Auth::user())->an('admin', 'ta', 'expert'))
+                                @if (request()->user()->can('update-quizzes'))
                                 <td><button class="btn btn-secondary" type="button" name="button" onclick="window.location='{{ route('edit_quiz_id_route', ['id' => $quiz->id]) }}'">Edit Quiz</button></td>
                                 @endif
                             </tr>
@@ -115,9 +115,9 @@
                                         </div>
                                     </td>
                                     <td>
-                                        @if (Bouncer::is(Auth::user())->an('student', 'expert'))
+                                        @if (request()->user()->can('conduct-quizzes'))
                                             <button class="btn btn-info" type="button" name="button" onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">Take Quiz</button>
-                                        @elseif (Bouncer::is(Auth::user())->an('admin', 'ta', 'expert'))
+                                        @elseif (request()->user()->can('update-quizzes'))
                                             <div class="dropdown">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                   Quiz Options

@@ -143,7 +143,7 @@ class PagesController extends Controller
 
     public function getUsers()
     {
-        if (request()->user()->can('view', User::class)){
+        if (request()->user()->can('view-users-page')){
             $users = $this->uc->getAllUsers();
 
             return view('admin_view_all_users')->with('users', $users);

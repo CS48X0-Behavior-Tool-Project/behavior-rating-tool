@@ -56,7 +56,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ route('export_users_route') }}">CSV</a>
                             <!-- TODO -->
-                            <a class="dropdown-item" href="#">JSON</a>
+                            <a class="dropdown-item" href="{{ route('export_users_json') }}">JSON</a>
                         </div>
                     </div>
                 </div>

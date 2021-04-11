@@ -31,7 +31,8 @@ class EditQuizController extends Controller
    */
   public function updateQuiz($id)
   {
-    if (request()->user()->can('edit', Quiz::class)) {
+    // if (request()->user()->can('edit', Quiz::class)) {
+    if (request()->user()->can('update-quizzes')) {
       try {
         $videoID = request()->input('video-id');
         $quizCode = request()->input('video-name');

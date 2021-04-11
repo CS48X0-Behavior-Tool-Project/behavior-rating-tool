@@ -84,9 +84,8 @@ Route::get('/users/{actionName}/{id}', [SingleUserController::class, 'action']);
  * Display review page
  */
 Route::get('/review', [ReviewQuizController::class, 'getUserQuizzes'])->name('users_review');
-// Route::get('/review/{id}', [ReviewQuizController::class, 'getReviewbyUserAttemptID']);
-Route::get('/quizzes/review/{id}', [ReviewQuizController::class, 'getReviewQuizByUserAttemptId']);   // id is user_attempt_id
-Route::get('/quizzes/review/{id}/{quiz}', [ReviewQuizController::class, 'getReviewUserQuiz']);   // id, quiz is quiz_code
+Route::get('/review/{id}', [ReviewQuizController::class, 'getReviewQuizByUserAttemptId']);   // id is user_attempt_id
+Route::get('/review/{id}/{quiz}', [ReviewQuizController::class, 'getReviewUserQuiz']);   // id, quiz is quiz_code
 
 /**
  * Route for submitting a login request.  Will need to test when actual webpage is created.
@@ -136,4 +135,4 @@ Route::get('/export/users', [ExportController::class, 'exportUsers'])->name('exp
 Route::get('/export/users_json', [ExportController::class, 'exportUsersJson'])->name('export_users_json');
 Route::get('/export/user_quizzes', [ExportController::class, 'exportUserAttempts'])->name('export_user_quizzes_route');
 Route::get('/export/user_quizzes_summary', [ReviewQuizController::class, 'exportUserQuizSummary'])->name('export_all_student_quizzes');
-
+Route::get('/export/user_quizzes_summary_json', [ReviewQuizController::class, 'exportUserQuizSummaryJson'])->name('export_all_student_quizzes_json');

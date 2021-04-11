@@ -21,13 +21,16 @@ class CreateQuizController extends Controller
 		// if (request()->user()->can('create', Quiz::class)) {
 		if (request()->user()->can('create-quizzes')) {
 			try {
+
+				$quizCode = request()->input('video-name');
+				if ($quizCode == NULL) {
+					return redirect()->route('create_quiz_route')->with('name-status', 'Name field cannot be empty');
+				}
+
 				$videoID = $this->readVideo();
 				$animal = $this->readAnimal();
 				$behaviours = $this->readBehaviours();
 				$interpretations = $this->readInterpretations();
-
-				$quizCode = request()->input('video-name');
-
 
 				Log::info('>>> videoID: ' . $videoID);
 				Log::info('>>> animal: ' . $animal);

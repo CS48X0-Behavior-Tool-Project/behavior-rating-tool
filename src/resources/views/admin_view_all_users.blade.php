@@ -85,7 +85,7 @@
                                 <tr>
                                     <td>{{$user->first_name}} {{$user->last_name}}</td>
                                     <td>{{$user->email}}</td>
-                                    <td> <a href="{{ url('users/quizzes/'.$user->id.'/') }}" class="btn btn-info" style="margin-left: 10px">View User's Quizzes</a></td>
+                                    <td> <a href="{{ url('review/'.$user->id.'/all') }}" class="btn btn-info" style="margin-left: 10px">View User's Quizzes</a></td>
                                     <td>
                                         <div class="dropdown">
                                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

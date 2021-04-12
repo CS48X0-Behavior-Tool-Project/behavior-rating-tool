@@ -65,7 +65,7 @@ class ReviewQuizController extends Controller
         $csvFile = "Student,Quiz Code,Number of Attempts,Best Score,Interpretation, Best Time\n";
 
         foreach ($admin_data as $row) {
-            $csvFile .= "{$row->email},{$row->code},{$row->attempts},'{$row->score}/{$row->max_score},{$row->interpretation_guess}, {$row->time}\n";
+            $csvFile .= "{$row->email},{$row->code},{$row->attempts}, "." {$row->score}/{$row->max_score},{$row->interpretation_guess}, {$row->time}\n";
         }
 
         return response($csvFile)

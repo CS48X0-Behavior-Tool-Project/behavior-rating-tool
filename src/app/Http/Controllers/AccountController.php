@@ -166,6 +166,12 @@ class AccountController extends Controller
 
     $oldpassword = request()->input('old-password');
     $newpassword = request()->input('password');
+    $confirmpassword = request()->input('password-confirm');
+
+    if ($newpassword === NULL || $confirmpassword === NULL) {
+      $password_err_msg = "Please fill in all the fields.";
+      return;
+    }
 
     $user = auth()->user();
 

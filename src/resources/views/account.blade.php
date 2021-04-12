@@ -18,7 +18,7 @@
                       <div class="form-group row">
                           <label class="col-md-4 col-form-label text-md-right" for="fname">First Name</label>
                           <div class="col-md-6">
-                              <input id="fname" type="text" class="form-control @error('name') is-invalid @enderror" name="fname" placeholder="{{auth()->user()->first_name}}">
+                              <input id="fname" type="text" class="form-control @error('name') is-invalid @enderror" name="fname" autocomplete="given-name" placeholder="{{auth()->user()->first_name}}">
                               @error('name')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
@@ -31,7 +31,7 @@
                             <label class="col-md-4 col-form-label text-md-right" for="lname">Last Name</label>
                             <div class="col-md-6">
                               <!-- TODO make placeholder first name -->
-                                <input id="lname" type="text" class="form-control @error('name') is-invalid @enderror" name="lname" placeholder="{{auth()->user()->last_name}}">
+                                <input id="lname" type="text" class="form-control @error('name') is-invalid @enderror" name="lname" autocomplete="family-name" placeholder="{{auth()->user()->last_name}}">
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -111,7 +111,7 @@
                         <label for="old-password" class="col-md-4 col-form-label text-md-right">Old Password</label>
 
                         <div class="col-md-6">
-                            <input id="old-password" type="password" class="form-control @error('password') is-invalid @enderror" name="old-password" placeholder="Old Password">
+                            <input id="old-password" type="password" class="form-control @error('password') is-invalid @enderror" name="old-password" autocomplete="current-password" placeholder="Old Password">
 
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -125,7 +125,7 @@
                         <label for="password" class="col-md-4 col-form-label text-md-right">New Password</label>
 
                         <div class="col-md-6">
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="New Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Password must have at least 8 characters. 1 upper case, 1 lower case, 1 number, and 1 special character' : '');">
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password" placeholder="New Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Password must have at least 8 characters. 1 upper case, 1 lower case, 1 number, and 1 special character' : '');">
 
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -139,7 +139,7 @@
                         <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm New Password</label>
 
                         <div class="col-md-6">
-                            <input id="password-confirm" type="password" class="form-control" name="password-confirm" placeholder="Confirm New Password">
+                            <input id="password-confirm" type="password" class="form-control" name="password-confirm" autocomplete="new-password" placeholder="Confirm New Password">
                         </div>
                     </div>
 

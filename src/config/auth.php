@@ -96,7 +96,7 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
-            'expire' => 1440,       //number of minutes before reset link expires (24 hours)
+            'expire' => 30,       //number of minutes before reset link expires (30)
             'throttle' => 60,
         ],
     ],

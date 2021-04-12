@@ -13,6 +13,7 @@ jQuery(function() {
 
     $('input[type=radio][name="animal-radio[]"]').change(function() {
         $("#video-name").val(this.value + "" + $("#video-id").val());
+        updateNameBorder();
     });
 
     $(document).ready(function(){
@@ -20,7 +21,12 @@ jQuery(function() {
             $("#a-new").val(this.value);
             $("#video-name").val(this.value + "" + $("#video-id").val());
             $("#a-new").prop("checked", true);
-        })
+            updateNameBorder();
+        });
+
+        $("#video-name").on("input", function(){
+            updateNameBorder();
+        });
     });
 
 
@@ -86,8 +92,22 @@ function updateVideoID(uuid) {
 function updateVideoName(uuid) {
     if ($('input[name="animal-radio[]"]:checked').val()) {
         $("#video-name").val($('input[name="animal-radio[]"]:checked').val() + "" + uuid);
+        updateNameBorder();
     } else {
         $("#video-name").val(uuid);
+        updateNameBorder();
+    }
+}
+
+/**
+ * Updates name border color to indicate an error
+ * if the field is blank
+ */
+function updateNameBorder(){
+    if($("#video-name").val() == ""){
+        $("#video-name").css({"borderColor": "red"});
+    } else {
+        $("#video-name").css({"borderColor": "#dfdfdf"});
     }
 }
 

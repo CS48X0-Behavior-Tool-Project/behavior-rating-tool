@@ -115,6 +115,13 @@ class AccountController extends Controller
 
     $oldemail = request()->input('old-email');
     $newemail = request()->input('email');
+    $confirmemail = request()->input('email-confirm');
+
+    //make sure the user filled in all the fields
+    if ($newemail === NULL || $confirmemail === NULL) {
+      $email_err_msg = "Please fill in all the fields.";
+      return;
+    }
 
     $user = auth()->user();
     $currentemail = $user->email;

@@ -44,6 +44,12 @@
             </div>
             @endif
 
+            @if (session('delete-message'))
+             <div class="alert alert-success">
+               <strong>{{ session('delete-message') }}</strong>
+             </div>
+            @endif
+
             <div class="card-body">
                 <!-- Computer Screens -->
                 <div class="d-none d-sm-none d-md-block">
@@ -75,6 +81,7 @@
                                 <td><button class="btn btn-info" type="button" name="button" onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">Take Quiz</button></td>
                                 @if (request()->user()->can('update-quizzes'))
                                 <td><button class="btn btn-secondary" type="button" name="button" onclick="window.location='{{ route('edit_quiz_id_route', ['id' => $quiz->id]) }}'">Edit Quiz</button></td>
+                                <td><button class="btn btn-secondary" type="button" name="button" onclick="window.location='{{ route('delete_quiz_id_route', ['id' => $quiz->id]) }}'">Delete Quiz</button></td>
                                 @endif
                             </tr>
                             @endforeach
@@ -115,9 +122,9 @@
                                         </div>
                                     </td>
                                     <td>
-                                        @if (request()->user()->can('conduct-quizzes'))
+                                        @if (Bouncer::can('conduct-quizzes'))
                                             <button class="btn btn-info" type="button" name="button" onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">Take Quiz</button>
-                                        @elseif (request()->user()->can('update-quizzes'))
+                                        @elseif (Bouncer::can('update-quizzes'))
                                             <div class="dropdown">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                   Quiz Options

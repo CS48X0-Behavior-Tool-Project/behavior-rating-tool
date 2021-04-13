@@ -43,6 +43,7 @@ class EditQuizController extends Controller
         $animal = $this->readAnimal($id);
 
         $behaviours = $this->readBehaviours($id);
+
         $interpretations = $this->readInterpretations($id);
 
         $this->editQuiz($id, $videoID, $quizCode, $animal, $behaviours, $interpretations);
@@ -93,21 +94,13 @@ class EditQuizController extends Controller
   private function readBehaviours($id)
   {
     //form responses and checkbox status stored in arrays, null otherwise
-    $behaviours = array(
-      request()->input('box-0'),
-      request()->input('box-1'),
-      request()->input('box-2'),
-      request()->input('box-3'),
-      request()->input('box-4'),
-      request()->input('box-5'),
-      request()->input('box-6'),
-      request()->input('box-7'),
-      request()->input('box-8'),
-      request()->input('box-9'),
-    );
+    $behaviours = array();
+		for ($i = 0; $i < 30; $i++) {
+			array_push($behaviours, request()->input('box-' . $i));
+		}
 
     $checkboxes = array();
-    for ($i = 0; $i < 10; $i++) {
+    for ($i = 0; $i < 30; $i++) {
       $checkboxes[$i] = NULL;
     }
 
@@ -162,13 +155,10 @@ class EditQuizController extends Controller
   private function readInterpretations($id)
   {
     //form responses stored in array, null otherwise
-    $interpretations = array(
-      request()->input('inter-0'),
-      request()->input('inter-1'),
-      request()->input('inter-2'),
-      request()->input('inter-3'),
-      request()->input('inter-4'),
-    );
+    $interpretations = array();
+		for ($i = 0; $i < 30; $i++) {
+			array_push($interpretations, request()->input('inter-' . $i));
+		}
 
     //whichever radio button (1-5) was selected
     $radioValue = request()->input('interpretation-radio');

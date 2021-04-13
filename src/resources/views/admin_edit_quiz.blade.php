@@ -7,6 +7,7 @@
 @endif
 
 <link rel="stylesheet" href="{{ URL::asset('css/admin_create_quiz.css') }}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
 @section('content')
     <div class="container">
@@ -130,10 +131,10 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         <!-- For each possible behaviour sent forward -->
-                                        @foreach (range(0,9) as $x)
+                                        @foreach (range(0,29) as $x)
                                             <!-- If it exists and is correct -->
                                             @if (@isset($b_options[$x]) and $b_options[$x]->is_solution)
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-3" id="field-b{{$x}}">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">
                                                             <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" checked="true" value="{{$x}}">
@@ -143,7 +144,7 @@
                                                 </div>
                                             <!-- If it exists and is NOT correct -->
                                             @elseif (@isset($b_options[$x]))
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-3" id="field-b{{$x}}">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">
                                                             <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
@@ -151,9 +152,19 @@
                                                     </div>
                                                     <input id="box-{{$x}}" type="text" class="form-control" name="box-{{$x}}" placeholder="Edit me..." value="{{$b_options[$x]->title}}">
                                                 </div>
-                                            <!-- Doesn't exist -->
+                                            <!-- Doesn't exist and is greater than 10 -->
+                                            @elseif ($x > 9)
+                                                <div class="input-group mb-3" id="field-b{{$x}}" style="display: none">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
+                                                        </div>
+                                                    </div>
+                                                    <input id="box-{{$x}}" type="text" class="form-control" name="box-{{$x}}" placeholder="Edit me...">
+                                                </div>
+                                            <!-- Doesn't exist and is less than or equal to 10-->
                                             @else
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-3" id="field-b{{$x}}">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">
                                                             <input type="checkbox" id="b-{{$x}}" name="behaviour-check[]" value="{{$x}}">
@@ -164,6 +175,14 @@
                                             @endif
                                         @endforeach
                                     </div>
+                                </div>
+                                <div class="form-group row justify-content-center">
+                                    <button class="btn btn" type="button" id="add-behaviour" style="margin-right: 5px; background-color: #fc8403; color: white">
+                                        <i class="fas fa-plus"></i> More
+                                    </button>
+                                    <button class="btn btn-secondary" type="button" id="remove-behaviour" style="margin-left: 5px">
+                                        <i class="fas fa-minus"></i> Less
+                                    </button>
                                 </div>
                                 @if (session('behaviour-status'))
                                     <div class="alert alert-danger">
@@ -179,10 +198,10 @@
                                 <div class="form-group row justify-content-center">
                                     <div>
                                         <!-- For each possible interpretation sent forward -->
-                                        @foreach (range(0,4) as $x)
+                                        @foreach (range(0,29) as $x)
                                             <!-- If it exists and is correct -->
                                             @if (@isset($i_options[$x]) and $i_options[$x]->is_solution)
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-3" id="field-i{{$x}}">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">
                                                             <input type="radio" id="i-{{$x}}" name="interpretation-radio" checked="true" value="{{$x}}">
@@ -192,7 +211,7 @@
                                                 </div>
                                             <!-- If it exists and is NOT correct -->
                                             @elseif (@isset($i_options[$x]))
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-3" id="field-i{{$x}}">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">
                                                             <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
@@ -200,9 +219,19 @@
                                                     </div>
                                                     <input id="inter-{{$x}}" type="text" class="form-control" name="inter-{{$x}}" placeholder="Edit me ..." value="{{$i_options[$x]->title}}">
                                                 </div>
+                                            @elseif ($x > 4)
+                                            <!-- Doesn't exist and is hidden -->
+                                                <div class="input-group mb-3" id="field-i{{$x}}" style="display: none">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
+                                                        </div>
+                                                    </div>
+                                                    <input id="inter-{{$x}}" type="text" class="form-control" name="inter-{{$x}}" placeholder="Edit me ...">
+                                                </div>
                                             @else
                                             <!-- Doesn't exist -->
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-3" id="field-i{{$x}}">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">
                                                             <input type="radio" id="i-{{$x}}" name="interpretation-radio" value="{{$x}}">
@@ -213,6 +242,14 @@
                                             @endif
                                         @endforeach
                                     </div>
+                                </div>
+                                <div class="form-group row justify-content-center">
+                                    <button class="btn btn" type="button" id="add-interpretation" style="margin-right: 5px; background-color: #fc8403; color: white">
+                                        <i class="fas fa-plus"></i> More
+                                    </button>
+                                    <button class="btn btn-secondary" type="button" id="remove-interpretation" style="margin-left: 5px">
+                                        <i class="fas fa-minus"></i> Less
+                                    </button>
                                 </div>
                                 @if (session('int-status'))
                                     <div class="alert alert-danger">
@@ -240,6 +277,6 @@
 
 @section('end-body-scripts')
     {{-- All ajax related scripts should be moved to the end-body-scripts section --}}
-    <script src="{{ asset('/javascript/create_quiz.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('javascript/edit_quiz.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('javascript/admin_create_quiz.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('javascript/create_quiz.js') }}"></script>
 @endsection

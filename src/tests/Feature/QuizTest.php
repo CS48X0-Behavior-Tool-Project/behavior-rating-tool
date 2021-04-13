@@ -433,7 +433,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz/1');
+        $response->assertRedirect('/quizzes');
         $response->assertSessionHas('animal-status', 'No Animal Selected');
     }
 
@@ -466,7 +466,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz/1');
+        $response->assertRedirect('/quizzes');
         $response->assertSessionHas('animal-status', 'Animal Field Empty');
     }
 
@@ -499,7 +499,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz/1');
+        $response->assertRedirect('/quizzes');
         $response->assertSessionHas('behaviour-status', 'Behaviours Incomplete');
     }
 
@@ -532,7 +532,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz/1');
+        $response->assertRedirect('/quizzes');
         $response->assertSessionHas('behaviour-status', 'Checked Fields Must Be Filled In');
     }
 
@@ -565,7 +565,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz/1');
+        $response->assertRedirect('/quizzes');
         $response->assertSessionHas('int-status', 'Interpretations Incomplete');
     }
 
@@ -598,7 +598,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz/1');
+        $response->assertRedirect('/quizzes');
         $response->assertSessionHas('int-status', 'Selected Field Must Be Filled In');
     }
 }

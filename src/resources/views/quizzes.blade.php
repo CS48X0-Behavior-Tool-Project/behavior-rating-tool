@@ -81,7 +81,6 @@
                                 <td><button class="btn btn-info" type="button" name="button" onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">Take Quiz</button></td>
                                 @if (Bouncer::is(Auth::user())->an("admin", "ta", "expert"))
                                 <td><button class="btn btn-secondary" type="button" name="button" onclick="window.location='{{ route('edit_quiz_id_route', ['id' => $quiz->id]) }}'">Edit Quiz</button></td>
-                                <td><button class="btn btn-secondary" type="button" name="button" onclick="window.location='{{ route('delete_quiz_id_route', ['id' => $quiz->id]) }}'">Delete Quiz</button></td>
                                 @endif
                             </tr>
                             @endforeach

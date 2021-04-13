@@ -260,13 +260,15 @@
                         </div>
 
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary" onclick="validate(event)">
-                                Edit Quiz
+                            <button type="submit" class="btn btn-primary" onclick="validate(event)" style="margin-right: 50px; padding: 10px">
+                                Save Changes
+                            </button>
+                            <button type="submit" class="btn btn-danger" onclick="window.location='{{ route('delete_quiz_id_route', ['id' => $quiz->id]) }}'" style="margin-left: 50px">
+                                Delete Quiz
                             </button>
                         </div>
 
                       </form>
-
 
                     </div>
                 </div>

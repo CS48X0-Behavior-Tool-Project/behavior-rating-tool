@@ -1,3 +1,79 @@
+// Add more behaviour fields
+jQuery(function() {
+    var nextBehaviour = 10;
+    const MAX_BEHAVIOURS = 30;
+    const MIN_BEHAVIOURS = 10;
+
+    var nextInterpretation = 5;
+    const MAX_INTERPRETATION = 30;
+    const MIN_INTERPRETATION = 5;
+
+
+    // Add Behaviours
+    $(document).ready(function () {
+        $("#add-behaviour").click(function(e){
+            e.preventDefault();
+            var field = "#field-b"+nextBehaviour;
+            $(field).show();
+
+            if (nextBehaviour >= MAX_BEHAVIOURS){
+                nextBehaviour = MAX_BEHAVIOURS;
+            } else {
+                nextBehaviour++;
+            }
+        });
+    });
+
+    // Remove behaviours
+    $(document).ready(function () {
+        $("#remove-behaviour").click(function(e){
+            e.preventDefault();
+            if (nextBehaviour < MIN_BEHAVIOURS+1){
+                nextBehaviour = MIN_BEHAVIOURS;
+            } else {
+                nextBehaviour--;
+            }
+
+            var field = "#field-b"+nextBehaviour;
+            var input = "#box-"+nextBehaviour;
+            $(input).val("");
+            $(field).hide();
+        });
+    });
+
+    // Add Interpretations
+    $(document).ready(function () {
+        $("#add-interpretation").click(function(e){
+            e.preventDefault();
+            var field = "#field-i"+nextInterpretation;
+            $(field).show();
+
+            if (nextInterpretation >= MAX_INTERPRETATION){
+                nextInterpretation = MAX_INTERPRETATION;
+            } else {
+                nextInterpretation++;
+            }
+        });
+    });
+
+    // Remove Interpreations
+    $(document).ready(function () {
+        $("#remove-interpretation").click(function(e){
+            e.preventDefault();
+            if (nextInterpretation < MIN_INTERPRETATION+1){
+                nextInterpretation = MIN_INTERPRETATION+1;
+            } else {
+                nextInterpretation--;
+            }
+
+            var field = "#field-i"+nextInterpretation;
+            $(field).hide();
+        });
+    });
+});
+
+
+
 function validate(event) {
     // Name field check
     nameField = document.getElementById("video-name");

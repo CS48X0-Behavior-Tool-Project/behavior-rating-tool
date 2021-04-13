@@ -18,7 +18,7 @@ class CreateQuizController extends Controller
 
 	public function createQuiz()
 	{
-		if (request()->user()->can('create', Quiz::class)) {
+		if (request()->user()->can('create-quizzes')) {
 			try {
 
 				$quizCode = request()->input('video-name');
@@ -105,21 +105,13 @@ class CreateQuizController extends Controller
 	public function readBehaviours()
 	{
 		//form responses and checkbox status stored in arrays, null otherwise
-		$behaviours = array(
-			request()->input('box-1'),
-			request()->input('box-2'),
-			request()->input('box-3'),
-			request()->input('box-4'),
-			request()->input('box-5'),
-			request()->input('box-6'),
-			request()->input('box-7'),
-			request()->input('box-8'),
-			request()->input('box-9'),
-			request()->input('box-10'),
-		);
+		$behaviours = array();
+		for ($i = 0; $i < 30; $i++) {
+			array_push($behaviours, request()->input('box-' . $i));
+		}
 
 		$checkboxes = array();
-		for ($i = 0; $i < 10; $i++) {
+		for ($i = 0; $i < 30; $i++) {
 			$checkboxes[$i] = NULL;
 		}
 
@@ -127,7 +119,7 @@ class CreateQuizController extends Controller
 		if ($behaviourCheck != null) {
 			if (is_array($behaviourCheck)) {
 				foreach ($behaviourCheck as $value) {
-					$checkboxes[$value - 1] = 'on';
+					$checkboxes[$value] = 'on';
 				}
 			}
 		}
@@ -173,15 +165,12 @@ class CreateQuizController extends Controller
 	public function readInterpretations()
 	{
 		//form responses stored in array, null otherwise
-		$interpretations = array(
-			request()->input('inter-1'),
-			request()->input('inter-2'),
-			request()->input('inter-3'),
-			request()->input('inter-4'),
-			request()->input('inter-5'),
-		);
+		$interpretations = array();
+		for ($i = 0; $i < 30; $i++) {
+			array_push($interpretations, request()->input('inter-' . $i));
+		}
 
-		//whichever radio button (1-5) was selected
+		//whichever radio button (0-29) was selected
 		$radioValue = request()->input('interpretation-radio');
 
 		if ($this->containsOnlyNull($interpretations) || $radioValue === NULL) {
@@ -189,7 +178,7 @@ class CreateQuizController extends Controller
 		}
 
 		//make sure the radio button corresponds to a non null input field
-		if ($interpretations[$radioValue - 1] === NULL) {
+		if ($interpretations[$radioValue] === NULL) {
 			return redirect()->route('create_quiz_route')->with('int-status', 'Selected Field Must Be Filled In');
 		}
 
@@ -199,7 +188,7 @@ class CreateQuizController extends Controller
 
 		foreach ($interpretations as $key => $value) {
 			if ($value !== NULL) {
-				if ($key == $radioValue - 1) {
+				if ($key == $radioValue) {
 					$interpretationsArray[$value] = 'on';
 				} else {
 					$interpretationsArray[$value] = NULL;

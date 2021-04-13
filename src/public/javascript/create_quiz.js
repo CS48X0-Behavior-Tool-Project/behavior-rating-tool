@@ -31,19 +31,25 @@ jQuery(function() {
 
 
     $("#upload-button").on('click', function(e) {
-        e.preventDefault();
-        var formData = new FormData($('#upload-form')[0]);
+        if($("#video-upload").val() == ""){
+            e.preventDefault();
+            $("#file-label").css({borderColor: "red"});
+        } else {
+            e.preventDefault();
+            $("#file-label").css({borderColor: "#dfdfdf"});
+            var formData = new FormData($('#upload-form')[0]);
 
-        $.ajax({
-            type: 'POST',
-            url: '/videos',
-            cache: false,
-            data: formData,
-            success: (data) => updateUI(data, true),
-            error: (data) => updateUI(data, false),
-            contentType: false,
-            processData: false
-        });
+            $.ajax({
+                type: 'POST',
+                url: '/videos',
+                cache: false,
+                data: formData,
+                success: (data) => updateUI(data, true),
+                error: (data) => updateUI(data, false),
+                contentType: false,
+                processData: false
+            });
+        }
     });
 });
 

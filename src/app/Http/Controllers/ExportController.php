@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Bouncer;
 use Illuminate\Support\Facades\Log;
+use \stdClass;
 
 class ExportController extends Controller
 {
@@ -17,26 +18,8 @@ class ExportController extends Controller
     public function exportUsers()
     {
         // Only Admins should be allowed to access this resource | have ability to export-users
-        // if (Auth::user() and Bouncer::is(request()->user())->an('admin')) {
-            if (Auth::user() and request()->user()->can('export-users')) {
-                $users = DB::table('users')
-                    ->select(   
-                        'users.email',
-                        'users.first_name',
-                        'users.last_name',
-                        'users.options->grad_year as grad_year',
-                        'users.options->experience as experience',
-                        'assigned_roles.entity_id',
-                        'assigned_roles.id',
-                        'roles.id',
-                        'roles.title as role'
-                    )
-                    ->leftJoin('assigned_roles', 'assigned_roles.entity_id', '=', 'users.id')
-                    ->leftJoin('roles', 'roles.id', '=', 'assigned_roles.role_id')
-                    ->get();
-
-                    Log::info($users);
-
+        if (Auth::user() and request()->user()->can('export-users')) {
+            $users = $this->getAllUsers();
             $csvFile = "Email,First Name,Last Name,Grad_Year,Experience,Role\n";
 
             foreach ($users as $row) {
@@ -52,6 +35,49 @@ class ExportController extends Controller
         } else {
             return redirect()->route('login_page')->with('validate', 'Please login first.');
         }
+    }
+
+    public function exportUsersJson() {
+        $users = $this->getAllUsers();
+        $file = array();
+        foreach ($users as $row) {
+            $single = new stdClass();
+            $single->email = $row->email;
+            $single->first_name = $row->first_name;
+            $single->last_name = $row->last_name;
+            $single->grad_year = $row->grad_year;
+            $single->experience = $row->experience; 
+            $single->role = $row->role;
+            array_push($file, $single);
+        }
+
+        return response($file)
+            ->withHeaders([
+                'Content-Type' => 'application/json; charset=utf-8',
+                'Cache-Control' => 'no-store, no-cache',
+                'Content-Disposition' => 'attachment; filename=users.json',
+            ]);
+    }
+
+    private function getAllUsers(){
+        $users = DB::table('users')
+        ->select(   
+            'users.email',
+            'users.first_name',
+            'users.last_name',
+            'users.options->grad_year as grad_year',
+            'users.options->experience as experience',
+            'assigned_roles.entity_id',
+            'assigned_roles.id',
+            'roles.id',
+            'roles.title as role'
+        )
+        ->leftJoin('assigned_roles', 'assigned_roles.entity_id', '=', 'users.id')
+        ->leftJoin('roles', 'roles.id', '=', 'assigned_roles.role_id')
+        ->get();
+
+        Log::info($users);
+        return $users;
     }
 
     public function exportUserAttempts() { 

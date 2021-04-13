@@ -20,6 +20,10 @@
 
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
+<!-- Icon styles -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -70,9 +74,15 @@
                 <div class="card-header">{{ __('Review All Student Quizzes') }}</div>
                 <div class="card-body">
                     <div style="display: flex; justify-content: flex-end">
-                        <!-- <strong>Download</strong>&nbsp&nbsp -->
-                        <a href="{{ route('export_all_student_quizzes') }}"><strong>Download CSV</strong></a>&nbsp&nbsp
-                        <a href="{{ route('export_all_student_quizzes_json') }}"><strong>JSON</strong></a>
+                        <div class="dropdown">
+                            <button type="button" class="btn btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #fc8403; color: white">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('export_all_student_quizzes') }}">CSV</a>
+                                <a class="dropdown-item" href="{{ route('export_all_student_quizzes_json') }}">JSON</a>
+                            </div>
+                        </div>
                     </div>
                     <br>
 

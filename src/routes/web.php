@@ -75,14 +75,9 @@ Route::get('/quizzes/{id}', [PagesController::class, 'getQuizById'])->name('quiz
 Route::get('/users', [PagesController::class, 'getUsers'])->name('users_route');;
 
 /**
- * Display the user
- */
-Route::get('/user/{id}', [PagesController::class, 'getUserById']);
-
-/**
  * Perform an action on the single user page
  */
-Route::post('/user/{id}', [SingleUserController::class, 'action']);
+Route::get('/users/{actionName}/{id}', [SingleUserController::class, 'action']);
 
 /**
  * Display review page
@@ -136,6 +131,7 @@ Route::post('/quizzes/{id}', [QuizAttemptController::class, 'submitQuizAttempt']
  */
 Route::get('/export', [PagesController::class, 'exportData']);
 Route::get('/export/users', [ExportController::class, 'exportUsers'])->name('export_users_route');
+Route::get('/export/users_json', [ExportController::class, 'exportUsersJson'])->name('export_users_json');
 Route::get('/export/user_quizzes', [ExportController::class, 'exportUserAttempts'])->name('export_user_quizzes_route');
 Route::get('/export/user_quizzes_summary', [ReviewQuizController::class, 'exportUserQuizSummary'])->name('export_all_student_quizzes');
 Route::get('/export/user_quizzes_summary_json', [ReviewQuizController::class, 'exportUserQuizSummaryJson'])->name('export_all_student_quizzes_json');

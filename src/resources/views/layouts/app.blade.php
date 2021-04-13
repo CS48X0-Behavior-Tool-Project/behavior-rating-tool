@@ -58,9 +58,6 @@
                                       {{ __('Quizzes') }}
                                   </a>
                               </li>
-                              <!-- <li class="nav-item">
-                                  <a class="nav-link" href="#">Review</a>
-                              </li> -->
                               <li class="nav-item">
                                   <a class="nav-link" href="{{ url('review') }}">
                                     {{ __('Review') }}
@@ -71,15 +68,6 @@
                                       {{ __('Account') }}
                                   </a>
                               </li>
-
-                              @if (request()->user()->can('export-users'))
-                              <li class="nav-item">
-                                  <a class="nav-link" href="{{ url('export') }}">
-                                      {{ __('Export') }}
-                                  </a>
-                              </li>
-                              @endif
-
                               <li class="nav-item">
                                   <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                       {{ __('Logout') }}

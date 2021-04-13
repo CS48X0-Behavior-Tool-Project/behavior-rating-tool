@@ -65,7 +65,7 @@ class ReviewQuizController extends Controller
         $csvFile = "Student,Quiz Code,Number of Attempts,Best Score,Interpretation, Best Time\n";
 
         foreach ($admin_data as $row) {
-            $csvFile .= "{$row->email},{$row->code},{$row->attempts},'{$row->score}/{$row->max_score},{$row->interpretation_guess}, {$row->time}\n";
+            $csvFile .= "{$row->email},{$row->code},{$row->attempts}, "." {$row->score}/{$row->max_score},{$row->interpretation_guess}, {$row->time}\n";
         }
 
         return response($csvFile)
@@ -151,10 +151,7 @@ class ReviewQuizController extends Controller
             ->get();
 
             Log::info(['>>> ReviewQuizController - getReviewUserQuiz: ',$quizzes]);
-
-            // $admin_data = $this->getAllStudentQuizzes();
-
-            // return view('review_all')->with(['quizzes' => $quizzes, 'admin_data' => $admin_data]);
+            
             return view('review_all')->with(['quizzes' => $quizzes, 'admin_data' => 'STUDENT']);  // if admin_data==STUDENT, means admin revice single user quiz
         }
         else

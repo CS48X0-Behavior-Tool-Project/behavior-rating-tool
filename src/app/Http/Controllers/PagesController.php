@@ -143,7 +143,7 @@ class PagesController extends Controller
 
     public function getUsers()
     {
-        if (request()->user()->can('view', User::class)){
+        if (request()->user()->can('view-users-page')){
             $users = $this->uc->getAllUsers();
 
             return view('admin_view_all_users')->with('users', $users);
@@ -151,16 +151,6 @@ class PagesController extends Controller
             abort(403);
         }
 
-    }
-
-    public function getUserById($id)
-    {
-        if (request()->user()->can('view', User::class)){
-            $user = $this->uc->getUser($id);
-            return view('single_user')->with('user', $user);
-        } else {
-            abort(403);
-        }
     }
 
     public function attemptQuiz($id)
@@ -177,7 +167,8 @@ class PagesController extends Controller
 
     public function getCreateQuiz()
     {
-        if (request()->user()->can('create', Quiz::class)) {
+        if (request()->user()->can('create-quizzes')) {
+            
             // search the database for different animal species to populate a radio button list
             $animals = Quiz::all()->pluck('animal')->unique();
 
@@ -197,7 +188,7 @@ class PagesController extends Controller
     // Edits a single quiz
     public function getEditQuizByID($id)
     {
-        if (request()->user()->can('edit', Quiz::class)) {
+        if (request()->user()->can('update-quizzes')) {
             $animals = Quiz::all()->pluck('animal')->unique();
             $quiz = Quiz::find($id);
             $b_options = QuizOption::where('quiz_id', '=', $quiz->id)->where('type', '=', 'behaviour')->get();
@@ -213,7 +204,7 @@ class PagesController extends Controller
 
     public function getAddUser()
     {
-        if (request()->user()->can('create', User::class)) {
+        if (request()->user()->can('create-users')) {
             return view('admin_add_user');
         }
         return redirect()->back();
@@ -232,15 +223,4 @@ class PagesController extends Controller
         return redirect()->back();
     }
 
-    // public function userQuizReview()
-    // {
-    //     if (request()->user()->can('view', User::class)){
-    //         $users = $this->uc->getAllUsers();
-
-    //         return view('admin_view_all_users')->with('users', $users);
-    //     } else {
-    //         abort(403);
-    //     }
-
-    // }
 }

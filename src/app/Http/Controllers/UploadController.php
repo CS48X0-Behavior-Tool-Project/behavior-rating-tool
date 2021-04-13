@@ -41,7 +41,6 @@ class UploadController extends Controller
     public function upload()
     {
         // Check administrator privileges
-        // if (request()->user()->can('create', User::class)) {
         if (request()->user()->can('create-users')) {
             if (request()->has('mycsv')) {
                 return $this->uploadFile();

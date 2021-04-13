@@ -18,7 +18,6 @@ class CreateQuizController extends Controller
 
 	public function createQuiz()
 	{
-		// if (request()->user()->can('create', Quiz::class)) {
 		if (request()->user()->can('create-quizzes')) {
 			try {
 

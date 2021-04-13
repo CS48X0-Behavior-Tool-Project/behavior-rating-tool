@@ -167,7 +167,6 @@ class PagesController extends Controller
 
     public function getCreateQuiz()
     {
-        // if (request()->user()->can('create', Quiz::class)) {
         if (request()->user()->can('create-quizzes')) {
             
             // search the database for different animal species to populate a radio button list
@@ -189,7 +188,6 @@ class PagesController extends Controller
     // Edits a single quiz
     public function getEditQuizByID($id)
     {
-        // if (request()->user()->can('edit', Quiz::class)) {
         if (request()->user()->can('update-quizzes')) {
             $animals = Quiz::all()->pluck('animal')->unique();
             $quiz = Quiz::find($id);
@@ -225,15 +223,4 @@ class PagesController extends Controller
         return redirect()->back();
     }
 
-    // public function userQuizReview()
-    // {
-    //     if (request()->user()->can('view', User::class)){
-    //         $users = $this->uc->getAllUsers();
-
-    //         return view('admin_view_all_users')->with('users', $users);
-    //     } else {
-    //         abort(403);
-    //     }
-
-    // }
 }

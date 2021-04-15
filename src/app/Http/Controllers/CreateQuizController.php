@@ -104,14 +104,16 @@ class CreateQuizController extends Controller
 	 */
 	public function readBehaviours()
 	{
+		$max_behaviours = 30;       //maximum number of behaviours you wish to have in your quizzes
+
 		//form responses and checkbox status stored in arrays, null otherwise
 		$behaviours = array();
-		for ($i = 0; $i < 30; $i++) {
+		for ($i = 0; $i < $max_behaviours; $i++) {
 			array_push($behaviours, request()->input('box-' . $i));
 		}
 
 		$checkboxes = array();
-		for ($i = 0; $i < 30; $i++) {
+		for ($i = 0; $i < $max_behaviours; $i++) {
 			$checkboxes[$i] = NULL;
 		}
 
@@ -164,9 +166,11 @@ class CreateQuizController extends Controller
 	 */
 	public function readInterpretations()
 	{
+		$max_interpretations = 30;       //maximum number of interpretations you wish to have in your quizzes
+
 		//form responses stored in array, null otherwise
 		$interpretations = array();
-		for ($i = 0; $i < 30; $i++) {
+		for ($i = 0; $i < $max_interpretations; $i++) {
 			array_push($interpretations, request()->input('inter-' . $i));
 		}
 

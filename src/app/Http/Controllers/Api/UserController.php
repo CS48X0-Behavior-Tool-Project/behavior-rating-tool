@@ -253,21 +253,4 @@ class UserController extends Controller
         // Implement logic to delete user
         User::find($id)->delete();
     }
-
-    /**
-    *  Delete every attempt the user has made, in preparation for the deletion of the user.
-    */
-    public function deleteUserAttempts($id)
-    {
-        $attemptIDs = Attempt::where('user_id','=',$id)->pluck('id')->toArray();
-        foreach ($attemptIDs as $key => $value) {
-          $attemptQuiz = AttemptQuiz::where('attempt_id','=',$value);
-          $attemptQuizID = $attemptQuiz->pluck('id')->toArray()[0];
-          AttemptAnswerItem::where('attempt_quiz_id','=',$attemptQuizID)->delete();
-          $attemptQuiz->delete();
-        }
-
-        Attempt::where('user_id','=',$id)->delete();
-        UserAttempt::where('user_id','=',$id)->delete();
-    }
 }

@@ -93,9 +93,10 @@
                                           </button>
                                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                               <a class="dropdown-item" href="{{ url('users/reset/'.$user->id.'/') }}">Reset {{$user->first_name}}'s Password</a>
-                                              @if (request()->user()->can('delete-users') && ($user->email != env('ADMIN_USER_EMAIL')))
+                                              {{-- ($user->email != env('ADMIN_USER_EMAIL') ensures you can't delete the Admin user --}}
+                                              @if (Bouncer::is(Auth::user())->an("admin") && ($user->email != env('ADMIN_USER_EMAIL')))
                                                 <a class="dropdown-item" href="{{ url('users/delete/'.$user->id.'/') }}" onclick="return confirm('Are you sure you want to delete {{$user->first_name}} {{$user->last_name}}?  All associated records will be removed.  This action is irreversible.')">Delete {{$user->first_name}} {{$user->last_name}}</a>
-                                              @endif  
+                                              @endif
                                           </div>
                                         </div>
                                     </td>

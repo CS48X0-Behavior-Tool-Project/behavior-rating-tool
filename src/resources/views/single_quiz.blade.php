@@ -6,6 +6,9 @@
     </div>
 @endif
 
+<!-- Alert on leave script -->
+<script type="text/javascript" src="{{ URL::asset('javascript/alert_before_unload_quiz.js') }}"></script>
+
 <!-- Timer Script -->
 <script type="text/javascript" src="{{ URL::asset('javascript/single_quiz.js') }}"></script>
 
@@ -23,7 +26,7 @@
                 <div class="card-header">Attempting Quiz:  {{$code ?? 'QuizID'}}  {{'Attempt #' . $attempt ?? 'Attempt#'}}</div>
                 <div class="card-body">
 
-                    <form action="" method="post">
+                    <form action="" method="post" onsubmit="setFormSubmission()">
                       @csrf
                         <!-- Stopwatch -->
                         <div class="col-xs-2">

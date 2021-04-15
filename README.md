@@ -187,9 +187,16 @@ Then you should populate the database using the Bouncer seeder so that an admin 
 docker-compose exec brt php artisan db:seed --class=BouncerSeeder
 ```
 
+### 1.11 Run autoqueue for video resizing
+
+The project currently uses Laravel's job system to automatically resize and scale down videos made in upload requests. Without this enabled, videos will still play fine, however, they will not be compressed meaning a lot more space will be taken up, which isn't particularly convenient. To start the job queue, run the following command:
+
+```
+docker-compose exec brt supervisord
+```
 
 
-### 1.11 Test your installation
+### 1.12 Test your installation
 
 To check if the installation went successfully, go to http://localhost:8080 in your browser. If successful, you should see a landing page. Make sure it is http, and not https. Locally certified SSL with Apache is much more difficult to setup and is not worth the hassle. Most modern web browsers will attempt to take you to https:// unless you specify http://. So if you ever attempt to load the website and it doesn't appear, first double check that you typed:
 

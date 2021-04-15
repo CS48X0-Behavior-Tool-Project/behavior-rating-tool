@@ -48,6 +48,11 @@ Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz'])->name('cre
  */
 Route::get('/edit_quiz/{id}', [PagesController::class, 'getEditQuizByID'])->name('edit_quiz_id_route');
 
+/**
+* Route to delete the selected quiz
+*/
+Route::get('/edit_quiz/{id}/delete', [EditQuizController::class, 'deleteQuiz'])->name('delete_quiz_id_route');
+
 
 /**
  *  Submit the updated quiz with new changes.

@@ -255,4 +255,17 @@ class EditQuizController extends Controller
 
     $this->qc->updateQuiz($request, $id);
   }
+
+  /**
+  * Delete the selected quiz.
+  */
+  public function deleteQuiz($id) {
+    //delete all the options associated with this quiz
+    QuizOption::where('quiz_id', '=', $id)->delete();
+    //then delete the quiz
+    $quizName = Quiz::where('id', '=', $id)->pluck('code')[0];
+    Quiz::where('id', '=', $id)->delete();
+
+    return redirect()->route('quizzes_route')->with('delete-message', 'Quiz ' . $quizName . ' has been deleted.');
+  }
 }

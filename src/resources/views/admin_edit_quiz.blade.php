@@ -260,13 +260,27 @@
                         </div>
 
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary" onclick="validate(event)">
-                                Edit Quiz
+                            <button type="submit" class="btn btn-primary" onclick="validate(event)" style="margin-right: 50px; padding: 10px">
+                                Save Changes
+                            </button>
+                            <button type="submit" class="btn btn-danger" onclick="deleteQuiz(event)" style="margin-left: 50px">
+                                Delete Quiz
                             </button>
                         </div>
 
-                      </form>
+                        <script>
+                        function deleteQuiz(e)
+                        {
+                            if(!confirm('Are you sure you want to delete {{$quiz->code}}? This action is irreversible.')) {
+                                e.preventDefault();
+                            }
+                            else {
+                              window.location='{{ route('delete_quiz_id_route', ['id' => $quiz->id]) }}'
+                            }
+                        }
 
+                        </script>
+                      </form>
 
                     </div>
                 </div>

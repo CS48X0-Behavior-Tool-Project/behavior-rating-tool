@@ -8,7 +8,7 @@
 
 @section('content')
 
-@if (request()->user()->can('create-quizzes'))
+@if (Bouncer::is(Auth::user())->an("admin", "ta"))
 <div class="row justify-content-center">
     <button class="btn btn-primary" type="button" name="button" onclick="window.location.href='/create_quiz'">Create New Quiz</button>
 </div>
@@ -44,10 +44,17 @@
             </div>
             @endif
 
+            @if (session('delete-message'))
+             <div class="alert alert-success">
+               <strong>{{ session('delete-message') }}</strong>
+             </div>
+             @endif
+
             @if (session('edit-status'))
             <div class="alert alert-success">
                 <strong>{{ session('edit-status') }}</strong>
             </div>
+
             @endif
 
             <div class="card-body">
@@ -61,7 +68,7 @@
                                 <th scope="colgroup" colspan="2" class="text-center">Best Score</th>
 
                                 <th scope="col" rowspan="2" style="white-space: nowrap; width: 5%">Take Quiz</th>
-                                @if (request()->user()->can('update-quizzes'))
+                                @if (Bouncer::is(Auth::user())->an("admin", "ta", "expert"))
                                   <th scope="col" rowspan="2" style="white-space: nowrap; width: 5%">Edit Quiz</th>
                                 @endif
                             </tr>
@@ -79,7 +86,7 @@
                                 <td>{{ $bestBehaviourScores[$quiz->id] ?? '-' }} / {{ $maxBehaviourScores[$quiz->id] ?? '-'}}</td>
                                 <td>{{ $bestInterpretationScores[$quiz->id] ?? '-' }}</td>
                                 <td><button class="btn btn-info" type="button" name="button" onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">Take Quiz</button></td>
-                                @if (request()->user()->can('update-quizzes'))
+                                @if (Bouncer::is(Auth::user())->an("admin", "ta", "expert"))
                                 <td><button class="btn btn-secondary" type="button" name="button" onclick="window.location='{{ route('edit_quiz_id_route', ['id' => $quiz->id]) }}'">Edit Quiz</button></td>
                                 @endif
                             </tr>
@@ -121,9 +128,10 @@
                                         </div>
                                     </td>
                                     <td>
-                                        @if (request()->user()->can('conduct-quizzes'))
+
+                                        @if (Bouncer::is(Auth::user())->a("student"))
                                             <button class="btn btn-info" type="button" name="button" onclick="window.location='{{ route('quiz.show', ['id' => $quiz->id]) }}'">Take Quiz</button>
-                                        @elseif (request()->user()->can('update-quizzes'))
+                                        @elseif (Bouncer::is(Auth::user())->an("admin", "ta", "expert"))
                                             <div class="dropdown">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                   Quiz Options
@@ -131,8 +139,6 @@
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" href="{{ route('quiz.show', ['id' => $quiz->id]) }}">Take Quiz</a>
                                                     <a class="dropdown-item" href="{{ route('edit_quiz_id_route', ['id' => $quiz->id]) }}">Edit Quiz</a>
-                                                    <!-- TODO inable deleteing quizzes and update href -->
-                                                    <a class="dropdown-item" href="#" onclick="return confirm('Are you sure you want to delete {{$quiz->code}}?  All associated records will be removed.  This action is irreversible.')">Delete {{$quiz->code}}</a>
                                                 </div>
                                             </div>
                                         @endif

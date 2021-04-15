@@ -177,14 +177,6 @@ class PagesController extends Controller
         return redirect()->back();
     }
 
-    // Selector page for editing quizzes
-    public function getEditQuiz()
-    {
-        $quizzes = Quiz::all();
-
-        return view('edit_quiz_selector')->with('quizzes',$quizzes);
-    }
-
     // Edits a single quiz
     public function getEditQuizByID($id)
     {

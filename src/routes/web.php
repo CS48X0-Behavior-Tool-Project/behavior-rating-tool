@@ -46,7 +46,6 @@ Route::get('/create_quiz', [PagesController::class, 'getCreateQuiz'])->name('cre
 /**
  * Edit quiz page
  */
-Route::get('/edit_quiz', [PagesController::class, 'getEditQuiz'])->name('edit_quiz_route');
 Route::get('/edit_quiz/{id}', [PagesController::class, 'getEditQuizByID'])->name('edit_quiz_id_route');
 
 
@@ -122,7 +121,7 @@ Route::post('/create_quiz', [CreateQuizController::class, 'createQuiz']);
  */
 Route::post('/confirmation', [NewAccountController::class, 'createAccount']);
 
-/** 
+/**
  * Route for submitting a quiz attempt
  */
 Route::post('/quizzes/{id}', [QuizAttemptController::class, 'submitQuizAttempt']);

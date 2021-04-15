@@ -44,14 +44,14 @@ class QuizTest extends TestCase
 
         Bouncer::allow('student')->to('view-profile');
         Bouncer::allow('student')->to('edit-profile');
-        Bouncer::allow('student')->to('review-my-quizzes');  
+        Bouncer::allow('student')->to('review-my-quizzes');
         Bouncer::allow('student')->to('conduct-quizzes');
 
         Bouncer::allow('expert')->to('view-profile');
         Bouncer::allow('expert')->to('edit-profile');
         Bouncer::allow('expert')->to('create-quizzes');
         Bouncer::allow('expert')->to('update-quizzes');
-        Bouncer::allow('expert')->to('review-my-quizzes');  
+        Bouncer::allow('expert')->to('review-my-quizzes');
         Bouncer::allow('expert')->to('conduct-quizzes');
 
         Bouncer::allow('ta')->to('view-users-page');
@@ -83,7 +83,7 @@ class QuizTest extends TestCase
         Bouncer::allow('admin')->to('review-quizzes');
         Bouncer::allow('admin')->to('export-student-quizzes');
         Bouncer::allow('admin')->to('conduct-quizzes');
-    
+
     }
 
     /**
@@ -415,7 +415,7 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
+        $response->assertRedirect('/quizzes');
         $response->assertSessionHas('edit-status', 'Successfully Edited Quiz Horse001');
     }
 
@@ -460,7 +460,7 @@ class QuizTest extends TestCase
                 'video-id' => '1',
                 'video-name' => 'Horse001',
                 'animal-radio' => null,
-                'a-new' => 'Pony',
+                'a-new' => null,
                 'behaviour-check' => ['1'],
                 'box-0' => null,
                 'box-1' => 'Kicking',
@@ -480,7 +480,6 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
         $response->assertSessionHas('animal-status', 'No Animal Selected');
     }
 
@@ -513,7 +512,6 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
         $response->assertSessionHas('animal-status', 'Animal Field Empty');
     }
 
@@ -546,7 +544,6 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
         $response->assertSessionHas('behaviour-status', 'Behaviours Incomplete');
     }
 
@@ -579,7 +576,6 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
         $response->assertSessionHas('behaviour-status', 'Checked Fields Must Be Filled In');
     }
 
@@ -612,7 +608,6 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
         $response->assertSessionHas('int-status', 'Interpretations Incomplete');
     }
 
@@ -645,7 +640,6 @@ class QuizTest extends TestCase
                 'inter-5' => null,
             ]);
 
-        $response->assertRedirect('/edit_quiz');
         $response->assertSessionHas('int-status', 'Selected Field Must Be Filled In');
     }
 }

@@ -48,6 +48,13 @@
              <div class="alert alert-success">
                <strong>{{ session('delete-message') }}</strong>
              </div>
+             @endif
+
+            @if (session('edit-status'))
+            <div class="alert alert-success">
+                <strong>{{ session('edit-status') }}</strong>
+            </div>
+
             @endif
 
             <div class="card-body">
